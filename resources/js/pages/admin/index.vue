@@ -35,17 +35,19 @@
 				</form>
 			</div>
 		</nav> -->
-		<sidebar-menu :menu="menu" :collapsed="collapsed" :relative="false" @toggle-collapse="onToggleCollapse" />
+		<!-- <sidebar-menu :menu="menu" :collapsed="collapsed" :relative="false" @toggle-collapse="onToggleCollapse">
+			<span slot="toggle-icon"><font-awesome-icon icon="arrows-alt-h" /></span>
+		</sidebar-menu>
 		<div :class="[collapsed ? 'collapsed' : 'extended']" style="height: 1000px; border: 2px solid orange;">
-			collapsed: {{ collapsed }}
-		</div>
-		<!-- <div class="container" style="border: 1px solid orange;">
-			<div class="row" style="border: 1px dashed green;">
-				<div class="col-12">
-					abc
-				</div>
-			</div>
+			collapsed: {{ collapsed }}<br />
+			<i class="fab fa-500px"></i><br />
+			<font-awesome-icon icon="user-secret" />
+			<font-awesome-icon icon="arrows-alt-h" />
+			<font-awesome-icon icon="users" />
+			<font-awesome-icon icon="calendar-day" />
+			<font-awesome-icon icon="briefcase" />
 		</div> -->
+		<h1>Admin</h1>
 	</div>
 </template>
 
@@ -54,7 +56,8 @@
 	import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 	import { SidebarMenu } from 'vue-sidebar-menu'
 	export default {
-		// layout: './layouts/basic',
+		// layout: './../../layouts/backend',
+		layout: 'backend',
 		components: { SidebarMenu },
 		middleware: ['admin'],
 		async created () {
@@ -73,20 +76,36 @@
                         hiddenOnCollapse: true
                     },
                     {
-                        href: '/',
-                        title: 'Dashboard',
-                        icon: 'fa fa-user'
+                        href: '/admin/users',
+                        title: 'Users',
+                        icon: {
+        					element: 'font-awesome-icon',
+        					attributes: {
+            					icon: 'users',
+            					size: 'xs'
+        					}
+    					}
                     },
                     {
-                        href: '/',
-                        title: 'Charts',
-                        icon: 'fa fa-chart-area',
-                        child: [
-                            {
-                                href: '/',
-                                title: 'Sub Link'
-                            }
-                        ]
+                        href: '/admin/activities',
+                        title: 'Activities',
+                        icon: {
+        					element: 'font-awesome-icon',
+        					attributes: {
+            					icon: 'calendar-day',
+            					size: '6x'
+        					}
+    					}
+                    },
+                    {
+                        href: '/admin/sponsors',
+                        title: 'Sponsors',
+                        icon: {
+        					element: 'font-awesome-icon',
+        					attributes: {
+            					icon: 'briefcase'
+        					}
+    					}
                     }
                 ]
 			}
@@ -113,4 +132,10 @@
 	.extended {
 		margin-left: 350px;
 	}
+	>>>.v-sidebar-menu .vsm--link_level-1 .vsm--icon {
+		height: 16px;
+		margin-top: 6px;
+	}
+
+
 </style>

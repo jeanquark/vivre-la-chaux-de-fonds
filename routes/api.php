@@ -62,3 +62,5 @@ Route::get('plan-seats/{userId}', 'SeatPlanController@getUserSeats');
 // Seat Reservation Routes
 Route::post('/reserve-a-seat', 'SeatReservationController@reserveOneSeat');
 
+Route::get('/activities', 'ActivitiesController@getActivities');
+Route::post('/activities', 'ActivitiesController@addActivity');

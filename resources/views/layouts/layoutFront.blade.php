@@ -20,9 +20,9 @@ $config = [
         <!-- Favicon -->
         <link rel="icon" href="{{ asset('images/favicon_2019.png') }}" type="image/x-icon">
         <link rel="stylesheet" href="{{ mix('dist/css/app.css') }}">
+        {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
         
         <style>
-
         </style>
         @yield('css')
     </head>

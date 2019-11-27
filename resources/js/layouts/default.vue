@@ -17,6 +17,9 @@
 
         components: {
             // Navbar
+        },
+        created () {
+            console.log('Using default layout!')
         }
     }
 </script>

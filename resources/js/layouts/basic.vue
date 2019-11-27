@@ -6,7 +6,10 @@
 
 <script>
 export default {
-  name: 'BasicLayout'
+  name: 'BasicLayout',
+  created () {
+    console.log('Using basic layout!')
+  }
 }
 </script>
 

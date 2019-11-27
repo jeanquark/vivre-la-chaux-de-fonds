@@ -8,6 +8,19 @@ import SvgVue from 'svg-vue'
 import '~/plugins'
 import '~/components'
 
+/* Font Awesome 5 */
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faUsers, faCalendarDay, faBriefcase, faUserSecret, faArrowsAltH } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faUserSecret)
+library.add(faArrowsAltH)
+library.add(faUsers)
+library.add(faCalendarDay)
+library.add(faBriefcase)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
 Vue.config.productionTip = false
 
 // Vue.component(
