@@ -9,6 +9,7 @@ use App\PlanSeat;
 use App\Activity;
 use DB;
 use View;
+use File;
 
 class ActivitiesController extends Controller
 {
@@ -39,20 +40,33 @@ class ActivitiesController extends Controller
     }
 
     protected function addActivity(Request $request) {
-        $newActivity = $request->all();
+        // $newActivity = $request->all();
+
+        $form = json_decode($request->form);
         $activity = Activity::create([
             'slug' => 'abc',
-            'title' => $request->title,
-            'text' => $request->text,
-            'content' => $request->content,
-            'subtitle' => $request->subtitle
+            'title' => $form->title,
+            'text' => $form->text,
+            'content' => $form->content,
+            'subtitle' => $form->subtitle
         ]);
+
+        // Upload image if present
+        if (File::exists($request->image)) {
+            $imageName = time().'.'. $request->image->getClientOriginalExtension();
+            $request->image->move(public_path('images/activities'), $imageName);
+        }
 
         return response()->json([
             'success' => true,
-            'request' => $request,
-            'newActivity' => $newActivity,
+            'message' => 'Activity added successfully',
             'activity' => $activity
+            // 'request' => $request,
+            // 'abc' => $abc,
+            // 'def' => $def,
+            // 'ghi' => $ghi,
+            // 'newActivity' => $newActivity,
+            // 'imageName' => $imageName
         ], 201);
     }
 

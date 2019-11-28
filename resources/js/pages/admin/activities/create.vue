@@ -17,7 +17,7 @@
 			const userId = parseInt(this.$route.params.id)
 	  		console.log('userId: ', userId)
 		},
-		data: {
+		data () {
 			return {
 				newActivity: {
 					name: 'ABC',

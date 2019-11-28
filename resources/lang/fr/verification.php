@@ -2,10 +2,10 @@
 
 return [
 
-    'verified' => 'Your email has been verified!',
-    'invalid' => 'The verification link is invalid.',
-    'already_verified' => 'The email is already verified.',
-    'user' => 'We can\'t find a user with that e-mail address.',
-    'sent' => 'We have e-mailed your verification link!',
+    'verified' => 'Votre mail a été vérifié!',
+    'invalid' => 'Le lien de vérification est invalide.',
+    'already_verified' => 'L\'email est déjà vérifié.',
+    'user' => 'Nous ne pouvons pas trouver un utilisateur avec cette adresse e-mail.',
+    'sent' => 'Nous avons envoyé votre lien de vérification par e-mail!',
 
 ];
