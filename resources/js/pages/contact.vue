@@ -1,17 +1,31 @@
 <template>
-	<div>
-		<navbar />
-		<h1 class="text-center my-3">Contact</h1>
-	</div>
+	<b-container class="bv-example-row bv-example-row-flex-cols">
+  <b-row align-v="start">
+    <b-col>One of three columns</b-col>
+    <b-col>One of three columns</b-col>
+    <b-col>One of three columns</b-col>
+  </b-row>
+
+  <b-row align-v="center">
+    <b-col>One of three columns</b-col>
+    <b-col>One of three columns</b-col>
+    <b-col>One of three columns</b-col>
+  </b-row>
+
+  <b-row align-v="end">
+    <b-col>One of three columns</b-col>
+    <b-col>One of three columns</b-col>
+    <b-col>One of three columns</b-col>
+  </b-row>
+</b-container>
 </template>
 
 <script>
-	import navbar from '../components/Navbar'
 	export default {
+		layout: 'frontend',
 		metaInfo () {
     		return { title: 'Contact' }
   		},
-		components: { navbar }
 	}
 </script>
 

@@ -18,6 +18,8 @@ class CreateSponsorsTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->string('image')->nullable();
+            $table->string('contribution')->nullable();
+            $table->date('ending_date')->nullable();
             $table->timestamps();
         });
     }

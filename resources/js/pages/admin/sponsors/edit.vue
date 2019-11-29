@@ -2,11 +2,11 @@
 	<div class="container">
 		<nav aria-label="breadcrumb">
 		  	<ol class="breadcrumb">
-		    	<li class="breadcrumb-item"><router-link to="/activities">Activités</router-link></li>
+		    	<li class="breadcrumb-item"><router-link to="/admin/sponsors">Sponsors</router-link></li>
 		    	<li class="breadcrumb-item active" aria-current="page">Editer</li>
 		  	</ol>
 		</nav>
-		<h1>Activity edit</h1>
+		<h1>Sponsor edit</h1>
 	</div>
 </template>
 
@@ -14,8 +14,8 @@
 	export default {
 		layout: 'backend',
 		mounted () {
-			const activityId = this.$route.params.id
-			console.log('activityId: ', activityId)
+			const sponsorId = this.$route.params.id
+			console.log('sponsorId: ', sponsorId)
 		}
 	}
 </script>

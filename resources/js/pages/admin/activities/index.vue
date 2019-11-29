@@ -1,8 +1,14 @@
 <template>
 	<div class="container">
+		<nav aria-label="breadcrumb">
+		  	<ol class="breadcrumb">
+		    	<li class="breadcrumb-item"><router-link to="/activities">Activités</router-link></li>
+		    	<li class="breadcrumb-item active" aria-current="page">Activités</li>
+		  	</ol>
+		</nav>
 		<h1>Activities index</h1>
 		<h3>All activities</h3>
-		loadedActivities: {{ loadedActivities }}<br /><br />
+		<!-- loadedActivities: {{ loadedActivities }}<br /><br /> -->
 		<div v-if="loadedActivities">
 			loadedActivities[0]['content']: <p v-html="loadedActivities[0]['content']" v-if="loadedActivities[0]"></p><br /><br />
 		</div>
@@ -17,8 +23,6 @@
       				<th scope="col">ID</th>
       				<th scope="col">Title</th>
       				<th scope="col">Subtitle</th>
-      				<!-- <th scope="col">Text</th> -->
-      				<!-- <th scope="col">Content</th> -->
       				<th scope="col">Image</th>
       				<th scope="col">Created at</th>
       				<th scope="col">Updated at</th>
@@ -33,7 +37,17 @@
       				<td>{{ activity.image }}</td>
       				<td>{{ activity.created_at }}</td>
       				<td>{{ activity.updated_at }}</td>
-      				<td></td>
+      				<td>
+      					<router-link :to="`/admin/activities/${activity.id}`" class="btn btn-warning">
+                            <font-awesome-icon icon="eye" />
+                        </router-link>
+                        <router-link :to="`/admin/activities/${activity.id}/edit`" class="btn btn-success">
+                            <font-awesome-icon icon="edit" />
+                        </router-link>
+                        <button class="btn btn-danger" @click="deleteActivity(activity.id)">
+                            <font-awesome-icon icon="trash" />
+                        </button>
+      				</td>
     			</tr>
   			</tbody>
 		</table>
@@ -112,6 +126,9 @@
 				const { data } = await axios.post('/api/activities', formData, config)
 				console.log('data: ', data)
 				this.$store.commit('activities/addActivity', data.activity)
+			},
+			async deleteActivity (activityId) {
+				console.log('deleteActivity: ', activityId)
 			}
 		}
 	}

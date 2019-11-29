@@ -62,5 +62,23 @@ Route::get('plan-seats/{userId}', 'SeatPlanController@getUserSeats');
 // Seat Reservation Routes
 Route::post('/reserve-a-seat', 'SeatReservationController@reserveOneSeat');
 
+// Users
+Route::get('/users', 'UsersController@getUsers');
+Route::post('/users', 'UsersController@addUser');
+Route::get('/users/{id}', 'UsersController@getUser');
+Route::put('/users/{id}', 'UsersController@updateUser');
+Route::delete('/users/{id}', 'UsersController@deleteUser');
+
+// Activities
 Route::get('/activities', 'ActivitiesController@getActivities');
 Route::post('/activities', 'ActivitiesController@addActivity');
+Route::get('/activities/{id}', 'ActivitiesController@getActivity');
+Route::put('/activities/{id}', 'ActivitiesController@updateActivity');
+Route::delete('/activities/{id}', 'ActivitiesController@deleteActivity');
+
+// Sponsors
+Route::get('/sponsors', 'SponsorsController@getSponsors');
+Route::post('/sponsors', 'SponsorsController@addSponsor');
+Route::get('/sponsors/{id}', 'SponsorsController@getSponsor');
+Route::put('/sponsors/{id}', 'SponsorsController@updateSponsor');
+Route::delete('/sponsors/{id}', 'SponsorsController@deleteSponsor');

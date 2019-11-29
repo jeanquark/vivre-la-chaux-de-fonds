@@ -115,7 +115,7 @@
 		              	{
 		                	type: 'link',
 		                	text: 'Contact',
-		                	path: './pricing',
+		                	path: './contact',
 		                	iconRight: '<i class="fa fa-long-arrow-right fa-fw"></i>',
 		              	},
 		              	{

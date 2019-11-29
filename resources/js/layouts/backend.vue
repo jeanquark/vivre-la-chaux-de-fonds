@@ -3,9 +3,7 @@
 		<sidebar-menu :menu="menu" :collapsed="collapsed" :relative="false" @toggle-collapse="onToggleCollapse">
 			<span slot="toggle-icon"><font-awesome-icon icon="arrows-alt-h" /></span>
 		</sidebar-menu>
-		<div :class="[collapsed ? 'collapsed' : 'extended']" style="height: 1000px; border: 2px solid orange;">
-			collapsed: {{ collapsed }}<br />
-			<i class="fab fa-500px"></i><br />
+		<div :class="[collapsed ? 'collapsed' : 'extended']" style="border: 0px solid orange;">
 			<child />
 		</div>
 		<!-- <h1>Backend layout</h1> -->
@@ -32,6 +30,17 @@
 						hiddenOnCollapse: true
 					},
 					{
+						href: '/admin/index',
+						title: 'Admin',
+						icon: {
+						element: 'font-awesome-icon',
+								attributes: {
+								icon: 'tachometer-alt',
+								size: 'xs'
+							}
+						}
+					},
+					{
 						href: '/admin/users',
 						title: 'Users',
 						icon: {
@@ -46,32 +55,43 @@
 						href: '/admin/activities',
 						title: 'Activities',
 						icon: {
-        					element: 'font-awesome-icon',
-        					attributes: {
-            					icon: 'calendar-day',
-            					size: '6x'
-        					}
-    					}
+							element: 'font-awesome-icon',
+							attributes: {
+								icon: 'calendar-day',
+								size: '6x'
+							}
+						}
 					},
 					{
 						href: '/admin/sponsors',
 						title: 'Sponsors',
 						icon: {
-        					element: 'font-awesome-icon',
-        					attributes: {
-            					icon: 'briefcase'
-        					}
-    					}
-					}
+							element: 'font-awesome-icon',
+							attributes: {
+								icon: 'briefcase'
+							}
+						}
+					},
+					{
+						href: '/',
+						title: 'Retour au site',
+						icon: {
+						element: 'font-awesome-icon',
+								attributes: {
+								icon: 'home',
+								size: 'xs'
+							}
+						}
+					},
 				]
 			}
 		},
 		methods: {
 			onToggleCollapse (collapsed) {
 				console.log('onToggleCollapse')
-      			console.log(collapsed)
-      			this.collapsed = collapsed
-    		}
+				console.log(collapsed)
+				this.collapsed = collapsed
+			}
 		}
 	}
 </script>

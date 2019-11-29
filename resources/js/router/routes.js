@@ -8,7 +8,7 @@ export default [
 
     { path: '/login', name: 'login', component: page('auth/login.vue') },
     { path: '/enregistrement', name: 'register', component: page('auth/register.vue') },
-    { path: '/password/reset', name: 'password.request', component: page('auth/password/email.vue') },
+    { path: '/mot-de-passe/reinitialiser', name: 'password.request', component: page('auth/password/email.vue') },
     { path: '/password/reset/:token', name: 'password.reset', component: page('auth/password/reset.vue') },
     { path: '/email/verify/:id', name: 'verification.verify', component: page('auth/verification/verify.vue') },
     { path: '/email/resend', name: 'verification.resend', component: page('auth/verification/resend.vue') },
@@ -23,15 +23,17 @@ export default [
         ]
     },
 
-    { path: '/admin', name: 'admin', component: page('admin/index.vue') },
     { path: '/accueil', name: 'accueil', component: page('accueil') },
-    { path: '/qui-sommes-nous', name: 'qui_sommes_nous', component: page('qui-sommes-nous.vue') },
-    { path: '/spectacles', name: 'spectacles', component: page('spectacles.vue') },
-    { path: '/reservation', name: 'reservation', component: page('reservation.vue') },
+    // { path: '/qui-sommes-nous', name: 'qui_sommes_nous', component: page('qui-sommes-nous.vue') },
+    // { path: '/spectacles', name: 'spectacles', component: page('spectacles.vue') },
+    // { path: '/reservation', name: 'reservation', component: page('reservation.vue') },
     { path: '/contact', name: 'contact', component: page('contact.vue') },
-    { path: '/mes-reservations', name: 'mes_reservations', component: page('mes-reservations.vue') },
+    // { path: '/mes-reservations', name: 'mes_reservations', component: page('mes-reservations.vue') },
+    
+    { path: '/admin', name: 'admin', component: page('admin/index.vue') },
 
     { path: '/admin/users', name: '', component: page('admin/users/index.vue') },
+    { path: '/admin/users/create', name: '', component: page('admin/users/create.vue') },
     { path: '/admin/users/:id', name: '', component: page('admin/users/show.vue') },
     { path: '/admin/users/:id/edit', name: '', component: page('admin/users/edit.vue') },
 
@@ -39,6 +41,11 @@ export default [
     { path: '/admin/activities/create', name: '', component: page('admin/activities/create.vue') },
     { path: '/admin/activities/:id', name: '', component: page('admin/activities/show.vue') },
     { path: '/admin/activities/:id/edit', name: '', component: page('admin/activities/edit.vue') },
+
+    { path: '/admin/sponsors', name: '', component: page('admin/sponsors/index.vue') },
+    { path: '/admin/sponsors/create', name: '', component: page('admin/sponsors/create.vue') },
+    { path: '/admin/sponsors/:id', name: '', component: page('admin/sponsors/show.vue') },
+    { path: '/admin/sponsors/:id/edit', name: '', component: page('admin/sponsors/edit.vue') },
 
     // {
     //     path: '/admin',
