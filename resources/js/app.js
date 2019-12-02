@@ -16,7 +16,7 @@ import '~/components'
 
 /* Font Awesome 5 */
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUsers, faCalendarDay, faBriefcase, faUserSecret, faArrowsAltH, faEye, faEdit, faTrash, faHome, faTachometerAlt } from '@fortawesome/free-solid-svg-icons'
+import { faUsers, faCalendarDay, faBriefcase, faUserSecret, faArrowsAltH, faEye, faEdit, faTrash, faHome, faTachometerAlt, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faUserSecret)
@@ -29,6 +29,7 @@ library.add(faEdit)
 library.add(faTrash)
 library.add(faHome)
 library.add(faTachometerAlt)
+library.add(faChevronDown)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

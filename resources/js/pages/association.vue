@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="text-center">Contact</h1>
+        <h1 class="text-center">Association</h1>
     </div>
 </template>
 
@@ -8,7 +8,7 @@
 	export default {
 		layout: 'frontend',
 		metaInfo () {
-    		return { title: 'Contact' }
+    		return { title: 'Association' }
   		},
 	}
 </script>

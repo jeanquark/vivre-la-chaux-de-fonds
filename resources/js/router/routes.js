@@ -24,11 +24,11 @@ export default [
     },
 
     { path: '/accueil', name: 'accueil', component: page('accueil') },
-    // { path: '/qui-sommes-nous', name: 'qui_sommes_nous', component: page('qui-sommes-nous.vue') },
-    // { path: '/spectacles', name: 'spectacles', component: page('spectacles.vue') },
-    // { path: '/reservation', name: 'reservation', component: page('reservation.vue') },
+    { path: '/association', name: 'association', component: page('association') },
+    { path: '/actualites', name: 'actualites', component: page('actualites') },
+    { path: '/on-parle-de-nous', name: 'on-parle-de-nous', component: page('on-parle-de-nous') },
+    { path: '/participez', name: 'participez', component: page('participez') },
     { path: '/contact', name: 'contact', component: page('contact.vue') },
-    // { path: '/mes-reservations', name: 'mes_reservations', component: page('mes-reservations.vue') },
     
     { path: '/admin', name: 'admin', component: page('admin/index.vue') },
 

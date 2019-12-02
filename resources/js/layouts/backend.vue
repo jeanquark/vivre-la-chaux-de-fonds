@@ -30,7 +30,7 @@
 						hiddenOnCollapse: true
 					},
 					{
-						href: '/admin/index',
+						href: '/admin',
 						title: 'Admin',
 						icon: {
 						element: 'font-awesome-icon',

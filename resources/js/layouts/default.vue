@@ -1,12 +1,12 @@
 <template>
-    <div class="main-layout">
+    <!-- <div class="main-layout"> -->
         <!-- <navbar /> -->
     
         <!-- <div class="container mt-4"> -->
-        <div>
+        <!-- <div> -->
             <child />
-        </div>
-    </div>
+        <!-- </div> -->
+    <!-- </div> -->
 </template>
 
 <script>
@@ -23,3 +23,7 @@
         }
     }
 </script>
+
+<style>
+    
+</style>
