@@ -2,12 +2,12 @@
 
 @section('css')
 	<style>
-		#body {
+		/*#body {
 			background: url('/images/svg/background.svg') center;
 	        background-repeat: no-repeat;
-	        /*background-size: 100%;*/
+	        background-size: 100%;
 	        background-size: cover;
-		}
+		}*/
 		/*@media (min-width: 576px)*/
 			/*.container {
 				max-width: 100%;

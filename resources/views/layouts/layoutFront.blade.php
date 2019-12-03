@@ -23,6 +23,23 @@ $config = [
         {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
         
         <style>
+            /*body, html {
+                height: 100%;
+                margin: 0;
+                color: #fff;
+            }
+            body {
+                background: url('/images/svg/bg_small.svg') no-repeat;
+                background-size: cover;
+            }
+
+            @media only screen and (min-width: 992px) {
+                body {
+                    background: url('/images/svg/bg.svg') no-repeat;
+                    background-size: cover;
+                }
+            }*/
+            
         </style>
         @yield('css')
     </head>

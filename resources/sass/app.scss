@@ -6,3 +6,7 @@
 @import 'elements/navbar';
 @import 'elements/buttons';
 @import 'elements/transitions';
+
+// Pretty checkboxes
+$pretty--color-primary: #9acd32;
+@import '~pretty-checkbox/src/pretty-checkbox.scss';

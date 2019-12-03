@@ -71,7 +71,7 @@ Route::delete('/users/{id}', 'UsersController@deleteUser');
 
 // Activities
 Route::get('/activities', 'ActivitiesController@getActivities');
-Route::post('/activities', 'ActivitiesController@addActivity');
+Route::post('/activities', 'ActivitiesController@createActivity');
 Route::get('/activities/{id}', 'ActivitiesController@getActivity');
 Route::put('/activities/{id}', 'ActivitiesController@updateActivity');
 Route::delete('/activities/{id}', 'ActivitiesController@deleteActivity');

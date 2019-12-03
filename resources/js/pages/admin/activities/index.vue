@@ -6,16 +6,8 @@
 		    	<li class="breadcrumb-item active" aria-current="page">Activités</li>
 		  	</ol>
 		</nav>
-		<h1>Activities index</h1>
-		<h3>All activities</h3>
-		<!-- loadedActivities: {{ loadedActivities }}<br /><br /> -->
-		<div v-if="loadedActivities">
-			loadedActivities[0]['content']: <p v-html="loadedActivities[0]['content']" v-if="loadedActivities[0]"></p><br /><br />
-		</div>
-		
-		<div>
-			this.form: {{ form }}
-		</div>
+		<h2>Activités</h2>
+		<router-link to="/admin/activities/create" class="btn btn-primary">Créer une nouvelle activité</router-link>
 
 		<table class="table">
   			<thead>
@@ -24,6 +16,7 @@
       				<th scope="col">Title</th>
       				<th scope="col">Subtitle</th>
       				<th scope="col">Image</th>
+      				<th scope="col">En ligne?</th>
       				<th scope="col">Created at</th>
       				<th scope="col">Updated at</th>
       				<th scope="col">Actions</th>
@@ -34,7 +27,11 @@
       				<th scope="row">{{ activity.id }}</th>
       				<td>{{ activity.title }}</td>
       				<td>{{ activity.subtitle }}</td>
-      				<td>{{ activity.image }}</td>
+      				<td>
+      					<img :src="`/images/${activity.image}`" style="max-width: 100px; max-height: 50px;" v-if="activity.image" />
+      					<span v-else>Pas d'image</span>
+      				</td>
+      				<td>{{ activity.is_published }}</td>
       				<td>{{ activity.created_at }}</td>
       				<td>{{ activity.updated_at }}</td>
       				<td>
@@ -52,53 +49,27 @@
   			</tbody>
 		</table>
 
-		<form @submit.prevent="createActivity">
-		  	<div class="form-group">
-		    	<label for="exampleInputEmail1">Titre</label>
-		    	<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" v-model="form.title">
-		  	</div>
-		  	<div class="form-group">
-			    <label for="exampleInputPassword1">Sous-titre</label>
-		    	<input type="textarea" class="form-control" id="exampleInputPassword1" placeholder="" v-model="form.subtitle">
-		  	</div>
-		  	<div class="form-group">
-				<label for="exampleFormControlTextarea1">Texte</label>
-				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="form.text"></textarea>
-			</div>
-			<div class="form-group">
-				<label for="image">Choisir une image:</label>
-				<input type="file" id="image" name="image" accept="image/png, image/jpeg" @change="uploadImage($event)">
-			</div>
-		  	<button type="submit" class="btn btn-primary">Create activity</button>
-		</form>
+		
 		
 		<br /><br />
-		<tinymce-editor api-key="mvp9jqgiu38hcoig0dkgzvr5v0520jvl6lghgeyi4slwrogf" :init="{plugins: 'wordcount'}" v-model="form.content"></tinymce-editor>
+		<!-- <tinymce-editor api-key="mvp9jqgiu38hcoig0dkgzvr5v0520jvl6lghgeyi4slwrogf" :init="{plugins: 'wordcount'}" v-model="form.content"></tinymce-editor> -->
 
 		<br /><br />
-		<iframe width="420" height="315" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>
+		<!-- <iframe width="420" height="315" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe> -->
 	</div>
 </template>
 
 <script>
 	import axios from 'axios'
-	import Editor from '@tinymce/tinymce-vue';
 	export default {
 		layout: 'backend',
-		components: { 'tinymce-editor': Editor },
+		// components: { 'tinymce-editor': Editor },
 		async created () {
 			const abc = await this.$store.dispatch('activities/fetchActivities')
 			console.log('abc: ', abc)
 		},
 		data () {
 			return {
-				form: {
-					title: 'New Title',
-					subtitle: '',
-					text: 'New text',
-					content: '',
-				},
-				image: {}
 			}
 		},
 		computed: {
@@ -107,26 +78,7 @@
 			}
 		},
 		methods: {
-			uploadImage (event) {
-				console.log('uploadImage', event)
-				console.log(event.target)
-				console.log(event.target.files[0])
-				this.image = event.target.files[0]
-			},
-			async createActivity () {
-				const config = {
-                    headers: { 'content-type': 'multipart/form-data' }
-                }
-
-				let formData = new FormData();
-                formData.append('image', this.image);
-                formData.append('form', JSON.stringify(this.form))
-                // console.log('formData: ', formData)
-
-				const { data } = await axios.post('/api/activities', formData, config)
-				console.log('data: ', data)
-				this.$store.commit('activities/addActivity', data.activity)
-			},
+			
 			async deleteActivity (activityId) {
 				console.log('deleteActivity: ', activityId)
 			}

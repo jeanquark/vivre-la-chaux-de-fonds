@@ -20,6 +20,13 @@ export const mutations = {
     addActivity (state, payload) {
         console.log('Add activity mutation: ', payload)
         state.activities.push(payload)
+    },
+    updateActivity (state, payload) {
+        console.log('Update activity mutation: ', payload)
+        const activityId = parseInt(payload.id)
+        const index = state.activities.findIndex(activity => activity.id === activityId)
+        console.log('index: ', index)
+        state.activities[index] = payload
     }
 }
 

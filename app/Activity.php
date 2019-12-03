@@ -12,6 +12,6 @@ class Activity extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'slug', 'title', 'subtitle', 'text', 'content', 'image', 'video'
+        'title', 'slug', 'subtitle', 'content', 'image', 'video', 'start_date', 'end_date', 'is_online'
     ];
 }

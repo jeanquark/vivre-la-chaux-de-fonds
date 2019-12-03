@@ -1,12 +1,11 @@
 <template>
-	<div>
+	<div style="">
 		<sidebar-menu :menu="menu" :collapsed="collapsed" :relative="false" @toggle-collapse="onToggleCollapse">
 			<span slot="toggle-icon"><font-awesome-icon icon="arrows-alt-h" /></span>
 		</sidebar-menu>
-		<div :class="[collapsed ? 'collapsed' : 'extended']" style="border: 0px solid orange;">
+		<div class="mt-2" :class="[collapsed ? 'collapsed' : 'extended']" style="border: 0px solid orange;">
 			<child />
 		</div>
-		<!-- <h1>Backend layout</h1> -->
 	</div>
 </template>
 
@@ -17,6 +16,14 @@
 	export default {
 		name: 'BackendLayout',
 		components: { SidebarMenu },
+		beforeCreate () {
+			console.log('beforeCreate')
+        	document.body.className = 'home'
+    	},
+    	beforeDestroy () {
+    		console.log('beforeDestroy')
+    		document.body.className = ''
+		},
 		created () {
 			console.log('Using backend layout!')
 		},
@@ -42,7 +49,7 @@
 					},
 					{
 						href: '/admin/users',
-						title: 'Users',
+						title: 'Utilisateurs',
 						icon: {
 						element: 'font-awesome-icon',
 								attributes: {
@@ -73,7 +80,7 @@
 						}
 					},
 					{
-						href: '/',
+						href: '/accueil',
 						title: 'Retour au site',
 						icon: {
 						element: 'font-awesome-icon',
@@ -95,6 +102,12 @@
 		}
 	}
 </script>
+
+<style>
+    body.home {
+    	background-image: none;
+	}
+</style>
 
 <style scoped>
 	.collapsed {
