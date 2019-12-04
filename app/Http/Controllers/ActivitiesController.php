@@ -58,6 +58,7 @@ class ActivitiesController extends Controller
         $activity->subtitle = $form->subtitle;
         $activity->slug = str_slug($form->title);
         $activity->content = $form->content;
+        $activity->is_published = false;
         if ($form->start_date) {
             $activity->start_date = date_create_from_format('Y-m-d H:i:s', $form->start_date);
         }
@@ -97,8 +98,6 @@ class ActivitiesController extends Controller
             $end_date = date_create_from_format('Y-m-d H:i:s', $updatedActivity->end_date);
         }
 
-
-
         // Upload new image if present
         if (File::exists($request->new_image)) {
             // Delete old image
@@ -125,24 +124,32 @@ class ActivitiesController extends Controller
             ]
         );
 
-        
-
         return response()->json([
             'status' => 'OK',
-            'request' => $request,
-            'request->form' => $request->form,
-            'id' => $id,
-            'updatedActivity' => $updatedActivity,
+            // 'request' => $request,
+            // 'request->form' => $request->form,
+            // 'id' => $id,
+            // 'updatedActivity' => $updatedActivity,
             'activity' => $activity,
-            'old_image' => $old_image,
-            'file' => $file
+            // 'old_image' => $old_image,
+            // 'file' => $file
         ], 201);
     }
 
-    protected function deleteActivity(Request $request) {
+    protected function deleteActivity(Request $request, $id) {
+        $activity = Activity::find($id);
+
+        // Delete image if it exists
+        if (Storage::disk('uploads')->exists($activity->image)) {
+            Storage::disk('uploads')->delete($activity->image);
+        }
+
+        // $activity->delete();
 
         return response()->json([
-            'status' => 'OK'
-        ], 201);
+            'success' => true,
+            'id' => $id,
+            'activity' => $activity
+        ], 204);
     }
 }

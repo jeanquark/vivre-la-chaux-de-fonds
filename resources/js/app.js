@@ -15,23 +15,23 @@ import '~/components'
 // Vue.use(BootstrapVue)
 
 /* Font Awesome 5 */
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUsers, faCalendarDay, faBriefcase, faUserSecret, faArrowsAltH, faEye, faEdit, faTrash, faHome, faTachometerAlt, faChevronDown } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// import { library } from '@fortawesome/fontawesome-svg-core'
+// import { faUsers, faCalendarDay, faBriefcase, faUserSecret, faArrowsAltH, faEye, faEdit, faTrash, faHome, faTachometerAlt, faChevronDown } from '@fortawesome/free-solid-svg-icons'
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faUserSecret)
-library.add(faArrowsAltH)
-library.add(faUsers)
-library.add(faCalendarDay)
-library.add(faBriefcase)
-library.add(faEye)
-library.add(faEdit)
-library.add(faTrash)
-library.add(faHome)
-library.add(faTachometerAlt)
-library.add(faChevronDown)
+// library.add(faUserSecret)
+// library.add(faArrowsAltH)
+// library.add(faUsers)
+// library.add(faCalendarDay)
+// library.add(faBriefcase)
+// library.add(faEye)
+// library.add(faEdit)
+// library.add(faTrash)
+// library.add(faHome)
+// library.add(faTachometerAlt)
+// library.add(faChevronDown)
 
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+// Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
 

@@ -50,14 +50,14 @@
 			
 			<div class="row align-items-center">
 				<div class="col-12 col-md-6">
-					<VueCtkDateTimePicker label="Choisir date et heure de début" format="YYYY-MM-DD HH:mm" color="#9ACD32" button-color="#9ACD32" button-now-translation="Maintenant" v-model="form.start_date" />
+					<VueCtkDateTimePicker label="Choisir date et heure de début" format="YYYY-MM-DD HH:mm:ss" color="#9ACD32" button-color="#9ACD32" button-now-translation="Maintenant" v-model="form.start_date" />
 				</div>
 				<div class="col-12 col-md-6">
 					<p-check class="p-curve p-bigger p-jelly" name="check" color="primary" button-now-translation="Maintenant" v-model="addEndDate">Ajouter une date de fin</p-check>
 					
 				</div>
 				<div class="col-12 col-md-6 my-3">
-					<VueCtkDateTimePicker label="Choisir date et heure de fin" format="YYYY-MM-DD HH:mm" color="#9ACD32" button-color="#9ACD32" v-model="form.end_date" v-if="addEndDate" />
+					<VueCtkDateTimePicker label="Choisir date et heure de fin" format="YYYY-MM-DD HH:mm:ss" color="#9ACD32" button-color="#9ACD32" v-model="form.end_date" v-if="addEndDate" />
 				</div>
 			</div>
 

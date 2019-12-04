@@ -44,6 +44,16 @@
     font-size: 36px;
     padding: 20px;
   }
+  /*Dialog confirmation*/
+  /*.dg-btn--cancel {
+    border-color: orange;
+  }
+  .dg-btn--ok {
+    border-color: green;
+  }
+  .dg-btn-loader .dg-circle {
+    background-color: #9acd32;
+  }*/
 </style>
 </head>
 <body>

@@ -40,8 +40,8 @@
 						href: '/admin',
 						title: 'Admin',
 						icon: {
-						element: 'font-awesome-icon',
-								attributes: {
+							element: 'font-awesome-icon',
+							attributes: {
 								icon: 'tachometer-alt',
 								size: 'xs'
 							}
@@ -51,8 +51,8 @@
 						href: '/admin/users',
 						title: 'Utilisateurs',
 						icon: {
-						element: 'font-awesome-icon',
-								attributes: {
+							element: 'font-awesome-icon',
+							attributes: {
 								icon: 'users',
 								size: 'xs'
 							}
@@ -83,13 +83,23 @@
 						href: '/accueil',
 						title: 'Retour au site',
 						icon: {
-						element: 'font-awesome-icon',
+							element: 'font-awesome-icon',
 								attributes: {
 								icon: 'home',
 								size: 'xs'
 							}
 						}
 					},
+					{
+						title: 'Logout',
+						icon: {
+							element: 'font-awesome-icon',
+							attributes: {
+								icon: 'sign-out-alt',
+								size: 'xs'
+							}
+						}
+					}
 				]
 			}
 		},
@@ -106,6 +116,21 @@
 <style>
     body.home {
     	background-image: none;
+	}
+	/*Dialog confirmation*/
+	.dg-btn--cancel {
+		background-color: #9acd32 !important;
+		/*border-color: orange !important;*/
+	}
+	.dg-btn--ok {
+		border-color: #9acd32 !important;
+		color: #9acd32 !important;
+	}
+	.dg-btn-loader .dg-circle {
+		/*background-color: #9acd32 !important;*/
+	}
+	.dg-btn:active, .dg-btn:focus { 
+		/*border: 1px dotted red !important;*/
 	}
 </style>
 

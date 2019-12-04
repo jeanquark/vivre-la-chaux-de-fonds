@@ -7,7 +7,7 @@
 		  	</ol>
 		</nav>
 		<h2>Activités</h2>
-		<router-link to="/admin/activities/create" class="btn btn-primary">Créer une nouvelle activité</router-link>
+		<router-link to="/admin/activities/create" class="btn btn-primary my-3">Créer une nouvelle activité</router-link>
 
 		<table class="table">
   			<thead>
@@ -29,7 +29,7 @@
       				<td>{{ activity.subtitle }}</td>
       				<td>
       					<img :src="`/images/${activity.image}`" style="max-width: 100px; max-height: 50px;" v-if="activity.image" />
-      					<span v-else>Pas d'image</span>
+      					<span v-else><i>Pas d'image</i></span>
       				</td>
       				<td>{{ activity.is_published }}</td>
       				<td>{{ activity.created_at }}</td>
@@ -65,8 +65,9 @@
 		layout: 'backend',
 		// components: { 'tinymce-editor': Editor },
 		async created () {
-			const abc = await this.$store.dispatch('activities/fetchActivities')
-			console.log('abc: ', abc)
+			if (this.$store.getters['activities/activities'].length < 1) {
+				await this.$store.dispatch('activities/fetchActivities')
+			}
 		},
 		data () {
 			return {
@@ -78,9 +79,15 @@
 			}
 		},
 		methods: {
-			
 			async deleteActivity (activityId) {
-				console.log('deleteActivity: ', activityId)
+				try {
+					const dialog = await this.$dialog.confirm('Voulez-vous vraiment supprimer cette activité?')
+					console.log('dialog: ', dialog)
+					console.log('deleteActivity: ', activityId)
+					await this.$store.dispatch('activities/deleteActivity', { activityId })
+				} catch (error) {
+					console.log('error from front: ', error)
+				}
 			}
 		}
 	}

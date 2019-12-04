@@ -37,6 +37,7 @@
     "vue-navigation-bar": "^2.0.0",
     "vue-router": "^3.0.6",
     "vue-sidebar-menu": "^4.4.3",
+    "vuejs-dialog": "^1.4.1",
     "vuex": "^3.1.0",
     "vuex-router-sync": "^5.0.0"
   },
