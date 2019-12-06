@@ -12,14 +12,14 @@ class Sponsor extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'slug', 'title', 'subtitle', 'text', 'content', 'image', 'video'
+        'name', 'slug', 'image', 'contribution', 'end_date', 'is_active'
     ];
 
     /**
-     * The roles that belong to the user.
+     * The activities that belong to the sponsor.
      */
     public function activities()
     {
-        return $this->belongsToMany('App\Activity');
+        return $this->belongsToMany('App\Activity', 'sponsor_activity', 'sponsor_id', 'activity_id');
     }
 }

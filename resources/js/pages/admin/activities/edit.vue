@@ -7,14 +7,11 @@
 		  	</ol>
 		</nav>
 		<h2>Editer une activité</h2>
-		<!-- loadedActivities: {{ loadedActivities }}<br /><br /> -->
-		<!-- loadedActivity: {{ loadedActivity }}<br /><br /> -->
-		activityId: {{ activityId }}<br /><br />
-		activitiy: {{ activity }}<br /><br />
+		<!-- activity: {{ activity }}<br /><br /> -->
 
 
-		<form @submit.prevent="updateActivity" v-if="activity">
-			<div class="row">
+		<form @submit.prevent="updateActivity" v-if="activity && activity.id">
+			<div class="row my-2">
 				<div class="col-12 col-md-6">
 				  	<div class="form-group">
 				    	<label for="title">Titre</label>
@@ -29,7 +26,7 @@
 				</div>
 			</div>			
 
-			<div class="row">
+			<div class="row my-2">
 				<div class="col-12">
 					<div class="form-group">
 						<label for="image">Contenu:</label>
@@ -42,12 +39,12 @@
 				</div>
 			</div>
 
-			<div class="row">
+			<div class="row my-2">
 				<div class="col-12 col-md-6">
 					<div class="form-group">
 						<label for="image">Image actuelle:</label><br />
 						<img :src="`/images/${activity.image}`" width="200" v-if="activity.image" />
-						<span v-else>Pas d'image</span>
+						<span v-else><i>Pas d'image</i></span>
 					</div>
 				</div>
 				<div class="col-12 col-md-6">
@@ -58,7 +55,7 @@
 				</div>
 			</div>
 			
-			<div class="row align-items-center">
+			<div class="row align-items-center my-2">
 				<div class="col-12 col-md-6">
 					<VueCtkDateTimePicker label="Choisir date et heure de début" format="YYYY-MM-DD HH:mm:ss" color="#9ACD32" button-color="#9ACD32" button-now-translation="Maintenant" v-model="activity.start_date" />
 				</div>
@@ -68,6 +65,30 @@
 				</div>
 				<div class="col-12 col-md-6 my-3">
 					<VueCtkDateTimePicker label="Choisir date et heure de fin" format="YYYY-MM-DD HH:mm:ss" color="#9ACD32" button-color="#9ACD32" button-now-translation="Maintenant" v-model="activity.end_date" v-if="addEndDate" />
+				</div>
+			</div>
+			
+			<div class="row align-items-center my-2">
+				<div class="col-12">
+					<div class="form-group">
+						<label for="image">Sponsors pour cette activité:</label><br />
+						<multiselect 
+							label="name"
+							track-by="id"
+							:options="sponsors"
+							:multiple="true"
+							:close-on-select="false"
+							:clear-on-select="false"
+							:preserve-search="true"
+							:preselect-first="true"
+							placeholder="Sélectionner un sponsor"
+							selectLabel="Appuyer sur Entrée pour sélectionner"
+							selectedLabel="Sélectionné"
+							deselectLabel="Appuyer sur entrée pour désélectionner"
+							v-model="activity.sponsors"
+						>
+						</multiselect>
+					</div>
 				</div>
 			</div>
 
@@ -83,58 +104,69 @@
 
 <script>
 	import axios from 'axios'
+
+	// Tinymce Editor
 	import Editor from '@tinymce/tinymce-vue'
+
+	// Datepicker
 	import VueCtkDateTimePicker from 'vue-ctk-date-time-picker'
 	import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css'
+
+	// Pretty checkboxes
 	import PrettyCheck from 'pretty-checkbox-vue/check'
+
+	// Multiselect
+	import Multiselect from 'vue-multiselect'
+	import 'vue-multiselect/dist/vue-multiselect.min.css'
 
 	export default {
 		layout: 'backend',
 		components: {
 			'tinymce-editor': Editor,
 			VueCtkDateTimePicker,
-			'p-check': PrettyCheck
+			'p-check': PrettyCheck,
+			Multiselect
 		},
 		async created () {
-			// if (this.$store.getters['activities/activities'].length < 1) {
-			// 	await this.$store.dispatch('activities/fetchActivities')
-			// }
+			if (this.$store.getters['sponsors/sponsors'].length < 1) {
+				this.$store.dispatch('sponsors/fetchSponsors')
+			}
 		},
 		async mounted () {
-			this.activityId = this.$route.params.id
+			// this.activityId = this.$route.params.id
 			const activityId = parseInt(this.$route.params.id)
 			console.log('activityId: ', activityId)
-			const { data } = await axios.get(`/api/activities/${activityId}`)
-			console.log('data: ', data)
-			this.activity = data.activity
-			if (this.activity.end_date) {
-				this.addEndDate = true
-			}
+			await this.$store.dispatch('activities/fetchActivity', { activityId })
+
+			// this.activity = this.$store.getters['activities/activity']
+
+			// const { data } = await axios.get(`/api/activities/${activityId}`)
+			// console.log('data: ', data)
+			// this.activity = data.activity
+			// this.activity['sponsors'] = data.sponsors
+			// if (this.activity.end_date) {
+			// 	this.addEndDate = true
+			// }
+			this.$noty.success("Hello world!")
+
+
 		},
 		data () {
 			return {
-				activityId: null,
 				tinymce_key: process.env.MIX_TINYMCE_KEY,
 				addEndDate: false,
-				// form: {
-				// 	title: 'New activity',
-				// 	subtitle: 'This is my new activity',
-				// 	content: '<b>Titre</b><p>Hello everyone</p>',
-				// 	start_date: null,
-				// 	end_date: null
-				// },
-				activity: {},
 				new_image: {}
 			}
 		},
 		computed: {
+			sponsors () {
+				return this.$store.getters['sponsors/sponsors']
+			},
 			activities () {
 				return this.$store.getters['activities/activities']
 			},
-			activity2 () {
-				return this.activities.find(activity => activity.id === parseInt(this.activityId))
-				// const activityId = this.$route.params.id
-				// return this.loadedActivities.find(activity => activity.id === activityId)
+			activity () {
+				return this.$store.getters['activities/activity']
 			}
 		},
 		methods: {
@@ -147,9 +179,11 @@
 			async updateActivity () {
 				try {
 	                await this.$store.dispatch('activities/updateActivity', { activity: this.activity, image: this.new_image })
+	                this.$noty.success('Activité mise à jour avec succès!')
 					this.$router.push('/admin/activities')
 				} catch (error) {
 					console.log('error: ', error)
+					this.$noty.error("Une erreur est survenue et l'activité n'a pas pu être mise à jour.")
 				}
 			}
 		}

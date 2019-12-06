@@ -6,8 +6,8 @@
             </ol>
         </nav>
 		<h1 class="text-center">Users</h1>
-    <br /><br />
-    <!-- loadedUsers: {{ loadedUsers }}<br /><br /> -->
+        <br /><br />
+        <!-- users: {{ users }}<br /><br /> -->
 		<table class="table">
   			<thead>
     			<tr>
@@ -19,7 +19,7 @@
     			</tr>
   			</thead>
   			<tbody>
-    			<tr v-for="user in loadedUsers" :key="user.id">
+    			<tr v-for="user in users" :key="user.id">
       				<th scope="row">{{ user.id }}</th>
       				<td>{{ user.email }}</td>
       				<td>{{ user.created_at }}</td>
@@ -45,7 +45,9 @@
 	export default {
         layout: 'backend',
         async created () {
-            await this.$store.dispatch('users/fetchUsers')
+            if (this.$store.getters['users/users'].length < 1) {
+                await this.$store.dispatch('users/fetchUsers')
+            }
         },
 		data () {
 			return {
@@ -53,7 +55,7 @@
 			}
 		},
 		computed: {
-			loadedUsers () {
+			users () {
 				return this.$store.getters['users/users']
 			}
 		},

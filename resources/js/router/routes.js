@@ -2,6 +2,9 @@ function page (path) {
   return () => import(/* webpackChunkName: '' */ `~/pages/${path}`).then(m => m.default || m)
 }
 
+// import auth from '../middleware/auth'
+
+
 export default [
     { path: '/', name: 'index', component: page('index.vue') },
     { path: '/welcome', name: 'welcome', component: page('welcome.vue') },
@@ -30,22 +33,57 @@ export default [
     { path: '/participez', name: 'participez', component: page('participez') },
     { path: '/contact', name: 'contact', component: page('contact.vue') },
     
-    { path: '/admin', name: 'admin', component: page('admin/index.vue') },
+    // { path: '/admin', name: 'admin', component: page('admin/index.vue') },
 
-    { path: '/admin/users', name: '', component: page('admin/users/index.vue') },
-    { path: '/admin/users/create', name: '', component: page('admin/users/create.vue') },
-    { path: '/admin/users/:id', name: '', component: page('admin/users/show.vue') },
-    { path: '/admin/users/:id/edit', name: '', component: page('admin/users/edit.vue') },
+    // { path: '/admin/users', name: '', component: page('admin/users/index.vue') },
+    // { path: '/admin/users/create', name: '', component: page('admin/users/create.vue') },
+    // { path: '/admin/users/:id', name: '', component: page('admin/users/show.vue') },
+    // { path: '/admin/users/:id/edit', name: '', component: page('admin/users/edit.vue') },
 
-    { path: '/admin/activities', name: '', component: page('admin/activities/index.vue') },
-    { path: '/admin/activities/create', name: '', component: page('admin/activities/create.vue') },
-    { path: '/admin/activities/:id', name: '', component: page('admin/activities/show.vue') },
-    { path: '/admin/activities/:id/edit', name: '', component: page('admin/activities/edit.vue') },
+    // { path: '/admin/activities', name: '', component: page('admin/activities/index.vue') },
+    // { path: '/admin/activities/create', name: '', component: page('admin/activities/create.vue') },
+    // { path: '/admin/activities/:id', name: '', component: page('admin/activities/show.vue') },
+    // { path: '/admin/activities/:id/edit', name: '', component: page('admin/activities/edit.vue') },
 
-    { path: '/admin/sponsors', name: '', component: page('admin/sponsors/index.vue') },
-    { path: '/admin/sponsors/create', name: '', component: page('admin/sponsors/create.vue') },
-    { path: '/admin/sponsors/:id', name: '', component: page('admin/sponsors/show.vue') },
-    { path: '/admin/sponsors/:id/edit', name: '', component: page('admin/sponsors/edit.vue') },
+    // { path: '/admin/sponsors', name: '', component: page('admin/sponsors/index.vue') },
+    // { path: '/admin/sponsors/create', name: '', component: page('admin/sponsors/create.vue') },
+    // { path: '/admin/sponsors/:id', name: '', component: page('admin/sponsors/show.vue') },
+    // { path: '/admin/sponsors/:id/edit', name: '', component: page('admin/sponsors/edit.vue') },
+
+
+
+
+    { path: '/admin', component: page('admin/index.vue'), children: [
+
+        { path: 'dashboard', name: '', component: page('admin/dashboard.vue') },
+
+        { path: 'users', name: '', component: page('admin/users/index.vue') },
+        { path: 'users/create', name: '', component: page('admin/users/create.vue') },
+        { path: 'users/:id', name: '', component: page('admin/users/show.vue') },
+        { path: 'users/:id/edit', name: '', component: page('admin/users/edit.vue') },
+
+        { path: 'activities', name: '', component: page('admin/activities/index.vue') },
+        { path: 'activities/create', name: '', component: page('admin/activities/create.vue') },
+        { path: 'activities/:id', name: '', component: page('admin/activities/show.vue') },
+        { path: 'activities/:id/edit', name: '', component: page('admin/activities/edit.vue') },
+
+        { path: 'sponsors', name: '', component: page('admin/sponsors/index.vue') },
+        { path: 'sponsors/create', name: '', component: page('admin/sponsors/create.vue') },
+        { path: 'sponsors/:id', name: '', component: page('admin/sponsors/show.vue') },
+        { path: 'sponsors/:id/edit', name: '', component: page('admin/sponsors/edit.vue') },
+
+        { path: '', redirect: '/admin/dashboard' },
+
+    ]},
+
+
+
+    // { path: '/admin/activities/create', name: '', component: page('admin/activities/create.vue'), meta: {
+    //             middleware: [
+    //                 auth
+    //             ]
+    //         } },
+
 
     // {
     //     path: '/admin',

@@ -47,18 +47,19 @@
 			<font-awesome-icon icon="calendar-day" />
 			<font-awesome-icon icon="briefcase" />
 		</div> -->
-		<h1>Admin</h1>
+		<!-- <h1>Admin</h1> -->
+		<router-view />
 	</div>
 </template>
 
 <script>
 	import axios from 'axios'
-	import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
-	import { SidebarMenu } from 'vue-sidebar-menu'
+	// import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
+	// import { SidebarMenu } from 'vue-sidebar-menu'
 	export default {
 		// layout: './../../layouts/backend',
 		layout: 'backend',
-		components: { SidebarMenu },
+		// components: { SidebarMenu },
 		middleware: ['admin'],
 		async created () {
 			console.log('Entered created lifecycle hook')
@@ -132,10 +133,10 @@
 	.extended {
 		margin-left: 350px;
 	}
-	>>>.v-sidebar-menu .vsm--link_level-1 .vsm--icon {
+	/*>>>.v-sidebar-menu .vsm--link_level-1 .vsm--icon {
 		height: 16px;
 		margin-top: 6px;
-	}
+	}*/
 
 
 </style>

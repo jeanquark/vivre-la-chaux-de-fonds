@@ -1,5 +1,5 @@
 <template>
-	<div id="abc">
+	<div id="abc2">
 		<!-- <vue-navigation-bar :options="navbarOptions" /> -->
 
 		<!-- Navigation large screens -->
@@ -40,7 +40,7 @@
         </nav>
 
 		<!-- Navigation small screens -->
-        <Bubble class="d-lg-none">
+        <Bubble class="d-lg-none d-block" style="padding-bottom: 100px;">
             <router-link to="/accueil" id="home">
                 <span>Accueil</span>
             </router-link>
@@ -75,9 +75,13 @@
 		created () {
 			console.log('Using frontend layout!')
 		},
+        mounted () {
+            // document.body.style.background = "url('/images/svg/bg.svg') no-repeat"
+            // document.body.style.backgroundSize = "cover"
+        },
 		data () {
-			return {
-				
+			return {                
+
 			}
 		},
         methods: {
@@ -88,8 +92,8 @@
 
 <style>
 	body, html {
-        height: 100%;
-        margin: 0;
+        /*height: 100%;*/
+        /*margin: 0;*/
         /*color: #fff;*/
     }
 	body {
@@ -106,16 +110,33 @@
 </style>
 
 <style scoped>
-    /*#app {
+    /*body, html {
+        height: 100%;
+        margin: 0;
+    }
+    body {
         background: url('/images/svg/bg_small.svg') no-repeat;
         background-size: cover;
     }
+
     @media only screen and (min-width: 992px) {
-        #app {
+        body {
             background: url('/images/svg/bg.svg') no-repeat;
             background-size: cover;
         }
     }*/
+    #abc {
+        height: 100%;
+        margin: 0;
+        background: url('/images/svg/bg_small.svg') no-repeat;
+        background-size: cover;
+    }
+    @media only screen and (min-width: 992px) {
+        #abc {
+            background: url('/images/svg/bg.svg') no-repeat;
+            background-size: cover;
+        }
+    }
 
 	nav {
         padding: 50px;

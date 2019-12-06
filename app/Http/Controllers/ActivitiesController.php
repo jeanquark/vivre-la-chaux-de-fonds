@@ -4,13 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\PlanTable;
-use App\PlanSeat;
 use App\Activity;
-use DB;
-use View;
 use File;
 use App\Http\Requests\StoreActivity;
+use App\Http\Requests\UpdateActivity;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -29,63 +26,68 @@ class ActivitiesController extends Controller
 
     public function getActivities()
     {
-        $activities = Activity::all();
+        $activities = Activity::with('sponsors')->get();
 
         return response()->json($activities, 200);
     }
 
     public function getActivity(Request $request, $id)
     {
-        // $activityId = $request->id;
-        // $activity = Activity::where('id', '=', 9)->get();
         $activity = Activity::find($id);
+        $activity['sponsors'] = $activity->sponsors;
 
         return response()->json([
             'success' => true,
-            'id' => $id,
-            'activity' => $activity, 
+            'activity' => $activity,
         ], 200);
     }
 
     protected function createActivity(Request $request) {
-        // $newActivity = $request->all();
-
-        $form = json_decode($request->form);
+        $newActivity = json_decode($request->form);
 
         $activity = new Activity;
 
-        $activity->title = $form->title;
-        $activity->subtitle = $form->subtitle;
-        $activity->slug = str_slug($form->title);
-        $activity->content = $form->content;
+        $activity->title = $newActivity->title;
+        $activity->subtitle = $newActivity->subtitle;
+        $activity->slug = str_slug($newActivity->title);
+        $activity->content = $newActivity->content;
         $activity->is_published = false;
-        if ($form->start_date) {
-            $activity->start_date = date_create_from_format('Y-m-d H:i:s', $form->start_date);
+        if ($newActivity->start_date) {
+            $activity->start_date = date_create_from_format('Y-m-d H:i:s', $newActivity->start_date);
         }
-        if ($form->end_date) {
-            $activity->end_date = date_create_from_format('Y-m-d H:i:s', $form->end_date);
+        if ($newActivity->end_date) {
+            $activity->end_date = date_create_from_format('Y-m-d H:i:s', $newActivity->end_date);
         }
 
         // Upload image if present
         if (File::exists($request->image)) {
-            $imageName = time().'.'. $request->image->getClientOriginalExtension();
-            $request->image->move(public_path('images/activities'), $imageName);
-            $activity->image = $imageName;
+            // $imageName = time().'.'. $request->image->getClientOriginalExtension();
+            // $request->image->move(public_path('images/activities'), $imageName);
+            // $activity->image = $imageName;
+
+            $file = Storage::disk('uploads')->put('activities', $request->image);
+            $activity->image = $file;
+
         }
 
         $activity->save();
 
+        // Save sponsors relationships
+        if ($newActivity->sponsors) {
+            foreach ($newActivity->sponsors as $sponsor) {
+                $activity->sponsors()->attach($sponsor->id);
+            }
+        }
+        
         return response()->json([
             'success' => true,
-            'message' => 'Activity added successfully',
-            'activity' => $activity
+            'activity' => $activity,
         ], 201);
     }
 
     protected function updateActivity(Request $request, $id) {
 
         $updatedActivity = json_decode($request->form);
-        // $updatedActivity = $request->form;
         $activity = Activity::find($id);
 
         $start_date = null;
@@ -124,15 +126,16 @@ class ActivitiesController extends Controller
             ]
         );
 
+        // Update sponsors relationships
+        $sponsorIdArray = [];
+        foreach($updatedActivity->sponsors as $sponsor) {
+            array_push($sponsorIdArray, $sponsor->id);
+        }
+        $activity->sponsors()->sync($sponsorIdArray);
+
         return response()->json([
-            'status' => 'OK',
-            // 'request' => $request,
-            // 'request->form' => $request->form,
-            // 'id' => $id,
-            // 'updatedActivity' => $updatedActivity,
+            'success' => true,
             'activity' => $activity,
-            // 'old_image' => $old_image,
-            // 'file' => $file
         ], 201);
     }
 
@@ -144,11 +147,10 @@ class ActivitiesController extends Controller
             Storage::disk('uploads')->delete($activity->image);
         }
 
-        // $activity->delete();
+        $activity->delete();
 
         return response()->json([
             'success' => true,
-            'id' => $id,
             'activity' => $activity
         ], 204);
     }

@@ -3,12 +3,14 @@ import * as types from '../mutation-types'
 
 // state
 export const state = {
-    activities: []
+    activities: [],
+    activity: {}
 }
 
 // getters
 export const getters = {
-    activities: state => state.activities
+    activities: state => state.activities,
+    activity: state => state.activity
 }
 
 // mutations
@@ -16,6 +18,10 @@ export const mutations = {
     setActivities (state, payload) {
         console.log('Set activities mutation: ', payload)
         state.activities = payload
+    },
+    setActivity (state, payload) {
+        console.log('Set activity mutation: ', payload)
+        state.activity = payload
     },
     addActivity (state, payload) {
         console.log('Add activity mutation: ', payload)
@@ -48,6 +54,35 @@ export const actions = {
             commit('setActivities', data)
         } catch (error) {
             console.log('vuex error: ', error)
+            throw error
+        }
+    },
+    async fetchActivity ({ commit }, payload) {
+        try {
+            console.log('fetchActivity action: ', payload)
+            const { activityId } = payload
+            const { data } = await axios.get(`/api/activities/${activityId}`)
+            console.log('data: ', data)
+            commit('setActivity', data.activity)
+        } catch (error) {
+            console.log('vuex error: ', error)
+            throw error
+        }
+    },
+    async createActivity ({ commit }, payload) {
+        try {
+            console.log('payload: ', payload)
+            const config = {
+                headers: { 'content-type': 'multipart/form-data' }
+            }
+            const { formData } = payload
+            // console.log('formData: ', formData)
+
+            const { data } = await axios.post('/api/activities', formData, config)
+            console.log('data: ', data)
+            commit('addActivity', data.activity)
+        } catch (error) {
+            throw error
         }
     },
     async updateActivity ({ commit }, payload) {
@@ -57,8 +92,9 @@ export const actions = {
             }
 
             let formData = new FormData();
+            console.log('payload: ', payload)
+
             formData.append('new_image', payload.new_image)
-            // console.log('this.activity: ', this.activity)
             formData.append('form', JSON.stringify(payload.activity))
             console.log('formData: ', formData)
 

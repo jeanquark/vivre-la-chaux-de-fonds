@@ -159,9 +159,8 @@
 
 <style scoped>
 	#body {
-		background: url('/images/svg/background.svg') center;
+		/*background: url('/images/svg/background.svg') center;
 	    background-repeat: no-repeat;
-	    /*background-size: 100%;*/
-	    background-size: cover;
+	    background-size: cover;*/
 	}
 </style>

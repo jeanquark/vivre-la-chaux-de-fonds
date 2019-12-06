@@ -2,12 +2,12 @@
 	<div class="container">
 		<nav aria-label="breadcrumb">
 		  	<ol class="breadcrumb">
-		    	<li class="breadcrumb-item"><router-link to="/activities">Activités</router-link></li>
 		    	<li class="breadcrumb-item active" aria-current="page">Activités</li>
 		  	</ol>
 		</nav>
 		<h2>Activités</h2>
 		<router-link to="/admin/activities/create" class="btn btn-primary my-3">Créer une nouvelle activité</router-link>
+		<!-- activities: {{ activities }}<br /><br /> -->
 
 		<table class="table">
   			<thead>
@@ -17,13 +17,13 @@
       				<th scope="col">Subtitle</th>
       				<th scope="col">Image</th>
       				<th scope="col">En ligne?</th>
-      				<th scope="col">Created at</th>
-      				<th scope="col">Updated at</th>
+      				<th scope="col">Date de création</th>
+      				<th scope="col">Dernière modification</th>
       				<th scope="col">Actions</th>
     			</tr>
   			</thead>
   			<tbody>
-    			<tr v-for="activity in loadedActivities" :key="activity.id">
+    			<tr v-for="activity in activities" :key="activity.id">
       				<th scope="row">{{ activity.id }}</th>
       				<td>{{ activity.title }}</td>
       				<td>{{ activity.subtitle }}</td>
@@ -74,7 +74,7 @@
 			}
 		},
 		computed: {
-			loadedActivities () {
+			activities () {
 				return this.$store.getters['activities/activities']
 			}
 		},

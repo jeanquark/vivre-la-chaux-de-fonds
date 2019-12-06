@@ -11,10 +11,11 @@
 
 <script>
 	import { SidebarMenu } from 'vue-sidebar-menu'
-	import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
+	// import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 
 	export default {
 		name: 'BackendLayout',
+		// middleware: 'admin',
 		components: { SidebarMenu },
 		beforeCreate () {
 			console.log('beforeCreate')
@@ -38,7 +39,7 @@
 					},
 					{
 						href: '/admin',
-						title: 'Admin',
+						title: 'Tableau de bord',
 						icon: {
 							element: 'font-awesome-icon',
 							attributes: {
@@ -50,6 +51,7 @@
 					{
 						href: '/admin/users',
 						title: 'Utilisateurs',
+						alias: ['/admin/users', '/admin/users/create', '/admin/users/:id', '/admin/users/:id/edit'],
 						icon: {
 							element: 'font-awesome-icon',
 							attributes: {
@@ -61,8 +63,10 @@
 					{
 						href: '/admin/activities',
 						title: 'Activities',
+						alias: ['/admin/activities', '/admin/activities/create', '/admin/activities/:id', '/admin/activities/:id/edit'],
 						icon: {
 							element: 'font-awesome-icon',
+							class: 'abc',
 							attributes: {
 								icon: 'calendar-day',
 								size: '6x'
@@ -72,10 +76,11 @@
 					{
 						href: '/admin/sponsors',
 						title: 'Sponsors',
+						alias: ['/admin/sponsors', '/admin/sponsors/create', '/admin/sponsors/:id', '/admin/sponsors/:id/edit'],
 						icon: {
 							element: 'font-awesome-icon',
 							attributes: {
-								icon: 'briefcase'
+								icon: 'dollar-sign'
 							}
 						}
 					},
@@ -114,6 +119,16 @@
 </script>
 
 <style>
+	body {
+        background: #fff;
+    }
+
+    @media only screen and (min-width: 992px) {
+        body {
+            background: #fff;
+        }
+    }
+
     body.home {
     	background-image: none;
 	}
@@ -141,7 +156,7 @@
 	.extended {
 		margin-left: 350px;
 	}
-	>>>.v-sidebar-menu .vsm--link_level-1 .vsm--icon {
+	/*>>>.v-sidebar-menu .vsm--link_level-1 .vsm--icon {
 		background-color: transparent;
 		height: 16px;
 		margin-top: 7px;
@@ -150,6 +165,5 @@
 		background-color: transparent;
 	}
 	>>>.v-sidebar-menu .vsm--icon {
-		/*background-color: transparent;*/
-	}
+	}*/
 </style>

@@ -14,7 +14,7 @@
 
     export default {
         name: 'MainLayout',
-
+        // middleware: 'admin',
         components: {
             // Navbar
         },

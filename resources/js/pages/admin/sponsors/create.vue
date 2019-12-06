@@ -6,37 +6,99 @@
 		    	<li class="breadcrumb-item active" aria-current="page">Créer</li>
 		  	</ol>
 		</nav>
-		<h1 class="text-center">Create new sponsor</h1>
-		newActivity: {{ newActivity }}<br />
+		<h2 class="text-center">Créer un nouveau sponsor</h2>
 		<form @submit.prevent="createSponsor">
-		  	<div class="form-group">
-		    	<label for="title">Titre</label>
-		    	<input type="text" class="form-control" id="title" aria-describedby="emailHelp" placeholder="" v-model="form.title">
-		  	</div>
-		  	<div class="form-group">
-			    <label for="subtitle">Sous-titre</label>
-		    	<input type="textarea" class="form-control" id="subtitle" placeholder="" v-model="form.subtitle">
-		  	</div>
-		  	<div class="form-group">
-				<label for="text">Texte</label>
-				<textarea class="form-control" id="text" rows="3" v-model="form.text"></textarea>
+			<div class="row">
+				<div class="col-12 col-md-6">
+				  	<div class="form-group">
+				    	<label for="name">Nom</label>
+				    	<input type="text" class="form-control" id="name" placeholder="" v-model="form.name">
+				  	</div>
+				</div>
+				<div class="col-12 col-md-6">
+				  	<div class="form-group">
+					    <label for="contribution">Contribution</label>
+				    	<input type="textarea" class="form-control" id="contribution" placeholder="" v-model="form.contribution">
+				  	</div>
+				</div>
+
+				<div class="col-12">
+
+					<div class="form-group">
+						<label for="image">Choisir une image:</label>
+						<input type="file" id="image" name="image" accept="image/png, image/jpeg" @change="uploadImage($event)">
+					</div>
+				</div>
+				
+				<div class="col-12 col-md-6">
+					<div class="form-group">
+						<VueCtkDateTimePicker label="Choisir une date de fin" only-date format="YYYY-MM-DD" formatted="YYYY-MM-DD" color="#9ACD32" button-color="#9ACD32" button-now-translation="Maintenant" v-model="form.end_date" />
+					</div>
+				</div>
+
+				<div class="col-12">
+					<div class="form-group">
+						<multiselect 
+							label="title"
+							track-by="id"
+							:options="activities"
+							:multiple="true"
+							:close-on-select="false"
+							:clear-on-select="false"
+							:preserve-search="true"
+							:preselect-first="true"
+							placeholder="Sélectionner un sponsor"
+							selectLabel="Appuyer sur Entrée pour sélectionner"
+							selectedLabel="Sélectionné"
+							deselectLabel="Appuyer sur entrée pour désélectionner"
+							v-model="form.activities"
+						>
+						</multiselect>
+					</div>
+				</div>
+
+				<div class="col-12 col-md-6">
+					<div class="form-group">
+						<p-check class="p-curve p-bigger p-jelly" name="check" color="primary" button-now-translation="Maintenant" v-model="form.is_active">Actif ?</p-check>
+					</div>
+				</div>
 			</div>
-			<div class="form-group">
-				<label for="image">Choisir une image:</label>
-				<input type="file" id="image" name="image" accept="image/png, image/jpeg" @change="uploadImage($event)">
-			</div>
-		  	<button type="submit" class="btn btn-primary">Create sponsor</button>
+
+			
+			<div class="row my-3">
+				<div class="col-12 text-center">
+		  			<button type="submit" class="btn btn-primary">Créer sponsor</button>
+		  		</div>
+		  	</div>
 		</form>
 	</div>
 </template>
 
 <script>
 	import axios from 'axios'
+
+	// Datepicker
+	import VueCtkDateTimePicker from 'vue-ctk-date-time-picker'
+	import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css'
+
+	// Pretty checkboxes
+	import PrettyCheck from 'pretty-checkbox-vue/check'
+
+	// Multiselect
+	import Multiselect from 'vue-multiselect'
+	import 'vue-multiselect/dist/vue-multiselect.min.css'
+
 	export default {
 		layout: 'backend',
+		components: {
+			VueCtkDateTimePicker,
+			'p-check': PrettyCheck,
+			Multiselect
+		},
 		async created () {
-			const abc = await this.$store.dispatch('sponsors/fetchSponsors')
-			console.log('abc: ', abc)
+			if (this.$store.getters['activities/activities'].length < 1) {
+				await this.$store.dispatch('activities/fetchActivities')
+			}
 		},
 		mounted () {
 			const userId = parseInt(this.$route.params.id)
@@ -46,11 +108,18 @@
 			return {
 				image: {},
 				form: {
-					title: 'New Title',
-					subtitle: '',
-					text: 'New text',
-					content: '',
-				}
+					name: '',
+					contribution: '',
+					end_date: '',
+					is_active: false,
+					activities: []
+				},
+				image: {}
+			}
+		},
+		computed: {
+			activities () {
+				return this.$store.getters['activities/activities']
 			}
 		},
 		methods: {
@@ -60,20 +129,52 @@
 				console.log(event.target.files[0])
 				this.image = event.target.files[0]
 			},
+			
 			async createSponsor () {
-				const config = {
-                    headers: { 'content-type': 'multipart/form-data' }
-                }
+				try {
+		            let formData = new FormData();
+		            formData.append('image', this.image);
+		            formData.append('form', JSON.stringify(this.form))
+		            // console.log('formData: ', formData)
 
-				let formData = new FormData();
-                formData.append('image', this.image);
-                formData.append('form', JSON.stringify(this.form))
-                // console.log('formData: ', formData)
+					await this.$store.dispatch('sponsors/createSponsor', { formData })
+	                this.$noty.success('Sponsor créé avec succès!')
+	                this.$router.push('/admin/sponsors')
+				} catch (error) {
+					console.log('error: ', error)
+					this.$noty.error("Une erreur est survenue et le sponsor n'a pas pu être créé.")
+				}
+			},
+			async createSponsor2 () {
+				try {
+					await this.$store.dispatch('sponsors/createSponsor', { sponsor: this.form, image })
+	                this.$noty.success('Sponsor créé avec succès!')
+	                this.$router.push('/admin/sponsors')
+				} catch (error) {
+					console.log('error: ', error)
+					this.$noty.error("Une erreur est survenue et le sponsor n'a pas pu être créé.")
+				}
+			},
+			async createSponsor3 () {
+				try {
+					const config = {
+		                headers: { 'content-type': 'multipart/form-data' }
+		            }
 
-				const { data } = await axios.post('/api/activities', formData, config)
-				console.log('data: ', data)
-				this.$store.commit('activities/addActivity', data.activity)
-			}
+		            let formData = new FormData();
+		            formData.append('image', this.image);
+		            formData.append('form', JSON.stringify(this.form))
+		            console.log('formData: ', formData)
+
+		            const { data } = await axios.post('/api/sponsors', formData, config)
+		            console.log('data: ', data)
+	                this.$noty.success('Sponsor créé avec succès!')
+	                this.$router.push('/admin/sponsors')
+				} catch (error) {
+					console.log('error: ', error)
+					this.$noty.error("Une erreur est survenue et le sponsor n'a pas pu être créé.")
+				}
+			},
 		}
 	}
 </script>

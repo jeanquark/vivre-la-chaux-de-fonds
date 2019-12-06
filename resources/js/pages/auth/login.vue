@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center align-items-center fadeInDown" style="height: calc(100vh - 64px); border: 0px solid green;">
+        <div class="row justify-content-center align-items-center" style="border: 0px solid green;">
             <div class="col-lg-8 m-auto">
                 <card title="Login">
                     <form @submit.prevent="login" @keydown="form.onKeydown($event)">
@@ -32,6 +32,9 @@
 
                                 <router-link :to="{ name: 'password.request' }" class="small ml-auto my-auto">
                                     Mot de passe oublié
+                                </router-link>
+                                <router-link :to="{ name: 'register' }" class="small ml-auto my-auto">
+                                    S'enregistrer
                                 </router-link>
                             </div>
                         </div>

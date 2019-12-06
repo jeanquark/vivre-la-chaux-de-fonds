@@ -14,4 +14,12 @@ class Activity extends Model
     protected $fillable = [
         'title', 'slug', 'subtitle', 'content', 'image', 'video', 'start_date', 'end_date', 'is_online'
     ];
+
+    /**
+     * The sponsors that belong to the activity.
+     */
+    public function sponsors()
+    {
+        return $this->belongsToMany('App\Sponsor', 'sponsor_activity', 'activity_id', 'sponsor_id' );
+    }
 }

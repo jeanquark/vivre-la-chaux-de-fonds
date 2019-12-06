@@ -23,7 +23,8 @@ class CreateActivitiesTable extends Migration
             $table->datetime('end_date')->nullable();
             $table->string('image')->nullable();
             $table->string('video')->nullable();
-            $table->boolean('is_online')->default(0);
+            $table->string('link')->nullable();
+            $table->boolean('is_published')->default(0);
             $table->timestamps();
         });
     }

@@ -7,6 +7,55 @@
 @import 'elements/buttons';
 @import 'elements/transitions';
 
+// General style
+button:focus {
+	outline: none;
+}
+
 // Pretty checkboxes
 $pretty--color-primary: #9acd32;
 @import '~pretty-checkbox/src/pretty-checkbox.scss';
+
+
+// Vue sidebar menu
+@import "vue-sidebar-menu/src/scss/vue-sidebar-menu.scss";
+.v-sidebar-menu .vsm--link_level-1.vsm--link_active, .v-sidebar-menu .vsm--link_level-1.vsm--link_exact-active {
+	box-shadow: 3px 0px 0px 0px $primary inset;
+}
+.v-sidebar-menu .vsm--dropdown .vsm--list {
+	background-color: #F5F5F5;
+}
+.v-sidebar-menu .vsm--link_level-1 .vsm--icon {
+	background-color: transparent;
+	height: 16px;
+	margin-top: 7px;
+}
+.v-sidebar-menu .vsm--link_level-2 .vsm--icon {
+	background-color: transparent;
+	height: 16px;
+	margin-top: 7px;
+}
+.v-sidebar-menu.vsm_expanded .vsm--item_open .vsm--link_level-1 .vsm--icon {
+	background-color: transparent;
+}
+.v-sidebar-menu .vsm--link_level-1.vsm--link_exact-active .vsm--icon, .v-sidebar-menu .vsm--link_level-1.vsm--link_active .vsm--icon {
+	background-color: transparent;
+}
+.v-sidebar-menu.vsm_expanded .vsm--item_open .vsm--link_level-1 {
+	background-color: $primary;
+}
+.v-sidebar-menu .vsm--mobile-bg {
+	background-color: $primary;
+}
+.v-sidebar-menu .vsm--link.vsm--link_mobile-item {
+	background-color: $primary;
+}
+
+.v-sidebar-menu.vsm_collapsed .vsm--link_level-1:hover .vsm--icon {
+	color: #000;
+	background-color: $primary;
+}
+
+
+// Vue noty
+@import '~vuejs-noty/dist/vuejs-noty.css';

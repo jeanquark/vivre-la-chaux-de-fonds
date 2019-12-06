@@ -44,7 +44,7 @@ $config = [
         @yield('css')
     </head>
     <body>
-        <div id="app" style="border: 2px dashed orange;">
+        <div id="app" style="border: 0px dashed orange;">
             {{-- <div class="container"> --}}
                 @yield('content')
             {{-- </div> --}}

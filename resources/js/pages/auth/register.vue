@@ -19,7 +19,7 @@
     </div>
 </div> -->
     <div class="container">
-        <div class="row justify-content-center align-items-center fadeInDown" style="height: calc(100vh - 64px);">
+        <div class="row justify-content-center align-items-center fadeInDown" style="">
             <div class="col-lg-8 m-auto">
                 <card v-if="mustVerifyEmail" title="Enregistrement">
                     <div class="alert alert-success" role="alert">

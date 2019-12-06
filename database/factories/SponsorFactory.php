@@ -22,6 +22,7 @@ $factory->define(Sponsor::class, function (Faker $faker) {
         'slug' => $faker->slug,
         'image' => $faker->imageUrl($width = 640, $height = 480),
         'contribution' => $faker->numberBetween($min = 100, $max = 5000),
-        'ending_date' => $faker->date($format = 'Y-m-d', $max = 'now'),
+        'is_active' => $faker->boolean($chanceOfGettingTrue = 50),
+        'end_date' => $faker->date($format = 'Y-m-d', $max = 'now'),
     ];
 });

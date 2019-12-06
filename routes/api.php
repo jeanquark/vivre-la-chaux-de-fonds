@@ -39,46 +39,27 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 });
 
-// Tables Routes
-Route::get('/tables', 'TablesController@getTables')->middleware('role:admin');
-Route::get('/tables/{id}', 'TablesController@getTableById');
 
-
-// Tables Plan Routes
-// Route::get('/plan-tables', 'TablePlanController@index');
-Route::get('/plan-tables', 'TablePlanController@getPlanTables');
-Route::get('/plan-tables/{svgId}', 'TablePlanController@getTableBySvgId');
-Route::put('/plan-tables', 'TablePlanController@update');
-Route::delete('/plan-tables/{svgId}', 'TablePlanController@delete');
-
-// Route::post('/tables', 'TablePlanController@addTable');
-// Route::post('/update-table-plan2', 'TablePlanController@update2');
-
-// Seats Plan Routes
-Route::get('plan-seats', 'SeatPlanController@getSeats');
-Route::get('plan-seats/{userId}', 'SeatPlanController@getUserSeats');
-// Route::get('plan-seats-by-table/{userId}', 'SeatPlanController@getUserSeats');
-
-// Seat Reservation Routes
-Route::post('/reserve-a-seat', 'SeatReservationController@reserveOneSeat');
-
-// Users
-Route::get('/users', 'UsersController@getUsers');
-Route::post('/users', 'UsersController@addUser');
-Route::get('/users/{id}', 'UsersController@getUser');
-Route::put('/users/{id}', 'UsersController@updateUser');
-Route::delete('/users/{id}', 'UsersController@deleteUser');
-
-// Activities
 Route::get('/activities', 'ActivitiesController@getActivities');
-Route::post('/activities', 'ActivitiesController@createActivity');
 Route::get('/activities/{id}', 'ActivitiesController@getActivity');
-Route::put('/activities/{id}', 'ActivitiesController@updateActivity');
-Route::delete('/activities/{id}', 'ActivitiesController@deleteActivity');
-
-// Sponsors
 Route::get('/sponsors', 'SponsorsController@getSponsors');
-Route::post('/sponsors', 'SponsorsController@addSponsor');
 Route::get('/sponsors/{id}', 'SponsorsController@getSponsor');
-Route::put('/sponsors/{id}', 'SponsorsController@updateSponsor');
-Route::delete('/sponsors/{id}', 'SponsorsController@deleteSponsor');
+
+Route::group(['middleware' => 'role:admin'], function () {
+    // Users
+    Route::get('/users', 'UsersController@getUsers');
+    Route::post('/users', 'UsersController@addUser');
+    Route::get('/users/{id}', 'UsersController@getUser');
+    Route::put('/users/{id}', 'UsersController@updateUser');
+    Route::delete('/users/{id}', 'UsersController@deleteUser');
+
+    // Activities
+    Route::post('/activities', 'ActivitiesController@createActivity');
+    Route::put('/activities/{id}', 'ActivitiesController@updateActivity');
+    Route::delete('/activities/{id}', 'ActivitiesController@deleteActivity');
+
+    // Sponsors
+    Route::post('/sponsors', 'SponsorsController@createSponsor');
+    Route::put('/sponsors/{id}', 'SponsorsController@updateSponsor');
+    Route::delete('/sponsors/{id}', 'SponsorsController@deleteSponsor');
+});

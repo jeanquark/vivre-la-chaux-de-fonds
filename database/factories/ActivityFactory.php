@@ -18,11 +18,11 @@ use Faker\Generator as Faker;
 
 $factory->define(Activity::class, function (Faker $faker) {
     return [
-        'name' => $faker->catchPhrase,
         'slug' => $faker->slug,
         'title' => $faker->sentence($nbWords = 3, $variableNbWords = true),
         'subtitle' => $faker->sentence($nbWords = 5, $variableNbWords = true),
-        'text' => $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
+        'content' => $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
+        'is_published' => $faker->boolean($chanceOfGettingTrue = 50),
         'image' => $faker->imageUrl($width = 640, $height = 480)
     ];
 });
