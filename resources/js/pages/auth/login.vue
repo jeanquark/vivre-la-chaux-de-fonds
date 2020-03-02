@@ -1,88 +1,92 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center align-items-center" style="border: 0px solid green;">
-            <div class="col-lg-8 m-auto">
-                <card title="Login">
-                    <form @submit.prevent="login" @keydown="form.onKeydown($event)">
-                        <!-- Email -->
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label text-md-right">E-mail</label>
-                            <div class="col-md-7">
-                                <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" class="form-control" type="email" name="email">
-                                <has-error :form="form" field="email" />
-                            </div>
-                        </div>
+    <b-container>
+        <b-row class="justify-content-center fadeInDown">
+            <b-col cols="12" md="8">
+                <b-card>
+                    <b-card-body>
+                        <b-card-title class="text-center mb-4">
+                            Login
+                        </b-card-title>
+                        <b-card-text>
+                            <b-form @submit.prevent="login">
+                                <!-- Email -->
+                                <b-row>
+                                    <b-col cols="12" md="4" class="text-right col-form-label">
+                                        <label>E-mail</label>
+                                    </b-col>
+                                    <b-col cols="12" md="6">
+                                        <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" class="form-control" type="email" name="email" />
+                                        <has-error :form="form" field="email" />
+                                    </b-col>
+                                </b-row>
 
-                        <!-- Password -->
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label text-md-right">Mot de passe</label>
-                            <div class="col-md-7">
-                                <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password">
-                                <has-error :form="form" field="password" />
-                            </div>
-                        </div>
+                                <!-- Password -->
+                                <b-row>
+                                    <b-col cols="12" md="4" class="text-right col-form-label">
+                                        <label>Mot de passe</label>
+                                    </b-col>
+                                    <b-col cols="12" md="6">
+                                        <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password" />
+                                        <has-error :form="form" field="password" />
+                                    </b-col>
+                                </b-row>
 
-                        <!-- Remember Me -->
-                        <div class="form-group row">
-                            <div class="col-md-3" />
-                            <div class="col-md-7 d-flex">
-                                <checkbox v-model="remember" name="remember">
-                                    Se souvenir de moi
-                                </checkbox>
 
-                                <router-link :to="{ name: 'password.request' }" class="small ml-auto my-auto">
-                                    Mot de passe oublié
-                                </router-link>
-                                <router-link :to="{ name: 'register' }" class="small ml-auto my-auto">
-                                    S'enregistrer
-                                </router-link>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-7 offset-md-3 d-flex">
-                                <!-- Submit Button -->
-                                <v-button :loading="form.busy">
-                                    Login
-                                </v-button>
-
-                                <!-- GitHub Login Button -->
-                                <login-with-github />
-                            </div>
-                        </div>
-                    </form>
-                </card>
-            </div>
-        </div>
-    </div>
+                                <b-row class="justify-content-center my-3">
+                                    <b-button type="submit" variant="primary">
+                                        <b-spinner small variant="primary" label="Spinning" :disabled="loading" v-if="loading"></b-spinner>
+                                        Login
+                                    </b-button>
+                                </b-row>
+                                
+                                <b-row class="justify-content-center my-3">
+                                    <b-col cols="12" md="10" class="text-center">
+                                        <router-link :to="{ name: 'password.request' }" class="m-2">
+                                            Mot de passe oublié?
+                                        </router-link>
+                                        <router-link :to="{ name: 'register' }" class="m-2">
+                                            S'enregistrer &rarr;
+                                        </router-link>
+                                    </b-col>
+                                </b-row>
+                            </b-form>
+                        </b-card-text>
+                    </b-card-body>
+                </b-card>
+            </b-col>
+        </b-row>
+    </b-container>
 </template>
 
 <script>
-    import Form from 'vform'
-    import LoginWithGithub from '~/components/LoginWithGithub'
+import Form from 'vform'
 
-    export default {
-        middleware: 'guest',
-        layout: 'frontend',
-        components: {
-            LoginWithGithub
-        },
-
-        metaInfo () {
-            return { title: 'Login' }
-        },
-
-        data: () => ({
-            form: new Form({
-                email: '',
-                password: ''
-            }),
-            remember: false
+export default {
+    metaInfo() {
+        return { title: 'Login' }
+    },
+    middleware: 'guest',
+    layout: 'frontend',
+    mounted() {
+        console.log('redirect: ', this.$route.query.redirect)
+    },
+    data: () => ({
+        form: new Form({
+            email: 'admin@example.com',
+            password: 'secre'
         }),
-
-        methods: {
-            async login () {
+        remember: false
+    }),
+    computed: {
+        loading () {
+            return this.$store.getters['loading/loading']
+        }
+    },
+    methods: {
+        async login() {
+            try {
                 // Submit the form.
+                this.$store.commit('loading/SET_LOADING', true)
                 const { data } = await this.form.post('/api/login')
                 console.log('data: ', data)
 
@@ -96,61 +100,52 @@
                 await this.$store.dispatch('auth/fetchUser')
 
                 // Redirect home.
-                this.$router.push({ name: 'accueil' })
+                // this.$router.push({ name: 'accueil' })
+                this.$store.commit('loading/SET_LOADING', false)
+                this.$router.push(this.$route.query.redirect || '/accueil')
+            } catch (error) {
+                this.$store.commit('loading/SET_LOADING', false)
+                this.$noty.error('Une erreur est survenue lors de la tentative de login.')
             }
         }
     }
+}
 </script>
 
 <style scoped>
-    /*.center {
-        width: 600px;
-        height: 400px;
-    
-        position: absolute;
-        top:0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        
-        margin: auto;
-    }*/
-    
     /* ANIMATIONS */
+  .fadeInDown {
+    -webkit-animation-name: fadeInDown;
+    animation-name: fadeInDown;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+  }
 
-    /* Simple CSS3 Fade-in-down Animation */
-    .fadeInDown {
-      -webkit-animation-name: fadeInDown;
-      animation-name: fadeInDown;
-      -webkit-animation-duration: 1s;
-      animation-duration: 1s;
-      -webkit-animation-fill-mode: both;
-      animation-fill-mode: both;
+  @-webkit-keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      -webkit-transform: translate3d(0, -100%, 0);
+      transform: translate3d(0, -100%, 0);
     }
+    100% {
+      opacity: 1;
+      -webkit-transform: none;
+      transform: none;
+    }
+  }
 
-    @-webkit-keyframes fadeInDown {
-      0% {
-        opacity: 0;
-        -webkit-transform: translate3d(0, -100%, 0);
-        transform: translate3d(0, -100%, 0);
-      }
-      100% {
-        opacity: 1;
-        -webkit-transform: none;
-        transform: none;
-      }
+  @keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      -webkit-transform: translate3d(0, -100%, 0);
+      transform: translate3d(0, -100%, 0);
     }
-
-    @keyframes fadeInDown {
-      0% {
-        opacity: 0;
-        -webkit-transform: translate3d(0, -100%, 0);
-        transform: translate3d(0, -100%, 0);
-      }
-      100% {
-        opacity: 1;
-        -webkit-transform: none;
-        transform: none;
-      }
+    100% {
+      opacity: 1;
+      -webkit-transform: none;
+      transform: none;
     }
+  }
 </style>

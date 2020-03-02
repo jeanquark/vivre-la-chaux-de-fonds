@@ -22,7 +22,7 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'firstname', 'lastname', 'email', 'password',
     ];
 
     /**
@@ -109,8 +109,8 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
         return [];
     }
 
-    public function seats()
+    public function roles()
     {
-        return $this->hasMany('App\PlanSeat');
+        return $this->belongsToMany('jeremykenedy\LaravelRoles\Models\Role');
     }
 }

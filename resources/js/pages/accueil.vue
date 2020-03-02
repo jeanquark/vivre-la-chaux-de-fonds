@@ -45,6 +45,8 @@
             </div>
         </div>
 
+        <b-button>Button</b-button>
+
 
         <div class="d-flex align-items-end flex-column" id="footer" style="border: 2px solid green; height: 200px; color: #000;">
             <div class="mt-auto p-2">

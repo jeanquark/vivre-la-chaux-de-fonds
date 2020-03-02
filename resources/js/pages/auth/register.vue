@@ -1,116 +1,127 @@
 <template>
-    <!-- <div class="wrapper fadeInDown">
-        <div id="formContent">
+    <b-container>
+        <b-row class="justify-content-center fadeInDown">
+            <b-col cols="12" md="6">
+                <b-card class="">
+                    <b-card-body>
+                        <b-card-title class="text-center mb-4">
+                            S'enregistrer
+                        </b-card-title>
+                        <b-card-text>
+                            <b-form @submit.prevent="register">
+                                <b-row>
+                                    <b-col cols="4" md="4" class="text-right col-form-label">
+                                        <label>Prénom</label>
+                                    </b-col>
+                                    <b-col cols="8" md="8">
+                                        <input type="text" name="firstname" class="form-control" :class="{ 'is-invalid': form.errors.has('firstname') }" v-model="form.firstname" />
+                                        <has-error :form="form" field="firstname" />
+                                    </b-col>
+                                </b-row>
+                                <b-row>
+                                    <b-col cols="4" md="4" class="text-right col-form-label">
+                                        <label>Nom</label>
+                                    </b-col>
+                                    <b-col cols="8" md="8">
+                                        <input type="text" name="lastname" class="form-control" :class="{ 'is-invalid': form.errors.has('lastname') }" v-model="form.lastname" />
+                                        <has-error :form="form" field="lastname" />
+                                    </b-col>
+                                </b-row>
+                                <b-row>
+                                    <b-col cols="4" md="4" class="text-right col-form-label">
+                                        <label>E-mail</label>
+                                    </b-col>
+                                    <b-col cols="8" md="8">
+                                        <input type="email" name="email" class="form-control" :class="{ 'is-invalid': form.errors.has('email') }" v-model="form.email" />
+                                        <has-error :form="form" field="email" />
+                                    </b-col>
+                                </b-row>
+                                <b-row align-v="center">
+                                    <b-col cols="6" md="4" class="text-right col-form-label">
+                                        <label>Mot de passe</label>
+                                    </b-col>
+                                    <b-col cols="6" md="8">
+                                        <input type="password" name="password" class="form-control" v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" />
+                                        <has-error :form="form" field="password" />
+                                    </b-col>
+                                </b-row>
+                                <b-row align-v="center">
+                                    <b-col cols="6" md="4" class="text-right col-form-label">
+                                        <label>Confirmer mot de passe</label>
+                                    </b-col>
+                                    <b-col cols="6" md="8">
+                                        <input
+                                            type="password"
+                                            name="password_confirmation"
+                                            class="form-control"
+                                            :class="{ 'is-invalid': form.errors.has('password_confirmation') }"
+                                            v-model="form.password_confirmation"
+                                        />
+                                        <has-error :form="form" field="password_confirmation" />
+                                    </b-col>
+                                </b-row>
+                                
+                                <b-row class="justify-content-center my-2">
+                                    <b-button type="submit" variant="primary" :disabled="loading">
+                                        <b-spinner small variant="primary" label="Spinning" v-if="loading"></b-spinner>
+                                        S'enregistrer
+                                    </b-button>
+                                </b-row>
 
-        <div class="fadeIn first">
-            <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
-        </div>
-
-        <form>
-            <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-            <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-            <input type="submit" class="fadeIn fourth" value="Log In">
-        </form>
-
-        <div id="formFooter">
-            <a class="underlineHover" href="#">Forgot Password?</a>
-        </div>
-
-    </div>
-</div> -->
-    <div class="container">
-        <div class="row justify-content-center align-items-center fadeInDown" style="">
-            <div class="col-lg-8 m-auto">
-                <card v-if="mustVerifyEmail" title="Enregistrement">
-                    <div class="alert alert-success" role="alert">
-                        {{ $t('verify_email_address') }}
-                    </div>
-                </card>
-                <card v-else title="S'enregistrer">
-                    <form @submit.prevent="register" @keydown="form.onKeydown($event)">
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label text-md-right">Nom</label>
-                            <div class="col-md-7">
-                                <input v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }" class="form-control" type="text" name="name">
-                                <has-error :form="form" field="name" />
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label text-md-right">E-mail</label>
-                            <div class="col-md-7">
-                                <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" class="form-control" type="email" name="email">
-                                <has-error :form="form" field="email" />
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label text-md-right">Mot de passe</label>
-                            <div class="col-md-7">
-                                <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password">
-                                <has-error :form="form" field="password" />
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label text-md-right">Confirmer mot de passe</label>
-                            <div class="col-md-7">
-                                <input v-model="form.password_confirmation" :class="{ 'is-invalid': form.errors.has('password_confirmation') }" class="form-control" type="password" name="password_confirmation">
-                                <has-error :form="form" field="password_confirmation" />
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-7 offset-md-3 d-flex">
-                                <v-button :loading="form.busy">
-                                    S'enregistrer
-                                </v-button>
-        
-                                <login-with-github />
-                            </div>
-                        </div>
-                    </form>
-                </card>
-            </div>
-        </div>
-    </div>
+                                <b-row class="justify-content-center my-2">
+                                    <router-link :to="{ name: 'login' }" class="m-2">Aller au login &rarr;</router-link>
+                                </b-row>
+                            </b-form>
+                        </b-card-text>
+                    </b-card-body>
+                </b-card>
+            </b-col>
+        </b-row>
+    </b-container>
 </template>
 
 <script>
-    import Form from 'vform'
-    import LoginWithGithub from '~/components/LoginWithGithub'
+import Form from 'vform'
 
-    export default {
-        middleware: 'guest',
-        layout: 'frontend',
-        components: {
-            LoginWithGithub
-        },
-        metaInfo () {
-            return { title: "S'enregistrer" }
-        },
-
-        data: () => ({
-            form: new Form({
-                name: '',
-                email: '',
-                password: '',
-                password_confirmation: ''
-            }),
-            mustVerifyEmail: false
+export default {
+    metaInfo() {
+        return { title: "S'enregistrer" }
+    },
+    middleware: 'guest',
+    components: {},
+    layout: 'frontend',
+    data: () => ({
+        form: new Form({
+            firstname: 'John',
+            lastname: 'Doe',
+            email: 'john.doe@example.com',
+            password: 'secret',
+            password_confirmation: 'secre'
         }),
-
-        methods: {
-            async register () {
+        mustVerifyEmail: false
+    }),
+    computed: {
+        loading() {
+            return this.$store.getters['loading/loading']
+        }
+    },
+    methods: {
+        async register() {
+            try {
                 // Register the user.
+                this.$store.commit('loading/SET_LOADING', true)
                 const { data } = await this.form.post('/api/register')
+                this.$noty.success('Enregistrement avec succÃ¨s!')
 
                 // Must verify email fist.
                 if (data.status) {
+                    this.$store.commit('loading/SET_LOADING', false)
                     this.mustVerifyEmail = true
                 } else {
                     // Log in the user.
-                    const { data: { token } } = await this.form.post('/api/login')
+                    const {
+                        data: { token }
+                    } = await this.form.post('/api/login')
 
                     // Save the token.
                     this.$store.dispatch('auth/saveToken', { token })
@@ -122,17 +133,24 @@
                     await this.$store.dispatch('auth/fetchUser')
 
                     // Redirect home.
+                    this.$store.commit('loading/SET_LOADING', false)
                     this.$router.push({ name: 'accueil' })
                 }
+            } catch (error) {
+                console.log('error: ', error)
+                this.$store.commit('loading/SET_LOADING', false)
+                this.$noty.error("Une erreur est survenue et l'enregistrement a Ã©chouÃ©.")
+                const { message } = error
+                console.log('message: ', message)
+                // this.form.errors = message.errors
             }
         }
     }
+}
 </script>
 
 <style scoped>
   /* ANIMATIONS */
-
-  /* Simple CSS3 Fade-in-down Animation */
   .fadeInDown {
     -webkit-animation-name: fadeInDown;
     animation-name: fadeInDown;

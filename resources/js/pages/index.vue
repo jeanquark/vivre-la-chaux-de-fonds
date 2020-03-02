@@ -2,6 +2,7 @@
 	<div id="body" style="border: 0px solid red;">
 		<vue-navigation-bar :options="navbarOptions" />
 		<h1 class="text-center my-5">Association Vivre La-Chaux-de-Fonds</h1>
+		<b-button variant="danger">Button</b-button>
 		<div class="container">
 			<div class="row justify-content-center">
 					<div class="col-6">

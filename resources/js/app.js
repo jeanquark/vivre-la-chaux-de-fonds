@@ -8,6 +8,8 @@ import App from '~/components/App'
 import '~/plugins'
 import '~/components'
 
+require('./bootstrap')
+
 /* Bootstrap-Vue */
 // import BootstrapVue from 'bootstrap-vue'
 // import 'bootstrap/dist/css/bootstrap.css'

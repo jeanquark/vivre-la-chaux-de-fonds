@@ -2,6 +2,9 @@
 // composer dump-autoload
 // php artisan migrate:refresh --seed
 
+// To propagate PHP configuration changes:
+// valet restart
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

@@ -32,6 +32,9 @@ export default [
     { path: '/on-parle-de-nous', name: 'on-parle-de-nous', component: page('on-parle-de-nous') },
     { path: '/participez', name: 'participez', component: page('participez') },
     { path: '/contact', name: 'contact', component: page('contact.vue') },
+    { path: '/devenir-benevole', name: 'devenir-benevole', component: page('devenir-benevole.vue') },
+    { path: '/devenir-membre', name: 'devenir-membre', component: page('devenir-membre.vue') },
+    { path: '/partenariat', name: 'partenariat', component: page('partenariat.vue') },
     
     // { path: '/admin', name: 'admin', component: page('admin/index.vue') },
 

@@ -25,16 +25,22 @@
                 </li> -->
                 <li>
                     <div class="dropdown">
-                        <div class="dropbtn">Participez! <font-awesome-icon icon="chevron-down" /></div>
+                        <div class="dropbtn" :class="this.$route.path === '/devenir-benevole' || this.$route.path === '/devenir-membre' || this.$route.path === '/partenariat' ? 'primary-color' : ''">Participez! <font-awesome-icon icon="chevron-down" /></div>
                         <div class="dropdown-content">
-                            <router-link to="/accueil">Devenir bénévole</router-link>
-                            <router-link to="/accueil">Devenir membre</router-link>
-                            <router-link to="/accueil">Partenariat</router-link>
+                            <router-link to="/devenir-benevole">Devenir bénévole</router-link>
+                            <router-link to="/devenir-membre">Devenir membre</router-link>
+                            <router-link to="/partenariat">Partenariat</router-link>
                         </div>
                     </div>
                 </li>
                 <li>
                     <router-link to="/contact">Contact</router-link>
+                </li>
+                <li>
+                    <router-link to="/login">Login</router-link>
+                </li>
+                <li>
+                    <router-link to="/admin">Admin</router-link>
                 </li>
             </ul>
         </nav>
@@ -60,7 +66,14 @@
                 <span>Contact</span>
             </router-link>
         </Bubble>
+        
+        <p class="text-center">
+            authUser: {{ authUser }}<br /><br />
+        </p>
+        
 		<child />
+
+        <Footer />
 	</div>
 </template>
 
@@ -69,9 +82,10 @@
 	// import "vue-navigation-bar/dist/vue-navigation-bar.css";
 
     import { Slide, Bubble } from 'vue-burger-menu'
+    import Footer from '~/components/Footer'
 	export default {
 		name: 'FrontendLayout',
-		components: { Slide, Bubble },
+		components: { Slide, Bubble, Footer },
 		created () {
 			console.log('Using frontend layout!')
 		},
@@ -84,6 +98,11 @@
 
 			}
 		},
+        computed: {
+            authUser () {
+                return this.$store.getters['auth/user']
+            }
+        },
         methods: {
 
         }
@@ -109,35 +128,8 @@
     }
 </style>
 
-<style scoped>
-    /*body, html {
-        height: 100%;
-        margin: 0;
-    }
-    body {
-        background: url('/images/svg/bg_small.svg') no-repeat;
-        background-size: cover;
-    }
-
-    @media only screen and (min-width: 992px) {
-        body {
-            background: url('/images/svg/bg.svg') no-repeat;
-            background-size: cover;
-        }
-    }*/
-    #abc {
-        height: 100%;
-        margin: 0;
-        background: url('/images/svg/bg_small.svg') no-repeat;
-        background-size: cover;
-    }
-    @media only screen and (min-width: 992px) {
-        #abc {
-            background: url('/images/svg/bg.svg') no-repeat;
-            background-size: cover;
-        }
-    }
-
+<style lang="scss" scoped>
+    @import './resources/sass/_variables.scss';
 	nav {
         padding: 50px;
     }
@@ -155,7 +147,8 @@
         text-align: center;
     }
     nav ul li a:hover {
-        color: yellow;
+        color: $primary;
+        text-decoration: none;
     }
     a {
         color: #fff;
@@ -172,7 +165,8 @@
     }
     .dropbtn:hover {
         cursor: pointer;
-        color: yellow;
+        color: $primary;
+        text-decoration: none;
     }
     .dropbtn:active {
         color: red;
@@ -200,7 +194,8 @@
     }
 
     .dropdown-content a:hover {
-    	background-color: transparent; color: yellow;
+    	background-color: transparent;
+        color: $primary;
     }
 
     .dropdown:hover .dropdown-content {
@@ -209,6 +204,12 @@
 
     .dropdown:hover .dropbtn {
     	background-color: transparent;
+    }
+    a.router-link-active {
+        color: $primary;
+    }
+    .primary-color {
+        color: $primary;
     }
 
     /* Small devices (phones) */

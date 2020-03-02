@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use View;
+use jeremykenedy\LaravelRoles\Models\Role;
 
 class UsersController extends Controller
 {
@@ -22,45 +23,103 @@ class UsersController extends Controller
 
     public function getUsers()
     {
-        $users = User::all();
+        $users = User::with(['roles'])->get();
 
         return response()->json($users, 200);
     }
 
-    public function getUser(Request $request)
+    public function getUser(Request $request, $id)
     {
-        $userId = $request->id;
-        $user = User::where('id', '=', $userId)->get();
-
-        return response()->json($user, 200);
-    }
-
-    protected function addUser(Request $request) {
-        // $newUser = $request->all();
-
-        $form = json_decode($request->form);
-        $user = User::create([
-            'email' => 'abc',
-        ]);
+        $user = User::find($id);
 
         return response()->json([
             'success' => true,
-            'message' => 'User added successfully',
+            'user' => $user,
+        ], 200);
+    }
+
+    protected function createUser(Request $request) {
+        $user = json_decode($request->form);
+
+        $newUser = new User;
+
+        $newUser->firstname = $user->firstname;
+        $newUser->lastname = $user->lastname;
+        $newUser->email = $user->email;
+        $newUser->phone = $user->phone;
+        $newUser->is_active = false;
+
+        $newUser->save();
+
+        // Save users relationships
+        // foreach ($user->shows as $show) {
+        //     $newUser->shows()->attach($show->id);
+        // }
+        
+        return response()->json([
+            'success' => true,
+            'newUser' => $newUser,
+        ], 201);
+    }
+
+    protected function update(Request $request, $id)
+    {
+
+        // $updatedUser = json_decode($request->form);
+        $user = $request->user;
+        $newRole = $request->newRole;
+        $userToUpdate = User::find($id);
+
+        // return response()->json([
+        //     'success' => true,
+        //     'updatedUser' => $updatedUser,
+        //     'updatedUser["firstname"]' => $updatedUser['firstname'],
+        //     'user' => $user,
+        //     'id' => $id,
+        //     'request->newRole' => $request->newRole
+        // ], 201);
+
+        if ($newRole) {
+            // Update role
+            $updatedRole = Role::where('slug', '=', $newRole)->first();
+            $userToUpdate->syncRoles($updatedRole);        
+        } else {
+            $userToUpdate->updateOrInsert(
+                ['id' => $id],
+                [
+                    'firstname' => $updatedUser['firstname'],
+                    'lastname' => $updatedUser['lastname'],
+                ]
+            );
+        }
+
+
+
+        
+
+        // Update users relationships
+        // $showIdArray = [];
+        // foreach($updatedUser->shows as $show) {
+        //     array_push($showIdArray, $show->id);
+        // }
+        // $user->users()->sync($showIdArray);
+        $updatedUser = User::with('roles')->find($id);
+
+        return response()->json([
+            'success' => true,
+            'updatedUser' => $updatedUser,
+        ], 201);
+    }
+
+    protected function delete(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        $user->delete();
+
+        return response()->json([
+            'success' => true,
             'user' => $user
-        ], 201);
-    }
-
-    protected function updateUser(Request $request) {
-
-        return response()->json([
-            'status' => 'OK'
-        ], 201);
-    }
-
-    protected function deleteUser(Request $request) {
-
-        return response()->json([
-            'status' => 'OK'
-        ], 201);
+        ], 204);
     }
 }

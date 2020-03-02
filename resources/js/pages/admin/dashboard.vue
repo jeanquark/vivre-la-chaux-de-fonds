@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h2 class="text-center">Tableau de bord</h2>
+		<h2 class="text-center">Tableau de bord Vivre La Chaux-de-Fonds</h2>
 	</div>
 </template>
 

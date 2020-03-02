@@ -1,6 +1,6 @@
 @import 'variables';
 @import '~bootstrap/scss/bootstrap';
-@import '~sweetalert2/src/sweetalert2';
+// @import '~sweetalert2/src/sweetalert2';
 
 @import 'elements/card';
 @import 'elements/navbar';
@@ -59,3 +59,18 @@ $pretty--color-primary: #9acd32;
 
 // Vue noty
 @import '~vuejs-noty/dist/vuejs-noty.css';
+.noty_theme__mint.noty_bar .noty_body {
+    font-size: 18px;
+}
+
+// Vertical center tables
+.table th {
+	vertical-align: middle;
+}
+.table td {
+	vertical-align: middle;
+}
+
+.help-block {
+	margin-bottom: 6px;
+}
