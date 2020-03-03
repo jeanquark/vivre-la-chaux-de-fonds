@@ -1,12 +1,13 @@
 <template>
-	<div class="container">
-		<nav aria-label="breadcrumb">
-		  	<ol class="breadcrumb">
-		    	<li class="breadcrumb-item"><router-link to="/admin/activities">Activités</router-link></li>
-		    	<li class="breadcrumb-item active" aria-current="page">Editer</li>
-		  	</ol>
-		</nav>
-		<h2>Editer une activité</h2>
+	<b-container>
+		<b-breadcrumb>
+            <b-breadcrumb-item to="/admin/users" class="navigation">
+				<font-awesome-icon icon="users" />
+				<span>Activités</span>
+			</b-breadcrumb-item>
+            <b-breadcrumb-item active>Editer</b-breadcrumb-item>
+        </b-breadcrumb>
+		<h2 class="text-center">Editer une activité</h2>
 		<!-- activity: {{ activity }}<br /><br /> -->
 
 
@@ -99,7 +100,7 @@
 		  	</div>
 		</form>
 
-	</div>
+	</b-container>
 </template>
 
 <script>

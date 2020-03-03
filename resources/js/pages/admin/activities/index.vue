@@ -1,11 +1,10 @@
 <template>
-	<div class="container">
-		<nav aria-label="breadcrumb">
-		  	<ol class="breadcrumb">
-		    	<li class="breadcrumb-item active" aria-current="page">Activités</li>
-		  	</ol>
-		</nav>
-		<h2>Activités</h2>
+	<b-container>
+		<b-breadcrumb>
+            <b-breadcrumb-item active><font-awesome-icon icon="users" />&nbsp;Activités</b-breadcrumb-item>
+        </b-breadcrumb>
+
+		<h2 class="text-center">Activités</h2>
 		<router-link to="/admin/activities/create" class="btn btn-primary my-3">Créer une nouvelle activité</router-link>
 		<!-- activities: {{ activities }}<br /><br /> -->
 
@@ -56,7 +55,7 @@
 
 		<br /><br />
 		<!-- <iframe width="420" height="315" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe> -->
-	</div>
+	</b-container>
 </template>
 
 <script>

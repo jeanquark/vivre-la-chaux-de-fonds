@@ -1,11 +1,13 @@
 <template>
-	<div class="container">
-		<nav aria-label="breadcrumb">
-		  	<ol class="breadcrumb">
-		    	<li class="breadcrumb-item"><router-link to="/admin/activities">Activités</router-link></li>
-		    	<li class="breadcrumb-item active" aria-current="page">Créer</li>
-		  	</ol>
-		</nav>
+	<b-container>
+		<b-breadcrumb>
+            <b-breadcrumb-item to="/admin/activities" class="navigation">
+				<font-awesome-icon icon="users" />
+				<span>Activités</span>
+			</b-breadcrumb-item>
+            <b-breadcrumb-item active>Créer</b-breadcrumb-item>
+        </b-breadcrumb>
+
 		<h2 class="text-center">Créer une nouvelle activité</h2>
 		<!-- form: {{ form }}<br /> -->
 		<!-- tinymce_key: {{ tinymce_key }}<br /> -->
@@ -124,7 +126,7 @@
 
 		<br /><br />
 
-	</div>
+	</b-container>
 </template>
 
 <script>
