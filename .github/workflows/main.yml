@@ -17,7 +17,7 @@ jobs:
           php -r "file_exists('.env') || copy('.env.example', '.env');"
           php artisan key:generate
           composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
-          php artisan migrate -y
+          php artisan migrate --force
   FTP-Deploy-Action:
     name: FTP-Deploy-Action
     runs-on: ubuntu-latest
