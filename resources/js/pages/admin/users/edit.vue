@@ -1,13 +1,15 @@
 <template>
-	<div class="container">
-		<nav aria-label="breadcrumb">
-		  	<ol class="breadcrumb">
-		    	<li class="breadcrumb-item"><router-link to="/admin/users">Users</router-link></li>
-		    	<li class="breadcrumb-item active" aria-current="page">Edit</li>
-		  	</ol>
-		</nav>
-		<h1>User edit</h1>
-	</div>
+	<b-container>
+		<b-breadcrumb>
+            <b-breadcrumb-item to="/admin/users" class="navigation">
+				<font-awesome-icon icon="file-alt" />
+				<span>Utilisateurs</span>
+			</b-breadcrumb-item>
+            <b-breadcrumb-item active>Editer</b-breadcrumb-item>
+        </b-breadcrumb>
+
+		<h1 class="text-center">Editer un utilisateur</h1>
+	</b-container>
 </template>
 
 <script>

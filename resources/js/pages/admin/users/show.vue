@@ -1,13 +1,14 @@
 <template>
-	<div class="container">
-		<nav aria-label="breadcrumb">
-		  	<ol class="breadcrumb">
-		    	<li class="breadcrumb-item"><router-link to="/admin/users">Users</router-link></li>
-		    	<li class="breadcrumb-item active" aria-current="page">User</li>
-		  	</ol>
-		</nav>
-		<h1>User show</h1>
-	</div>
+	<b-container>
+		<b-breadcrumb>
+            <b-breadcrumb-item to="/admin/users" class="navigation">
+				<font-awesome-icon icon="users" />
+				<span>Utilisateurs</span>
+			</b-breadcrumb-item>
+            <b-breadcrumb-item active>Montrer</b-breadcrumb-item>
+        </b-breadcrumb>
+        <h2 class="text-center">Utilisateur {{ user.firstname }} {{ user.lastname }}</h2>
+    </b-container>
 </template>
 
 <script>
