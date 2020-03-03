@@ -13,9 +13,7 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         port: 22
         script: |
-          ls
-          cd web/theatre-la-parenthese
-          ls
+          cd web/vivre-la-chaux-de-fonds
           php -r "file_exists('.env') || copy('.env.example', '.env');"
           php artisan key:generate
           composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
