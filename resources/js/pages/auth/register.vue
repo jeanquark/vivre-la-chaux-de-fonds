@@ -111,7 +111,7 @@ export default {
                 // Register the user.
                 this.$store.commit('loading/SET_LOADING', true)
                 const { data } = await this.form.post('/api/register')
-                this.$noty.success('Enregistrement avec succÃ¨s!')
+                this.$noty.success('Enregistrement avec succès!')
 
                 // Must verify email fist.
                 if (data.status) {
@@ -134,12 +134,12 @@ export default {
 
                     // Redirect home.
                     this.$store.commit('loading/SET_LOADING', false)
-                    this.$router.push({ name: 'accueil' })
+                    this.$router.push({ name: 'index' })
                 }
             } catch (error) {
                 console.log('error: ', error)
                 this.$store.commit('loading/SET_LOADING', false)
-                this.$noty.error("Une erreur est survenue et l'enregistrement a Ã©chouÃ©.")
+                this.$noty.error("Une erreur est survenue et l'enregistrement a échoué.")
                 const { message } = error
                 console.log('message: ', message)
                 // this.form.errors = message.errors

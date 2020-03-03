@@ -9,6 +9,9 @@
             </router-link>
             <ul>
                 <li>
+                    <router-link to="/">Accueil</router-link>
+                </li>
+                <li>
                     <router-link to="/association">Association</router-link>
                 </li>
                 <li>
@@ -36,11 +39,14 @@
                 <li>
                     <router-link to="/contact">Contact</router-link>
                 </li>
-                <li>
+                <li v-if="!authUser">
                     <router-link to="/login">Login</router-link>
                 </li>
-                <li>
+                <li v-if="authUser && authUser.roles.includes('admin')">
                     <router-link to="/admin">Admin</router-link>
+                </li>
+                <li v-if="authUser">
+                    <router-link to="/logout">Logout</router-link>
                 </li>
             </ul>
         </nav>
@@ -90,8 +96,7 @@
 			console.log('Using frontend layout!')
 		},
         mounted () {
-            // document.body.style.background = "url('/images/svg/bg.svg') no-repeat"
-            // document.body.style.backgroundSize = "cover"
+
         },
 		data () {
 			return {                
@@ -104,7 +109,7 @@
             }
         },
         methods: {
-
+            
         }
     }
 </script>
@@ -205,7 +210,7 @@
     .dropdown:hover .dropbtn {
     	background-color: transparent;
     }
-    a.router-link-active {
+    a.router-link-exact-active {
         color: $primary;
     }
     .primary-color {

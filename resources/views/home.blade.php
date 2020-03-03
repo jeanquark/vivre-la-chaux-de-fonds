@@ -2,23 +2,12 @@
 
 @section('css')
 	<style>
-		/*#body {
-			background: url('/images/svg/background.svg') center;
-	        background-repeat: no-repeat;
-	        background-size: 100%;
-	        background-size: cover;
-		}*/
-		/*@media (min-width: 576px)*/
-			/*.container {
-				max-width: 100%;
-				margin: 0px;
-				padding: 0px;
-			}*/
+
 	</style>
 @endsection
 
 @section('content')
-	<div id="body" style="display: none;">
+	<!--<div id="body" style="display: none;">
 		<h1 class="text-center my-5">Association Vivre La-Chaux-de-Fonds</h1>
 		<div class="row justify-content-center">
 				<div class="col-6">
@@ -43,22 +32,12 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<div id="app" class="container2" style="border: 1px dashed green;">
+	</div>-->
+	<div id="app">
 	</div>
 @endsection
 
 @section('scripts')
-	{{-- // <script src="{{ asset('js/app.js') }}"></script> --}}
-	{{-- // <script src="dist/js/app.js"></script> --}}
 
-	{{-- Global configuration object --}}
-  	{{-- <script>
-    	window.config = @json($config);
-  	</script> --}}
-
-	{{-- // <script src="{{ mix('dist/js/app.js') }}"></script> --}}
-	<script>
-		// import Welcome from '../js/pages/Welcome.vue';
-	</script>
 @endsection
+

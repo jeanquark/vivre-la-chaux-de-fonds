@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="basic-layout d-flex align-items-center justify-content-center m-0 bg-white">
     <child />
   </div>
@@ -30,4 +30,4 @@ export default {
     text-transform: uppercase;
   }
 }
-</style>
+</style> -->

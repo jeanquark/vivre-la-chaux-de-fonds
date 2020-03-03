@@ -102,7 +102,7 @@ export default {
                 // Redirect home.
                 // this.$router.push({ name: 'accueil' })
                 this.$store.commit('loading/SET_LOADING', false)
-                this.$router.push(this.$route.query.redirect || '/accueil')
+                this.$router.push(this.$route.query.redirect || { name: 'index' })
             } catch (error) {
                 this.$store.commit('loading/SET_LOADING', false)
                 this.$noty.error('Une erreur est survenue lors de la tentative de login.')

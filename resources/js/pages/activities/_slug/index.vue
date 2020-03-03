@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="text-center">Actualité</h1>
+        <h1 class="text-center">Activité {{ slug }}</h1>
     </div>
 </template>
 
@@ -11,7 +11,12 @@
             return { title: 'Actualité' }
         },
         mounted () {
-        	console.log(this.$route.params.id)
+        	console.log(this.$route.params.slug)
+        },
+        data () {
+            return {
+                slug: this.$route.params.slug
+            }
         }
     }
 </script>

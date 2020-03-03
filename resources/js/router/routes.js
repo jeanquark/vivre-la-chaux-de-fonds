@@ -10,6 +10,7 @@ export default [
     { path: '/welcome', name: 'welcome', component: page('welcome.vue') },
 
     { path: '/login', name: 'login', component: page('auth/login.vue') },
+    { path: '/logout', name: 'logout', component: page('auth/logout.vue') },
     { path: '/enregistrement', name: 'register', component: page('auth/register.vue') },
     { path: '/mot-de-passe/reinitialiser', name: 'password.request', component: page('auth/password/email.vue') },
     { path: '/password/reset/:token', name: 'password.reset', component: page('auth/password/reset.vue') },
@@ -29,6 +30,10 @@ export default [
     { path: '/accueil', name: 'accueil', component: page('accueil') },
     { path: '/association', name: 'association', component: page('association') },
     { path: '/actualites', name: 'actualites', component: page('actualites') },
+
+    { path: '/activites', name: 'activities', component: page('activities') },
+    { path: '/activites/:slug', name: 'activity', component: page('activities/_slug/index') },
+
     { path: '/on-parle-de-nous', name: 'on-parle-de-nous', component: page('on-parle-de-nous') },
     { path: '/participez', name: 'participez', component: page('participez') },
     { path: '/contact', name: 'contact', component: page('contact.vue') },
