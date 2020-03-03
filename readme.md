@@ -1,4 +1,4 @@
-# web-toucan
+# vlcf
 
 Vivre La Chaux-de-Fonds est le site d'une association à but non lucratif basée à la Chaux-de-Fonds.
 
