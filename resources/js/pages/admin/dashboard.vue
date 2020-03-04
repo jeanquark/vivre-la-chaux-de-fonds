@@ -1,7 +1,7 @@
 <template>
-	<div>
-		<h2 class="text-center">Tableau de bord Vivre La Chaux-de-Fonds</h2>
-	</div>
+	<b-container>
+		<h2 class="text-center">Tableau de bord Site internet VLCF</h2>
+	</b-container>
 </template>
 
 <script>

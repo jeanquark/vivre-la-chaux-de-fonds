@@ -1,97 +1,96 @@
 <template>
-	<b-container>
-		<b-breadcrumb>
-            <b-breadcrumb-item active><font-awesome-icon icon="users" />&nbsp;Activités</b-breadcrumb-item>
+    <b-container>
+        <b-breadcrumb>
+            <b-breadcrumb-item active><font-awesome-icon icon="calendar-day" />&nbsp;Activités</b-breadcrumb-item>
         </b-breadcrumb>
 
-		<h2 class="text-center">Activités</h2>
-		<router-link to="/admin/activities/create" class="btn btn-primary my-3">Créer une nouvelle activité</router-link>
-		<!-- activities: {{ activities }}<br /><br /> -->
+        <h2 class="text-center">Activités</h2>
+        <router-link to="/admin/activities/create" class="btn btn-primary my-3">Créer une nouvelle activité</router-link>
+        <!-- activities: {{ activities }}<br /><br /> -->
 
-		<table class="table">
-  			<thead>
-    			<tr>
-      				<th scope="col">ID</th>
-      				<th scope="col">Title</th>
-      				<th scope="col">Subtitle</th>
-      				<th scope="col">Image</th>
-      				<th scope="col">En ligne?</th>
-      				<th scope="col">Date de création</th>
-      				<th scope="col">Dernière modification</th>
-      				<th scope="col">Actions</th>
-    			</tr>
-  			</thead>
-  			<tbody>
-    			<tr v-for="activity in activities" :key="activity.id">
-      				<th scope="row">{{ activity.id }}</th>
-      				<td>{{ activity.title }}</td>
-      				<td>{{ activity.subtitle }}</td>
-      				<td>
-      					<img :src="`/images/${activity.image}`" style="max-width: 100px; max-height: 50px;" v-if="activity.image" />
-      					<span v-else><i>Pas d'image</i></span>
-      				</td>
-      				<td>{{ activity.is_published }}</td>
-      				<td>{{ activity.created_at }}</td>
-      				<td>{{ activity.updated_at }}</td>
-      				<td>
-      					<router-link :to="`/admin/activities/${activity.id}`" class="btn btn-warning">
-                            <font-awesome-icon icon="eye" />
-                        </router-link>
-                        <router-link :to="`/admin/activities/${activity.id}/edit`" class="btn btn-success">
-                            <font-awesome-icon icon="edit" />
-                        </router-link>
-                        <button class="btn btn-danger" @click="deleteActivity(activity.id)">
-                            <font-awesome-icon icon="trash" />
-                        </button>
-      				</td>
-    			</tr>
-  			</tbody>
-		</table>
+        <b-table show-empty small stacked="md" :items="activities" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" class="nowrap" v-if="!loading">
+            <template v-slot:cell(image)="row">
+                <img :src="`/images/${row.item.image}`" style="max-width: 100px; max-height: 50px;" v-if="row.item.image" />
+                <span v-else><i>Pas d'image</i></span>
+            </template>
 
-		
-		
-		<br /><br />
-		<!-- <tinymce-editor api-key="mvp9jqgiu38hcoig0dkgzvr5v0520jvl6lghgeyi4slwrogf" :init="{plugins: 'wordcount'}" v-model="form.content"></tinymce-editor> -->
+			<template v-slot:cell(is_published)="row">
+                {{ row.item.is_published ? 'Oui' : 'Non' }}
+            </template>
 
-		<br /><br />
-		<!-- <iframe width="420" height="315" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe> -->
-	</b-container>
+            <template v-slot:cell(updated_at)="row">
+                {{ row.item.updated_at | moment('from', 'now') }}
+            </template>
+            <template v-slot:cell(actions)="data">
+                <router-link :to="`/admin/activities/${data.item.id}`" class="btn btn-warning my-1" style="display: inline-block;">
+                    <font-awesome-icon icon="eye" />
+                </router-link>
+                <router-link :to="`/admin/activities/${data.item.id}/edit`" class="btn btn-success my-1" style="display: inline-block;">
+                    <font-awesome-icon icon="edit" />
+                </router-link>
+                <b-button variant="danger" @click="deleteActivity(data.item.id)" class="my-1">
+                    <font-awesome-icon icon="trash" />
+                </b-button>
+            </template>
+        </b-table>
+        <b-row class="justify-content-center" v-if="loading">
+            <b-spinner variant="primary" label="Spinning"></b-spinner>
+        </b-row>
+    </b-container>
 </template>
 
 <script>
-	import axios from 'axios'
-	export default {
-		layout: 'backend',
-		// components: { 'tinymce-editor': Editor },
-		async created () {
-			if (this.$store.getters['activities/activities'].length < 1) {
-				await this.$store.dispatch('activities/fetchActivities')
-			}
-		},
-		data () {
-			return {
-			}
-		},
-		computed: {
-			activities () {
-				return this.$store.getters['activities/activities']
-			}
-		},
-		methods: {
-			async deleteActivity (activityId) {
-				try {
-					const dialog = await this.$dialog.confirm('Voulez-vous vraiment supprimer cette activité?')
-					console.log('dialog: ', dialog)
-					console.log('deleteActivity: ', activityId)
-					await this.$store.dispatch('activities/deleteActivity', { activityId })
-				} catch (error) {
-					console.log('error from front: ', error)
-				}
-			}
-		}
-	}
+import axios from 'axios'
+export default {
+    layout: 'backend',
+    async created() {
+        if (this.$store.getters['activities/activities'].length < 2) {
+            this.$store.commit('loading/SET_LOADING', true)
+            await this.$store.dispatch('activities/fetchActivities')
+            this.$store.commit('loading/SET_LOADING', false)
+        }
+    },
+    data() {
+        return {
+            sortBy: 'id',
+            sortDesc: true,
+            fields: [
+                { key: 'id', label: 'ID', sortable: true },
+                { key: 'title', label: 'Titre', sortable: true },
+                { key: 'image', label: 'Image', sortable: true },
+                { key: 'is_published', label: 'Publié?', sortable: true },
+                { key: 'updated_at', label: 'Dernière modification', sortable: true },
+                { key: 'actions', sortable: false }
+            ]
+        }
+    },
+    computed: {
+        loading() {
+            return this.$store.getters['loading/loading']
+        },
+        activities() {
+            return this.$store.getters['activities/activities']
+        }
+    },
+    methods: {
+        async deleteActivity(activityId) {
+            try {
+                const value = await this.$bvModal.msgBoxConfirm(`Etes-vous sûr de vouloir supprimer l'activité ${activityId}?`, {
+                    okTitle: 'OK',
+                    cancelTitle: 'Annuler'
+                })
+                console.log('value: ', value)
+                if (value) {
+                    await this.$store.dispatch('activities/deleteActivity', { activityId })
+                    this.$noty.success('Activité supprimée avec succès!')
+                }
+            } catch (error) {
+                console.log('error: ', error)
+                this.$noty.error("Une erreur est survenue et l'activité n'a pas pu être supprimée.")
+            }
+        }
+    }
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -7,7 +7,7 @@
         <!-- users: {{ users }}<br /><br /> -->
         <b-button variant="primary" class="my-3" to="/admin/users/create">Créer un nouvel utilistateur</b-button>
 
-        <b-table show-empty small stacked="md" :items="users" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" class="nowrap" v-if="!loading">
+        <b-table show-empty small stacked="md" responsive="sm" :items="users" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" class="nowrap" v-if="!loading">
             <template v-slot:cell(role)="row">
                 <!-- {{ row.item.roles }} -->
                 {{ row.item.roles[0].name }}
@@ -56,7 +56,7 @@ export default {
             sortDesc: true,
             fields: [
                 { key: 'id', label: 'ID', sortable: true },
-                { key: 'email', label: 'E-mail', sortable: true },
+                { key: 'email', label: 'Email', sortable: true },
                 { key: 'role', label: 'Role', sortable: true },
                 // { key: 'created_at', label: 'Date de création', sortable: true },
                 { key: 'updated_at', label: 'Dernière modification', sortable: true },

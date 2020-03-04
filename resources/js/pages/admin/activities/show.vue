@@ -2,7 +2,7 @@
 	<b-container>
 		<b-breadcrumb>
             <b-breadcrumb-item to="/admin/activities" class="navigation">
-				<font-awesome-icon icon="users" />
+				<font-awesome-icon icon="calendar-day" />
 				<span>Activités</span>
 			</b-breadcrumb-item>
             <b-breadcrumb-item active>Montrer</b-breadcrumb-item>
@@ -13,7 +13,7 @@
 		    	<li class="breadcrumb-item active" aria-current="page">Activité</li>
 		  	</ol>
 		</nav> -->
-		<h2 class="text-center">Activity show</h1>
+		<h2 class="text-center">Activity show</h2>
 	</b-container>
 </template>
 

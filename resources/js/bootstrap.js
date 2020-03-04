@@ -54,7 +54,7 @@ function errorResponseHandler(error) {
                     timeout: 5000
                 }).show()
             }
-        } else {
+        } else if (error.response.status >= 500) {
             new Noty({
                 text: "Une erreur est survenue au niveau de la requête API. Veuillez contacter le webmaster si le problème persiste.",
                 type: 'error',

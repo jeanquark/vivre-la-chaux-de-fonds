@@ -2,7 +2,7 @@
 	<b-container>
 		<b-breadcrumb>
             <b-breadcrumb-item to="/admin/activities" class="navigation">
-				<font-awesome-icon icon="users" />
+				<font-awesome-icon icon="calendar-day" />
 				<span>Activités</span>
 			</b-breadcrumb-item>
             <b-breadcrumb-item active>Créer</b-breadcrumb-item>

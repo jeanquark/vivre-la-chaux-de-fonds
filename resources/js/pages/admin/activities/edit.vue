@@ -2,7 +2,7 @@
 	<b-container>
 		<b-breadcrumb>
             <b-breadcrumb-item to="/admin/users" class="navigation">
-				<font-awesome-icon icon="users" />
+				<font-awesome-icon icon="calendar-day" />
 				<span>Activités</span>
 			</b-breadcrumb-item>
             <b-breadcrumb-item active>Editer</b-breadcrumb-item>

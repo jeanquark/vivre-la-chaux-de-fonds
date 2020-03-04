@@ -1,6 +1,6 @@
 <template>
 	<div style="">
-		<sidebar-menu :menu="menu" :collapsed="collapsed" :relative="false" @toggle-collapse="onToggleCollapse">
+		<sidebar-menu :menu="menu" :collapsed="collapsed" :relative="false" @toggle-collapse="onToggleCollapse" style="height: 100%;">
 			<span slot="toggle-icon"><font-awesome-icon icon="arrows-alt-h" /></span>
 		</sidebar-menu>
 		<div class="mt-2" :class="[collapsed ? 'collapsed' : 'extended']" style="border: 0px solid orange;">
@@ -11,7 +11,6 @@
 
 <script>
 	import { SidebarMenu } from 'vue-sidebar-menu'
-	// import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 
 	export default {
 		name: 'BackendLayout',
@@ -30,7 +29,7 @@
 		},
 		data () {
 			return {
-				collapsed: false,
+				collapsed: screen.width < 992 ? true : false,
 				menu: [
 					{
 						header: true,
@@ -85,7 +84,7 @@
 						}
 					},
 					{
-						href: '/accueil',
+						href: '/',
 						title: 'Retour au site',
 						icon: {
 							element: 'font-awesome-icon',
@@ -119,51 +118,22 @@
 </script>
 
 <style>
-	body {
-        background: #fff;
-    }
-
-    @media only screen and (min-width: 992px) {
-        body {
-            background: #fff;
-        }
-    }
-
     body.home {
     	background-image: none;
 	}
-	/*Dialog confirmation*/
-	.dg-btn--cancel {
-		background-color: #9acd32 !important;
-		/*border-color: orange !important;*/
-	}
-	.dg-btn--ok {
-		border-color: #9acd32 !important;
-		color: #9acd32 !important;
-	}
-	.dg-btn-loader .dg-circle {
-		/*background-color: #9acd32 !important;*/
-	}
-	.dg-btn:active, .dg-btn:focus { 
-		/*border: 1px dotted red !important;*/
-	}
 </style>
 
-<style scoped>
+<style lang="scss" scoped>
+	// ::v-deep body {
+    //     background: #fff;
+    // }
+	// >>> body.home {
+    // 	background-image: none;
+	// }
 	.collapsed {
 		margin-left: 50px;
 	}
 	.extended {
 		margin-left: 350px;
 	}
-	/*>>>.v-sidebar-menu .vsm--link_level-1 .vsm--icon {
-		background-color: transparent;
-		height: 16px;
-		margin-top: 7px;
-	}
-	>>>.v-sidebar-menu .vsm--link_level-1.vsm--link_exact-active .vsm--icon, .v-sidebar-menu .vsm--link_level-1.vsm--link_active .vsm--icon {
-		background-color: transparent;
-	}
-	>>>.v-sidebar-menu .vsm--icon {
-	}*/
 </style>

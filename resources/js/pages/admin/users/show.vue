@@ -7,19 +7,25 @@
 			</b-breadcrumb-item>
             <b-breadcrumb-item active>Montrer</b-breadcrumb-item>
         </b-breadcrumb>
-        <h2 class="text-center">Utilisateur {{ user.firstname }} {{ user.lastname }}</h2>
+        <h2 class="text-center" v-if="user">Utilisateur {{ user.firstname }} {{ user.lastname }}</h2>
     </b-container>
 </template>
 
 <script>
 	export default {
 		layout: 'backend',
-		created () {
-
+		async created () {
+			if (this.$store.getters['users/users'].length < 1) {
+				await this.$store.dispatch('users/fetchUsers')
+			}
 		},
-		mounted () {
-			const userId = parseInt(this.$route.params.id)
-	  		console.log('userId: ', userId)
+		computed: {
+			users () {
+				return this.$store.getters['users/users']
+			},
+			user () {
+				return this.$store.getters['users/users'].find(user => user.id === parseInt(this.$route.params.id))
+			},
 		}
 	}
 </script>

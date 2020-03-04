@@ -31,14 +31,13 @@
                                     </b-col>
                                 </b-row>
 
-
                                 <b-row class="justify-content-center my-3">
                                     <b-button type="submit" variant="primary">
                                         <b-spinner small variant="primary" label="Spinning" :disabled="loading" v-if="loading"></b-spinner>
                                         Login
                                     </b-button>
                                 </b-row>
-                                
+
                                 <b-row class="justify-content-center my-3">
                                     <b-col cols="12" md="10" class="text-center">
                                         <router-link :to="{ name: 'password.request' }" class="m-2">
@@ -78,7 +77,7 @@ export default {
         remember: false
     }),
     computed: {
-        loading () {
+        loading() {
             return this.$store.getters['loading/loading']
         }
     },
@@ -113,39 +112,39 @@ export default {
 </script>
 
 <style scoped>
-    /* ANIMATIONS */
-  .fadeInDown {
+/* ANIMATIONS */
+.fadeInDown {
     -webkit-animation-name: fadeInDown;
     animation-name: fadeInDown;
     -webkit-animation-duration: 1s;
     animation-duration: 1s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
-  }
+}
 
-  @-webkit-keyframes fadeInDown {
+@-webkit-keyframes fadeInDown {
     0% {
-      opacity: 0;
-      -webkit-transform: translate3d(0, -100%, 0);
-      transform: translate3d(0, -100%, 0);
+        opacity: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
     }
     100% {
-      opacity: 1;
-      -webkit-transform: none;
-      transform: none;
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
     }
-  }
+}
 
-  @keyframes fadeInDown {
+@keyframes fadeInDown {
     0% {
-      opacity: 0;
-      -webkit-transform: translate3d(0, -100%, 0);
-      transform: translate3d(0, -100%, 0);
+        opacity: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
     }
     100% {
-      opacity: 1;
-      -webkit-transform: none;
-      transform: none;
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
     }
-  }
+}
 </style>

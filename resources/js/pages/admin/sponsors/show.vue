@@ -1,25 +1,23 @@
 <template>
-	<div class="container">
-		<nav aria-label="breadcrumb">
-		  	<ol class="breadcrumb">
-		    	<li class="breadcrumb-item"><router-link to="/admin/sponsors">Sponsors</router-link></li>
-		    	<li class="breadcrumb-item active" aria-current="page">Sponsor</li>
-		  	</ol>
-		</nav>
-		<h1>Sponsor show</h1>
-	</div>
+    <b-container>
+        <b-breadcrumb>
+            <b-breadcrumb-item to="/admin/sponsors" class="navigation">
+                <font-awesome-icon icon="dollar-sign" />
+                <span>Sponsors</span>
+            </b-breadcrumb-item>
+            <b-breadcrumb-item active>Montrer</b-breadcrumb-item>
+        </b-breadcrumb>
+    </b-container>
 </template>
 
 <script>
-	export default {
-		layout: 'backend',
-		mounted () {
-			const sponsorId = this.$route.params.id
-			console.log('sponsorId: ', sponsorId)
-		}
-	}
+export default {
+    layout: 'backend',
+    mounted() {
+        const sponsorId = this.$route.params.id
+        console.log('sponsorId: ', sponsorId)
+    }
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
