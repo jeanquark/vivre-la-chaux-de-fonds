@@ -58,7 +58,7 @@ class UsersController extends Controller
         // $newUser->password = Hash::make($request->password);
         // $newUser->save();
 
-        $newUser = User::create([
+        $user = User::create([
             'firstname' => $request['firstname'],
             'lastname' => $request['lastname'],
             'email' => $request['email'],
@@ -67,8 +67,9 @@ class UsersController extends Controller
         
         // Attach user role
         $role = Role::where('name', '=', 'User')->first();
-        $newUser->attachRole($role);
+        $user->attachRole($role);
         
+        $newUser = $user::with('roles')->find($user->id);
 
         return response()->json([
             'success' => true,

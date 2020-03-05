@@ -17,7 +17,7 @@
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('index');
 });
 
 // Route::patch('/admin', function () {
