@@ -7,8 +7,8 @@ require('laravel-mix-svg-vue')
 
 
 mix
-  // .js('resources/js/app.js', 'public/dist/js')
-  .js('resources/js/app.js', 'public/dist/js', 'public/js')
+  .js('resources/js/app.js', 'public/dist/js')
+  // .js('resources/js/app.js', 'public/dist/js', 'public/js')
   .sass('resources/sass/app.scss', 'public/dist/css')
 
   .disableNotifications()
