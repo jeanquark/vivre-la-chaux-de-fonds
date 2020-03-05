@@ -13,7 +13,55 @@
 		<!-- tinymce_key: {{ tinymce_key }}<br /> -->
 		<!-- sponsors: {{ sponsors }}<br /> -->
 
-		<form @submit.prevent="createActivity">
+		<b-row class="justify-content-center">
+            <b-col cols="12" md="8" lg="6">
+                <b-form @submit.prevent="createUser">
+                    <b-row align-v="center" class="justify-content-start my-3 px-3">
+                        <b-col cols="12" md="6">
+                            <b-form-group label="Prénom:" label-for="newUserFirstname">
+                                <b-form-input id="newUserFirstname" placeholder="Prénom" :class="{ 'is-invalid': form.errors.has('firstname') }" v-model="form.firstname"></b-form-input>
+                                <has-error :form="form" field="firstname" />
+                            </b-form-group>
+                        </b-col>
+                        <b-col cols="12" md="6">
+                            <b-form-group label="Nom:" label-for="newUserLastname">
+                                <b-form-input id="newUserLastname" placeholder="Nom" :class="{ 'is-invalid': form.errors.has('lastname') }" v-model="form.lastname"></b-form-input>
+								<has-error :form="form" field="lastname" />
+                            </b-form-group>
+                        </b-col>
+                        <b-col cols="12" md="6">
+                            <b-form-group  label="E-mail:" label-for="newUserEmail">
+                                <b-form-input type="email" id="newUserEmail" placeholder="E-mail" :class="{ 'is-invalid': form.errors.has('email') }" v-model="form.email"></b-form-input>
+								<has-error :form="form" field="email" />
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
+					<b-row align-v="center" class="justify-content-start px-3">
+                        <b-col cols="12">
+                            <b-form-group  label="Mot de passe:" label-for="newUserPassword">
+                                <b-form-input type="password" id="newUserPassword" placeholder="Mot de passe" :class="{ 'is-invalid': form.errors.has('password') }" v-model="form.password"></b-form-input>
+								<has-error :form="form" field="password" />
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12">
+                            <b-form-group  label="Confirmation mot de passe:" label-for="newUserPasswordConfirmation">
+                                <b-form-input type="password" id="newUserPasswordConfirmation" placeholder="Confirmation mot de passe" :class="{ 'is-invalid': form.errors.has('password_confirmation') }" v-model="form.password_confirmation"></b-form-input>
+								<has-error :form="form" field="password_confirmation" />
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
+                    <b-row class="justify-content-center my-2">
+                        <b-button variant="primary" :disabled="loading" type="submit">
+                            <b-spinner small type="grow" v-if="loading"></b-spinner>
+                            Créer nouvel utilisateur
+                        </b-button>
+                    </b-row>
+                </b-form>
+            </b-col>
+        </b-row>
+
+		<!--<form @submit.prevent="createActivity">
 			<div class="row">
 				<div class="col-12 col-md-6">
 				  	<div class="form-group">
@@ -31,14 +79,6 @@
 
 			<div class="row">
 				<div class="col-12">
-					<!-- <div class="form-group">
-						<label for="image">Contenu:</label>
-						<tinymce-editor 
-							:api-key="tinymce_key"
-							:init="{plugins: 'wordcount'}"
-							v-model="form.content"
-						></tinymce-editor>
-					</div> -->
 				</div>
 			</div>
 
@@ -69,29 +109,7 @@
 			</div>
 
 			<div class="row">
-				<!-- <div class="col-12">
-					<select multiple size="3" class="custom-select">
-						<option selected>Open this select menu</option>
-						<option value="1">One</option>
-						<option selected value="2">Two</option>
-						<option value="3">Three</option>
-						<option value="4">Four</option>
-						<option value="5">Five</option>
-						<option value="6">Six</option>
-					</select>
-				</div> -->
 				<div class="col-12">
-					<!-- <multiselect 
-						v-model="form.sponsors"
-						:options="sponsors"
-						label="name"
-						:multiple="true"
-						track-by="value"
-						placeholder="Sélectionner un sponsor"
-						selectLabel="Appuyer sur Entrée pour sélectionner"
-						selectedLabel="Sélectionné"
-						deselectLabel="Appuyer sur entrée pour désélectionner"
-					></multiselect> -->
 					<multiselect 
 						label="name"
 						track-by="id"
@@ -107,12 +125,6 @@
 						deselectLabel="Appuyer sur entrée pour désélectionner"
 						v-model="form.sponsors"
 					>
-    					<!-- <template slot="selection" slot-scope="{ values, search, isOpen }">
-    						<span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">
-    							{{ values.length }} options selected
-
-    						</span>
-    					</template> -->
 					</multiselect>
 				</div>
 			</div>
@@ -122,7 +134,7 @@
 		  			<button type="submit" class="btn btn-primary">Créer cette activité</button>
 		  		</div>
 		  	</div>
-		</form>
+		</form>-->
 
 		<br /><br />
 

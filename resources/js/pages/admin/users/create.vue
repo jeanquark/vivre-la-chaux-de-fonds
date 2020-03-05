@@ -10,7 +10,7 @@
 
         <h1 class="text-center">Créer un nouvel utilisateur</h1>
 
-        <b-row class="justify-content-center fadeInDown">
+        <b-row class="justify-content-center">
             <b-col cols="12" md="8" lg="6">
                 <b-form @submit.prevent="createUser">
                     <b-row align-v="center" class="justify-content-start my-3 px-3">
