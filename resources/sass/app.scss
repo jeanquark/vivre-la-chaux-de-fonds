@@ -75,3 +75,12 @@ $pretty--color-primary: #9acd32;
 .help-block {
 	margin-bottom: 6px;
 }
+
+.navigation a:hover {
+	color: $primary;
+	text-decoration: none;
+}
+.navigation span:hover {
+	color: $primary-hover;
+	text-decoration: underline;
+}

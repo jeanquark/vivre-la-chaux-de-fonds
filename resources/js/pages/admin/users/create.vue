@@ -1,85 +1,106 @@
 <template>
-	<b-container>
-		<b-breadcrumb>
+    <b-container>
+        <b-breadcrumb>
             <b-breadcrumb-item to="/admin/users" class="navigation">
-				<font-awesome-icon icon="users" />
-				<span>Utilisateurs</span>
-			</b-breadcrumb-item>
+                <font-awesome-icon icon="users" />
+                <span>Utilisateurs</span>
+            </b-breadcrumb-item>
             <b-breadcrumb-item active>Créer</b-breadcrumb-item>
         </b-breadcrumb>
 
-		<nav aria-label="breadcrumb">
-		  	<ol class="breadcrumb">
-		    	<li class="breadcrumb-item"><router-link to="/admin/users">Users</router-link></li>
-		    	<li class="breadcrumb-item active" aria-current="page">Create</li>
-		  	</ol>
-		</nav>
-		<h1 class="text-center">Create new user</h1>
+        <h1 class="text-center">Créer un nouvel utilisateur</h1>
 
-		<form @submit.prevent="createUser">
-			<div class="form-row">
-				<div class="col-12 col-md-6">
-				  	<div class="form-group">
-				    	<label for="firstname">Prénom</label>
-				    	<input type="text" class="form-control" id="firstname" placeholder="" v-model="form.firstname">
-				  	</div>
-				</div>
-				<div class="col-12 col-md-6">
-				  	<div class="form-group">
-					    <label for="lastname">Nom</label>
-				    	<input type="text" class="form-control" id="lastname" placeholder="" v-model="form.lastname">
-				  	</div>
-				</div>
+        <b-row class="justify-content-center fadeInDown">
+            <b-col cols="12" md="8" lg="6">
+                <b-form @submit.prevent="createUser">
+                    <b-row align-v="center" class="justify-content-start my-3 px-3">
+                        <b-col cols="12" md="6">
+                            <b-form-group label="Prénom:" label-for="newUserFirstname">
+                                <b-form-input id="newUserFirstname" placeholder="Prénom" :class="{ 'is-invalid': form.errors.has('firstname') }" v-model="form.firstname"></b-form-input>
+                                <has-error :form="form" field="firstname" />
+                            </b-form-group>
+                        </b-col>
+                        <b-col cols="12" md="6">
+                            <b-form-group label="Nom:" label-for="newUserLastname">
+                                <b-form-input id="newUserLastname" placeholder="Nom" :class="{ 'is-invalid': form.errors.has('lastname') }" v-model="form.lastname"></b-form-input>
+								<has-error :form="form" field="lastname" />
+                            </b-form-group>
+                        </b-col>
+                        <b-col cols="12" md="6">
+                            <b-form-group  label="E-mail:" label-for="newUserEmail">
+                                <b-form-input type="email" id="newUserEmail" placeholder="E-mail" :class="{ 'is-invalid': form.errors.has('email') }" v-model="form.email"></b-form-input>
+								<has-error :form="form" field="email" />
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
+					<b-row align-v="center" class="justify-content-start px-3">
+                        <b-col cols="12">
+                            <b-form-group  label="Mot de passe:" label-for="newUserPassword">
+                                <b-form-input type="password" id="newUserPassword" placeholder="Mot de passe" :class="{ 'is-invalid': form.errors.has('password') }" v-model="form.password"></b-form-input>
+								<has-error :form="form" field="password" />
+                            </b-form-group>
+                        </b-col>
 
-				<div class="col-12 col-md-6">
-				  	<div class="form-group">
-				    	<label for="email">E-mail</label>
-				    	<input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="" v-model="form.email">
-				  	</div>
-				</div>
-			</div>			
-
-			<div class="row my-3">
-				<div class="col-12 text-center">
-		  			<button type="submit" class="btn btn-primary">Créer cet utilisateur</button>
-		  		</div>
-		  	</div>
-		</form>
-	</b-container>
+                        <b-col cols="12">
+                            <b-form-group  label="Confirmation mot de passe:" label-for="newUserPasswordConfirmation">
+                                <b-form-input type="password" id="newUserPasswordConfirmation" placeholder="Confirmation mot de passe" :class="{ 'is-invalid': form.errors.has('password_confirmation') }" v-model="form.password_confirmation"></b-form-input>
+								<has-error :form="form" field="password_confirmation" />
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
+                    <b-row class="justify-content-center my-2">
+                        <b-button variant="primary" :disabled="loading" type="submit">
+                            <b-spinner small type="grow" v-if="loading"></b-spinner>
+                            Créer nouvel utilisateur
+                        </b-button>
+                    </b-row>
+                </b-form>
+            </b-col>
+        </b-row>
+    </b-container>
 </template>
 
 <script>
-	export default {
-		layout: 'backend',
-		async created () {
-		},
-		mounted () {
-		},
-		data () {
-			return {
-				image: {},
-				form: {
-					firstname: 'John',
-					lastname: 'Doe',
-					email: 'john.doe@example.com'
-				}
-			}
-		},
-		methods: {
-			async createUser () {
-				try {
-					console.log('this.form: ', this.form)
-					
-					await this.$store.dispatch('users/createUser', { activity: this.form })
-					this.$router.push('/admin/users')
-				} catch (error) {
-					console.log('error: ', error)
-				}
-			}
-		}
-	}
+import Form from 'vform'
+export default {
+    layout: 'backend',
+    async created() {},
+    mounted() {},
+    data() {
+        return {
+            form: new Form({
+                firstname: 'John',
+                lastname: 'Doe',
+                email: 'john.doe@example.com',
+                password: 'secret',
+                password_confirmation: 'secret'
+            })
+        }
+    },
+    computed: {
+        loading() {
+            return this.$store.getters['loading/loading']
+        }
+    },
+    methods: {
+        async createUser() {
+            try {
+                console.log('this.form: ', this.form)
+				this.$store.commit('loading/SET_LOADING', true)
+				// const { data } = await this.form.post('/api/users')
+				// console.log('data: ', data)
+                await this.$store.dispatch('users/createUser', this.form)
+				this.$store.commit('loading/SET_LOADING', false)
+				this.$noty.success('Nouvel utilisateur créé avec succès!')
+				this.$router.push('/admin/users')
+            } catch (error) {
+				this.$store.commit('loading/SET_LOADING', false)
+				console.log('error: ', error)
+				this.$noty.error("Une erreur est survenue et l'utillisateur n'a pas pu être créé.")
+            }
+        }
+    }
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

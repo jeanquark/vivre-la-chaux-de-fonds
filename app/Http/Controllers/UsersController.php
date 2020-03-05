@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+// use App\Role;
 use View;
 use jeremykenedy\LaravelRoles\Models\Role;
+use App\Http\Requests\StoreUser;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -38,24 +41,35 @@ class UsersController extends Controller
         ], 200);
     }
 
-    protected function createUser(Request $request) {
-        $user = json_decode($request->form);
+    protected function createUser(StoreUser $request) {
 
-        $newUser = new User;
+        // return response()->json([
+        //     'success' => true,
+        //     'request' => $request,
+        // ], 201);
 
-        $newUser->firstname = $user->firstname;
-        $newUser->lastname = $user->lastname;
-        $newUser->email = $user->email;
-        $newUser->phone = $user->phone;
-        $newUser->is_active = false;
+        // $user = json_decode($request->form);
 
-        $newUser->save();
+        // $newUser = new User;
 
-        // Save users relationships
-        // foreach ($user->shows as $show) {
-        //     $newUser->shows()->attach($show->id);
-        // }
+        // $newUser->firstname = $request->firstname;
+        // $newUser->lastname = $request->lastname;
+        // $newUser->email = $request->email;
+        // $newUser->password = Hash::make($request->password);
+        // $newUser->save();
+
+        $newUser = User::create([
+            'firstname' => $request['firstname'],
+            'lastname' => $request['lastname'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password']),
+        ]);
         
+        // Attach user role
+        $role = Role::where('name', '=', 'User')->first();
+        $newUser->attachRole($role);
+        
+
         return response()->json([
             'success' => true,
             'newUser' => $newUser,

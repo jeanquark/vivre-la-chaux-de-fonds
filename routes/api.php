@@ -48,7 +48,7 @@ Route::get('/sponsors/{id}', 'SponsorsController@getSponsor');
 Route::group(['middleware' => 'role:admin'], function () {
     // Users
     Route::get('/users', 'UsersController@getUsers');
-    Route::post('/users', 'UsersController@addUser');
+    Route::post('/users', 'UsersController@createUser');
     Route::get('/users/{id}', 'UsersController@getUser');
     Route::put('/users/{id}', 'UsersController@updateUser');
     Route::delete('/users/{id}', 'UsersController@deleteUser');

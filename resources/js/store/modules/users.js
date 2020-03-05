@@ -24,7 +24,7 @@ export const mutations = {
         state.user = payload
     },
     ADD_USER (state, payload) {
-        console.log('Add user mutation: ', payload)
+        console.log('ADD_USER mutation: ', payload)
         state.users.push(payload)
     },
     UPDATE_USER (state, payload) {
@@ -67,21 +67,26 @@ export const actions = {
             console.log('vuex error: ', error)
         }
     },
-    async createUser ({ commit }, payload) {
+    async createUser ({ commit }, form) {
         try {
-            console.log('payload: ', payload)
-            const config = {
-                headers: { 'content-type': 'multipart/form-data' }
-            }
+            console.log('payload: ', form)
 
-            let formData = new FormData();
-            formData.append('image', payload.image);
-            formData.append('form', JSON.stringify(payload.user))
-            console.log('formData: ', formData)
-
-            const { data } = await axios.post('/api/users', formData, config)
+            const { data } = await form.post('/api/users')
             console.log('data: ', data)
             commit('ADD_USER', data.newUser)
+
+            // const config = {
+            //     headers: { 'content-type': 'multipart/form-data' }
+            // }
+
+            // let formData = new FormData();
+            // formData.append('image', payload.image);
+            // formData.append('form', JSON.stringify(payload.user))
+            // console.log('formData: ', formData)
+
+            // const { data } = await axios.post('/api/users', formData, config)
+            // console.log('data: ', data)
+            // commit('ADD_USER', data.newUser)
         } catch (error) {
             throw error
         }
