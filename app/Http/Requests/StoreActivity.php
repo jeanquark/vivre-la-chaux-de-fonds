@@ -24,9 +24,9 @@ class StoreActivity extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'min:2', 'max:2'],
+            // 'title' => ['required', 'min:2', 'max:4'],
             'subtitle' => ['required', 'min:2', 'max:128'],
-            'content' => []
+            'content' => [],
             'image' => ['required', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
             // 'file' => ['file', 'mimes:pdf', 'max:5000'] // max size is in kilobytes
         ];

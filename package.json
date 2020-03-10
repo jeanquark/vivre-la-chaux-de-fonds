@@ -24,6 +24,7 @@
     "js-cookie": "^2.2.0",
     "jwt-decode": "^2.2.0",
     "laravel-mix-svg-vue": "^0.2.3",
+    "object-to-formdata": "^3.0.6",
     "popper.js": "^1.16.0",
     "pretty-checkbox-vue": "^1.1.9",
     "svg.draggable.js": "^2.2.2",

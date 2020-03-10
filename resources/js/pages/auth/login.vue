@@ -26,7 +26,7 @@
                                         <label>Mot de passe</label>
                                     </b-col>
                                     <b-col cols="12" md="6">
-                                        <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password" />
+                                        <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') || form.errors.has('email') }" class="form-control" type="password" name="password" />
                                         <has-error :form="form" field="password" />
                                     </b-col>
                                 </b-row>

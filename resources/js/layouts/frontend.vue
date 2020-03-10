@@ -121,14 +121,14 @@
         /*color: #fff;*/
     }
 	body {
-        background: url('/images/svg/bg_small.svg') no-repeat;
-        background-size: cover;
+        /* background: url('/images/svg/bg_small.svg') no-repeat; */
+        /* background-size: cover; */
     }
 
     @media only screen and (min-width: 992px) {
         body {
-            background: url('/images/svg/bg.svg') no-repeat;
-            background-size: cover;
+            /* background: url('/images/svg/bg.svg') no-repeat; */
+            /* background-size: cover; */
         }
     }
 </style>

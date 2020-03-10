@@ -25,8 +25,8 @@ function errorResponseHandler(error) {
 
     // if has response show the error 
     if (error.response) {
-        console.log('error.response from bootstrap.js: ', error.response)
-        console.log('error.response.status from bootstrap.js: ', error.response.status)
+        // console.log('error.response from bootstrap.js: ', error.response)
+        // console.log('error.response.status from bootstrap.js: ', error.response.status)
         // console.log('store.getters[auth/token]: ', store.getters['auth/token'])
         
 

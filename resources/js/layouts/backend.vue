@@ -61,7 +61,7 @@
 					},
 					{
 						href: '/admin/activities',
-						title: 'Activities',
+						title: 'Activités',
 						alias: ['/admin/activities', '/admin/activities/create', '/admin/activities/:id', '/admin/activities/:id/edit'],
 						icon: {
 							element: 'font-awesome-icon',
@@ -95,6 +95,7 @@
 						}
 					},
 					{
+						href: '/logout',
 						title: 'Logout',
 						icon: {
 							element: 'font-awesome-icon',
@@ -118,9 +119,9 @@
 </script>
 
 <style>
-    body.home {
+    /* body.home {
     	background-image: none;
-	}
+	} */
 </style>
 
 <style lang="scss" scoped>

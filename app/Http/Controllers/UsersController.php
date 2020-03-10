@@ -69,7 +69,7 @@ class UsersController extends Controller
         $role = Role::where('name', '=', 'User')->first();
         $user->attachRole($role);
         
-        $newUser = $user::with('roles')->find($user->id);
+        $newUser = User::with('roles')->find($user->id);
 
         return response()->json([
             'success' => true,

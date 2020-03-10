@@ -1,196 +1,253 @@
 <template>
-	<b-container>
-		<b-breadcrumb>
-            <b-breadcrumb-item to="/admin/users" class="navigation">
-				<font-awesome-icon icon="calendar-day" />
-				<span>Activités</span>
-			</b-breadcrumb-item>
+    <b-container>
+        <b-breadcrumb>
+            <b-breadcrumb-item to="/admin/activities" class="navigation">
+                <font-awesome-icon icon="calendar-day" />
+                <span>Activités</span>
+            </b-breadcrumb-item>
             <b-breadcrumb-item active>Editer</b-breadcrumb-item>
         </b-breadcrumb>
-		<h2 class="text-center">Editer une activité</h2>
-		<!-- activity: {{ activity }}<br /><br /> -->
+        <h2 class="text-center">Editer une activité</h2>
+        <!-- activity: {{ activity }}<br /><br /> -->
+        <!-- activity.sponsors: {{ activity.sponsors }}<br /><br /> -->
+        <!-- form.sponsors: {{ form.sponsors }}<br /><br /> -->
 
+        <b-row class="justify-content-center">
+            <b-col cols="12" md="8" lg="6">
+                <b-form @submit.prevent="updateActivity">
+                    <!-- form.id: {{ form.id }}<br /><br /> -->
+                    <!-- form.image: {{ form.image }}<br /><br /> -->
+                    <b-row align-v="center" class="justify-content-start my-3 px-3">
+                        <b-col cols="12">
+                            <b-form-group label="Titre:" label-for="title">
+                                <b-form-input id="title" :class="{ 'is-invalid': form.errors.has('title') }" v-model="form.title"></b-form-input>
+                                <has-error :form="form" field="title" />
+                            </b-form-group>
+                        </b-col>
+                        <b-col cols="12">
+                            <b-form-group label="Sous-titre:" label-for="subtitle">
+                                <b-form-input id="subtitle" :class="{ 'is-invalid': form.errors.has('subtitle') }" v-model="form.subtitle"></b-form-input>
+                                <has-error :form="form" field="subtitle" />
+                            </b-form-group>
+                        </b-col>
+                        <b-col cols="12">
+                            <b-form-group label="Contenu:" label-for="content">
+                                <b-form-textarea id="content" placeholder="" rows="3" max-rows="6" :class="{ 'is-invalid': form.errors.has('content') }" v-model="form.content"></b-form-textarea>
+                                <has-error :form="form" field="content" />
+                            </b-form-group>
+                        </b-col>
+                        <b-col cols="12" md="6">
+                            <b-form-group label="Date de début:" label-for="startDate">
+                                <VueCtkDateTimePicker
+                                    label="Cliquer pour choisir une date"
+                                    format="DD-MM-YYYY HH:mm"
+                                    formatted="DD-MM-YYYY HH-mm"
+                                    button-now-translation="Aujourd'hui"
+                                    id="startDate"
+                                    v-model="form.start_date"
+                                />
+                            </b-form-group>
+                        </b-col>
+                        <b-col cols="12" md="6">
+                            <b-form-group label="Date de fin:" label-for="endDate">
+                                <VueCtkDateTimePicker
+                                    label="Cliquer pour choisir une date"
+                                    format="YYYY-MM-DD"
+                                    formatted="YYYY-MM-DD"
+                                    button-now-translation="Aujourd'hui"
+                                    only-date
+                                    id="endDate"
+                                    v-model="form.end_date"
+                                />
+                            </b-form-group>
+                        </b-col>
 
-		<form @submit.prevent="updateActivity" v-if="activity && activity.id">
-			<div class="row my-2">
-				<div class="col-12 col-md-6">
-				  	<div class="form-group">
-				    	<label for="title">Titre</label>
-				    	<input type="text" class="form-control" id="title" aria-describedby="emailHelp" placeholder="" v-model="activity.title">
-				  	</div>
-				</div>
-				<div class="col-12 col-md-6">
-				  	<div class="form-group">
-					    <label for="subtitle">Sous-titre</label>
-				    	<input type="textarea" class="form-control" id="subtitle" placeholder="" v-model="activity.subtitle">
-				  	</div>
-				</div>
-			</div>			
+                        <b-col cols="12" class="my-2">
+                            <b-form-checkbox id="is_published" name="is_published" v-model="form.is_published">
+                                Publié?
+                            </b-form-checkbox>
+                        </b-col>
 
-			<div class="row my-2">
-				<div class="col-12">
-					<div class="form-group">
-						<label for="image">Contenu:</label>
-						<tinymce-editor 
-							:api-key="tinymce_key"
-							:init="{plugins: 'wordcount'}"
-							v-model="activity.content"
-						></tinymce-editor>
-					</div>
-				</div>
-			</div>
+                        <b-col cols="12" class="my-2">
+                            <p class="text-center">Image actuelle:</p>
+                            <b-img center :src="`/images/${form.image}`" width="200" class=""></b-img>
+                        </b-col>
+                        <b-col cols="12" class="my-2">
+                            <b-form-file
+                                accept="image/jpeg, image/png"
+                                placeholder="Choisir un nouveau fichier..."
+                                drop-placeholder="Placez votre fichier ici..."
+                                @change="selectFile"
+                                :class="{ 'is-invalid': form.errors.has('image_new') }"
+                            ></b-form-file>
+                            <!-- <div class="mt-3">Selected file: {{ form.file ? form.file.name : '' }}</div> -->
+                            <has-error :form="form" field="image_new" />
+                        </b-col>
 
-			<div class="row my-2">
-				<div class="col-12 col-md-6">
-					<div class="form-group">
-						<label for="image">Image actuelle:</label><br />
-						<img :src="`/images/${activity.image}`" width="200" v-if="activity.image" />
-						<span v-else><i>Pas d'image</i></span>
-					</div>
-				</div>
-				<div class="col-12 col-md-6">
-					<div class="form-group">
-						<label for="image">Nouvelle image:</label><br />
-						<input type="file" id="image" name="image" accept="image/png, image/jpeg" @change="uploadImage($event)">
-					</div>
-				</div>
-			</div>
-			
-			<div class="row align-items-center my-2">
-				<div class="col-12 col-md-6">
-					<VueCtkDateTimePicker label="Choisir date et heure de début" format="YYYY-MM-DD HH:mm:ss" color="#9ACD32" button-color="#9ACD32" button-now-translation="Maintenant" v-model="activity.start_date" />
-				</div>
-				<div class="col-12 col-md-6">
-					<p-check class="p-curve p-bigger p-jelly" name="check" color="primary" v-model="addEndDate">Ajouter une date de fin</p-check>
-					
-				</div>
-				<div class="col-12 col-md-6 my-3">
-					<VueCtkDateTimePicker label="Choisir date et heure de fin" format="YYYY-MM-DD HH:mm:ss" color="#9ACD32" button-color="#9ACD32" button-now-translation="Maintenant" v-model="activity.end_date" v-if="addEndDate" />
-				</div>
-			</div>
-			
-			<div class="row align-items-center my-2">
-				<div class="col-12">
-					<div class="form-group">
-						<label for="image">Sponsors pour cette activité:</label><br />
-						<multiselect 
-							label="name"
-							track-by="id"
-							:options="sponsors"
-							:multiple="true"
-							:close-on-select="false"
-							:clear-on-select="false"
-							:preserve-search="true"
-							:preselect-first="true"
-							placeholder="Sélectionner un sponsor"
-							selectLabel="Appuyer sur Entrée pour sélectionner"
-							selectedLabel="Sélectionné"
-							deselectLabel="Appuyer sur entrée pour désélectionner"
-							v-model="activity.sponsors"
-						>
-						</multiselect>
-					</div>
-				</div>
-			</div>
-
-			<div class="row my-4">
-				<div class="col-12 text-center">
-		  			<button type="submit" class="btn btn-primary">Editer cette activité</button>
-		  		</div>
-		  	</div>
-		</form>
-
-	</b-container>
+                        <b-col cols="12" class="my-2">
+                            <b-form-select multiple value-field="id" text-field="name" v-model="form.sponsors" :options="sponsors" size="sm" class="mt-3"></b-form-select>
+                            <!-- <multiselect
+                                label="name"
+                                track-by="id"
+                                :options="sponsors"
+                                :multiple="true"
+                                :close-on-select="false"
+                                :clear-on-select="false"
+                                :preserve-search="true"
+                                :preselect-first="true"
+                                placeholder="Sélectionner un sponsor"
+                                selectLabel="Appuyer sur Entrée pour sélectionner"
+                                selectedLabel="Sélectionné"
+                                deselectLabel="Appuyer sur entrée pour désélectionner"
+                                v-model="form.sponsors"
+                            >
+                            </multiselect> -->
+                        </b-col>
+                    </b-row>
+                    <b-row class="justify-content-center my-2">
+                        <b-button variant="primary" :disabled="loading" type="submit">
+                            <b-spinner small type="grow" v-if="loading"></b-spinner>
+                            Editer activité
+                        </b-button>
+                    </b-row>
+                </b-form>
+            </b-col>
+        </b-row>
+    </b-container>
 </template>
 
 <script>
-	import axios from 'axios'
+import Form from 'vform'
 
-	// Tinymce Editor
-	import Editor from '@tinymce/tinymce-vue'
+// Datepicker
+import VueCtkDateTimePicker from 'vue-ctk-date-time-picker'
+import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css'
 
-	// Datepicker
-	import VueCtkDateTimePicker from 'vue-ctk-date-time-picker'
-	import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css'
+// Multiselect
+import Multiselect from 'vue-multiselect'
+import 'vue-multiselect/dist/vue-multiselect.min.css'
 
-	// Pretty checkboxes
-	import PrettyCheck from 'pretty-checkbox-vue/check'
+export default {
+    layout: 'backend',
+    components: {
+        VueCtkDateTimePicker,
+        Multiselect
+    },
+    async created() {
 
-	// Multiselect
-	import Multiselect from 'vue-multiselect'
-	import 'vue-multiselect/dist/vue-multiselect.min.css'
+    },
+    async mounted() {
+        const activityId = parseInt(this.$route.params.id)
+		console.log('activityId: ', activityId)
 
-	export default {
-		layout: 'backend',
-		components: {
-			'tinymce-editor': Editor,
-			VueCtkDateTimePicker,
-			'p-check': PrettyCheck,
-			Multiselect
-		},
-		async created () {
-			if (this.$store.getters['sponsors/sponsors'].length < 1) {
-				this.$store.dispatch('sponsors/fetchSponsors')
-			}
-		},
-		async mounted () {
-			// this.activityId = this.$route.params.id
-			const activityId = parseInt(this.$route.params.id)
-			console.log('activityId: ', activityId)
-			await this.$store.dispatch('activities/fetchActivity', { activityId })
-
-			// this.activity = this.$store.getters['activities/activity']
-
-			// const { data } = await axios.get(`/api/activities/${activityId}`)
-			// console.log('data: ', data)
-			// this.activity = data.activity
-			// this.activity['sponsors'] = data.sponsors
-			// if (this.activity.end_date) {
-			// 	this.addEndDate = true
-			// }
-			this.$noty.success("Hello world!")
-
-
-		},
-		data () {
-			return {
-				tinymce_key: process.env.MIX_TINYMCE_KEY,
-				addEndDate: false,
-				new_image: {}
-			}
-		},
-		computed: {
-			sponsors () {
-				return this.$store.getters['sponsors/sponsors']
-			},
-			activities () {
-				return this.$store.getters['activities/activities']
-			},
-			activity () {
-				return this.$store.getters['activities/activity']
-			}
-		},
-		methods: {
-			uploadImage (event) {
-				console.log('uploadImage', event)
-				console.log(event.target)
-				console.log(event.target.files[0])
-				this.new_image = event.target.files[0]
-			},
-			async updateActivity () {
-				try {
-	                await this.$store.dispatch('activities/updateActivity', { activity: this.activity, image: this.new_image })
-	                this.$noty.success('Activité mise à jour avec succès!')
-					this.$router.push('/admin/activities')
-				} catch (error) {
-					console.log('error: ', error)
-					this.$noty.error("Une erreur est survenue et l'activité n'a pas pu être mise à jour.")
-				}
-			}
+		// if (!this.$store.getters['activities/activities'].find(activity => activity.id === activityId)) {
+		if (this.$store.getters['activities/activities'].length < 2) {
+            // await this.$store.dispatch('activities/fetchActivity', { activityId })
+            await this.$store.dispatch('activities/fetchActivities')
 		}
-	}
+
+
+        if (this.$store.getters['sponsors/sponsors'].length < 2) {
+            await this.$store.dispatch('sponsors/fetchSponsors')
+        }
+
+        console.log('this.activity: ', this.activity)
+        console.log('this.form: ', this.form)
+        this.form.fill(this.activity)
+        this.form.sponsors = this.activity.sponsors.map(sponsor => sponsor.id)
+    },
+    data() {
+        return {
+			form: new Form({
+                id: '',
+				title: '',
+                subtitle: '',
+                content: '',
+                start_date: '',
+                end_date: '',
+                image: null,
+                new_image: null,
+                is_published: false,
+				sponsors: []
+            }),
+            // selected: ['3'],
+        }
+    },
+    computed: {
+		loading () {
+			return this.$store.getters['loading/loading']
+		},
+        sponsors() {
+            return this.$store.getters['sponsors/sponsors']
+        },
+        activities() {
+            return this.$store.getters['activities/activities']
+        },
+        activity() {
+            return this.$store.getters['activities/activities'].find(activity => activity.id === parseInt(this.$route.params.id))
+        }
+    },
+    methods: {
+		selectFile(e) {
+            this.form.new_image = e.target.files[0]
+        },
+        async updateActivity() {
+            try {
+                console.log('this.form: ', this.form)
+                // return
+                this.$store.commit('loading/SET_LOADING', true)
+                // const { data } = await axios.post('/api/users', this.form)
+                // console.log('data: ', data)
+                await this.$store.dispatch('activities/updateActivity', this.form)
+                this.$store.commit('loading/SET_LOADING', false)
+                this.$noty.success('Nouvelle activité mise à jour avec succès!')
+                this.$router.push('/admin/activities')
+            } catch (error) {
+                this.$store.commit('loading/SET_LOADING', false)
+                console.log('error: ', error)
+                this.$noty.error("Une erreur est survenue et l'activité n'a pas pu être mise à jour.")
+            }
+        }
+    }
+}
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import './resources/sass/_variables.scss';
+// Datetime picker style
+::v-deep .header-picker {
+    background-color: $primary !important;
+}
+::v-deep .custom-button-content {
+    color: $primary !important;
+}
+::v-deep .datepicker-day-effect {
+    background: $primary !important;
+}
+::v-deep .datepicker-button-content {
+    color: $primary !important;
+}
+::v-deep .datepicker-button svg {
+    fill: $primary !important;
+}
+::v-deep .datepicker-button-effect {
+    background: $primary !important;
+}
+::v-deep .field-input:focus {
+    border: 1px solid $primary !important;
+}
+::v-deep .field-label {
+    color: $primary !important;
+}
+::v-deep .time-picker-column-item-effect {
+    background-color: $primary !important;
+}
 
+// Image upload
+::v-deep .custom-file-label::after {
+    content: 'Parcourir' !important;
+}
+::v-deep .b-form-file.is-invalid {
+    outline: #dc3545 solid 1px;
+}
 </style>
