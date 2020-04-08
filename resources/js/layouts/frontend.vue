@@ -122,13 +122,15 @@
     }
 	body {
         /* background: url('/images/svg/bg_small.svg') no-repeat; */
-        /* background-size: cover; */
+        background: url('/images/svg/la_chaux_de_fonds_background.svg') no-repeat;
+        background-size: cover;
     }
 
     @media only screen and (min-width: 992px) {
         body {
-            /* background: url('/images/svg/bg.svg') no-repeat; */
-            /* background-size: cover; */
+            /* background: url('/images/svg/city.svg') no-repeat; */
+            background: url('/images/svg/la_chaux_de_fonds_background.svg') no-repeat;
+            background-size: cover;
         }
     }
 </style>

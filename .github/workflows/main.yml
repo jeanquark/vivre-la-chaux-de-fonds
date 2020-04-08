@@ -1,8 +1,8 @@
 on: push
 name: Publish Website
 jobs:
-  FTP-Deploy-Action:
-    name: FTP-Deploy-Action
+  deploy-file-updates:
+    name: Deploy file updates
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -14,8 +14,8 @@ jobs:
         ftp-server: ${{ secrets.FTP_HOST }}/web/vivre-la-chaux-de-fonds
         ftp-username: ${{ secrets.FTP_USERNAME }}
         ftp-password: ${{ secrets.FTP_PASSWORD }}
-  build:
-    name: Build
+  composer-install:
+    name: Composer install
     runs-on: ubuntu-latest
     steps:
     - name: executing remote ssh commands using password

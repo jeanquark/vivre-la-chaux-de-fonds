@@ -10,10 +10,10 @@
 		<b-row class="justify-content-center">
 
 			<b-col cols="6" class="p-5" v-for="activity in activities" :key="activity.id">
-                <b-card img-src="https://placekitten.com/1000/600" img-alt="Card image" img-top>
+                <b-card :img-src="`/images/activities/${activity.image}`" img-alt="Card image" img-top>
                 	<b-card-text class="text-center">
-                        <h5 class="my-2">St-Nicolas 2019</h5>
-                        <b-button variant="primary" class="my-2" :to="{ name: 'activity', params: { slug: activity.slug}}">En savoir plus</b-button>
+                        <h5 class="my-2">{{ activity.name }}</h5>
+                        <b-button variant="primary" class="my-2" :to="{ name: 'activity', params: { slug: activity.slug}}">En savoir plus &rarr;</b-button>
                 	</b-card-text>
                 </b-card>
             </b-col>
