@@ -1,11 +1,11 @@
 <template>
-    <b-container>
-        <b-row class="mt-4 mx-0">
-            <b-col cols="12" id="footer" style="min-height: 200px;">
+    <!-- <b-container> -->
+        <b-row class="" style="position: fixed; bottom: 0; height: 200px; width: 100%; border: 2px solid green; margin: 0px; padding: 0px;">
+            <b-col cols="12" style="">
                 Footer
             </b-col>
         </b-row>
-    </b-container>
+    <!-- </b-container> -->
 </template>
 
 <script>

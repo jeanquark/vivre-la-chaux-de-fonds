@@ -43,9 +43,9 @@
                                         <router-link :to="{ name: 'password.request' }" class="m-2">
                                             Mot de passe oublié?
                                         </router-link>
-                                        <router-link :to="{ name: 'register' }" class="m-2">
+                                        <!-- <router-link :to="{ name: 'register' }" class="m-2">
                                             S'enregistrer &rarr;
-                                        </router-link>
+                                        </router-link> -->
                                     </b-col>
                                 </b-row>
                             </b-form>

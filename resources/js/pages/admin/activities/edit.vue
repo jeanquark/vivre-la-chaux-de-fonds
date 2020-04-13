@@ -7,7 +7,7 @@
             </b-breadcrumb-item>
             <b-breadcrumb-item active>Editer</b-breadcrumb-item>
         </b-breadcrumb>
-        <h2 class="text-center">Editer une activité</h2>
+        <h2 class="text-center" v-if="activity">Editer activité {{ activity.name }}</h2>
         <!-- activity: {{ activity }}<br /><br /> -->
         <!-- activity.sponsors: {{ activity.sponsors }}<br /><br /> -->
         <!-- form.sponsors: {{ form.sponsors }}<br /><br /> -->
@@ -19,9 +19,9 @@
                     <!-- form.image: {{ form.image }}<br /><br /> -->
                     <b-row align-v="center" class="justify-content-start my-3 px-3">
                         <b-col cols="12">
-                            <b-form-group label="Titre:" label-for="title">
-                                <b-form-input id="title" :class="{ 'is-invalid': form.errors.has('title') }" v-model="form.title"></b-form-input>
-                                <has-error :form="form" field="title" />
+                            <b-form-group label="Nom:" label-for="name">
+                                <b-form-input id="name" :class="{ 'is-invalid': form.errors.has('name') }" v-model="form.name"></b-form-input>
+                                <has-error :form="form" field="name" />
                             </b-form-group>
                         </b-col>
                         <b-col cols="12">
@@ -63,14 +63,14 @@
                         </b-col>
 
                         <b-col cols="12" class="my-2">
-                            <b-form-checkbox id="is_published" name="is_published" v-model="form.is_published">
+                            <b-form-checkbox id="is_published" name="is_published" value="1" unchecked-value="0" v-model="form.is_published">
                                 Publié?
                             </b-form-checkbox>
                         </b-col>
 
                         <b-col cols="12" class="my-2">
                             <p class="text-center">Image actuelle:</p>
-                            <b-img center :src="`/images/${form.image}`" width="200" class=""></b-img>
+                            <b-img center :src="`/images/activities/${form.image}`" width="200" class=""></b-img>
                         </b-col>
                         <b-col cols="12" class="my-2">
                             <b-form-file
@@ -85,7 +85,9 @@
                         </b-col>
 
                         <b-col cols="12" class="my-2">
-                            <b-form-select multiple value-field="id" text-field="name" v-model="form.sponsors" :options="sponsors" size="sm" class="mt-3"></b-form-select>
+                            <b-form-group label="Sponsors:">
+                                <b-form-select multiple value-field="id" text-field="name" v-model="form.sponsors" :options="sponsors" size="sm" class=""></b-form-select>
+                            </b-form-group>
                             <!-- <multiselect
                                 label="name"
                                 track-by="id"
@@ -117,6 +119,7 @@
 </template>
 
 <script>
+// vform
 import Form from 'vform'
 
 // Datepicker
@@ -133,21 +136,16 @@ export default {
         VueCtkDateTimePicker,
         Multiselect
     },
-    async created() {
-
-    },
+    async created() {},
     async mounted() {
         const activityId = parseInt(this.$route.params.id)
-		console.log('activityId: ', activityId)
+        console.log('activityId: ', activityId)
 
-		// if (!this.$store.getters['activities/activities'].find(activity => activity.id === activityId)) {
-		if (this.$store.getters['activities/activities'].length < 2) {
-            // await this.$store.dispatch('activities/fetchActivity', { activityId })
-            await this.$store.dispatch('activities/fetchActivities')
-		}
+        if (!this.$store.getters['activities/activities'][this.$route.params.id]) {
+            await this.$store.dispatch('activities/fetchActivityById', { activityId: this.$route.params.id })
+        }
 
-
-        if (this.$store.getters['sponsors/sponsors'].length < 2) {
+        if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {
             await this.$store.dispatch('sponsors/fetchSponsors')
         }
 
@@ -158,9 +156,9 @@ export default {
     },
     data() {
         return {
-			form: new Form({
+            form: new Form({
                 id: '',
-				title: '',
+                name: '',
                 subtitle: '',
                 content: '',
                 start_date: '',
@@ -168,15 +166,14 @@ export default {
                 image: null,
                 new_image: null,
                 is_published: false,
-				sponsors: []
-            }),
-            // selected: ['3'],
+                sponsors: []
+            })
         }
     },
     computed: {
-		loading () {
-			return this.$store.getters['loading/loading']
-		},
+        loading() {
+            return this.$store.getters['loading/loading']
+        },
         sponsors() {
             return this.$store.getters['sponsors/sponsors']
         },
@@ -184,11 +181,11 @@ export default {
             return this.$store.getters['activities/activities']
         },
         activity() {
-            return this.$store.getters['activities/activities'].find(activity => activity.id === parseInt(this.$route.params.id))
+            return this.$store.getters['activities/activities'][this.$route.params.id]
         }
     },
     methods: {
-		selectFile(e) {
+        selectFile(e) {
             this.form.new_image = e.target.files[0]
         },
         async updateActivity() {
@@ -200,7 +197,7 @@ export default {
                 // console.log('data: ', data)
                 await this.$store.dispatch('activities/updateActivity', this.form)
                 this.$store.commit('loading/SET_LOADING', false)
-                this.$noty.success('Nouvelle activité mise à jour avec succès!')
+                this.$noty.success('Activité mise à jour avec succès!')
                 this.$router.push('/admin/activities')
             } catch (error) {
                 this.$store.commit('loading/SET_LOADING', false)

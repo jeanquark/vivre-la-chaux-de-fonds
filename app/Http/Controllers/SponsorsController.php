@@ -31,9 +31,31 @@ class SponsorsController extends Controller
         return response()->json($sponsors, 200);
     }
 
-    public function getSponsor(Request $request, $id)
+    // public function getSponsor(Request $request, $id)
+    // {
+    //     $sponsor = Sponsor::find($id);
+    //     $sponsor['activities'] = $sponsor->activities;
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'sponsor' => $sponsor,
+    //     ], 200);
+    // }
+
+    public function getSponsorById(Request $request, $id)
     {
         $sponsor = Sponsor::find($id);
+        $sponsor['activities'] = $sponsor->activities;
+
+        return response()->json([
+            'success' => true,
+            'sponsor' => $sponsor,
+        ], 200);
+    }
+
+    public function getSponsorBySlug(Request $request, $slug)
+    {
+        $sponsor = Sponsor::where('slug', '=', $slug)->first();
         $sponsor['activities'] = $sponsor->activities;
 
         return response()->json([
@@ -90,50 +112,95 @@ class SponsorsController extends Controller
     }
 
     protected function updateSponsor(Request $request, $id) {
-
-        $updatedSponsor = json_decode($request->form);
         $sponsor = Sponsor::find($id);
 
         $end_date = null;
-        if ($updatedSponsor->end_date) {
-            $end_date = date_create_from_format('Y-m-d H:i:s', $updatedSponsor->end_date);
+        if ($request->end_date) {
+            $end_date = date_create_from_format('Y-m-d H:i:s', $request->end_date);
         }
 
         // Upload new image if present
-        if (File::exists($request->image)) {
+        if (File::exists($request->new_image)) {
             // Delete old image
-            $old_image = $sponsor->image;
-            if (Storage::disk('uploads')->exists($sponsor->image)) {
-                Storage::disk('uploads')->delete($sponsor->image);
+            $old_image = $request->image;
+            if (Storage::disk('uploads')->exists($request->image)) {
+                Storage::disk('uploads')->delete($request->image);
             }
 
             // Upload new image
-            $file = Storage::disk('uploads')->put('sponsors', $request->image);
-            $updatedSponsor->image = $file;
+            $file = Storage::disk('uploads')->put('sponsors2', $request->new_image);
+            $request->image = $file;
         }
 
         $sponsor->updateOrInsert(
             ['id' => $id],
             [
-                'name' => $updatedSponsor->name,
-                'slug' => str_slug($updatedSponsor->name),
-                'contribution' => $updatedSponsor->contribution,
-                'end_date' => $updatedSponsor->end_date,
-                'is_active' => $updatedSponsor->is_active
+                'name' => $request->name,
+                'slug' => str_slug($request->name),
+                'contribution' => $request->contribution,
+                'image' => $request->image,
+                'end_date' => $end_date,
+                'updated_at' => \Carbon\Carbon::now()
             ]
         );
 
-        // Update sponsors relationships
+        // Update activities relationships
         $activityIdArray = [];
-        foreach($updatedSponsor->activities as $activity) {
-            array_push($activityIdArray, $activity->id);
+        foreach($request->activities as $activityId) {
+            array_push($activityIdArray, $activityId);
         }
         $sponsor->activities()->sync($activityIdArray);
 
+
+
+
+
+        // $updatedSponsor = json_decode($request->form);
+        // $sponsor = Sponsor::find($id);
+
+        // $end_date = null;
+        // if ($updatedSponsor->end_date) {
+        //     $end_date = date_create_from_format('Y-m-d H:i:s', $updatedSponsor->end_date);
+        // }
+
+        // // Upload new image if present
+        // if (File::exists($request->image)) {
+        //     // Delete old image
+        //     $old_image = $sponsor->image;
+        //     if (Storage::disk('uploads')->exists($sponsor->image)) {
+        //         Storage::disk('uploads')->delete($sponsor->image);
+        //     }
+
+        //     // Upload new image
+        //     $file = Storage::disk('uploads')->put('sponsors', $request->image);
+        //     $updatedSponsor->image = $file;
+        // }
+
+        // $sponsor->updateOrInsert(
+        //     ['id' => $id],
+        //     [
+        //         'name' => $updatedSponsor->name,
+        //         'slug' => str_slug($updatedSponsor->name),
+        //         'contribution' => $updatedSponsor->contribution,
+        //         'end_date' => $updatedSponsor->end_date,
+        //         'is_active' => $updatedSponsor->is_active
+        //     ]
+        // );
+
+        // // Update sponsors relationships
+        // $activityIdArray = [];
+        // foreach($updatedSponsor->activities as $activity) {
+        //     array_push($activityIdArray, $activity->id);
+        // }
+        // $sponsor->activities()->sync($activityIdArray);
+
+        $updatedSponsor = Sponsor::find($id);
+
         return response()->json([
             'success' => true,
-            '$request->image' => $request->image,
-            'sponsor' => $sponsor,
+            // '$request->image' => $request->image,
+            // 'sponsor' => $sponsor,
+            'updatedSponsor' => $updatedSponsor
         ], 201);
     }
 

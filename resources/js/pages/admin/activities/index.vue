@@ -8,9 +8,9 @@
         <router-link to="/admin/activities/create" class="btn btn-primary my-3">Créer une nouvelle activité</router-link>
         <!-- activities: {{ activities }}<br /><br /> -->
 
-        <b-table show-empty small stacked="md" :items="activities" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" class="nowrap" v-if="!loading">
+        <b-table show-empty small stacked="md" :items="activitiesArray" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" class="nowrap" v-if="!loading">
             <template v-slot:cell(image)="row">
-                <img :src="`/images/${row.item.image}`" style="max-width: 100px; max-height: 50px;" v-if="row.item.image" />
+                <img :src="`/images/activities/${row.item.image}`" style="max-width: 100px; max-height: 50px;" v-if="row.item.image" />
                 <span v-else><i>Pas d'image</i></span>
             </template>
 
@@ -25,6 +25,11 @@
                 <router-link :to="`/admin/activities/${data.item.id}`" class="btn btn-warning my-1" style="display: inline-block;">
                     <font-awesome-icon icon="eye" />
                 </router-link>
+                <!-- <b-link :to="`/admin/activities/${data.item.slug}`" class="btn btn-warning my-1" style="display: inline-block;">
+                    <font-awesome-icon icon="eye" />
+                </b-link> -->
+                <!-- <b-button variant="primary" class="my-2" :to="{ name: 'activity', params: { slug: activity.slug } }">En savoir plus &rarr;</b-button> -->
+
                 <router-link :to="`/admin/activities/${data.item.id}/edit`" class="btn btn-success my-1" style="display: inline-block;">
                     <font-awesome-icon icon="edit" />
                 </router-link>
@@ -44,7 +49,8 @@ import axios from 'axios'
 export default {
     layout: 'backend',
     async created() {
-        if (this.$store.getters['activities/activities'].length < 2) {
+        // console.log("Object.keys(this.$store.getters['activities/activities']: ", Object.keys(this.$store.getters['activities/activities']))
+        if (Object.keys(this.$store.getters['activities/activities']).length < 2) {
             this.$store.commit('loading/SET_LOADING', true)
             await this.$store.dispatch('activities/fetchActivities')
             this.$store.commit('loading/SET_LOADING', false)
@@ -56,7 +62,7 @@ export default {
             sortDesc: true,
             fields: [
                 { key: 'id', label: 'ID', sortable: true },
-                { key: 'title', label: 'Titre', sortable: true },
+                { key: 'name', label: 'Nom', sortable: true },
                 { key: 'image', label: 'Image', sortable: true },
                 { key: 'is_published', label: 'Publié?', sortable: true },
                 { key: 'updated_at', label: 'Dernière modification', sortable: true },
@@ -68,8 +74,8 @@ export default {
         loading() {
             return this.$store.getters['loading/loading']
         },
-        activities() {
-            return this.$store.getters['activities/activities']
+        activitiesArray() {
+            return Object.values(this.$store.getters['activities/activities'])
         }
     },
     methods: {

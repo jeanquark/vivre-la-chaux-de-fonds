@@ -31,9 +31,20 @@ class ActivitiesController extends Controller
         return response()->json($activities, 200);
     }
 
-    public function getActivity(Request $request, $id)
+    public function getActivityById(Request $request, $id)
     {
         $activity = Activity::find($id);
+        $activity['sponsors'] = $activity->sponsors;
+
+        return response()->json([
+            'success' => true,
+            'activity' => $activity,
+        ], 200);
+    }
+
+    public function getActivityBySlug(Request $request, $slug)
+    {
+        $activity = Activity::where('slug', '=', $slug)->first();
         $activity['sponsors'] = $activity->sponsors;
 
         return response()->json([
@@ -54,9 +65,9 @@ class ActivitiesController extends Controller
 
         $activity = new Activity;
 
-        $activity->title = $request->title;
+        $activity->name = $request->name;
         $activity->subtitle = $request->subtitle;
-        $activity->slug = str_slug($request->title);
+        $activity->slug = str_slug($request->name);
         $activity->content = $request->content;
         $activity->is_published = false;
         if ($request->start_date) {
@@ -98,17 +109,6 @@ class ActivitiesController extends Controller
     }
 
     protected function updateActivity(Request $request, $id) {
-
-        // return response()->json([
-        //     'success' => true,
-        //     'id' => $id,
-        //     'request' => $request,
-        //     'request->title' => $request->title,
-        //     'request->image' => $request->image,
-        //     'request->new_image' => $request->new_image
-        // ], 201);
-
-        // $updatedActivity = json_decode($request->form);
         $activity = Activity::find($id);
 
         $start_date = null;
@@ -137,13 +137,14 @@ class ActivitiesController extends Controller
         $activity->updateOrInsert(
             ['id' => $id],
             [
-                'title' => $request->title,
+                'name' => $request->name,
+                'slug' => str_slug($request->name),
                 'subtitle' => $request->subtitle,
-                'slug' => str_slug($request->title),
                 'content' => $request->content,
                 'image' => $request->image,
                 'start_date' => $start_date,
-                'end_date' => $end_date
+                'end_date' => $end_date,
+                'updated_at' => \Carbon\Carbon::now()
             ]
         );
 
@@ -160,7 +161,7 @@ class ActivitiesController extends Controller
             'success' => true,
             // 'activity' => $activity,
             'updatedActivity' => $updatedActivity,
-            'request->sponsors' => $request->sponsors
+            // 'request->sponsors' => $request->sponsors
         ], 201);
     }
 

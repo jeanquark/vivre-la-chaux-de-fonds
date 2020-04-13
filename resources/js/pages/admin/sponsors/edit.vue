@@ -5,86 +5,85 @@
                 <font-awesome-icon icon="dollar-sign" />
                 <span>Sponsors</span>
             </b-breadcrumb-item>
-            <b-breadcrumb-item active>Montrer</b-breadcrumb-item>
+            <b-breadcrumb-item active>Editer</b-breadcrumb-item>
         </b-breadcrumb>
-        <form @submit.prevent="updateSponsor" v-if="sponsor">
-            <div class="form-group">
-                <label for="name">Nom</label>
-                <input type="text" class="form-control" id="name" placeholder="" v-model="sponsor.name" />
-            </div>
-            <div class="form-group">
-                <label for="contribution">Contribution</label>
-                <input type="textarea" class="form-control" id="contribution" placeholder="" v-model="sponsor.contribution" />
-            </div>
 
-            <div class="row my-2">
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label for="image">Image actuelle:</label><br />
-                        <img :src="`/images/${sponsors.image}`" width="200" v-if="sponsor.image" />
-                        <span v-else><i>Pas d'image</i></span>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label for="image">Nouvelle image:</label><br />
-                        <input type="file" id="image" name="image" accept="image/png, image/jpeg" @change="uploadImage($event)" />
-                    </div>
-                </div>
-            </div>
+        <b-row class="justify-content-center">
+            <b-col cols="12" md="8" lg="6">
+                <b-form @submit.prevent="updateSponsor">
 
-            <div class="form-group">
-                <VueCtkDateTimePicker
-                    label="Date de fin de sponsoring"
-                    only-date
-                    format="YYYY-MM-DD"
-                    formatted="YYYY-MM-DD"
-                    color="#9ACD32"
-                    button-color="#9ACD32"
-                    button-now-translation="Maintenant"
-                    v-model="sponsor.end_date"
-                />
-            </div>
+                    <b-row align-v="center" class="justify-content-start my-3 px-3">
+                        <b-col cols="12">
+                            <b-form-group label="Nom:" label-for="name">
+                                <b-form-input id="name" :class="{ 'is-invalid': form.errors.has('name') }" v-model="form.name"></b-form-input>
+                                <has-error :form="form" field="name" />
+                            </b-form-group>
+                        </b-col>
+                        <b-col cols="12">
+                            <b-form-group label="Contribution:" label-for="contribution">
+                                <b-form-textarea id="contribution" placeholder="" rows="3" max-rows="6" :class="{ 'is-invalid': form.errors.has('contribution') }" v-model="form.contribution"></b-form-textarea>
+                                <has-error :form="form" field="contribution" />
+                            </b-form-group>
+                        </b-col>
+                        <b-col cols="12" md="6">
+                            <b-form-group label="Date de fin:" label-for="endDate">
+                                <VueCtkDateTimePicker
+                                    label="Cliquer pour choisir une date"
+                                    format="YYYY-MM-DD"
+                                    formatted="YYYY-MM-DD"
+                                    button-now-translation="Aujourd'hui"
+                                    only-date
+                                    id="endDate"
+                                    v-model="form.end_date"
+                                />
+                            </b-form-group>
+                        </b-col>
 
-            <div class="row align-items-center my-2">
-                <div class="col-12">
-                    <div class="form-group">
-                        <label for="image">Activités pour ce sponsor:</label><br />
-                        <multiselect
-                            label="title"
-                            track-by="id"
-                            :options="activities"
-                            :multiple="true"
-                            :close-on-select="false"
-                            :clear-on-select="false"
-                            :preserve-search="true"
-                            :preselect-first="true"
-                            placeholder="Sélectionner un sponsor"
-                            selectLabel="Appuyer sur Entrée pour sélectionner"
-                            selectedLabel="Sélectionné"
-                            deselectLabel="Appuyer sur entrée pour désélectionner"
-                            v-model="sponsor.activities"
-                        >
-                        </multiselect>
-                    </div>
-                </div>
-            </div>
+                        <b-col cols="12" class="my-2">
+                            <b-form-checkbox id="is_active" name="is_active" value="1" unchecked-value="0" v-model="form.is_active">
+                                Actif?
+                            </b-form-checkbox>
+                        </b-col>
 
-            <div class="col-12 col-md-6">
-                <p-check class="p-curve p-bigger p-jelly" name="check" color="primary" button-now-translation="Maintenant" v-model="sponsor.is_active">Actif ?</p-check>
-            </div>
+                        <b-col cols="12" class="my-2">
+                            <p class="text-center">Image actuelle:</p>
+                            <b-img center :src="`/images/sponsors2/${form.image}`" width="200" class=""></b-img>
+                        </b-col>
+                        <b-col cols="12" class="my-2">
+                            <b-form-file
+                                accept="image/jpeg, image/png"
+                                placeholder="Choisir un nouveau fichier..."
+                                drop-placeholder="Placez votre fichier ici..."
+                                @change="selectFile"
+                                :class="{ 'is-invalid': form.errors.has('image_new') }"
+                            ></b-form-file>
+                            <has-error :form="form" field="image_new" />
+                        </b-col>
 
-            <div class="row my-3">
-                <div class="col-12 text-center">
-                    <button type="submit" class="btn btn-primary">Editer sponsor</button>
-                </div>
-            </div>
-        </form>
+                        <b-col cols="12" class="my-2">
+                            <b-form-group label="Activités:">
+                                <b-form-select multiple value-field="id" text-field="name" v-model="form.activities" :options="activities" size="sm" class=""></b-form-select>
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
+                    <b-row class="justify-content-center my-2">
+                        <b-button variant="primary" :disabled="loading" type="submit">
+                            <b-spinner small type="grow" v-if="loading"></b-spinner>
+                            Editer sponsor
+                        </b-button>
+                    </b-row>
+
+                    
+                </b-form>
+            </b-col>
+        </b-row>
     </b-container>
 </template>
 
 <script>
-import axios from 'axios'
+// vform
+import Form from 'vform'
+
 
 // Datepicker
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker'
@@ -104,37 +103,43 @@ export default {
         'p-check': PrettyCheck,
         Multiselect
     },
-    async created() {
-        // if (this.$store.getters['sponsors/sponsors'].length < 1) {
-        // 	await this.$store.dispatch('sponsors/fetchActivities')
-        // }
-        if (this.$store.getters['activities/activities'].length < 1) {
-            this.$store.dispatch('activities/fetchActivities')
-        }
+    async created() {      
     },
     async mounted() {
-        // this.sponsorId = this.$route.params.id
         const sponsorId = parseInt(this.$route.params.id)
         console.log('sponsorId: ', sponsorId)
-        await this.$store.dispatch('sponsors/fetchSponsor', { sponsorId })
 
-        // this.sponsor = this.$store.getters['sponsors/sponsor']
+        if (!this.$store.getters['sponsors/sponsors'][this.$route.params.id]) {
+            await this.$store.dispatch('sponsors/fetchSponsorById', { sponsorId: this.$route.params.id })
+        }
 
-        // const { data } = await axios.get(`/api/sponsors/${sponsorId}`)
-        // console.log('data: ', data)
-        // this.sponsor = data.sponsor
-        // this.sponsor['sponsors'] = data.sponsors
-        // if (this.sponsor.end_date) {
-        // 	this.addEndDate = true
-        // }
+        if (Object.keys(this.$store.getters['activities/activities']).length < 2) {
+            await this.$store.dispatch('activities/fetchActivities')
+        }
+
+        console.log('this.sponsor: ', this.sponsor)
+        console.log('this.form: ', this.form)
+        this.form.fill(this.sponsor)
+        this.form.activities = this.sponsor.activities.map(activity => activity.id)
     },
     data() {
         return {
-            // sponsorId: null,
-            new_image: {}
+            form: new Form({
+                id: '',
+                name: '',
+                contribution: 0,
+                end_date: '',
+                image: null,
+                new_image: null,
+                is_active: false,
+                activities: []
+            })
         }
     },
     computed: {
+        loading () {
+            return this.$store.getters['loading/loading']
+        },
         activities() {
             return this.$store.getters['activities/activities']
         },
@@ -142,7 +147,7 @@ export default {
             return this.$store.getters['sponsors/sponsors']
         },
         sponsor() {
-            return this.$store.getters['sponsors/sponsor']
+            return this.$store.getters['sponsors/sponsors'][this.$route.params.id]
         }
     },
     methods: {
@@ -152,7 +157,27 @@ export default {
             console.log(event.target.files[0])
             this.new_image = event.target.files[0]
         },
-        async updateSponsor() {
+        selectFile(e) {
+            this.form.new_image = e.target.files[0]
+        },
+        async updateSponsor () {
+            try {
+                console.log('this.form: ', this.form)
+                // return
+                this.$store.commit('loading/SET_LOADING', true)
+                // const { data } = await axios.post('/api/users', this.form)
+                // console.log('data: ', data)
+                await this.$store.dispatch('sponsors/updateSponsor', this.form)
+                this.$store.commit('loading/SET_LOADING', false)
+                this.$noty.success('Sponsor mis à jour avec succès!')
+                this.$router.push('/admin/sponsors')
+            } catch (error) {
+                this.$store.commit('loading/SET_LOADING', false)
+                console.log('error: ', error)
+                this.$noty.error("Une erreur est survenue et le sponsor n'a pas pu être mise à jour.")
+            }
+        },
+        async updateSponsor2() {
             try {
                 await this.$store.dispatch('sponsors/updateSponsor', { sponsor: this.sponsor, image: this.new_image })
                 this.$noty.success('Sponsor mis à jour avec succè!')

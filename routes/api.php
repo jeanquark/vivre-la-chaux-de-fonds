@@ -41,9 +41,12 @@ Route::group(['middleware' => 'guest:api'], function () {
 
 
 Route::get('/activities', 'ActivitiesController@getActivities');
-Route::get('/activities/{id}', 'ActivitiesController@getActivity');
+Route::get('/activities/{id}', 'ActivitiesController@getActivityById');
+Route::get('/activities/slug/{slug}', 'ActivitiesController@getActivityBySlug');
 Route::get('/sponsors', 'SponsorsController@getSponsors');
-Route::get('/sponsors/{id}', 'SponsorsController@getSponsor');
+Route::get('/sponsors/{id}', 'SponsorsController@getSponsorById');
+Route::get('/sponsors/slug/{slug}', 'SponsorsController@getSponsorBySlug');
+Route::post('/send-contact-form', 'ContactMessageController@send');
 
 Route::group(['middleware' => 'role:admin'], function () {
     // Users

@@ -11,27 +11,27 @@
         <h2 class="text-center">Créer une nouvelle activité</h2>
         <!-- sponsors: {{ sponsors }}<br /><br /> -->
         <!-- form: {{ form }}<br /><br /> -->
-        form.sponsors: {{ form.sponsors }}<br /><br />
+        <!-- form.sponsors: {{ form.sponsors }}<br /><br /> -->
 
         <b-row class="justify-content-center">
             <b-col cols="12" md="8" lg="6">
                 <b-form @submit.prevent="createActivity">
                     <b-row align-v="center" class="justify-content-start my-3 px-3">
                         <b-col cols="12">
-                            <b-form-group label="Titre:" label-for="title">
-                                <b-form-input id="title" placeholder="Titre" :class="{ 'is-invalid': form.errors.has('title') }" v-model="form.title"></b-form-input>
-                                <has-error :form="form" field="title" />
+                            <b-form-group label="Nom:" label-for="name">
+                                <b-form-input id="name" :class="{ 'is-invalid': form.errors.has('name') }" v-model="form.name"></b-form-input>
+                                <has-error :form="form" field="name" />
                             </b-form-group>
                         </b-col>
                         <b-col cols="12">
                             <b-form-group label="Sous-titre:" label-for="subtitle">
-                                <b-form-input id="subtitle" placeholder="Sous-title" :class="{ 'is-invalid': form.errors.has('subtitle') }" v-model="form.subtitle"></b-form-input>
+                                <b-form-input id="subtitle" :class="{ 'is-invalid': form.errors.has('subtitle') }" v-model="form.subtitle"></b-form-input>
                                 <has-error :form="form" field="subtitle" />
                             </b-form-group>
                         </b-col>
                         <b-col cols="12">
                             <b-form-group label="Contenu:" label-for="content">
-                                <b-form-textarea id="content" placeholder="" rows="3" max-rows="6" :class="{ 'is-invalid': form.errors.has('content') }" v-model="form.content"></b-form-textarea>
+                                <b-form-textarea id="content" rows="3" max-rows="6" :class="{ 'is-invalid': form.errors.has('content') }" v-model="form.content"></b-form-textarea>
                                 <has-error :form="form" field="content" />
                             </b-form-group>
                         </b-col>
@@ -136,9 +136,9 @@ export default {
     data() {
         return {
             form: new Form({
-                title: 'Tournoi de Jass',
+                name: 'Tournoi de Jass',
                 subtitle: 'Un événement à ne pas rater!',
-                content: 'Le 10 octobre aura lieu le tournoi annuel de Jass.',
+                content: 'Le 10 octobre aura lieu notre tournoi annuel de Jass.',
                 start_date: '',
                 end_date: '',
                 image: null,

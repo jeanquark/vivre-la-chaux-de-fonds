@@ -6,9 +6,9 @@
         <h2 class="text-center">Sponsors</h2>
         <b-button variant="primary" class="my-3" to="/admin/sponsors/create">Créer un nouvel sponsor</b-button>
 
-        <b-table show-empty small stacked="md" :items="sponsors" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" class="nowrap" v-if="!loading">
+        <b-table show-empty small stacked="md" :items="sponsorsArray" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" class="nowrap" v-if="!loading">
             <template v-slot:cell(image)="row">
-                <img :src="`/images/${row.item.image}`" style="max-width: 100px; max-height: 50px;" v-if="row.item.image" />
+                <img :src="`/images/sponsors2/${row.item.image}`" style="max-width: 100px; max-height: 50px;" v-if="row.item.image" />
                 <span v-else><i>Pas d'image</i></span>
             </template>
 
@@ -41,7 +41,7 @@
 export default {
     layout: 'backend',
     async created() {
-        if (this.$store.getters['sponsors/sponsors'].length < 2) {
+        if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {
             this.$store.commit('loading/SET_LOADING', true)
             await this.$store.dispatch('sponsors/fetchSponsors')
             this.$store.commit('loading/SET_LOADING', false)
@@ -65,8 +65,8 @@ export default {
         loading() {
             return this.$store.getters['loading/loading']
         },
-        sponsors() {
-            return this.$store.getters['sponsors/sponsors']
+        sponsorsArray() {
+            return Object.values(this.$store.getters['sponsors/sponsors'])
         }
     },
     methods: {

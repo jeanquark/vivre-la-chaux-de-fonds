@@ -4,44 +4,68 @@ import { objectToFormData } from 'object-to-formdata'
 
 // state
 export const state = {
-    activities: [],
-    activity: {}
+    // activities: [],
+    activities: {}
+    // activity: {}
 }
 
 // getters
 export const getters = {
     activities: state => state.activities,
-    activity: state => state.activity
+    // activity: state => state.activity
 }
 
 // mutations
 export const mutations = {
-    setActivities(state, payload) {
-        console.log('Set activities mutation: ', payload)
-        state.activities = payload
+    SET_ACTIVITIES (state, payload) {
+        console.log('SET_ACTIVITIES mutation', payload)
+        // state.activities = payload
+        payload.forEach(activity => {
+            state.activities = Object.assign({}, state.activities, {
+                [activity.id]: activity
+            })
+        })
     },
-    setActivity(state, payload) {
-        console.log('Set activity mutation: ', payload)
-        state.activity = payload
+    SET_ACTIVITY (state, payload) {
+        console.log('SET_ACTIVITY mutation', payload)
+        state.activities = Object.assign({}, state.activities, {
+            [payload.id]: payload
+        })
     },
-    ADD_ACTIVITY(state, payload) {
-        console.log('Add activity mutation: ', payload)
-        state.activities.push(payload)
-    },
+    // setActivities(state, payload) {
+    //     console.log('Set activities mutation: ', payload)
+    //     state.activities = payload
+    // },
+    // setActivity(state, payload) {
+    //     console.log('Set activity mutation: ', payload)
+    //     state.activity = payload
+    // },
+    // ADD_ACTIVITY(state, payload) {
+    //     console.log('Add activity mutation: ', payload)
+    //     state.activities.push(payload)
+    // },
     UPDATE_ACTIVITY(state, payload) {
-        console.log('Update activity mutation: ', payload)
-        const activityId = parseInt(payload.id)
-        const index = state.activities.findIndex(activity => activity.id === activityId)
-        console.log('index: ', index)
-        state.activities[index] = payload
+        console.log('UPDATE_ACTIVITY mutation: ', payload)
+        state.activities = Object.assign({}, state.activities, {
+            [payload.id]: payload
+        })
+
+        // const activityId = parseInt(payload.id)
+        // const index = state.activities.findIndex(activity => activity.id === activityId)
+        // console.log('index: ', index)
+        // state.activities[index] = payload
     },
-    deleteActivity(state, payload) {
-        const activityId = parseInt(payload)
+    DELETE_ACTIVITY(state, payload) {
+        // const activityId = parseInt(payload)
+        // console.log('activityId: ', activityId)
+        // const index = state.activities.findIndex(activity => activity.id === activityId)
+        // console.log('index: ', index)
+        // console.log('state.activities: ', state.activities)
+        // state.activities.splice(index, 1)
+        console.log('DELETE_ACTIVITY mutation: ', payload)
+        const { activityId } = payload
         console.log('activityId: ', activityId)
-        const index = state.activities.findIndex(activity => activity.id === activityId)
-        console.log('index: ', index)
-        console.log('state.activities: ', state.activities)
-        state.activities.splice(index, 1)
+        Vue.set(state.activities, activityId, null)
     }
 }
 
@@ -52,19 +76,31 @@ export const actions = {
             console.log('fetchActivities action')
             const { data } = await axios.get('/api/activities')
             console.log('data: ', data)
-            commit('setActivities', data)
+            commit('SET_ACTIVITIES', data)
         } catch (error) {
             console.log('vuex error: ', error)
             throw error
         }
     },
-    async fetchActivity({ commit }, payload) {
+    async fetchActivityById({ commit }, payload) {
         try {
-            console.log('fetchActivity action: ', payload)
+            console.log('fetchActivityById action: ', payload)
             const { activityId } = payload
             const { data } = await axios.get(`/api/activities/${activityId}`)
             console.log('data: ', data)
-            commit('setActivity', data.activity)
+            commit('SET_ACTIVITY', data.activity)
+        } catch (error) {
+            console.log('vuex error: ', error)
+            throw error
+        }
+    },
+    async fetchActivityBySlug({ commit }, payload) {
+        try {
+            console.log('fetchActivityBySlug action: ', payload)
+            const { activitySlug } = payload
+            const { data } = await axios.get(`/api/activities/slug/${activitySlug}`)
+            console.log('data: ', data)
+            commit('SET_ACTIVITY', data.activity)
         } catch (error) {
             console.log('vuex error: ', error)
             throw error
@@ -113,7 +149,7 @@ export const actions = {
             console.log('activityId: ', activityId)
             const activity = await axios.delete(`/api/activities/${activityId}`)
             console.log('activity: ', activity)
-            commit('deleteActivity', activityId)
+            commit('DELETE_ACTIVITY', activityId)
         } catch (error) {
             console.log('error from vuex: ', error)
             throw error

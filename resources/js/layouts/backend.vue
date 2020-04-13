@@ -18,7 +18,7 @@
 		components: { SidebarMenu },
 		beforeCreate () {
 			console.log('beforeCreate')
-        	document.body.className = 'home'
+        	document.body.className = 'backend'
     	},
     	beforeDestroy () {
     		console.log('beforeDestroy')
@@ -119,8 +119,11 @@
 </script>
 
 <style>
-    /* body.home {
+    body.backend {
     	background-image: none;
+	}
+	/* body {
+		background-image: none;
 	} */
 </style>
 
@@ -130,6 +133,9 @@
     // }
 	// >>> body.home {
     // 	background-image: none;
+	// }
+	// body {
+	// 	background: #fff;
 	// }
 	.collapsed {
 		margin-left: 50px;

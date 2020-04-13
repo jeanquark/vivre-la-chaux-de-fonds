@@ -20,6 +20,6 @@ class Activity extends Model
      */
     public function sponsors()
     {
-        return $this->belongsToMany('App\Sponsor', 'sponsor_activity', 'activity_id', 'sponsor_id' );
+        return $this->belongsToMany('App\Sponsor', 'sponsor_activity', 'activity_id', 'sponsor_id' )->withTimestamps();
     }
 }
