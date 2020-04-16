@@ -47,6 +47,7 @@ Route::get('/sponsors', 'SponsorsController@getSponsors');
 Route::get('/sponsors/{id}', 'SponsorsController@getSponsorById');
 Route::get('/sponsors/slug/{slug}', 'SponsorsController@getSponsorBySlug');
 Route::post('/send-contact-form', 'ContactMessageController@send');
+Route::get('/list-all-files', 'FilesController@get');
 
 Route::group(['middleware' => 'role:admin'], function () {
     // Users

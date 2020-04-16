@@ -80,6 +80,11 @@ export default [
         { path: 'sponsors/:id', name: '', component: page('admin/sponsors/show.vue') },
         { path: 'sponsors/:id/edit', name: '', component: page('admin/sponsors/edit.vue') },
 
+        { path: 'pages', name: '', component: page('admin/pages/index.vue') },
+        { path: 'pages/create', name: '', component: page('admin/pages/create.vue') },
+        { path: 'pages/:id', name: '', component: page('admin/pages/show.vue') },
+        { path: 'pages/:id/edit', name: '', component: page('admin/pages/edit.vue') },
+
         { path: '', redirect: '/admin/dashboard' },
 
     ]},

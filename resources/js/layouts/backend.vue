@@ -84,6 +84,17 @@
 						}
 					},
 					{
+						href: '/admin/pages',
+						title: 'Pages',
+						alias: ['/admin/pages', '/admin/pages/create', '/admin/pages/:id', '/admin/pages/:id/edit'],
+						icon: {
+							element: 'font-awesome-icon',
+							attributes: {
+								icon: 'file-alt'
+							}
+						}
+					},
+					{
 						href: '/',
 						title: 'Retour au site',
 						icon: {
