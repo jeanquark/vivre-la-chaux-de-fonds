@@ -40,7 +40,9 @@
                         <!-- <img class="intLink" title="Underline" @click.prevent="formatDoc('insertImage', 'http://dummyimage.com/160x90')" src="/images/icon-image.png" width="30" /> -->
                         <img class="intLink" title="Underline" @click.prevent="openFilesModal()" src="/images/icon-image.png" width="30" />
                         <button @click.prevent="insertDiv('12')">Insert div</button>
+
                         <div contenteditable="true" id="textBox" v-html="content" ref="abc" @mouseover="selectedElement"></div>
+                        
                         <button @click="showHTML">Show HTML</button>
                         <p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" v-model="checked" @click="setDocMode(checked)" /> <label for="switchBox">Show HTML</label></p>
                         checked: {{ checked }}<br /><br />
@@ -78,11 +80,6 @@ export default {
     },
     async created() {},
     mounted() {
-        // let oDoc = document.getElementById('textBox')
-        // let sDefTxt = oDoc.innerHTML
-        // if (document.compForm.switchMode.checked) {
-        //     setDocMode(true)
-        // }
     },
     data() {
         return {
@@ -108,8 +105,8 @@ export default {
     },
     methods: {
         selectedElement(event) {
-            console.log('selectedElement: ', event.target)
-            event.target.width="200"
+            // console.log('selectedElement: ', event.target)
+            // event.target.width="200"
         },
         openFilesModal() {
             console.log('openFilesModal: ')
@@ -188,8 +185,8 @@ export default {
 
 <style scoped>
 #textBox {
-    width: 540px;
-    height: 200px;
+    width: 100%;
+    height: 250px;
     border: 1px #000000 solid;
     padding: 12px;
     overflow: scroll;
