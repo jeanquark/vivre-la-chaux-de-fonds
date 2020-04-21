@@ -8,6 +8,8 @@
             <b-breadcrumb-item active>Créer</b-breadcrumb-item>
         </b-breadcrumb>
         <h2 class="text-center">Ajouter une nouvelle page</h2>
+        newPage['content']: {{ newPage['content'] }}<br /><br />
+        /images/pages/400x400.jpg
 
         <b-form @submit.prevent="addNewPage">
             <b-row align-v="center" class="justify-content-start my-3 px-3">

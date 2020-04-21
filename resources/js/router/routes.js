@@ -82,6 +82,7 @@ export default [
 
         { path: 'pages', name: '', component: page('admin/pages/index.vue') },
         { path: 'pages/create', name: '', component: page('admin/pages/create.vue') },
+        { path: 'pages/create_ORIGINAL', name: '', component: page('admin/pages/create_ORIGINAL.vue') },
         { path: 'pages/:id', name: '', component: page('admin/pages/show.vue') },
         { path: 'pages/:id/edit', name: '', component: page('admin/pages/edit.vue') },
 

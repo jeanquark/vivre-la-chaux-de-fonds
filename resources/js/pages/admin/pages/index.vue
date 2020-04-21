@@ -9,6 +9,7 @@
 		<!-- contentsArray: {{ contentsArray }}<br /><br /> -->
 
 		<b-button to="/admin/pages/create" variant="primary" class="my-3">Créer une nouvelle page</b-button>
+		<b-button to="/admin/pages/create_ORIGINAL" variant="primary" class="my-3">Créer une nouvelle page ORIGINAL</b-button>
 
 		<b-table
 	      responsive="sm"
@@ -47,9 +48,9 @@
 		async created () {
 			try {
 				this.$store.commit('loading/SET_LOADING', true)
-				if (Object.entries(this.$store.getters['pages/pages']).length <= 1) {
-					await this.$store.dispatch('pages/fetchPages')
-				}
+				// if (Object.entries(this.$store.getters['pages/pages']).length <= 1) {
+				// 	await this.$store.dispatch('pages/fetchPages')
+				// }
 				this.$store.commit('loading/SET_LOADING', false)
 			} catch (error) {
 				console.log('error: ', error)
