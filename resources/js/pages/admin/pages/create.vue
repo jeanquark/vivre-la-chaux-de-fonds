@@ -13,13 +13,18 @@
         showDocumentsModal: {{ showDocumentsModal }} <b-button size="sm" @click="showDocumentsModal = false">Fermer</b-button><br /><br />
         selectedImageNode: {{ selectedImageNode }}<br /><br />
         selectedImageProps: {{ selectedImageProps }}<br /><br />
+        focused: {{ focused }}<br /><br />
 
         <a href="/documents/38959262-real3d-flipbook-jquery-plugin-license.pdf" type="application/pdf" title="38959262-real3d-flipbook-jquery-plugin-license" target="_blank">38959262-real3d-flipbook-jquery-plugin-license</a>
+        <a href="/documents/38959262-real3d-flipbook-jquery-plugin-license.pdf" type="application/pdf" title="abc">Mon Fichier</a>
 
-        <!-- <b-row class="justify-content-center" v-if="showImagesModal" style="border: 1px solid #000;">
+        <b-row class="justify-content-center" v-if="showImagesModal" style="border: 1px solid #000;">
             <b-col cols="6" md="3" lg="2">
-                <label for="width">Largeur (px):</label>
-                <b-form-input type="number" min="0" id="width" v-model="selectedImageProps['width']" @update="updateSelectedImage($event, 'width')"></b-form-input>
+                <!-- <label for="width">Largeur (px):</label>
+                <b-form-input type="number" min="0" id="width" v-model="selectedImageProps['width']" @update="updateSelectedImage($event, 'width')"></b-form-input> -->
+                <b-form-group label="Largeur (px)" label-for="width">
+                    <b-form-input type="number" min="0" id="width" v-model="selectedImageProps['width']" @update="updateSelectedImage($event, 'width')"></b-form-input>
+                </b-form-group>
             </b-col>
             <b-col cols="6" md="3" lg="2">
                 <label for="height">Hauteur (px):</label>
@@ -37,7 +42,7 @@
                 <label for="float">Float:</label>
                 <b-form-select :options="['left', 'center', 'right']" id="float" v-model="selectedImageProps['style']['float']" @change="updateSelectedImage($event, 'float')"></b-form-select>
             </b-col>
-        </b-row> -->
+        </b-row>
 
         <b-form @submit.prevent="createNewPage">
             <b-row align-v="center" class="justify-content-start my-3 px-3">
@@ -46,40 +51,72 @@
                         <b-form-input id="newPageTitle" placeholder="Titre de la page" v-model="newPage.title"></b-form-input>
                     </b-form-group>
                 </b-col>
-                <b-col cols="12">
+                <b-col cols="12" class="">
                     <b-form-group label="Contenu de la page:" label-for="newPageContent">
-                        <img
+                        <!-- <img
                             class="intLink"
                             title="Bold"
                             @click="formatDoc('bold')"
                             src="data:image/gif;base64,R0lGODlhFgAWAID/AMDAwAAAACH5BAEAAAAALAAAAAAWABYAQAInhI+pa+H9mJy0LhdgtrxzDG5WGFVk6aXqyk6Y9kXvKKNuLbb6zgMFADs="
                             style="border: 1px solid #000;"
-                        />
-                        <img
+                        /> -->
+                        <b-button variant="primary" v-b-tooltip.hover title="Gras" @click.prevent="formatDoc('bold')">
+                            <font-awesome-icon size="1x" icon="bold" class="" />
+                        </b-button>
+
+                        <!-- <img
                             class="intLink"
                             title="Italic"
                             @click="formatDoc('italic')"
                             src="data:image/gif;base64,R0lGODlhFgAWAKEDAAAAAF9vj5WIbf///yH5BAEAAAMALAAAAAAWABYAAAIjnI+py+0Po5x0gXvruEKHrF2BB1YiCWgbMFIYpsbyTNd2UwAAOw=="
-                        />
-                        <img
+                        /> -->
+                        <b-button variant="primary" v-b-tooltip.hover title="Italic" @click.prevent="formatDoc('italic')">
+                            <font-awesome-icon size="1x" icon="italic" class="" />
+                        </b-button>
+
+                        <!-- <img
                             class="intLink"
                             title="Underline"
                             @click="formatDoc('underline')"
                             src="data:image/gif;base64,R0lGODlhFgAWAKECAAAAAF9vj////////yH5BAEAAAIALAAAAAAWABYAAAIrlI+py+0Po5zUgAsEzvEeL4Ea15EiJJ5PSqJmuwKBEKgxVuXWtun+DwxCCgA7"
-                        />
-                        <img class="intLink" title="Left align" @click="formatDoc('justifyleft');" src="data:image/gif;base64,R0lGODlhFgAWAID/AMDAwAAAACH5BAEAAAAALAAAAAAWABYAQAIghI+py+0Po5y02ouz3jL4D4JMGELkGYxo+qzl4nKyXAAAOw==" />
-                        <img class="intLink" title="Center align" @click="formatDoc('justifycenter');" src="data:image/gif;base64,R0lGODlhFgAWAID/AMDAwAAAACH5BAEAAAAALAAAAAAWABYAQAIfhI+py+0Po5y02ouz3jL4D4JOGI7kaZ5Bqn4sycVbAQA7" />
-                        <img class="intLink" title="Right align" @click="formatDoc('justifyright');" src="data:image/gif;base64,R0lGODlhFgAWAID/AMDAwAAAACH5BAEAAAAALAAAAAAWABYAQAIghI+py+0Po5y02ouz3jL4D4JQGDLkGYxouqzl43JyVgAAOw==" />
+                        /> -->
+                        <b-button variant="primary" v-b-tooltip.hover title="Souligné" @click.prevent="formatDoc('underline')">
+                            <font-awesome-icon size="1x" icon="underline" class="" />
+                        </b-button>
+
+                        <!-- <img class="intLink" title="Left align" @click="formatDoc('justifyleft');" src="data:image/gif;base64,R0lGODlhFgAWAID/AMDAwAAAACH5BAEAAAAALAAAAAAWABYAQAIghI+py+0Po5y02ouz3jL4D4JMGELkGYxo+qzl4nKyXAAAOw==" /> -->
+                        <b-button variant="primary" v-b-tooltip.hover title="Aligner à gauche" @click.prevent="formatDoc('justifyleft')">
+                            <font-awesome-icon size="1x" icon="align-left" class="" />
+                        </b-button>
+                        <!-- <img class="intLink" title="Center align" @click="formatDoc('justifycenter');" src="data:image/gif;base64,R0lGODlhFgAWAID/AMDAwAAAACH5BAEAAAAALAAAAAAWABYAQAIfhI+py+0Po5y02ouz3jL4D4JOGI7kaZ5Bqn4sycVbAQA7" /> -->
+                        <b-button variant="primary" v-b-tooltip.hover title="Aligner au centre" @click.prevent="formatDoc('justifycenter')">
+                            <font-awesome-icon size="1x" icon="align-center" class="" />
+                        </b-button>
+                        <!-- <img class="intLink" title="Right align" @click="formatDoc('justifyright');" src="data:image/gif;base64,R0lGODlhFgAWAID/AMDAwAAAACH5BAEAAAAALAAAAAAWABYAQAIghI+py+0Po5y02ouz3jL4D4JQGDLkGYxouqzl43JyVgAAOw==" /> -->
+                        <b-button variant="primary" v-b-tooltip.hover title="Aligner à droite" @click.prevent="formatDoc('justifyright')">
+                            <font-awesome-icon size="1x" icon="align-right" class="" />
+                        </b-button>
 
                         <!-- <img class="intLink" title="Underline" @click.prevent="formatDoc('insertImage', 'http://dummyimage.com/160x90')" src="/images/icon-image.png" width="30" /> -->
-                        <img class="intLink" title="Underline" @click.prevent="openImagesModal" src="/images/icons/image.png" width="30" />
-                        <img class="intLink" title="Underline" @click.prevent="openDocumentsModal" src="/images/icons/pdf.png" width="30" />
+                        <!-- <img class="intLink" title="Underline" @click.prevent="openImagesModal" src="/images/icons/image.png" width="30" /> -->
+
+                        <b-button variant="primary" v-b-tooltip.hover title="Ajouter image" :disabled="!focused" @mousedown.prevent="focused = true" @click.prevent="openImagesModal">
+                            <font-awesome-icon size="1x" icon="image" class="" />
+                        </b-button>
+                        <!-- <img class="intLink" title="Underline" @click.prevent="openDocumentsModal" src="/images/icons/pdf.png" width="30" /> -->
+
+                        <b-button variant="primary" v-b-tooltip.hover title="Ajouter PDF" :disabled="!focused" @mousedown.prevent="focused = true" @click.prevent="openDocumentsModal">
+                            <font-awesome-icon size="1x" icon="file-pdf" class="" />
+                        </b-button>
+
                         <button @click.prevent="insertDiv('12')">Insert div</button>
 
-                        <div contenteditable="true" id="textBox" v-html="content" @dblclick="selectedElement"></div>
+                        <div contenteditable="true" id="textBox" v-html="content" @focus="focused = true" @blur="focused = false" @dblclick="selectedElement" class="mt-1" v-if="!showHTML"></div>
+                        <div contenteditable="true" id="textBox" @focus="focused = true" @blur="focused = false" @dblclick="selectedElement" class="mt-1" v-else><pre>{{ content }}</pre></div>
 
-                        <button @click="showHTML">Show HTML</button>
+                        <button @click="showHTML = !showHTML">Show HTML</button>
                         <!-- <p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" v-model="checked" @click="setDocMode(checked)" /> <label for="switchBox">Show HTML</label></p> -->
+                        <p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" @change="setDocMode(checked);" /> <label for="switchBox">Show HTML</label></p>
                         <!-- checked: {{ checked }}<br /><br /> -->
                         <!-- content: {{ content }} -->
                     </b-form-group>
@@ -128,8 +165,9 @@ export default {
             //     filebrowserUploadUrl: '/userfiles'
             // },
             newPage: {},
+            showHTML: false,
             content: '<p>Ceci est mon texte en <b>gras</b>.</p><img src="/images/logo.png" width="100" style="margin: 20px; float: right;" />',
-            // checked: false,
+            checked: false,
             // showModal: false,
             showImagesModal: false,
             showDocumentsModal: false,
@@ -141,15 +179,27 @@ export default {
                 width: 0,
                 height: 0,
                 style: {}
-            }
+            },
+            focused: false
         }
     },
     computed: {
         loading() {
             return this.$store.getters['loading/loading']
-        }        
+        },
+        // abc () {
+        //     // return '<b>abc</b>'
+        //     console.log(document.getElementById('textBox'))
+        //     return document.getElementById('textBox').innerHTML
+        // }    
     },
     methods: {
+        abc () {
+            console.log('abc')
+        },
+        onFocus ($event) {
+            console.log('onFocus', $event)
+        },
         updateSelectedImage (value, type) {
             console.log('updateSelectedImage: ', value, type)
             if (type === 'width' || type === 'height') {
@@ -193,7 +243,9 @@ export default {
             }, 300)
         },
         openDocumentsModal () {
-            console.log('openFilesModal')
+            console.log('openDocumentsModal')
+            // console.log('document.activeElement: ', document.activeElement)
+            // return
             this.showDocumentsModal = true
             setTimeout(() => {
                 this.$bvModal.show('documentsModal')
@@ -206,9 +258,12 @@ export default {
             const image = `/images/${value}`
             document.execCommand('insertImage', false, image)
         },
-        insertFile(value) {
-            console.log('insertFile', value)
-            document.execCommand('insertHTML', false, `<a href="/documents/${value}" type="application/pdf" title="${value}">${value}</a>`)
+        insertFile(filePath, fileType, fileName) {
+            console.log('insertFile', filePath, fileType, fileName)
+            // const abc = fileName
+            // document.execCommand('insertHTML', false, `<a href="/documents/38959262-real3d-flipbook-jquery-plugin-license.pdf" type="application/pdf" title="abc" target="_blank">Mon Fichier</a>`)
+            // document.execCommand('insertHTML', false, `<a href="/documents/${filePath}" type="${fileType}" title="abc" target="_blank">abc</a>`)
+            document.execCommand('insertHTML', false, `<a href="/documents/${filePath}" type="${fileType}" title="${fileName}" target="_blank">${fileName}</a>`)
 
         },
         insertDiv(value) {
@@ -216,7 +271,7 @@ export default {
             const selectedElement = window.getSelection().focusNode.parentNode
             selectedElement.className = 'col-6'
         },
-        showHTML() {},
+        // showHTML() {},
         formatDoc(sCmd, sValue) {
             console.log('sCmd: ', sCmd)
             console.log('sValue: ', sValue)
@@ -229,36 +284,36 @@ export default {
 
             // if (validateMode()) { document.execCommand(sCmd, false, sValue); oDoc.focus(); }
         },
-        // setDocMode(bToSource) {
-        //     console.log('bToSource: ', bToSource)
-        //     console.log('this.checked: ', this.checked)
-        //     var oDoc = document.getElementById('textBox')
-        //     console.log('oDoc: ', oDoc)
-        //     // return
-        //     var oContent
-        //     if (bToSource) {
-        //         oContent = document.createTextNode(oDoc.innerHTML)
-        //         console.log('oContent: ', oContent)
-        //         oDoc.innerHTML = ''
-        //         var oPre = document.createElement('pre')
-        //         oDoc.contentEditable = false
-        //         oPre.id = 'sourceText'
-        //         oPre.contentEditable = true
-        //         oPre.appendChild(oContent)
-        //         oDoc.appendChild(oPre)
-        //         document.execCommand('defaultParagraphSeparator', false, 'div')
-        //     } else {
-        //         if (document.all) {
-        //             oDoc.innerHTML = oDoc.innerText
-        //         } else {
-        //             oContent = document.createRange()
-        //             oContent.selectNodeContents(oDoc.firstChild)
-        //             oDoc.innerHTML = oContent.toString()
-        //         }
-        //         oDoc.contentEditable = true
-        //     }
-        //     oDoc.focus()
-        // },
+        setDocMode(bToSource) {
+            console.log('bToSource: ', bToSource)
+            console.log('this.checked: ', this.checked)
+            var oDoc = document.getElementById('textBox')
+            console.log('oDoc: ', oDoc)
+            // return
+            var oContent
+            if (bToSource) {
+                oContent = document.createTextNode(oDoc.innerHTML)
+                console.log('oContent: ', oContent)
+                oDoc.innerHTML = ''
+                var oPre = document.createElement('pre')
+                oDoc.contentEditable = false
+                oPre.id = 'sourceText'
+                oPre.contentEditable = true
+                oPre.appendChild(oContent)
+                oDoc.appendChild(oPre)
+                document.execCommand('defaultParagraphSeparator', false, 'div')
+            } else {
+                if (document.all) {
+                    oDoc.innerHTML = oDoc.innerText
+                } else {
+                    oContent = document.createRange()
+                    oContent.selectNodeContents(oDoc.firstChild)
+                    oDoc.innerHTML = oContent.toString()
+                }
+                oDoc.contentEditable = true
+            }
+            oDoc.focus()
+        },
         async createNewPage() {
             try {
                 console.log('document.getElementById("textBox").innerHTML: ', document.getElementById('textBox').innerHTML)
@@ -315,6 +370,14 @@ img.intLink {
 .resizable img {
     width: 100%;
     height: 100%;
+}
+.button2:hover {
+    cursor: pointer;
+    color: orange;
+}
+.disabled:hover {
+    cursor: not-allowed;
+    color: #000;
 }
 
 /*.cke_image_resizer {

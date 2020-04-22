@@ -48,7 +48,7 @@ Route::get('/sponsors/{id}', 'SponsorsController@getSponsorById');
 Route::get('/sponsors/slug/{slug}', 'SponsorsController@getSponsorBySlug');
 Route::post('/send-contact-form', 'ContactMessageController@send');
 Route::get('/list-all-images', 'FilesController@getImages');
-Route::get('/list-all-documents', 'FilesController@getFiles');
+Route::get('/list-all-documents', 'FilesController@getDocuments');
 
 Route::group(['middleware' => 'role:admin'], function () {
     // Users
@@ -70,4 +70,5 @@ Route::group(['middleware' => 'role:admin'], function () {
 
     // Pages
     Route::post('/pages/upload-image', 'FilesController@uploadImage');
+    Route::post('/pages/upload-document', 'FilesController@uploadDocument');
 });

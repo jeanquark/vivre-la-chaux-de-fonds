@@ -55,7 +55,7 @@ class FilesController extends Controller
     }
 
 
-    public function getFiles()
+    public function getDocuments()
     {
         $files = array();
         $allowedFileTypes = ['application/pdf'];
@@ -115,32 +115,34 @@ class FilesController extends Controller
     }
 
 
-    public function uploadFile(Request $request)
+    public function uploadDocument(Request $request)
     {
         $validatedData = $request->validate([
-            'file' => 'required|file',
+            'document' => 'required|file',
         ]);
 
         // Upload file
-        if (File::exists($request->file)) {
-            $fileName = $request->file->getClientOriginalName(); //Get File Name
-            $uploadedFile = Storage::disk('documents')->put($request->file, $fileName);
+        if (File::exists($request->document)) {
+            $fileName = $request->document->getClientOriginalName(); //Get File Name
+            // $uploadedFile = Storage::disk('uploads')->putFileAs('pages', $request->document, $fileName);
+            $uploadedFile = Storage::disk('documents')->putFileAs('', $request->document, $fileName);
+            // $uploadedFile = Storage::disk('documents')->put($request->document, $fileName);
         }
 
         $newFileArray = array();
-        array_push($newFileArray, $uploadedFile);
-        array_push($newFileArray, Storage::disk('uploads')->mimeType($uploadedFile));
-        array_push($newFileArray, Storage::disk('uploads')->size($uploadedFile));
-        array_push($newFileArray, Storage::disk('uploads')->lastModified($uploadedFile));
+        // array_push($newFileArray, $uploadedFile);
+        // array_push($newFileArray, Storage::disk('documents')->mimeType($uploadedFile));
+        // array_push($newFileArray, Storage::disk('documents')->size($uploadedFile));
+        // array_push($newFileArray, Storage::disk('documents')->lastModified($uploadedFile));
 
 
         return response()->json([
             'success' => true,
             'request' => $request,
             'request->image' => $request->image,
-            'request->file' => $request->file,
-            'imageName' => $imageName,
-            'uploadedFile' => $uploadedFile,
+            'request->document' => $request->document,
+            'fileName' => $fileName,
+            // 'uploadedFile' => $uploadedFile,
             // 'newFile' => $newFile,
             'newFileArray' => $newFileArray
         ], 200);

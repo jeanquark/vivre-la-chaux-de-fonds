@@ -40,7 +40,7 @@
             <b-tab title="Uploader une image">
                 <b-row class="justify-content-center my-3">
                     <b-col cols="12" md="6" lg="4">
-                        <b-form-file accept=".jpg, .png, .gif" placeholder="Choisir un fichier..." drop-placeholder="Placer le fichier ici..." @change="onFileChange" :class="{ 'is-invalid': form.errors.has('image') }"></b-form-file>
+                        <b-form-file accept=".jpg, .png, .gif" placeholder="Choisir un fichier..." drop-placeholder="Placer le fichier ici..." :class="{ 'is-invalid': form.errors.has('image') }" @change="onFileChange"></b-form-file>
                         <has-error :form="form" field="image" />
                         <div id="preview">
                             <img v-if="url" :src="url" />
