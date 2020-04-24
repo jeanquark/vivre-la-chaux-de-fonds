@@ -1,5 +1,5 @@
 <template>
-    <b-modal size="xl" id="documentsModal" ok-disabled no-close-on-esc no-close-on-backdrop @close="closeModal">
+    <b-modal size="xl" id="documentsModal" title="Gestion des documents" ok-disabled no-close-on-esc no-close-on-backdrop @close="closeModal">
         <template v-slot:modal-title>
             <span class="unselectable">Manager Documents</span>
         </template>

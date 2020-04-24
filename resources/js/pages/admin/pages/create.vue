@@ -3,7 +3,7 @@
         <b-breadcrumb>
             <b-breadcrumb-item to="/admin/pages" class="navigation">
                 <font-awesome-icon icon="file-alt" />
-                <span>Plans</span>
+                <span>Pages</span>
             </b-breadcrumb-item>
             <b-breadcrumb-item active>Créer</b-breadcrumb-item>
         </b-breadcrumb>
@@ -11,6 +11,7 @@
         
         showImagesModal: {{ showImagesModal }} <b-button size="sm" @click="showImagesModal = false">Fermer</b-button><br /><br />
         showDocumentsModal: {{ showDocumentsModal }} <b-button size="sm" @click="showDocumentsModal = false">Fermer</b-button><br /><br />
+        showImagePropertiesToast: {{ showImagePropertiesToast }} <b-button size="sm" @click="showImagePropertiesToast = false">Fermer</b-button> <b-button size="sm" @click="showImagePropertiesToast = true">Ouvrir</b-button><br /><br />
         selectedImageNode: {{ selectedImageNode }}<br /><br />
         selectedImageProps: {{ selectedImageProps }}<br /><br />
         focused: {{ focused }}<br /><br />
@@ -20,8 +21,6 @@
 
         <b-row class="justify-content-center" v-if="showImagesModal" style="border: 1px solid #000;">
             <b-col cols="6" md="3" lg="2">
-                <!-- <label for="width">Largeur (px):</label>
-                <b-form-input type="number" min="0" id="width" v-model="selectedImageProps['width']" @update="updateSelectedImage($event, 'width')"></b-form-input> -->
                 <b-form-group label="Largeur (px)" label-for="width">
                     <b-form-input type="number" min="0" id="width" v-model="selectedImageProps['width']" @update="updateSelectedImage($event, 'width')"></b-form-input>
                 </b-form-group>
@@ -43,12 +42,15 @@
                 <b-form-select :options="['left', 'center', 'right']" id="float" v-model="selectedImageProps['style']['float']" @change="updateSelectedImage($event, 'float')"></b-form-select>
             </b-col>
         </b-row>
+        
 
+        
         <b-form @submit.prevent="createNewPage">
             <b-row align-v="center" class="justify-content-start my-3 px-3">
                 <b-col cols="12" md="6">
-                    <b-form-group label="Entrer un titre pour cette page:" label-for="newPageTitle">
-                        <b-form-input id="newPageTitle" placeholder="Titre de la page" v-model="newPage.title"></b-form-input>
+                    <b-form-group label="Entrer un titre pour cette page:" label-for="name">
+                        <b-form-input id="name" name="name" placeholder="Titre de la page" :class="{ 'is-invalid': form.errors.has('name') }" v-model="form.name"></b-form-input>
+                        <has-error :form="form" field="name" />
                     </b-form-group>
                 </b-col>
                 <b-col cols="12" class="">
@@ -100,23 +102,39 @@
                         <!-- <img class="intLink" title="Underline" @click.prevent="formatDoc('insertImage', 'http://dummyimage.com/160x90')" src="/images/icon-image.png" width="30" /> -->
                         <!-- <img class="intLink" title="Underline" @click.prevent="openImagesModal" src="/images/icons/image.png" width="30" /> -->
 
-                        <b-button variant="primary" v-b-tooltip.hover title="Ajouter image" :disabled="!focused" @mousedown.prevent="focused = true" @click.prevent="openImagesModal">
+                        <b-button variant="secondary" v-b-tooltip.hover title="Ajouter image" :disabled="!focused" @mousedown.prevent="focused = true" @click.prevent="openImagesModal">
                             <font-awesome-icon size="1x" icon="image" class="" />
                         </b-button>
                         <!-- <img class="intLink" title="Underline" @click.prevent="openDocumentsModal" src="/images/icons/pdf.png" width="30" /> -->
 
-                        <b-button variant="primary" v-b-tooltip.hover title="Ajouter PDF" :disabled="!focused" @mousedown.prevent="focused = true" @click.prevent="openDocumentsModal">
+                        <b-button variant="secondary" v-b-tooltip.hover title="Ajouter PDF" :disabled="!focused" @mousedown.prevent="focused = true" @click.prevent="openDocumentsModal">
                             <font-awesome-icon size="1x" icon="file-pdf" class="" />
+                        </b-button>
+
+                        <b-button variant="dark" v-b-tooltip.hover title="Voir code" @click="toggleShowHTML">
+                            <font-awesome-icon size="1x" icon="code" />
                         </b-button>
 
                         <button @click.prevent="insertDiv('12')">Insert div</button>
 
-                        <div contenteditable="true" id="textBox" v-html="content" @focus="focused = true" @blur="focused = false" @dblclick="selectedElement" class="mt-1" v-if="!showHTML"></div>
-                        <div contenteditable="true" id="textBox" @focus="focused = true" @blur="focused = false" @dblclick="selectedElement" class="mt-1" v-else><pre>{{ content }}</pre></div>
+                        Link - Number list - Bullet point list - Citation - Styles - Format
+                        
+                        <b-row class="justify-content-center my-2" v-if="showImagePropertiesToast">
+                            <b-col cols="12" md="6">
+                                <image-properties-toast :selectedImageProps="selectedImageProps" @updateSelectedImageProperties="updateSelectedImageProperties" @closeImagePropertiesToast="showImagePropertiesToast = false" style="" />
+                            </b-col>
+                        </b-row>
 
-                        <button @click="showHTML = !showHTML">Show HTML</button>
+                        <div contenteditable="true" id="textBox" v-html="content" @focus="focused = true" @blur="focused = false" @dblclick="selectedElement" class="mt-1" v-if="!showHTML"></div>
+
+                        <div contenteditable="true" id="textBox" @focus="focused = true" @blur="focused = false" @dblclick="selectedElement" class="mt-1" v-else>
+                            <pre style="">{{ content }}</pre>
+                            <!-- {{ content }} -->
+                        </div>
+
+                        <!-- <button @click.prevent="toggleShowHTML">Show HTML</button> -->
                         <!-- <p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" v-model="checked" @click="setDocMode(checked)" /> <label for="switchBox">Show HTML</label></p> -->
-                        <p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" @change="setDocMode(checked);" /> <label for="switchBox">Show HTML</label></p>
+                        <!-- <p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" @change="setDocMode(checked);" /> <label for="switchBox">Show HTML</label></p> -->
                         <!-- checked: {{ checked }}<br /><br /> -->
                         <!-- content: {{ content }} -->
                     </b-form-group>
@@ -137,26 +155,47 @@
         </div> -->
 
         <!-- <b-modal id="filesModal">Hello From My Modal2!</b-modal> -->
-        <images-modal :@insertFile="insertImage" @closeImagesModal="showImagesModal = false" v-if="showImagesModal" />
+        <images-modal @insertFile="insertImage" @closeImagesModal="showImagesModal = false" v-if="showImagesModal" />
         <!-- hoveredElement: {{ hoveredElement }} -->
         <documents-modal @insertFile="insertFile" @closeDocumentsModal="showDocumentsModal = false" v-if="showDocumentsModal" />
+        
+        <!-- <b-sidebar aria-controls="details" title="Propriétés de l'image" width="360px" shadow v-model="showImagePropertiesToast">
+            <div class="px-3 py-2">
+
+            </div>
+            <template v-slot:footer="{ hide }">
+                <div class="d-flex bg-dark text-light justify-content-center align-items-center px-3 py-2">
+                    <b-button size="sm" @click="hide">Fermer</b-button>
+                </div>
+            </template>
+        </b-sidebar> -->
+        
+        <!-- <b-button class="mb-2" variant="primary" @click="$bvToast.show('example-toast')">
+            Show toast
+        </b-button> -->
+        <!-- <b-toast id="example-toast" title="BootstrapVue" static no-auto-hide>
+            Hello, world! This is a toast message.
+        </b-toast> -->
     </b-container>
 </template>
 
 <script>
+import Form from 'vform'
+
 // import CKEditor from 'ckeditor4-vue'
 import ImagesModal from '~/components/ImagesModal'
 import DocumentsModal from '~/components/DocumentsModal'
+import ImagePropertiesToast from '~/components/ImagePropertiesToast'
 
 export default {
     components: {
         // ckeditor: CKEditor.component
         ImagesModal,
-        DocumentsModal
+        DocumentsModal,
+        ImagePropertiesToast
     },
     async created() {},
-    mounted() {
-    },
+    mounted() {},
     data() {
         return {
             // editorConfig: {
@@ -164,13 +203,17 @@ export default {
             //     filebrowserBrowseUrl: '/ckfinder/browser',
             //     filebrowserUploadUrl: '/userfiles'
             // },
-            newPage: {},
+            form: new Form({
+                name: '',
+                content: ''
+            }),
             showHTML: false,
-            content: '<p>Ceci est mon texte en <b>gras</b>.</p><img src="/images/logo.png" width="100" style="margin: 20px; float: right;" />',
+            content: '<p>Ceci est mon texte en <b>gras</b>. fghhg fghfgvb dfereff fgfghvs</p><img src="/images/logo.png" width="100" style="margin: 20px; float: right;" />',
             checked: false,
             // showModal: false,
             showImagesModal: false,
             showDocumentsModal: false,
+            showImagePropertiesToast: false,
             selectedImageNode: null,
             // selectedImageWidth: 0,
             // selectedImageHeight: 0,
@@ -180,13 +223,14 @@ export default {
                 height: 0,
                 style: {}
             },
-            focused: false
+            focused: false,
         }
     },
     computed: {
         loading() {
             return this.$store.getters['loading/loading']
         },
+        
         // abc () {
         //     // return '<b>abc</b>'
         //     console.log(document.getElementById('textBox'))
@@ -194,11 +238,13 @@ export default {
         // }    
     },
     methods: {
-        abc () {
-            console.log('abc')
-        },
-        onFocus ($event) {
-            console.log('onFocus', $event)
+        toggleShowHTML () {
+            if (!this.showHTML) {
+                this.content = document.getElementById('textBox').innerHTML
+            } else {
+                this.content = document.getElementById('textBox').innerText
+            }
+            this.showHTML = !this.showHTML
         },
         updateSelectedImage (value, type) {
             console.log('updateSelectedImage: ', value, type)
@@ -225,14 +271,50 @@ export default {
             const element = event.target.tagName.toLowerCase()
             console.log('element: ', element)
             if (element === 'img') {
-                this.showImageModal = true
+                console.log('img!')
+                // console.log(this.$bvModal('sidebar-1'))
+                // this.$bvSidebar.show('sidebar-1')
+                // this.$bvSidebar.show('sidebar-1')
+                // v-b-toggle.sidebar-1
+
+                // this.showImagePropertiesToast = true
+                // this.$bvToast.show('example-toast')
                 this.selectedImageNode = event.target
                 this.selectedImageProps['width'] = event.target.width
                 this.selectedImageProps['height'] = event.target.height
                 this.selectedImageProps['style']['margin'] = event.target.style.margin.match(/\d/g).join('')
                 this.selectedImageProps['style']['float'] = event.target.style.float
+                this.openImagePropertiesToast()
+
+                // return
+                // this.openImagePropertiesModal()
+                // // this.showImagePropertiesToast = true
+                // // this.showImagesModal = true
+                // this.selectedImageNode = event.target
+                // this.selectedImageProps['width'] = event.target.width
+                // this.selectedImageProps['height'] = event.target.height
+                // this.selectedImageProps['style']['margin'] = event.target.style.margin.match(/\d/g).join('')
+                // this.selectedImageProps['style']['float'] = event.target.style.float
                 // event.target.width = 200
                 // this.selectedImage.width = 400
+            }
+        },
+        updateSelectedImageProperties (value, type) {
+            console.log('updateSelectedImageProperties2: ', value, type)
+            console.log('selectedImageNode: ', this.selectedImageNode)
+            // this.selectedImageProps[type] = value
+            // this.selectedImageNode[type] = value
+            if (type === 'width' || type === 'height') {
+                this.selectedImageNode[type] = value
+            }
+            if (type === 'margin') {
+                this.selectedImageNode.style.margin = `${value}px`
+            }
+            if (type === 'marginRight') {
+                this.selectedImageNode.style.marginRight = `${value}px`
+            }
+            if (type === 'float') {
+                this.selectedImageNode.style.float = value
             }
         },
         openImagesModal() {
@@ -249,6 +331,13 @@ export default {
             this.showDocumentsModal = true
             setTimeout(() => {
                 this.$bvModal.show('documentsModal')
+            }, 300)
+        },
+        openImagePropertiesToast() {
+            console.log('openImagePropertiesToast')
+            this.showImagePropertiesToast = true
+            setTimeout(() => {
+                this.$bvToast.show('example-toast')
             }, 300)
         },
         insertImage(value) {
@@ -271,7 +360,6 @@ export default {
             const selectedElement = window.getSelection().focusNode.parentNode
             selectedElement.className = 'col-6'
         },
-        // showHTML() {},
         formatDoc(sCmd, sValue) {
             console.log('sCmd: ', sCmd)
             console.log('sValue: ', sValue)
@@ -314,12 +402,19 @@ export default {
             }
             oDoc.focus()
         },
+        
         async createNewPage() {
             try {
-                console.log('document.getElementById("textBox").innerHTML: ', document.getElementById('textBox').innerHTML)
-                return
+                // console.log('document.getElementById("textBox").innerHTML2: ', document.getElementById('textBox').innerHTML)
                 this.$store.commit('loading/SET_LOADING', true)
-                await this.$store.dispatch('pages/createPage', { newPage: this.newPage })
+                const content = document.getElementById('textBox').innerHTML
+                // console.log('content: ', content)
+                this.form['content'] = content
+                console.log('this.form: ', this.form)
+                // return
+                await this.$store.dispatch('pages/createPage', this.form)
+                // await this.$store.dispatch('activities/createActivity', this.form)
+
                 this.$store.commit('loading/SET_LOADING', false)
                 this.$noty.success('Nouvelle page créée avec succès!')
                 this.$router.push('/admin/pages')
@@ -379,6 +474,15 @@ img.intLink {
     cursor: not-allowed;
     color: #000;
 }
+
+pre {
+    overflow-x: auto;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+ }
 
 /*.cke_image_resizer {
     display: none;

@@ -1,5 +1,5 @@
 <template>
-    <b-modal size="xl" title="Médias Manager" id="imagesModal" ok-disabled no-close-on-esc no-close-on-backdrop @close="closeModal">
+    <b-modal size="xl" title="Gestion des images" id="imagesModal" ok-disabled no-close-on-esc no-close-on-backdrop @close="closeModal">
         showSidebar: {{ showSidebar }}<br /><br />
         selectedFile: {{ selectedFile }}<br /><br />
         files: {{ files }}<br /><br />
@@ -84,13 +84,12 @@
 			return {
 				showSidebar: false,
 				selectedFile: null,
-                // selectedImage: new Image(),
-                // selectedImageWidth: null,
-                // selectedImageHeight: null,
-				form: new Form({
-					image: null
-				}),
-				files: [],
+                files: [],
+                form: new Form({
+                    image: null
+                }),
+                selectedImageHeight: null,
+                selectedImageWidth: null,
                 url: null
 			}
 		},

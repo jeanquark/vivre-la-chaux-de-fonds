@@ -69,6 +69,11 @@ Route::group(['middleware' => 'role:admin'], function () {
     Route::delete('/sponsors/{id}', 'SponsorsController@deleteSponsor');
 
     // Pages
+    Route::get('/pages', 'PagesController@getPages');
+    Route::post('/pages', 'PagesController@createPage');
+    Route::get('/pages/{id}', 'PagesController@getPageById');
+    Route::put('/pages/{id}', 'PagesController@updatePage');
+    Route::delete('/pages/{id}', 'PagesController@deletePage');
     Route::post('/pages/upload-image', 'FilesController@uploadImage');
     Route::post('/pages/upload-document', 'FilesController@uploadDocument');
 });
