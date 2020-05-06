@@ -27,7 +27,8 @@ class PagesController extends Controller
 
     public function getPages()
     {
-        $pages = Page::all();
+        $pages = Page::with('sections')->get();
+        // $pages = Page::all();
 
         return response()->json($pages, 200);
     }
@@ -35,6 +36,9 @@ class PagesController extends Controller
     public function getPageById(Request $request, $id)
     {
         $page = Page::find($id);
+        $page['sections'] = $page->sections;
+
+        // $page = Page::where('id', '=', $id)->with('sections')->first();
 
         return response()->json([
             'success' => true,
@@ -44,7 +48,8 @@ class PagesController extends Controller
 
     public function getPageBySlug(Request $request, $slug)
     {
-        $page = Page::where('slug', '=', $slug)->first();
+        $page = Page::where('slug', '=', $slug)->with('sections')->first();
+        // $page['sections'] = $page->sections;
 
         return response()->json([
             'success' => true,

@@ -7,7 +7,7 @@
             </b-breadcrumb-item>
             <b-breadcrumb-item active>Editer</b-breadcrumb-item>
         </b-breadcrumb>
-        <h2 class="text-center" v-if="activity">Editer activité {{ activity.name }}</h2>
+        <h2 class="text-center" v-if="activity">Editer activité "{{ activity.name }}"</h2>
         <!-- activity: {{ activity }}<br /><br /> -->
         <!-- activity.sponsors: {{ activity.sponsors }}<br /><br /> -->
         <!-- form.sponsors: {{ form.sponsors }}<br /><br /> -->

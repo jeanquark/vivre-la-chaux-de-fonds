@@ -2,24 +2,33 @@
     <b-container>
         <b-row class="justify-content-center">
             <b-col cols="12" md="8">
-                <b-card style="border-radius: 15px; background-color: rgba(0, 0, 0, .7);">
+                <b-card style="border: none; border-radius: 15px; background-color: #FFFFFF90;">
                     <b-card-text class="text-center">
-                        <h3 class="my-2" style="color: #fff;"><span class="secondary-color">L’Association</span> Vivre La Chaux-de-Fonds <span class="secondary-color">vous souhaite une cordiale bienvenue</span></h3>
-                        <h5 style="color: #fff;">
+                        <h3 class="my-2" style=""><span class="secondary-color">L’Association</span> Vivre La Chaux-de-Fonds 2 <span class="secondary-color">vous souhaite une cordiale bienvenue</span></h3>
+                        <h5 style="">
                             Favoriser le développement et l’animation de la ville de La Chaux-de-Fonds, créer des ponts, tisser des liens entre les différents milieux actifs en ville et la population,
                             tels sont les buts principaux de l’Association Vivre La Chaux-de-Fonds.
                         </h5>
                     </b-card-text>
                 </b-card>
+                <!-- <b-card style="border: none; border-radius: 15px; background-color: rgba(0, 0, 0, .7);">
+                    <b-card-text class="text-center">
+                        <h3 class="my-2" style="color: #fff;"><span class="secondary-color">L’Association</span> Vivre La Chaux-de-Fonds 2 <span class="secondary-color">vous souhaite une cordiale bienvenue</span></h3>
+                        <h5 style="color: #fff;">
+                            Favoriser le développement et l’animation de la ville de La Chaux-de-Fonds, créer des ponts, tisser des liens entre les différents milieux actifs en ville et la population,
+                            tels sont les buts principaux de l’Association Vivre La Chaux-de-Fonds.
+                        </h5>
+                    </b-card-text>
+                </b-card> -->
             </b-col>
         </b-row>
-
+        <!-- activities: {{ activities }} -->
         <b-row class="justify-content-center">
-            <b-col cols="12" md="6" lg="4" class="p-5" v-for="activity in activities" :key="activity.id">
-                <b-card :img-src="`/images/activities/${activity.image}`" img-alt="Card image" img-top>
+            <b-col cols="12" md="6" lg="4" class="p-5" style="" v-for="activity in activities" :key="activity.id">
+                <b-card :img-src="`/images/activities/${activity.image}`" img-alt="Card image" img-top style="border: none;">
                     <b-card-text class="text-center">
                         <h5 class="my-2">{{ activity.name }}</h5>
-                        <b-button variant="primary" class="my-2" :to="{ name: 'activity', params: { slug: activity.slug } }">En savoir plus &rarr;</b-button>
+                        <b-button variant="primary" size="sm" class="my-2" :to="{ name: 'activity', params: { slug: activity.slug } }">En savoir plus &rarr;</b-button>
                     </b-card-text>
                 </b-card>
             </b-col>
@@ -49,7 +58,7 @@
 export default {
     layout: 'frontend',
     async created() {
-        if (this.$store.getters['activities/activities'].length < 2) {
+        if (Object.keys(this.$store.getters['activities/activities']).length < 2) {
             await this.$store.dispatch('activities/fetchActivities')
         }
     },

@@ -1,14 +1,14 @@
 <template>
     <b-container>
-        <b-row class="justify-content-center">
-            <h1 class="my-5">Actualités & Manifestations</h1>
-        </b-row>
-        <b-row class="justify-content-center">
-            <b-col cols="12" md="6" lg="5" class="p-5" v-for="activity in activities" :key="activity.id">
-                <b-card :img-src="`/images/activities/${activity.image}`" img-alt="Image" img-top tag="article" style="" class="mb-2">
+        <!-- <b-row class="justify-content-center"> -->
+            <h1 class="text-center">Actualités & Manifestations</h1>
+        <!-- </b-row> -->
+        <b-row class="justify-content-center mt-5">
+            <b-col cols="12" sm="6" md="4" lg="4" class="px-5" v-for="activity in activities" :key="activity.id">
+                <b-card :img-src="`/images/activities/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" style="border: none;">
                     <b-card-text class="text-center">
                         <h5 class="my-2">{{ activity.name }}</h5>
-                        <b-button variant="primary" class="my-2" :to="{ name: 'activity', params: { slug: activity.slug } }">En savoir plus &rarr;</b-button>
+                        <b-button variant="primary" size="sm" class="my-2" :to="{ name: 'activity', params: { slug: activity.slug } }">En savoir plus &rarr;</b-button>
                     </b-card-text>
                 </b-card>
             </b-col>

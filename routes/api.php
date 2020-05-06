@@ -43,12 +43,25 @@ Route::group(['middleware' => 'guest:api'], function () {
 Route::get('/activities', 'ActivitiesController@getActivities');
 Route::get('/activities/{id}', 'ActivitiesController@getActivityById');
 Route::get('/activities/slug/{slug}', 'ActivitiesController@getActivityBySlug');
+
 Route::get('/sponsors', 'SponsorsController@getSponsors');
 Route::get('/sponsors/{id}', 'SponsorsController@getSponsorById');
 Route::get('/sponsors/slug/{slug}', 'SponsorsController@getSponsorBySlug');
+
+Route::get('/pages', 'PagesController@getPages');
+Route::get('/pages/{id}', 'PagesController@getPageById');
+Route::get('/pages/slug/{slug}', 'PagesController@getPageBySlug');
+
+Route::get('/sections', 'SectionsController@getSections');
+Route::get('/sections/{id}', 'SectionsController@getSectionById');
+Route::get('/sections/page/{pageId}', 'SectionsController@getSectionsByPageId');
+
 Route::post('/send-contact-form', 'ContactMessageController@send');
 Route::get('/list-all-images', 'FilesController@getImages');
 Route::get('/list-all-documents', 'FilesController@getDocuments');
+
+
+
 
 Route::group(['middleware' => 'role:admin'], function () {
     // Users
@@ -69,9 +82,9 @@ Route::group(['middleware' => 'role:admin'], function () {
     Route::delete('/sponsors/{id}', 'SponsorsController@deleteSponsor');
 
     // Pages
-    Route::get('/pages', 'PagesController@getPages');
+    
     Route::post('/pages', 'PagesController@createPage');
-    Route::get('/pages/{id}', 'PagesController@getPageById');
+    
     Route::put('/pages/{id}', 'PagesController@updatePage');
     Route::delete('/pages/{id}', 'PagesController@deletePage');
     Route::post('/pages/upload-image', 'FilesController@uploadImage');

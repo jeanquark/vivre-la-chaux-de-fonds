@@ -3,7 +3,7 @@
         <!-- <vue-navigation-bar :options="navbarOptions" /> -->
 
         <!-- Navigation large screens -->
-        <nav class="d-none d-lg-block" style="padding-bottom: 100px;">
+        <nav class="d-none d-lg-block" style="">
             <router-link to="/" id="logo">
                 <img src="/images/logo.png" width="150px" />
             </router-link>
@@ -27,13 +27,13 @@
                 </li> -->
                 <li>
                     <div class="dropdown">
-                        <div class="dropbtn" :class="this.$route.path === '/devenir-benevole' || this.$route.path === '/devenir-membre' || this.$route.path === '/partenariat' ? 'primary-color' : ''">
+                        <div class="dropbtn" :class="this.$route.path === '/participez' ? 'primary-color' : ''">
                             Participez! <font-awesome-icon icon="chevron-down" />
                         </div>
                         <div class="dropdown-content">
-                            <router-link to="/devenir-benevole">Devenir bénévole</router-link>
-                            <router-link to="/devenir-membre">Devenir membre</router-link>
-                            <router-link to="/partenariat">Partenariat</router-link>
+                            <router-link to="/participez">Devenir bénévole</router-link>
+                            <router-link to="/participez">Devenir membre</router-link>
+                            <router-link to="/participez">Partenariat</router-link>
                         </div>
                     </div>
                 </li>
@@ -82,8 +82,8 @@
         <!-- <div style="border: 2px solid green;">
             <h2>Footer</h2>
         </div> -->
-        <footer style="border: 2px solid red; width: 100%; background: #fff;">
-            <h2>Footer</h2>
+        <footer>
+            <h5 class="text-center my-0 py-2">vlcf.ch &copy;2020</h5>
         </footer>
     </div>
 </template>
@@ -275,5 +275,9 @@ a.router-link-exact-active {
 footer {
     position: absolute;
     bottom: 0;
+    width: 100%;
+    background: #FFF;
+    opacity: .7;
+    // border-top: 4px solid $primary;
 }
 </style>

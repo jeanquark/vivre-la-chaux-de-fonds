@@ -6,7 +6,7 @@
             <b-col cols="12" md="6">
                 <b-card style="">
                     <b-card-text class="text-center">
-                        <p class="text-left">
+                        <p class="text-left" style="font-size: 1.15em;">
                             Association Vivre La Chaux-de-Fonds<br />
                             Case postale<br />
                             2300 La Chaux-de-Fonds<br />

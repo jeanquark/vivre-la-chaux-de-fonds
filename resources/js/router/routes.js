@@ -84,7 +84,8 @@ export default [
         { path: 'pages/create', name: '', component: page('admin/pages/create.vue') },
         { path: 'pages/create_ORIGINAL', name: '', component: page('admin/pages/create_ORIGINAL.vue') },
         { path: 'pages/:id', name: '', component: page('admin/pages/show.vue') },
-        { path: 'pages/:id/edit', name: '', component: page('admin/pages/edit.vue') },
+        { path: 'pages/slug/:slug', name: '', component: page('admin/pages/show.vue') },
+        { path: 'pages/:slug/edit', name: '', component: page('admin/pages/edit.vue') },
 
         { path: '', redirect: '/admin/dashboard' },
 

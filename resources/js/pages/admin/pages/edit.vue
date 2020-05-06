@@ -7,42 +7,9 @@
             </b-breadcrumb-item>
             <b-breadcrumb-item active>Editer</b-breadcrumb-item>
         </b-breadcrumb>
-        <h2 class="text-center" v-if="page">Editer page {{ page.name }}</h2>
-        page: {{ page }}<br /><br />
-
-        <!-- <b-row class="justify-content-center">
-            <b-col cols="12" md="8" lg="6">
-                <b-form @submit.prevent="updatePage">
-                    <b-row align-v="center" class="justify-content-start my-3 px-3">
-                        <b-col cols="12">
-                            <b-form-group label="Nom:" label-for="name">
-                                <b-form-input id="name" :class="{ 'is-invalid': form.errors.has('name') }" v-model="form.name"></b-form-input>
-                                <has-error :form="form" field="name" />
-                            </b-form-group>
-                        </b-col>
-
-                        <b-col cols="12">
-                            <b-form-group label="Contenu:" label-for="content">
-                                <b-form-textarea id="content" placeholder="" rows="3" max-rows="6" :class="{ 'is-invalid': form.errors.has('content') }" v-model="form.content"></b-form-textarea>
-                                <has-error :form="form" field="content" />
-                            </b-form-group>
-                        </b-col>
-
-                        <b-col cols="12" class="my-2">
-                            <b-form-checkbox id="is_published" name="is_published" value="1" unchecked-value="0" v-model="form.is_published">
-                                Publié?
-                            </b-form-checkbox>
-                        </b-col>
-                    </b-row>
-                    <b-row class="justify-content-center my-2">
-                        <b-button variant="primary" :disabled="loading" type="submit">
-                            <b-spinner small type="grow" v-if="loading"></b-spinner>
-                            Editer activité
-                        </b-button>
-                    </b-row>
-                </b-form>
-            </b-col>
-        </b-row> -->
+        <h2 class="text-center" v-if="page">Editer page "{{ page.name }}"</h2>
+        <!-- page: {{ page }}<br /><br /> -->
+        <!-- sections: {{ sections }}<br /><br /> -->
 
         <b-form @submit.prevent="updatePage">
             <b-row align-v="center" class="justify-content-start my-3 px-3">
@@ -50,6 +17,13 @@
                     <b-form-group label="Entrer un titre pour cette page:" label-for="name">
                         <b-form-input id="name" name="name" placeholder="Titre de la page" :class="{ 'is-invalid': form.errors.has('name') }" v-model="form.name"></b-form-input>
                         <has-error :form="form" field="name" />
+                    </b-form-group>
+                </b-col>
+                <b-col cols="12" class="my-2">
+                    <!-- <b-form-select v-model="form.sections" :options="sections"></b-form-select> -->
+                    sectionsArray: {{ sectionsArray }}
+                    <b-form-group label="Sections:">
+                        <b-form-select multiple value-field="id" text-field="name" v-model="form.sections" :options="sectionsArray" size="sm" class=""></b-form-select>
                     </b-form-group>
                 </b-col>
                 <b-col cols="12" class="my-2">
@@ -95,11 +69,16 @@
                             <font-awesome-icon size="1x" icon="code" />
                         </b-button>
 
-                        <button @click.prevent="insertDiv('12')">Insert div</button>
-                        
+                        <!-- <button @click.prevent="insertDiv('12')">Insert div</button> -->
+
                         <b-row class="justify-content-center my-2" v-if="showImagePropertiesToast">
                             <b-col cols="12" md="6">
-                                <image-properties-toast :selectedImageProps="selectedImageProps" @updateSelectedImageProperties="updateSelectedImageProperties" @closeImagePropertiesToast="showImagePropertiesToast = false" style="" />
+                                <image-properties-toast
+                                    :selectedImageProps="selectedImageProps"
+                                    @updateSelectedImageProperties="updateSelectedImageProperties"
+                                    @closeImagePropertiesToast="showImagePropertiesToast = false"
+                                    style=""
+                                />
                             </b-col>
                         </b-row>
 
@@ -136,16 +115,22 @@ export default {
     },
     async created() {},
     async mounted() {
-        const pageId = parseInt(this.$route.params.id)
-        console.log('pageId: ', pageId)
+        // const pageId = parseInt(this.$route.params.id)
+        // console.log('pageId: ', pageId)
 
-        if (!this.$store.getters['pages/pages'][this.$route.params.id]) {
-            await this.$store.dispatch('pages/fetchPageById', { pageId: this.$route.params.id })
+        if (!this.$store.getters['pages/pages'][this.$route.params.slug]) {
+            await this.$store.dispatch('pages/fetchPageBySlug', { slug: this.$route.params.slug })
+        }
+
+        if (Object.keys(this.$store.getters['sections/sections']).length < 2) {
+            await this.$store.dispatch('sections/fetchSections')
         }
 
         console.log('this.page: ', this.page)
         console.log('this.form: ', this.form)
         this.form.fill(this.page)
+        this.form.sections = this.page.sections.map(section => section.id)
+
     },
     data() {
         return {
@@ -153,7 +138,7 @@ export default {
                 id: '',
                 name: '',
                 content: '',
-                is_published: false,
+                is_published: false
             }),
             showHTML: false,
             focused: false,
@@ -165,7 +150,7 @@ export default {
                 width: 0,
                 height: 0,
                 style: {}
-            },
+            }
         }
     },
     computed: {
@@ -179,11 +164,38 @@ export default {
             return this.$store.getters['pages/pages']
         },
         page() {
-            return this.$store.getters['pages/pages'][this.$route.params.id]
+            return this.$store.getters['pages/pages'][this.$route.params.slug]
+        },
+        sections() {
+            return this.$store.getters['sections/sections']
+        },
+        sectionsArray () {
+            // const array = []
+            // array.push(this.sections)
+            // return array
+
+            // return [
+            //     {
+            //         id: 1,
+            //         name: 'abc'
+            //     },
+            //     {
+            //         id: 2,
+            //         name: 'def'
+            //     }
+            // ]
+
+            // return Object.entries(this.sections)
+
+            // return Object.entries(this.sections).map(entry => entry[key])
+
+            var arr = [];
+Object.keys(this.sections).forEach(key => arr.push(this.sections[key]))
+return arr
         }
     },
     methods: {
-        toggleShowHTML () {
+        toggleShowHTML() {
             if (!this.showHTML) {
                 this.content = document.getElementById('textBox').innerHTML
             } else {
@@ -191,7 +203,7 @@ export default {
             }
             this.showHTML = !this.showHTML
         },
-        updateSelectedImage (value, type) {
+        updateSelectedImage(value, type) {
             console.log('updateSelectedImage: ', value, type)
             if (type === 'width' || type === 'height') {
                 this.selectedImageNode[type] = value
@@ -221,7 +233,7 @@ export default {
                 this.openImagePropertiesToast()
             }
         },
-        updateSelectedImageProperties (value, type) {
+        updateSelectedImageProperties(value, type) {
             console.log('updateSelectedImageProperties2: ', value, type)
             console.log('selectedImageNode: ', this.selectedImageNode)
             // this.selectedImageProps[type] = value
@@ -246,7 +258,7 @@ export default {
                 this.$bvModal.show('imagesModal')
             }, 300)
         },
-        openDocumentsModal () {
+        openDocumentsModal() {
             console.log('openDocumentsModal')
             this.showDocumentsModal = true
             setTimeout(() => {
@@ -273,7 +285,6 @@ export default {
             // document.execCommand('insertHTML', false, `<a href="/documents/38959262-real3d-flipbook-jquery-plugin-license.pdf" type="application/pdf" title="abc" target="_blank">Mon Fichier</a>`)
             // document.execCommand('insertHTML', false, `<a href="/documents/${filePath}" type="${fileType}" title="abc" target="_blank">abc</a>`)
             document.execCommand('insertHTML', false, `<a href="/documents/${filePath}" type="${fileType}" title="${fileName}" target="_blank">${fileName}</a>`)
-
         },
         insertDiv(value) {
             document.execCommand('formatBlock', false, 'div')
@@ -282,13 +293,14 @@ export default {
         },
         async updatePage() {
             try {
+                console.log('updatePage: ', this.form)
                 this.$store.commit('loading/SET_LOADING', true)
                 const content = document.getElementById('textBox').innerHTML
                 // console.log('content: ', content)
                 this.form['content'] = content
                 console.log('this.form: ', this.form)
                 // return
-                
+
                 // const { data } = await axios.post('/api/users', this.form)
                 await this.$store.dispatch('pages/updatePage', this.form)
                 // console.log('data: ', data)
@@ -341,5 +353,5 @@ pre {
     white-space: -pre-wrap;
     white-space: -o-pre-wrap;
     word-wrap: break-word;
- }
+}
 </style>

@@ -47,18 +47,7 @@
 							}
 						}
 					},
-					{
-						href: '/admin/users',
-						title: 'Utilisateurs',
-						alias: ['/admin/users', '/admin/users/create', '/admin/users/:id', '/admin/users/:id/edit'],
-						icon: {
-							element: 'font-awesome-icon',
-							attributes: {
-								icon: 'users',
-								size: 'xs'
-							}
-						}
-					},
+					
 					{
 						href: '/admin/activities',
 						title: 'Activités',
@@ -91,6 +80,18 @@
 							element: 'font-awesome-icon',
 							attributes: {
 								icon: 'file-alt'
+							}
+						}
+					},
+					{
+						href: '/admin/users',
+						title: 'Utilisateurs',
+						alias: ['/admin/users', '/admin/users/create', '/admin/users/:id', '/admin/users/:id/edit'],
+						icon: {
+							element: 'font-awesome-icon',
+							attributes: {
+								icon: 'users',
+								size: 'xs'
 							}
 						}
 					},
