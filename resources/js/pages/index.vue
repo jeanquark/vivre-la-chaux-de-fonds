@@ -67,7 +67,8 @@ export default {
     },
     computed: {
         activities() {
-            return this.$store.getters['activities/activities']
+            // return this.$store.getters['activities/activities']
+            return Object.values(this.$store.getters['activities/activities']).filter(activity => activity.is_on_frontpage == true)
         }
     }
 }

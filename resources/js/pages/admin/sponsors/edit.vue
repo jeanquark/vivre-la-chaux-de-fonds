@@ -7,6 +7,8 @@
             </b-breadcrumb-item>
             <b-breadcrumb-item active>Editer</b-breadcrumb-item>
         </b-breadcrumb>
+        <h2 class="text-center" v-if="sponsor">Editer sponsor "{{ sponsor.name }}"</h2>
+
 
         <b-row class="justify-content-center">
             <b-col cols="12" md="8" lg="6">
@@ -47,15 +49,16 @@
 
                         <b-col cols="12" class="my-2">
                             <p class="text-center">Image actuelle:</p>
-                            <b-img center :src="`/images/sponsors2/${form.image}`" width="200" class=""></b-img>
+                            <b-img center :src="`/images/partenaires/${form.image}`" width="200" class=""></b-img>
                         </b-col>
+
                         <b-col cols="12" class="my-2">
                             <b-form-file
                                 accept="image/jpeg, image/png"
                                 placeholder="Choisir un nouveau fichier..."
                                 drop-placeholder="Placez votre fichier ici..."
-                                @change="selectFile"
                                 :class="{ 'is-invalid': form.errors.has('image_new') }"
+                                @change="selectFile"
                             ></b-form-file>
                             <has-error :form="form" field="image_new" />
                         </b-col>

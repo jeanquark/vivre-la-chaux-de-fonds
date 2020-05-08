@@ -89,3 +89,16 @@ $pretty--color-primary: #9acd32;
 .custom-file-input:lang(en) ~ .custom-file-label::after {
     content: 'Parcourir';
 }
+
+// Multiselect
+@import '~vue-multiselect/dist/vue-multiselect.min.css';
+.multiselect__tag {
+    background: $primary;
+    line-height: 16px;
+}
+.multiselect__tag-icon {
+    line-height: 21px;
+}
+.multiselect__tag-icon:hover {
+    background: $dark;
+}

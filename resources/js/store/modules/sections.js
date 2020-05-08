@@ -17,14 +17,14 @@ export const mutations = {
 		console.log('SET_SECTIONS: ', payload)
 		payload.forEach(section => {
             state.sections = Object.assign({}, state.sections, {
-                [section.slug]: section
+                [section.id]: section
             })
         })
 	},
 	SET_SECTION (state, payload) {
 		console.log('SET_SECTION: ', payload)
 		state.sections = Object.assign({}, state.sections, {
-            [payload.slug]: payload
+            [payload.id]: payload
         })
 	},
 	DELETE_SECTION (state, payload) {
@@ -59,6 +59,18 @@ export const actions = {
 			console.log('error: ', error)
 			throw error
 		}
+	},
+	async fetchSectionBySlug ({ commit }, payload) {
+		try {
+			console.log('fetchSectionBySlug vuex action: ', payload)
+			const { sectionSlug } = payload
+			const { data } = await axios.get(`/api/sections/slug/${sectionSlug}`)
+			console.log('data: ', data)
+			commit('SET_SECTION', data.section)
+		} catch (error) {
+			console.log('error: ', error)
+			throw error
+		}
     },
     async fetchSectionsByPageId ({ commit }, payload) {
         try {
@@ -84,7 +96,7 @@ export const actions = {
                 ]
             })
             console.log('data: ', data)
-            commit('SET_SECTION', data.section)
+            commit('SET_SECTION', data.newSection)
         } catch (error) {
             console.log('error: ', error)
             throw error

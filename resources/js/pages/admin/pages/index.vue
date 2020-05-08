@@ -1,7 +1,7 @@
 <template>
 	<b-container>
 		<b-breadcrumb>
-            <b-breadcrumb-item active><font-awesome-icon icon="file-alt" />&nbsp;Pages</b-breadcrumb-item>
+            <b-breadcrumb-item active><font-awesome-icon icon="folder" />&nbsp;Pages</b-breadcrumb-item>
         </b-breadcrumb>
 		<h2 class="text-center">Gestion des pages</h2>
 
@@ -9,7 +9,7 @@
 		<!-- contentsArray: {{ contentsArray }}<br /><br /> -->
 
 		<b-button to="/admin/pages/create" variant="primary" class="my-3">Créer une nouvelle page</b-button>
-		<b-button to="/admin/pages/create_ORIGINAL" variant="primary" class="my-3">Créer une nouvelle page ORIGINAL</b-button>
+		<!-- <b-button to="/admin/pages/create_ORIGINAL" variant="primary" class="my-3">Créer une nouvelle page ORIGINAL</b-button> -->
 
 		<b-table
 	      responsive="sm"
@@ -25,7 +25,7 @@
 	    >
 			<template v-slot:cell(sections)="row">
 				<div v-for="section in row.item.sections" :key="section.id">
-					{{ section.name }}
+					<router-link :to="`/admin/sections/${section.id}/edit`">{{ section.name }}</router-link>
 				</div>
 			</template>
 
@@ -34,7 +34,13 @@
 			</template>
 
 			<template v-slot:cell(is_published)="row">
-				{{ row.item.is_published ? 'Oui' : 'Non' }}
+				<!-- {{ row.item.is_published ? 'Oui' : 'Non' }} -->
+				<span class="text-success" v-if="row.item.is_published" >
+                    Oui
+                </span>
+                <span class="text-danger" v-else>
+                    Non
+                </span>
 			</template>
 
 	    	<template v-slot:cell(updated_at)="row">
@@ -42,13 +48,13 @@
 			</template>
 
 			<template v-slot:cell(actions)="data">
-				<router-link :to="`/admin/pages/slug/${data.item.slug}`" class="btn btn-warning" style="display: inline-block;">
+				<router-link :to="`/admin/pages/${data.item.id}`" class="btn btn-warning" style="display: inline-block;">
                     <font-awesome-icon icon="eye" />
                 </router-link>
-                <router-link :to="`/admin/pages/${data.item.slug}/edit`" class="btn btn-success" style="display: inline-block;">
+                <router-link :to="`/admin/pages/${data.item.id}/edit`" class="btn btn-success" style="display: inline-block;">
                     <font-awesome-icon icon="edit" />
                 </router-link>
-                <button class="btn btn-danger" @click="deletePage(data.item.id)">
+                <button class="btn btn-danger" @click="deletePage(data.item)">
                     <font-awesome-icon icon="trash" />
                 </button>
 			</template>
@@ -108,16 +114,16 @@
 			}
 		},
 		methods: {
-			async deletePage (pageId) {
+			async deletePage (page) {
 				try {
-					const value = await this.$bvModal.msgBoxConfirm(`Etes-vous sûr de vouloir supprimer la page ${pageId}?`, {
+					const value = await this.$bvModal.msgBoxConfirm(`Etes-vous sûr de vouloir supprimer la page ${page.name}?`, {
 							okTitle: 'OK',
 							cancelTitle: 'Annuler',
 						}
 					)
 			        // console.log('value: ', value)
 			        if (value) {
-			        	await this.$store.dispatch('pages/deletePage', { pageId })
+			        	await this.$store.dispatch('pages/deletePage', { pageId: page.id })
 			        	this.$noty.success('Page supprimée avec succès!')
 			        }
 		    	} catch (error) {

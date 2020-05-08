@@ -10,7 +10,7 @@
 
         <!-- activity: {{ activity }}<br /><br /> -->
 		<!-- activityArray: {{ activityArray }}<br /><br /> -->
-        <h2 class="text-center" v-if="activity">Activité {{ activity.name }}</h2>
+        <h2 class="text-center" v-if="activity">Activité "{{ activity.name }}"</h2>
 
         <b-row class="justify-content-center">
             <b-col cols="12">
@@ -23,7 +23,7 @@
                     </template>
                     <template v-slot:cell(sponsors)="row">
                         <div v-for="sponsor in row.item.sponsors" :key="sponsor.id" class="p-1">
-                            <img :src="`/images/sponsors2/${sponsor.image}`" width="100" />
+                            <img :src="`/images/partenaires/${sponsor.image}`" width="100" />
 							{{ sponsor.name }}
                         </div>
                     </template>
@@ -61,7 +61,8 @@ export default {
                 { key: 'start_date', label: 'Date de début', sortable: true },
                 { key: 'end_date', label: 'Date de fin', sortable: true },
                 { key: 'image', label: 'Image', sortable: false },
-                { key: 'is_published', label: 'publié?', sortable: true },
+                { key: 'is_published', label: 'Publié?', sortable: true },
+                { key: 'is_on_frontpage', label: 'En première page?', sortable: true },
                 { key: 'sponsors', label: 'Sponsors', sortable: false },
                 { key: 'created_at', label: 'Date de création', sortable: true },
                 { key: 'updated_at', label: 'Dernière modification', sortable: true }

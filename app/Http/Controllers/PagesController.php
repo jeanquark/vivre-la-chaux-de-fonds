@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Page;
-use File;
-use App\Http\Requests\StorePage;
 use App\Http\Requests\UpdatePage;
-use Illuminate\Support\Facades\Storage;
+use App\Page;
+use App\Section;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-
 
 class PagesController extends Controller
 {
@@ -23,7 +20,6 @@ class PagesController extends Controller
     {
         // $this->middleware('guest');
     }
-
 
     public function getPages()
     {
@@ -49,7 +45,7 @@ class PagesController extends Controller
     public function getPageBySlug(Request $request, $slug)
     {
         $page = Page::where('slug', '=', $slug)->with('sections')->first();
-        // $page['sections'] = $page->sections;
+        // $page = Page::where('slug', '=', $slug)->with('sections:id,name,page_id')->first();
 
         return response()->json([
             'success' => true,
@@ -57,7 +53,8 @@ class PagesController extends Controller
         ], 200);
     }
 
-    protected function createPage(Request $request) {
+    protected function createPage(Request $request)
+    {
 
         $validatedData = $request->validate([
             'name' => 'required|unique:pages',
@@ -77,8 +74,14 @@ class PagesController extends Controller
         $page->slug = str_slug($request->name);
         $page->content = $request->content;
         // $page->is_published = false;
-        $page->save();
 
+        // Upload image if present
+        if (File::exists($request->image)) {
+            $image = Storage::disk('images')->put('pages', $request->image);
+            $page->image = $image;
+        }
+
+        $page->save();
 
         return response()->json([
             'success' => true,
@@ -86,7 +89,8 @@ class PagesController extends Controller
         ], 201);
     }
 
-    protected function updatePage(Request $request, $id) {
+    protected function updatePage(Request $request, $id)
+    {
 
         $validatedData = $request->validate([
             // 'name' => 'required|unique:pages',
@@ -94,45 +98,63 @@ class PagesController extends Controller
             'name' => ['required', Rule::unique('pages')->ignore($id)],
         ]);
 
-        // return response()->json([
-        //     'success' => true,
-        //     'request' => $request,
-        //     'id' => $id,
-        //     'request->name' => $request->name,
-        //     'request->content' => $request->content
-        // ], 201);
-
         $page = Page::find($id);
 
-        $page->updateOrInsert(
+        $page->updateOrCreate(
             ['id' => $id],
             [
                 'name' => $request->name,
                 'slug' => str_slug($request->name),
                 'content' => $request->content,
+                // 'sections' => $request->sections,
                 'is_published' => $request->is_published,
-                'updated_at' => \Carbon\Carbon::now()
+                'updated_at' => \Carbon\Carbon::now(),
             ]
         );
+
+        // 1) First, dissociate all existing relationships
+        foreach ($page->sections as $section) {
+            $section->page()->dissociate();
+            $section->save();
+        }
+
+        // 2) Second, associate current relationships
+        if ($request->sections) {
+            foreach ($request->sections as $sectionId) {
+                $section = Section::find($sectionId);
+                $section->page()->associate($page->id);
+                $section->save();
+            }
+        }
 
         $updatedPage = Page::find($id);
 
         return response()->json([
             'success' => true,
-            // 'page' => $page,
+            'page' => $page,
             'updatedPage' => $updatedPage,
+            // 'request->sections' => $request->sections,
+            // 'updatedPage->sections' => $updatedPage->sections,
+            // 'updatedPage->sections()->get()' => $updatedPage->sections()->get(),
+            // 'page->id' => $page->id,
         ], 201);
     }
 
-    protected function deletePage(Request $request, $id) {
-        $page = Page::find($id);
+    protected function deletePage(Request $request, $slug)
+    {
+        $page = Page::where('slug', '=', $slug)->first();
+
+        // Delete image if exists
+        if (Storage::disk('images')->exists('pages', $page->image)) {
+            Storage::disk('images')->delete('pages', $page->image);
+        }
 
         $page->delete();
 
         return response()->json([
             'success' => true,
             'page' => $page,
-            'id' => $id
+            'slug' => $slug
         ], 204);
     }
 }

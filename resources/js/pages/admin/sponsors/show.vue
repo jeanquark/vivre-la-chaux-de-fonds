@@ -8,13 +8,13 @@
             <b-breadcrumb-item active>Montrer</b-breadcrumb-item>
         </b-breadcrumb>
 
-        <h2 class="text-center" v-if="sponsor">Sponsor {{ sponsor.name }}</h2>
+        <h2 class="text-center" v-if="sponsor">Sponsor "{{ sponsor.name }}"</h2>
 
         <b-row class="justify-content-center">
             <b-col cols="12">
                 <b-table show-empty responsive="sm" :items="sponsorArray" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" class="nowrap" :stacked="true">
                     <template v-slot:cell(image)="row">
-                        <img :src="`/images/sponsors2/${row.item.image}`" width="200" />
+                        <img :src="`/images/partenaires/${row.item.image}`" width="200" />
                     </template>
                     <template v-slot:cell(is_active)="row">
                         {{ row.item.is_active ? 'Oui' : 'Non' }}

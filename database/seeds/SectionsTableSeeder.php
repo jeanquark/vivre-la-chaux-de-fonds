@@ -21,7 +21,6 @@ class SectionsTableSeeder extends Seeder
                 'content' => "L’Association <b>Vivre La Chaux-de-Fonds</b> a été créée en 2000/2001 et elle est active depuis cette période. A ce jour, elle a déjà organisé plus de 150 événements dont les Vivamitiés avec un regard sur l’Italie en 2002, Wallonie-Flandres-Bruxelles Capitale en 2004, Helvetissima et ses suissitudes en 2007, ainsi qu’une multitude d’autres manifestations impliquant l’ensemble des ressortissants des montagnes neuchâteloises mais aussi des communautés étrangères.<br />L’Association compte actuellement plus de 500 bénévoles qui mettent à sa disposition leurs compétences et savoir-faire. Ce sont environ 7000 heures de bénévolat annuel que l’Association peut relever.<br />Cette Association, à but non lucratif a pour buts de <br />
                 <ul>
                 <li>favoriser le développement de l’image des montagnes neuchâteloises et de La Chaux-de-Fonds/Le Locle en particulier;</li><li>de promouvoir le développement et l'extension du commerce local par l'organisation de manifestations adéquates;</li><li>de développer l'extension de toutes les activités de nature à animer la ville: entreprises commerciales, artisanales, financières, industrielles et de services, professions libérales, animations culturelles, etc.;</li><li>de resserrer les liens de solidarité qui doivent unir tous les milieux concernés;</li><li>d'assurer la liaison et la collaboration avec les autres institutions travaillant à la défense des intérêts généraux de la cité.</li><br />Vous trouverez tous les renseignements concernant notre association dans ses statuts, sur ce site ainsi qu’un résumé des différents paramètres dans menu Manifestations",
-                'is_published' => true,
             ],
             [
                 'page_id' => 1,
@@ -33,7 +32,6 @@ class SectionsTableSeeder extends Seeder
                 Cotisation annuelle minimale de CHF 50.–, sans plafonnement.<br /><b>Sociétés locales, associations:</b><br />
                 Cotisation annuelle de CHF 100.– sans plafonnement.<br /><b>Entreprises morales:</b><br />
                 Cotisation annuelle minimale de CHF 250.– sans plafonnement<br /><nuxt-link to='/devenir-membre'>Adhérer</nuxt-link>",
-                'is_published' => true,
             ],
             [
                 'page_id' => 1,
@@ -46,7 +44,6 @@ class SectionsTableSeeder extends Seeder
                 C’est ainsi que le 16 février 2001, après une année de discussion et de formation d’un réseau avec l’ensemble des groupements professionnels que naquit l’Association Vivre La Chaux-de-Fonds. Forte d’un comité de 14 membre, représentant l’Association des grands magasins, du Commerce indépendant du détail, de membres des sociétés locales, du service économique de la ville ainsi que d’autre personnes œuvrant dans le secteur bancaire, de la construction, ou autres enseignes commerciales régionales.<br />
                 Les séances se déroulaient alors dans la salle des commissions du 13ème étage de la tour Espacité.<br />
                 En 2004, L’association prend son envol seule, sans le soutien de la ville et de la chancellerie communale. Elle doit maintenant évoluer seule et s’auto financer. Les premières recherches de membres soutiens se développent pour arriver au résultat que l’on connaît maintenant.",
-                'is_published' => true,
             ],
             [
                 'page_id' => 1,
@@ -75,7 +72,6 @@ class SectionsTableSeeder extends Seeder
                     <li>Patricia Dos Santos,  Responsable communication</li>
                 </ul>
                 Les membres du comité directeur pilotent des sous-commissions lorsqu’elles s’avèrent nécessaires à la réalisation d’un événement.",
-                'is_published' => true,
             ],
             [
                 'page_id' => 1,
@@ -83,7 +79,6 @@ class SectionsTableSeeder extends Seeder
                 'slug' => 'statuts',
                 'image' => 'statuts.jpg',
                 'content' => "",
-                'is_published' => true,
             ],
             [
                 'page_id' => 2,
@@ -100,7 +95,6 @@ class SectionsTableSeeder extends Seeder
                         <td>217.3 Ko</td>
                     </tr>
                 </table>",
-                'is_published' => true,
             ],
             [
                 'page_id' => 2,
@@ -108,7 +102,6 @@ class SectionsTableSeeder extends Seeder
                 'slug' => 'bulletin-vivinfo',
                 'image' => '',
                 'content' => "",
-                'is_published' => true,
             ],
             [
                 'page_id' => 2,
@@ -116,7 +109,6 @@ class SectionsTableSeeder extends Seeder
                 'slug' => 'pv-assemblees-generales',
                 'image' => '',
                 'content' => "",
-                'is_published' => true,
             ],
             [
                 'page_id' => 3,
@@ -139,7 +131,6 @@ class SectionsTableSeeder extends Seeder
 
                 Nous nous réjouissons d’ores et déjà de construire des futurs événements en votre compagnie.<br />
                 Formulaire adhésion (PDF)",
-                'is_published' => true,
             ],
             [
                 'page_id' => 3,
@@ -158,10 +149,9 @@ class SectionsTableSeeder extends Seeder
                 Toute personne répondant aux conditions fixées ci-dessus présente une demande d’admission écrite, qui comporte l’adhésion aux présents statuts. Le comité est compétent pour se prononcer sur les demandes d’admission. En cas de refus d’une demande, il peut y avoir recours à l’assemblée générale.<br />
                 Adhésion entreprises/collectivités (PDF)<br />
                 Adhésion individuelle (PDF)",
-                'is_published' => true,
             ],
             [
-                'page_id' => 3,
+                'page_id' => NULL,
                 'name' => 'Partenariat',
                 'slug' => 'partenariat',
                 'image' => 'partenariat.jpg',
@@ -176,7 +166,6 @@ class SectionsTableSeeder extends Seeder
                 Nous contacter à ce propos<br />
 
                 Nos fidèles partenaires vous dévoilent pourquoi ils ont choisis l’Association Vivre La Chaux-de-Fonds comme support de communication :",
-                'is_published' => true,
             ],
         ];
 

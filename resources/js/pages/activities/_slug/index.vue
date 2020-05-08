@@ -1,11 +1,12 @@
 <template>
     <b-container>
         <b-row class="justify-content-center">
-            <b-col cols="12" md="8">
+            <b-col cols="12" md="8" v-if="activity">
+                <!-- activity: {{ activity }}<br /><br /> -->
                 <b-card :img-src="`/images/activities/${activity.image}`" img-alt="Image" img-top tag="article" style="" class="mb-2">
                     <b-card-text class="text-center">
                         <h5>{{ activity.name }}</h5>
-                        {{ activity }}
+                        <span v-html="activity.content"></span>
                     </b-card-text>
                 </b-card>
             </b-col>
@@ -19,11 +20,16 @@ export default {
     metaInfo() {
         return { title: 'Activité' }
     },
+    async created () {
+        // if (!this.$store.getters['activities/activities'][this.$route.params.slug]) {
+        if (!this.activity) {
+            console.log('load')
+            await this.$store.dispatch('activities/fetchActivityBySlug', { activitySlug: this.$route.params.slug })
+        }
+    },
     mounted() {
         console.log(this.$route.params.slug)
-        if (!this.$store.getters['activities/activities'][this.$route.params.slug]) {
-            this.$store.dispatch('activities/fetchActivity', { activitySlug: this.$route.params.slug })
-        }
+        
     },
     data() {
         return {
@@ -32,8 +38,10 @@ export default {
     },
     computed: {
         activity() {
-            return this.$store.getters['activities/activities'][this.$route.params.slug]
+            // return this.$store.getters['activities/activities'][this.$route.params.slug]
             // .find(activity => activity.slug === this.$route.params.slug)
+            // return Object.values(this.$store.getters['activities/activities'][1])
+            return Object.values(this.$store.getters['activities/activities']).find(activity => activity.slug === this.$route.params.slug)
         }
     }
 }

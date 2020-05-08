@@ -27,16 +27,17 @@ class SectionsController extends Controller
 
     public function getSections()
     {
+        $sections = Section::with('page:id,name,slug,id')->get();
         // $sections = Section::with('sections')->get();
-        $sections = Section::all();
+        // $sections = Section::all();
 
         return response()->json($sections, 200);
     }
 
     public function getSectionById(Request $request, $id)
     {
-        $section = Section::find($id);
-        $section['sections'] = $section->sections;
+        $section = Section::with('page:id,name,slug,id')->find($id);
+        // $section['sections'] = $section->sections;
 
         // $section = Section::where('id', '=', $id)->with('sections')->first();
 
@@ -48,8 +49,8 @@ class SectionsController extends Controller
 
     public function getSectionBySlug(Request $request, $slug)
     {
-        $section = Section::where('slug', '=', $slug)->first();
-        $section['sections'] = $section->sections;
+        $section = Section::where('slug', '=', $slug)->with('page:id,name,slug,id')->first();
+        // $section['sections'] = $section->sections;
 
         return response()->json([
             'success' => true,
@@ -78,20 +79,29 @@ class SectionsController extends Controller
         //     'request->content' => $request->content
         // ], 201);
 
-        // $newSection = json_decode($request->form);
-
         $section = new Section;
 
         $section->name = $request->name;
         $section->slug = str_slug($request->name);
         $section->content = $request->content;
-        // $section->is_published = false;
+
+        // Upload image if present
+        if (File::exists($request->image)) {
+            $image = Storage::disk('images')->put('sections', $request->image);
+            $section->image = $image;
+        }
+
         $section->save();
 
+        $newSection = Section::with('page:id,name,slug,id')->find($section->id);
 
         return response()->json([
             'success' => true,
+            'request' => $request,
+            'request->name' => $request->name,
+            'request->image' => $request->image,
             'section' => $section,
+            'newSection' => $newSection
         ], 201);
     }
 
@@ -134,14 +144,19 @@ class SectionsController extends Controller
     }
 
     protected function deleteSection(Request $request, $id) {
+        // $section = Section::where('slug', '=', $slug)->first();
         $section = Section::find($id);
+
+        // Delete image if exists
+        if (Storage::disk('images')->exists('sections', $section->image)) {
+            Storage::disk('images')->delete('sections', $section->image);
+        }
 
         $section->delete();
 
         return response()->json([
             'success' => true,
-            'section' => $section,
-            'id' => $id
+            'section' => $section
         ], 204);
     }
 }

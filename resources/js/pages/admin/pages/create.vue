@@ -2,12 +2,12 @@
     <b-container>
         <b-breadcrumb>
             <b-breadcrumb-item to="/admin/pages" class="navigation">
-                <font-awesome-icon icon="file-alt" />
+                <font-awesome-icon icon="folder" />
                 <span>Pages</span>
             </b-breadcrumb-item>
             <b-breadcrumb-item active>Créer</b-breadcrumb-item>
         </b-breadcrumb>
-        <h2 class="text-center">Ajouter une nouvelle page</h2>
+        <h2 class="text-center">Créer une nouvelle page</h2>
         
         showImagesModal: {{ showImagesModal }} <b-button size="sm" @click="showImagesModal = false">Fermer</b-button><br /><br />
         showDocumentsModal: {{ showDocumentsModal }} <b-button size="sm" @click="showDocumentsModal = false">Fermer</b-button><br /><br />
@@ -31,7 +31,7 @@
             </b-col>
             <b-col cols="6" md="3" lg="2">
                 <label for="margin">Marges (px):</label>
-                <b-form-input type="number"id="margin" v-model="selectedImageProps['style']['margin']" @update="updateSelectedImage($event, 'margin')"></b-form-input>
+                <b-form-input type="number" id="margin" v-model="selectedImageProps['style']['margin']" @update="updateSelectedImage($event, 'margin')"></b-form-input>
             </b-col>
             <b-col cols="6" md="3" lg="2">
                 <label for="marginRight">Marge droite (px):</label>
@@ -47,10 +47,24 @@
         
         <b-form @submit.prevent="createNewPage">
             <b-row align-v="center" class="justify-content-start my-3 px-3">
-                <b-col cols="12" md="6">
-                    <b-form-group label="Entrer un titre pour cette page:" label-for="name">
+                <b-col cols="12">
+                    <b-form-group label="Titre:" label-for="name">
                         <b-form-input id="name" name="name" placeholder="Titre de la page" :class="{ 'is-invalid': form.errors.has('name') }" v-model="form.name"></b-form-input>
                         <has-error :form="form" field="name" />
+                    </b-form-group>
+                </b-col>
+                <b-col cols="12" class="my-2">
+                    <b-form-group label="Sections:">
+                        <multiselect
+                            tag-placeholder="Add this as new tag"
+                            placeholder="Search or add a tag"
+                            label="name"
+                            track-by="id"
+                            :options="sectionsArray"
+                            :multiple="true"
+                            :taggable="true"
+                            v-model="pageSections"
+                        ></multiselect>
                     </b-form-group>
                 </b-col>
                 <b-col cols="12" class="">
@@ -182,6 +196,9 @@
 <script>
 import Form from 'vform'
 
+// Multiselect
+import Multiselect from 'vue-multiselect'
+
 // import CKEditor from 'ckeditor4-vue'
 import ImagesModal from '~/components/ImagesModal'
 import DocumentsModal from '~/components/DocumentsModal'
@@ -190,12 +207,17 @@ import ImagePropertiesToast from '~/components/ImagePropertiesToast'
 export default {
     components: {
         // ckeditor: CKEditor.component
+        Multiselect,
         ImagesModal,
         DocumentsModal,
         ImagePropertiesToast
     },
     async created() {},
-    mounted() {},
+    async mounted() {
+        if (Object.keys(this.$store.getters['sections/sections']).length < 2) {
+            await this.$store.dispatch('sections/fetchSections')
+        }
+    },
     data() {
         return {
             // editorConfig: {
@@ -224,18 +246,21 @@ export default {
                 style: {}
             },
             focused: false,
+            pageSections: [],
         }
     },
     computed: {
         loading() {
             return this.$store.getters['loading/loading']
         },
-        
-        // abc () {
-        //     // return '<b>abc</b>'
-        //     console.log(document.getElementById('textBox'))
-        //     return document.getElementById('textBox').innerHTML
-        // }    
+        sections() {
+            return this.$store.getters['sections/sections']
+        },
+        sectionsArray() {
+            var arr = []
+            Object.keys(this.sections).forEach(key => arr.push(this.sections[key]))
+            return arr
+        }  
     },
     methods: {
         toggleShowHTML () {
@@ -427,11 +452,12 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import './resources/sass/_variables.scss';
 #textBox {
     width: 100%;
     height: 250px;
-    border: 1px #000000 solid;
+    border: 6px double $secondary;
     padding: 12px;
     overflow: scroll;
 }

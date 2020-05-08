@@ -79,6 +79,17 @@
 						icon: {
 							element: 'font-awesome-icon',
 							attributes: {
+								icon: 'folder'
+							}
+						}
+					},
+					{
+						href: '/admin/sections',
+						title: 'Sections',
+						alias: ['/admin/sections', '/admin/sections/create', '/admin/sections/:id', '/admin/sections/:id/edit'],
+						icon: {
+							element: 'font-awesome-icon',
+							attributes: {
 								icon: 'file-alt'
 							}
 						}

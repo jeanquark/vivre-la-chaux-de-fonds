@@ -29,10 +29,10 @@ class FilesController extends Controller
         $files = array();
         $allowedFileTypes = ['image/jpeg', 'image/gif', 'image/png', 'image/svg+xml'];
 
-        $diskFiles = Storage::disk('uploads')->allfiles('pages');
+        $diskFiles = Storage::disk('images')->allfiles('pages');
         foreach ($diskFiles as $file) {
             $array = array();
-            $fileType = Storage::disk('uploads')->mimeType($file);
+            $fileType = Storage::disk('images')->mimeType($file);
 
             // list($width, $height) = getimagesize("Full path of the image"); 
             // $fileDimensions = Storage::disk('uploads')->getimagesize($file);
@@ -42,8 +42,8 @@ class FilesController extends Controller
                 array_push($array, $file);
                 array_push($array, $fileType);
                 // array_push($array, $fileDimensions);
-                array_push($array, Storage::disk('uploads')->size($file));
-                array_push($array, Storage::disk('uploads')->lastModified($file));
+                array_push($array, Storage::disk('images')->size($file));
+                array_push($array, Storage::disk('images')->lastModified($file));
                 array_push($files, $array);
             }
         }

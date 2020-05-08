@@ -14,20 +14,23 @@ class PagesTableSeeder extends Seeder
     {
         $pages = [
             [
-                'name'      => 'Association',
-                'slug'      => 'association',
-                'content'   => ''
+                'name'          => 'Association',
+                'slug'          => 'association',
+                'content'       => '',
+                'is_published'  => true
             ],
             [
-                'name'      => 'On parle de nous',
-                'slug'      => 'on-parle-de-nous',
-                'content'   => '<h4>Les maîtres du temps.</h4><br />
-                                <iframe width="420" height="345" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>'
+                'name'          => 'On parle de nous',
+                'slug'          => 'on-parle-de-nous',
+                'content'       => '<h4>Les maîtres du temps.</h4><br />
+                                <iframe width="420" height="345" src="https://www.youtube.com/watch?v=hdz8Q_1NDyM&feature=emb_logo"></iframe>',
+                'is_published'  => true
             ],
             [
-                'name'      => 'Participez',
-                'slug'      => 'participez',
-                'content'   => ''
+                'name'          => 'Participez',
+                'slug'          => 'participez',
+                'content'       => '',
+                'is_published'  => true
             ],
         ];
 

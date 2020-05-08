@@ -69,6 +69,12 @@
                         </b-col>
 
                         <b-col cols="12" class="my-2">
+                            <b-form-checkbox id="is_on_frontpage" name="is_on_frontpage" value="1" unchecked-value="0" v-model="form.is_on_frontpage">
+                                Em première page?
+                            </b-form-checkbox>
+                        </b-col>
+
+                        <b-col cols="12" class="my-2">
                             <p class="text-center">Image actuelle:</p>
                             <b-img center :src="`/images/activities/${form.image}`" width="200" class=""></b-img>
                         </b-col>
@@ -174,15 +180,16 @@ export default {
         loading() {
             return this.$store.getters['loading/loading']
         },
-        sponsors() {
-            return this.$store.getters['sponsors/sponsors']
-        },
+        
         activities() {
             return this.$store.getters['activities/activities']
         },
         activity() {
             return this.$store.getters['activities/activities'][this.$route.params.id]
-        }
+        },
+        sponsors() {
+            return this.$store.getters['sponsors/sponsors']
+        },
     },
     methods: {
         selectFile(e) {

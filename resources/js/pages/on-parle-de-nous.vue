@@ -45,8 +45,9 @@ export default {
         
     },
     async mounted() {
-        if (!this.$store.getters['pages/pages'][this.$route.path.substring(1)]) {
-            await this.$store.dispatch('pages/fetchPageBySlug', { slug: this.$route.path.substring(1) })
+        // if (!this.$store.getters['pages/pages'][this.$route.path.substring(1)]) {
+        if (!this.page) {
+            await this.$store.dispatch('pages/fetchPageBySlug', { pageSlug: this.$route.path.substring(1) })
         }
         if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {
             await this.$store.dispatch('sponsors/fetchSponsors')
@@ -64,17 +65,20 @@ export default {
             return this.$store.getters['pages/pages']
         },
         page() {
-            return this.$store.getters['pages/pages'][this.$route.path.substring(1)]
+            // return this.$store.getters['pages/pages'][this.$route.path.substring(1)]
+            return Object.values(this.$store.getters['pages/pages']).find(page => page.slug === this.$route.path.substring(1));
         },
-        sponsors() {
-            return this.$store.getters['sponsors/sponsors']
-        },
+        
         pageSections() {
-            return this.$store.getters['pages/pages'][this.$route.path.substring(1)] ? this.$store.getters['pages/pages'][this.$route.path.substring(1)]['sections'] : ''
+            // return this.$store.getters['pages/pages'][this.$route.path.substring(1)] ? this.$store.getters['pages/pages'][this.$route.path.substring(1)]['sections'] : ''
             // if (this.$store.getters['pages/pages'][this.$route.path.substring(1)]) {
             //     return this.$store.getters['pages/pages'][this.$route.path.substring(1)]['sections']
             // }
             // return
+            return this.page ? this.page['sections'] : []
+        },
+        sponsors() {
+            return this.$store.getters['sponsors/sponsors']
         }
     },
     methods: {

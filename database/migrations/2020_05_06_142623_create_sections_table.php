@@ -15,13 +15,12 @@ class CreateSectionsTable extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('page_id')->index();
+            $table->unsignedBigInteger('page_id')->index()->nullable();
             $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('content')->nullable();
             $table->string('image')->nullable();
-            $table->boolean('is_published')->default(0);
             $table->timestamps();
         });
     }

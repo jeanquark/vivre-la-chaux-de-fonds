@@ -8,12 +8,18 @@
 
         <b-table show-empty small stacked="md" :items="sponsorsArray" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" class="nowrap" v-if="!loading">
             <template v-slot:cell(image)="row">
-                <img :src="`/images/sponsors2/${row.item.image}`" style="max-width: 100px; max-height: 50px;" v-if="row.item.image" />
+                <img :src="`/images/partenaires/${row.item.image}`" style="max-width: 100px; max-height: 50px;" v-if="row.item.image" />
                 <span v-else><i>Pas d'image</i></span>
             </template>
 
             <template v-slot:cell(is_active)="row">
-                {{ row.item.is_active ? 'Oui' : 'Non' }}
+                <!-- {{ row.item.is_active ? 'Oui' : 'Non' }} -->
+                <span class="text-success" v-if="row.item.is_active" >
+                    Oui
+                </span>
+                <span class="text-danger" v-else>
+                    Non
+                </span>
             </template>
 
             <template v-slot:cell(updated_at)="row">

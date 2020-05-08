@@ -17,34 +17,37 @@ class ActivitiesTableSeeder extends Seeder
         // factory(App\Activity::class, 5)->create();
         $activities = [
             [
-                'name'          => 'St Nicolas 2019',
-                'slug'          => 'st_nicolas_2019',
-                'subtitle'      => 'Un événement à ne pas rater',
-                'content'       => 'Le 10 octobre aura lieu le tournoi annuel de Jass.',
-                'image'         => 'st_nicolas_2019.jpg',
+                'name'              => 'St Nicolas 2019',
+                'slug'              => 'st_nicolas_2019',
+                'subtitle'          => 'Un événement à ne pas rater',
+                'content'           => 'Le 10 octobre aura lieu le tournoi annuel de Jass.',
+                'image'             => 'st_nicolas_2019.jpg',
                 // 'start_date'    => '',
                 // 'end_date'      => '',
-                'is_published'  => true
+                'is_published'      => true,
+                'is_on_frontpage'   => false
             ],
             [
-                'name'          => 'St Patrick 2019',
-                'slug'          => 'st_patrick_2019',
-                'subtitle'      => 'Un événement à ne pas rater',
-                'content'       => 'Le 10 octobre aura lieu le tournoi annuel de Jass.',
-                'image'         => 'st_patrick_2019.jpg',
+                'name'              => 'St Patrick 2019',
+                'slug'              => 'st_patrick_2019',
+                'subtitle'          => 'Un événement à ne pas rater',
+                'content'           => 'Le 10 octobre aura lieu le tournoi annuel de Jass.',
+                'image'             => 'st_patrick_2019.jpg',
                 // 'start_date'    => '',
                 // 'end_date'      => '',
-                'is_published'  => true
+                'is_published'      => true,
+                'is_on_frontpage'   => false
             ],
             [
-                'name'          => 'Ola Portugal',
-                'slug'          => 'ola_portugal',
-                'subtitle'      => 'Un événement à ne pas rater',
-                'content'       => 'Le 10 octobre aura lieu le tournoi annuel de Jass.',
-                'image'         => 'ola_portugal_2019.png',
+                'name'              => 'Ola Portugal',
+                'slug'              => 'ola_portugal',
+                'subtitle'          => 'Un événement à ne pas rater',
+                'content'           => 'Le 10 octobre aura lieu le tournoi annuel de Jass.',
+                'image'             => 'ola_portugal_2019.png',
                 // 'start_date'    => '',
                 // 'end_date'      => '',
-                'is_published'  => true
+                'is_published'      => true,
+                'is_on_frontpage'   => false
             ],
         ];
 

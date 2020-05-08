@@ -2,7 +2,7 @@
     <b-container>
         <b-breadcrumb>
             <b-breadcrumb-item to="/admin/pages" class="navigation">
-                <font-awesome-icon icon="file-alt" />
+                <font-awesome-icon icon="folder" />
                 <span>Pages</span>
             </b-breadcrumb-item>
             <b-breadcrumb-item active>Editer</b-breadcrumb-item>
@@ -14,18 +14,39 @@
         <b-form @submit.prevent="updatePage">
             <b-row align-v="center" class="justify-content-start my-3 px-3">
                 <b-col cols="12" md="6">
-                    <b-form-group label="Entrer un titre pour cette page:" label-for="name">
+                    <b-form-group label="Titre:" label-for="name">
                         <b-form-input id="name" name="name" placeholder="Titre de la page" :class="{ 'is-invalid': form.errors.has('name') }" v-model="form.name"></b-form-input>
                         <has-error :form="form" field="name" />
                     </b-form-group>
                 </b-col>
+
                 <b-col cols="12" class="my-2">
                     <!-- <b-form-select v-model="form.sections" :options="sections"></b-form-select> -->
-                    sectionsArray: {{ sectionsArray }}
-                    <b-form-group label="Sections:">
+                    <!-- sectionsArray: {{ sectionsArray }} -->
+                    <!-- <b-form-group label="Sections:">
                         <b-form-select multiple value-field="id" text-field="name" v-model="form.sections" :options="sectionsArray" size="sm" class=""></b-form-select>
+                    </b-form-group> -->
+                    <!-- <multiselect :multiple="true" :options="sectionsArray" label="name" v-model="form.sections"  >
+                        <template slot="selection" slot-scope="{ values, search, isOpen }">
+                            {{ value }}
+                        </template>
+                    </multiselect> -->
+                    <!-- values: {{ values }}<br /><br /> -->
+                    <!-- form.sections: {{ form.sections }} -->
+                    <b-form-group label="Sections:">
+                        <multiselect
+                            tag-placeholder="Add this as new tag"
+                            placeholder="Search or add a tag"
+                            label="name"
+                            track-by="id"
+                            :options="sectionsArray"
+                            :multiple="true"
+                            :taggable="true"
+                            v-model="pageSections"
+                        ></multiselect>
                     </b-form-group>
                 </b-col>
+
                 <b-col cols="12" class="my-2">
                     <b-form-checkbox id="is_published" name="is_published" value="1" unchecked-value="0" v-model="form.is_published">
                         Publié?
@@ -101,7 +122,13 @@
 </template>
 
 <script>
+// vForm
 import Form from 'vform'
+
+// Multiselect
+import Multiselect from 'vue-multiselect'
+// import 'vue-multiselect/dist/vue-multiselect.min.css'
+
 import ImagesModal from '~/components/ImagesModal'
 import DocumentsModal from '~/components/DocumentsModal'
 import ImagePropertiesToast from '~/components/ImagePropertiesToast'
@@ -109,6 +136,7 @@ import ImagePropertiesToast from '~/components/ImagePropertiesToast'
 export default {
     // layout: 'backend',
     components: {
+        Multiselect,
         ImagesModal,
         DocumentsModal,
         ImagePropertiesToast
@@ -118,8 +146,8 @@ export default {
         // const pageId = parseInt(this.$route.params.id)
         // console.log('pageId: ', pageId)
 
-        if (!this.$store.getters['pages/pages'][this.$route.params.slug]) {
-            await this.$store.dispatch('pages/fetchPageBySlug', { slug: this.$route.params.slug })
+        if (!this.$store.getters['pages/pages'][this.$route.params.id]) {
+            await this.$store.dispatch('pages/fetchPageById', { pageId: this.$route.params.id })
         }
 
         if (Object.keys(this.$store.getters['sections/sections']).length < 2) {
@@ -129,8 +157,10 @@ export default {
         console.log('this.page: ', this.page)
         console.log('this.form: ', this.form)
         this.form.fill(this.page)
-        this.form.sections = this.page.sections.map(section => section.id)
-
+        // this.form.sections = this.page.sections.map(section => section.id)
+        // this.form.sections = this.page.sections
+        // this.form.sections = []
+        this.pageSections = this.page.sections
     },
     data() {
         return {
@@ -150,7 +180,9 @@ export default {
                 width: 0,
                 height: 0,
                 style: {}
-            }
+            },
+            pageSections: [],
+            // options: [{ name: 'Vue.js', code: 'vu' }, { name: 'Javascript', code: 'js' }, { name: 'Open Source', code: 'os' }]
         }
     },
     computed: {
@@ -164,12 +196,12 @@ export default {
             return this.$store.getters['pages/pages']
         },
         page() {
-            return this.$store.getters['pages/pages'][this.$route.params.slug]
+            return this.$store.getters['pages/pages'][this.$route.params.id]
         },
         sections() {
             return this.$store.getters['sections/sections']
         },
-        sectionsArray () {
+        sectionsArray() {
             // const array = []
             // array.push(this.sections)
             // return array
@@ -189,9 +221,9 @@ export default {
 
             // return Object.entries(this.sections).map(entry => entry[key])
 
-            var arr = [];
-Object.keys(this.sections).forEach(key => arr.push(this.sections[key]))
-return arr
+            var arr = []
+            Object.keys(this.sections).forEach(key => arr.push(this.sections[key]))
+            return arr
         }
     },
     methods: {
@@ -294,10 +326,14 @@ return arr
         async updatePage() {
             try {
                 console.log('updatePage: ', this.form)
+                // console.log('this.form: ', this.form)
+                // return
+
                 this.$store.commit('loading/SET_LOADING', true)
                 const content = document.getElementById('textBox').innerHTML
                 // console.log('content: ', content)
                 this.form['content'] = content
+                this.form['sections'] = this.pageSections.map(section => parseInt(section.id))
                 console.log('this.form: ', this.form)
                 // return
 
@@ -306,7 +342,7 @@ return arr
                 // console.log('data: ', data)
                 this.$store.commit('loading/SET_LOADING', false)
                 this.$noty.success('Page mise à jour avec succès!')
-                this.$router.push('/admin/pages')
+                // this.$router.push('/admin/pages')
             } catch (error) {
                 this.$store.commit('loading/SET_LOADING', false)
                 console.log('error: ', error)
@@ -317,17 +353,18 @@ return arr
 }
 </script>
 
+<!--<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>-->
 <style lang="scss" scoped>
 @import './resources/sass/_variables.scss';
 #textBox {
     width: 100%;
     height: 250px;
-    border: 1px #000000 solid;
     padding: 12px;
     overflow: scroll;
+    border: 6px double $secondary;
 }
 #textBox #sourceText {
-    padding: 0;
+    padding: 10px;
     margin: 0;
     min-width: 498px;
     min-height: 200px;

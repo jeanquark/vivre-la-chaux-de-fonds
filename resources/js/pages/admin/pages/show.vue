@@ -2,7 +2,7 @@
     <b-container>
         <b-breadcrumb>
             <b-breadcrumb-item to="/admin/pages" class="navigation">
-                <font-awesome-icon icon="file-alt" />
+                <font-awesome-icon icon="folder" />
                 <span>Pages</span>
             </b-breadcrumb-item>
             <b-breadcrumb-item active>Montrer</b-breadcrumb-item>
@@ -34,9 +34,9 @@
             </b-col>
         </b-row>
 
-        <b-row class="my-2">
-            <div v-html="page ? page['content'] : ''" style="width: 100%; border: 1px solid red;"></div>
-            <div v-html="page ? page['sections'] : ''" style="width: 100%; border: 1px solid red;"></div>
+        <b-row no-gutters class="my-2">
+            <div v-html="page ? page['content'] : ''" id="textBox" class="p-3" style=""></div>
+            <!-- <div v-html="page ? page['sections'] : ''" style="width: 100%; border: 1px solid red;"></div> -->
         </b-row>
     </b-container>
 </template>
@@ -44,8 +44,8 @@
 <script>
 export default {
     mounted() {
-        if (!this.$store.getters['pages/pages'][this.$route.params.slug]) {
-            this.$store.dispatch('pages/fetchPageBySlug', { slug: this.$route.params.slug })
+        if (!this.$store.getters['pages/pages'][this.$route.params.id]) {
+            this.$store.dispatch('pages/fetchPageById', { pageId: this.$route.params.id })
         }
     },
     data() {
@@ -69,7 +69,7 @@ export default {
             return this.$store.getters['loading/loading']
         },
         page() {
-            return this.$store.getters['pages/pages'][this.$route.params.slug]
+            return this.$store.getters['pages/pages'][this.$route.params.id]
         },
         pageArray() {
             // return this.page
@@ -87,4 +87,8 @@ export default {
 
 <style lang="scss" scoped>
 @import './resources/sass/_variables.scss';
+#textBox {
+    width: 100%;
+    border: 6px double $secondary;
+}
 </style>

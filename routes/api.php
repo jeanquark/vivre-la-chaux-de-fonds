@@ -54,6 +54,7 @@ Route::get('/pages/slug/{slug}', 'PagesController@getPageBySlug');
 
 Route::get('/sections', 'SectionsController@getSections');
 Route::get('/sections/{id}', 'SectionsController@getSectionById');
+Route::get('/sections/slug/{slugId}', 'SectionsController@getSectionBySlug');
 Route::get('/sections/page/{pageId}', 'SectionsController@getSectionsByPageId');
 
 Route::post('/send-contact-form', 'ContactMessageController@send');
@@ -82,11 +83,16 @@ Route::group(['middleware' => 'role:admin'], function () {
     Route::delete('/sponsors/{id}', 'SponsorsController@deleteSponsor');
 
     // Pages
-    
-    Route::post('/pages', 'PagesController@createPage');
-    
+    Route::post('/pages', 'PagesController@createPage'); 
     Route::put('/pages/{id}', 'PagesController@updatePage');
     Route::delete('/pages/{id}', 'PagesController@deletePage');
     Route::post('/pages/upload-image', 'FilesController@uploadImage');
     Route::post('/pages/upload-document', 'FilesController@uploadDocument');
+
+    // Sections
+    Route::post('/sections', 'SectionsController@createSection'); 
+    Route::put('/sections/{id}', 'SectionsController@updateSection');
+    Route::delete('/sections/{id}', 'SectionsController@deleteSection');
+    Route::post('/sections/upload-image', 'FilesController@uploadImage');
+    Route::post('/sections/upload-document', 'FilesController@uploadDocument');
 });

@@ -15,7 +15,21 @@
             </template>
 
 			<template v-slot:cell(is_published)="row">
-                {{ row.item.is_published ? 'Oui' : 'Non' }}
+                <span class="text-success" v-if="row.item.is_published" >
+                    Oui
+                </span>
+                <span class="text-danger" v-else>
+                    Non
+                </span>
+            </template>
+
+            <template v-slot:cell(is_on_frontpage)="row">
+                <span class="text-success" v-if="row.item.is_on_frontpage">
+                    Oui
+                </span>
+                <span class="text-danger" v-else>
+                    Non
+                </span>
             </template>
 
             <template v-slot:cell(updated_at)="row">
@@ -65,6 +79,7 @@ export default {
                 { key: 'name', label: 'Nom', sortable: true },
                 { key: 'image', label: 'Image', sortable: true },
                 { key: 'is_published', label: 'Publié?', sortable: true },
+                { key: 'is_on_frontpage', label: 'En première page?', sortable: true },
                 { key: 'updated_at', label: 'Dernière modification', sortable: true },
                 { key: 'actions', sortable: false }
             ]

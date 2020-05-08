@@ -17,14 +17,14 @@ export const mutations = {
 		console.log('SET_PAGES: ', payload)
 		payload.forEach(page => {
             state.pages = Object.assign({}, state.pages, {
-                [page.slug]: page
+                [page.id]: page
             })
         })
 	},
 	SET_PAGE (state, payload) {
 		console.log('SET_PAGE: ', payload)
 		state.pages = Object.assign({}, state.pages, {
-            [payload.slug]: payload
+            [payload.id]: payload
         })
 	},
 	DELETE_PAGE (state, payload) {
@@ -63,8 +63,8 @@ export const actions = {
 	async fetchPageBySlug ({ commit }, payload) {
 		try {
 			console.log('fetchPageBySlug vuex action: ', payload)
-			const { slug } = payload
-			const { data } = await axios.get(`/api/pages/slug/${slug}`)
+			const { pageSlug } = payload
+			const { data } = await axios.get(`/api/pages/slug/${pageSlug}`)
 			console.log('data: ', data)
 			commit('SET_PAGE', data.page)
 		} catch (error) {

@@ -25,6 +25,7 @@ class CreateActivitiesTable extends Migration
             $table->string('video')->nullable();
             $table->string('link')->nullable();
             $table->boolean('is_published')->default(0);
+            $table->boolean('is_on_frontpage')->default(0);
             $table->timestamps();
         });
     }

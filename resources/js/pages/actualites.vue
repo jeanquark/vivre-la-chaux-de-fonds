@@ -22,8 +22,10 @@ export default {
     metaInfo() {
         return { title: 'Actualités' }
     },
-    created() {
-        this.$store.dispatch('activities/fetchActivities')
+    async created() {
+        if (Object.keys(this.$store.getters['activities/activities']).length < 2) {
+            await this.$store.dispatch('activities/fetchActivities')
+        }
     },
     data() {
         return {}

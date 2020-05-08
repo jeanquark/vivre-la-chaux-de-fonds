@@ -11,7 +11,7 @@
                     <b-col cols="6" class="p-2" style="border: 0px solid red;">
                         <!-- {{ pages }} -->
                         <!-- {{ sponsors }} -->
-                        <!-- selectedPage: {{ selectedPage }}<br /> -->
+                        <!-- selectedSection: {{ selectedSection }}<br /> -->
                         <div v-for="section in pageSections" :key="section.id">
                             <b-button pill variant="primary" size="sm" class="m-1" @click="selectSection(section)" :class="{ active: section.id === selectedSection.id }">{{ section.name }}</b-button
                             ><br />
@@ -45,8 +45,9 @@ export default {
     },
     async created() {},
     async mounted() {
-        if (!this.$store.getters['pages/pages'][this.$route.path.substring(1)]) {
-            await this.$store.dispatch('pages/fetchPageBySlug', { slug: this.$route.path.substring(1) })
+        // if (!this.$store.getters['pages/pages'][this.$route.path.substring(1)]) {
+        if (!this.page) {
+            await this.$store.dispatch('pages/fetchPageBySlug', { pageSlug: this.$route.path.substring(1) })
         }
 
         if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {
@@ -64,9 +65,14 @@ export default {
     computed: {
         pages() {
             return this.$store.getters['pages/pages']
+            
+        },
+        page () {
+            return Object.values(this.$store.getters['pages/pages']).find(page => page.slug === this.$route.path.substring(1));
         },
         pageSections () {
-            return this.$store.getters['pages/pages'][this.$route.path.substring(1)] ? this.$store.getters['pages/pages'][this.$route.path.substring(1)]['sections'] : ''
+            // return this.$store.getters['pages/pages'][this.$route.path.substring(1)] ? this.$store.getters['pages/pages'][this.$route.path.substring(1)]['sections'] : ''
+            return this.page ? this.page['sections'] : []
         },
         sponsors() {
             return this.$store.getters['sponsors/sponsors']

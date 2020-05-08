@@ -64,7 +64,7 @@ return [
             'url' => env('AWS_URL'),
         ],
 
-        'uploads' => [
+        'images' => [
             'driver' => 'local',
             'root' => public_path('images'),
             'url' => env('APP_URL').'/images',

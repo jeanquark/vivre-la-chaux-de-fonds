@@ -85,7 +85,13 @@ export default [
         { path: 'pages/create_ORIGINAL', name: '', component: page('admin/pages/create_ORIGINAL.vue') },
         { path: 'pages/:id', name: '', component: page('admin/pages/show.vue') },
         { path: 'pages/slug/:slug', name: '', component: page('admin/pages/show.vue') },
-        { path: 'pages/:slug/edit', name: '', component: page('admin/pages/edit.vue') },
+        { path: 'pages/:id/edit', name: '', component: page('admin/pages/edit.vue') },
+
+        { path: 'sections', name: '', component: page('admin/sections/index.vue') },
+        { path: 'sections/create', name: '', component: page('admin/sections/create.vue') },
+        { path: 'sections/:id', name: '', component: page('admin/sections/show.vue') },
+        { path: 'sections/slug/:slug', name: '', component: page('admin/sections/show.vue') },
+        { path: 'sections/:id/edit', name: '', component: page('admin/sections/edit.vue') },
 
         { path: '', redirect: '/admin/dashboard' },
 

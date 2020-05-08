@@ -7,13 +7,24 @@
                 </b-carousel>
             </b-col>
             <b-col cols="9" style="border: 0px solid green;">
-                <b-row no-gutters style="background-color:rgba(0, 0, 0, 0.5);">
+                <!-- {{ pages }} -->
+                <!-- page: {{ page }}<br /><br /> -->
+                <!-- pageSections: {{ pageSections }}<br /><br /> -->
+                <!-- {{ sponsors }} -->
+                <!-- selectedPage: {{ selectedPage }}<br /> -->
+                <!-- selectedSection: {{ selectedSection }}<br /><br /> -->
+                <b-row no-gutters class="my-3" v-if="page && page['content']">
+                    <b-col cols="12">
+                        <b-card>
+                            <b-card-text class="">
+                                <div v-html="page['content']"></div>
+                            </b-card-text>
+                        </b-card>
+                    </b-col>
+                    </b-row>
+                <b-row no-gutters style="background-color:rgba(0, 0, 0, 0.5);" v-if="pageSections.length > 0">
                     <b-col cols="6" class="p-2" style="border: 0px solid red;">
-						<!-- {{ pages }} -->
-                        <!-- pageSections: {{ pageSections }}<br /> -->
-						<!-- {{ sponsors }} -->
-						<!-- selectedPage: {{ selectedPage }}<br /> -->
-                        <!-- selectedSection: {{ selectedSection }}<br /> -->
+						
                         <div v-for="section in pageSections" :key="section.id">
                             <b-button pill variant="primary" size="sm" class="m-1" @click="selectSection(section)" :class="{'active': section.id === selectedSection.id}">{{ section.name }}</b-button
                             ><br />
@@ -25,7 +36,7 @@
                         <b-img right :src="`/images/pages/${selectedSection.image}`" fluid :alt="selectedSection.name" class=""></b-img>
                     </b-col>
                 </b-row>
-                <b-row no-gutters>
+                <b-row no-gutters v-if="selectedSection">
                     <b-col cols="12">
                         <b-card>
                             <b-card-text class="">
@@ -46,12 +57,10 @@ export default {
         return { title: 'Association' }
     },
     async created() {
-        
-	},
-	async mounted () {
         console.log('abc: ', this.$route.path)
-        if (!this.$store.getters['pages/pages'][this.$route.path.substring(1)]) {
-            await this.$store.dispatch('pages/fetchPageBySlug', { slug: this.$route.path.substring(1) })
+        // if (!this.$store.getters['pages/pages'][this.$route.path.substring(1)]) {
+        if (!this.page) {
+            await this.$store.dispatch('pages/fetchPageBySlug', { pageSlug: this.$route.path.substring(1) })
         }
 		
 		if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {
@@ -60,6 +69,9 @@ export default {
 		console.log('Done!')
 	
         this.selectedSection = this.pageSections[0]
+	},
+	async mounted () {
+        
 	},
     data() {
         return {
@@ -70,8 +82,16 @@ export default {
         pages() {
             return this.$store.getters['pages/pages']
         },
+        page () {
+            // return this.$store.getters['pages/pages'][this.$route.path.substring(1)]
+            // return this.$store.getters['pages/pages'][1]
+            // return Object.entries(this.$store.getters['pages/pages']).find(pageId => pageId.slug === 'association');
+            return Object.values(this.$store.getters['pages/pages']).find(page => page.slug === this.$route.path.substring(1));
+        },
         pageSections () {
-            return this.$store.getters['pages/pages'][this.$route.path.substring(1)] ? this.$store.getters['pages/pages'][this.$route.path.substring(1)]['sections'] : ''
+            // return this.$store.getters['pages/pages'][this.$route.path.substring(1)] ? this.$store.getters['pages/pages'][this.$route.path.substring(1)]['sections'] : []
+            // return this.$store.getters['pages/pages'][1] ? this.$store.getters['pages/pages'][1]['sections'] : []
+            return this.page ? this.page['sections'] : []
         },
 		sponsors () {
 			return this.$store.getters['sponsors/sponsors']
