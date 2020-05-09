@@ -9,7 +9,7 @@
         </b-breadcrumb>
 
         <!-- activity: {{ activity }}<br /><br /> -->
-		<!-- activityArray: {{ activityArray }}<br /><br /> -->
+        <!-- activityArray: {{ activityArray }}<br /><br /> -->
         <h2 class="text-center" v-if="activity">Activité "{{ activity.name }}"</h2>
 
         <b-row class="justify-content-center">
@@ -21,10 +21,13 @@
                     <template v-slot:cell(is_published)="row">
                         {{ row.item.is_published ? 'Oui' : 'Non' }}
                     </template>
+                    <template v-slot:cell(is_on_frontpage)="row">
+                        {{ row.item.is_on_frontpage ? 'Oui' : 'Non' }}
+                    </template>
                     <template v-slot:cell(sponsors)="row">
                         <div v-for="sponsor in row.item.sponsors" :key="sponsor.id" class="p-1">
                             <img :src="`/images/partenaires/${sponsor.image}`" width="100" />
-							{{ sponsor.name }}
+                            {{ sponsor.name }}
                         </div>
                     </template>
 
@@ -66,20 +69,20 @@ export default {
                 { key: 'sponsors', label: 'Sponsors', sortable: false },
                 { key: 'created_at', label: 'Date de création', sortable: true },
                 { key: 'updated_at', label: 'Dernière modification', sortable: true }
-			]
+            ]
         }
     },
     computed: {
-		loading() {
+        loading() {
             return this.$store.getters['loading/loading']
         },
         activity() {
             return this.$store.getters['activities/activities'][this.$route.params.id]
         },
         activityArray() {
-			// return this.activity
-			// return Object.values(this.$store.getters['activities/activities'])
-			// return Object.entries(this.activity)
+            // return this.activity
+            // return Object.values(this.$store.getters['activities/activities'])
+            // return Object.entries(this.activity)
             const array = []
             array.push(this.activity)
             return array

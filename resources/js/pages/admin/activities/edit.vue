@@ -70,7 +70,7 @@
 
                         <b-col cols="12" class="my-2">
                             <b-form-checkbox id="is_on_frontpage" name="is_on_frontpage" value="1" unchecked-value="0" v-model="form.is_on_frontpage">
-                                Em première page?
+                                En première page?
                             </b-form-checkbox>
                         </b-col>
 
@@ -91,8 +91,20 @@
                         </b-col>
 
                         <b-col cols="12" class="my-2">
-                            <b-form-group label="Sponsors:">
+                            <!-- <b-form-group label="Sponsors:">
                                 <b-form-select multiple value-field="id" text-field="name" v-model="form.sponsors" :options="sponsors" size="sm" class=""></b-form-select>
+                            </b-form-group> -->
+                            <b-form-group label="Sponsors:">
+                                <multiselect
+                                    tag-placeholder="Add this as new tag"
+                                    placeholder="Search or add a tag"
+                                    label="name"
+                                    track-by="id"
+                                    :options="sponsorsArray"
+                                    :multiple="true"
+                                    :taggable="true"
+                                    v-model="activitySponsors"
+                                ></multiselect>
                             </b-form-group>
                             <!-- <multiselect
                                 label="name"
@@ -134,7 +146,6 @@ import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css'
 
 // Multiselect
 import Multiselect from 'vue-multiselect'
-import 'vue-multiselect/dist/vue-multiselect.min.css'
 
 export default {
     layout: 'backend',
@@ -158,7 +169,8 @@ export default {
         console.log('this.activity: ', this.activity)
         console.log('this.form: ', this.form)
         this.form.fill(this.activity)
-        this.form.sponsors = this.activity.sponsors.map(sponsor => sponsor.id)
+        // this.form.sponsors = this.activity.sponsors.map(sponsor => sponsor.id)
+        this.activitySponsors = this.activity.sponsors
     },
     data() {
         return {
@@ -172,8 +184,10 @@ export default {
                 image: null,
                 new_image: null,
                 is_published: false,
+                is_on_frontpage: false,
                 sponsors: []
-            })
+            }),
+            activitySponsors: []
         }
     },
     computed: {
@@ -190,6 +204,11 @@ export default {
         sponsors() {
             return this.$store.getters['sponsors/sponsors']
         },
+        sponsorsArray () {
+            var arr = []
+            Object.keys(this.sponsors).forEach(key => arr.push(this.sponsors[key]))
+            return arr
+        }
     },
     methods: {
         selectFile(e) {
@@ -198,8 +217,9 @@ export default {
         async updateActivity() {
             try {
                 console.log('this.form: ', this.form)
-                // return
                 this.$store.commit('loading/SET_LOADING', true)
+                this.form['sponsors'] = this.activitySponsors.map(sponsor => parseInt(sponsor.id))
+                // return
                 // const { data } = await axios.post('/api/users', this.form)
                 // console.log('data: ', data)
                 await this.$store.dispatch('activities/updateActivity', this.form)

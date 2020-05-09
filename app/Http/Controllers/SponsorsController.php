@@ -44,8 +44,8 @@ class SponsorsController extends Controller
 
     public function getSponsorById(Request $request, $id)
     {
-        $sponsor = Sponsor::find($id);
-        $sponsor['activities'] = $sponsor->activities;
+        $sponsor = Sponsor::with('activities')->find($id);
+        // $sponsor['activities'] = $sponsor->activities;
 
         return response()->json([
             'success' => true,
@@ -55,8 +55,8 @@ class SponsorsController extends Controller
 
     public function getSponsorBySlug(Request $request, $slug)
     {
-        $sponsor = Sponsor::where('slug', '=', $slug)->first();
-        $sponsor['activities'] = $sponsor->activities;
+        $sponsor = Sponsor::where('slug', '=', $slug)->with('activities')->first();
+        // $sponsor['activities'] = $sponsor->activities;
 
         return response()->json([
             'success' => true,
@@ -145,11 +145,13 @@ class SponsorsController extends Controller
         );
 
         // Update activities relationships
-        $activityIdArray = [];
-        foreach($request->activities as $activityId) {
-            array_push($activityIdArray, $activityId);
-        }
-        $sponsor->activities()->sync($activityIdArray);
+        // $activityIdArray = [];
+        // foreach($request->activities as $activityId) {
+        //     array_push($activityIdArray, $activityId);
+        // }
+        // $sponsor->activities()->sync($activityIdArray);
+
+        $sponsor->activities()->sync($request->activities);
 
 
 
@@ -194,7 +196,7 @@ class SponsorsController extends Controller
         // }
         // $sponsor->activities()->sync($activityIdArray);
 
-        $updatedSponsor = Sponsor::find($id);
+        $updatedSponsor = Sponsor::with('activities')->find($id);
 
         return response()->json([
             'success' => true,

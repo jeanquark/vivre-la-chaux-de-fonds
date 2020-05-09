@@ -124,7 +124,7 @@ export const actions = {
             throw error
         }
     },
-    async updateActivity({ commit }, form) {
+    async updateActivity({ commit, dispatch }, form) {
         try {
             console.log('form2: ', form)
             // const { data } = await form.post(`/api/activities/${form.id}`, {
@@ -139,6 +139,7 @@ export const actions = {
             })
             console.log('data: ', data)
             commit('UPDATE_ACTIVITY', data.updatedActivity)
+            dispatch('sponsors/fetchSponsors', {}, { root: true })
         } catch (error) {
             console.log('error from vuex: ', error)
             throw error

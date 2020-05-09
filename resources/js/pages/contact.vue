@@ -75,10 +75,10 @@ export default {
     data() {
         return {
             form: new Form({
-                name: 'John Doe',
-                email: 'john.doe@example.com',
-                object: 'Mon inscription',
-                message: 'Mon nouveau message'
+                name: '',
+                email: '',
+                object: '',
+                message: ''
             })
         }
     },

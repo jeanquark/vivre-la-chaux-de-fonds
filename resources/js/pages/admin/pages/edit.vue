@@ -391,4 +391,14 @@ pre {
     white-space: -o-pre-wrap;
     word-wrap: break-word;
 }
+// .multiselect__tag {
+//     background: $primary;
+//     line-height: 16px;
+// }
+// .multiselect__tag-icon {
+//     line-height: 21px;
+// }
+// .multiselect__tag-icon:hover {
+//     background: $dark;
+// }
 </style>

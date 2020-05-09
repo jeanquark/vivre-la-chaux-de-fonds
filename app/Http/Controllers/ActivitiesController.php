@@ -33,8 +33,8 @@ class ActivitiesController extends Controller
 
     public function getActivityById(Request $request, $id)
     {
-        $activity = Activity::find($id);
-        $activity['sponsors'] = $activity->sponsors;
+        $activity = Activity::with('sponsors')->find($id);
+        // $activity['sponsors'] = $activity->sponsors;
 
         return response()->json([
             'success' => true,
@@ -44,8 +44,8 @@ class ActivitiesController extends Controller
 
     public function getActivityBySlug(Request $request, $slug)
     {
-        $activity = Activity::where('slug', '=', $slug)->first();
-        $activity['sponsors'] = $activity->sponsors;
+        $activity = Activity::where('slug', '=', $slug)->with('sponsors')->first();
+        // $activity['sponsors'] = $activity->sponsors;
 
         return response()->json([
             'success' => true,
@@ -144,16 +144,21 @@ class ActivitiesController extends Controller
                 'image' => $request->image,
                 'start_date' => $start_date,
                 'end_date' => $end_date,
+                'is_published' => $request->is_published,
+                'is_on_frontpage' => $request->is_on_frontpage,
                 'updated_at' => \Carbon\Carbon::now()
             ]
         );
 
         // Update sponsors relationships
-        $sponsorIdArray = [];
-        foreach($request->sponsors as $sponsorId) {
-            array_push($sponsorIdArray, $sponsorId);
-        }
-        $activity->sponsors()->sync($sponsorIdArray);
+        // $sponsorIdArray = [];
+        // foreach($request->sponsors as $sponsorId) {
+        //     array_push($sponsorIdArray, $sponsorId);
+        // }
+        // $activity->sponsors()->sync($sponsorIdArray);
+
+        $activity->sponsors()->sync($request->sponsors);
+
 
         $updatedActivity = Activity::with('sponsors')->find($id);
 

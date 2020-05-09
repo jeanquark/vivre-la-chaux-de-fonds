@@ -93,7 +93,6 @@ import PrettyCheck from 'pretty-checkbox-vue/check'
 
 // Multiselect
 import Multiselect from 'vue-multiselect'
-import 'vue-multiselect/dist/vue-multiselect.min.css'
 
 export default {
     layout: 'backend',

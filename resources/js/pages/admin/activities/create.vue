@@ -119,7 +119,6 @@ import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css'
 
 // Multiselect
 import Multiselect from 'vue-multiselect'
-import 'vue-multiselect/dist/vue-multiselect.min.css'
 
 export default {
     layout: 'backend',

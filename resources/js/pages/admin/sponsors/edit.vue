@@ -9,7 +9,7 @@
         </b-breadcrumb>
         <h2 class="text-center" v-if="sponsor">Editer sponsor "{{ sponsor.name }}"</h2>
 
-
+        <!-- sponsor: {{ sponsor }}<br /><br /> -->
         <b-row class="justify-content-center">
             <b-col cols="12" md="8" lg="6">
                 <b-form @submit.prevent="updateSponsor">
@@ -23,7 +23,7 @@
                         </b-col>
                         <b-col cols="12">
                             <b-form-group label="Contribution:" label-for="contribution">
-                                <b-form-textarea id="contribution" placeholder="" rows="3" max-rows="6" :class="{ 'is-invalid': form.errors.has('contribution') }" v-model="form.contribution"></b-form-textarea>
+                                <b-form-input type="number" id="contribution" placeholder="" :class="{ 'is-invalid': form.errors.has('contribution') }" v-model="form.contribution"></b-form-input>
                                 <has-error :form="form" field="contribution" />
                             </b-form-group>
                         </b-col>
@@ -64,8 +64,20 @@
                         </b-col>
 
                         <b-col cols="12" class="my-2">
-                            <b-form-group label="Activités:">
+                            <!-- <b-form-group label="Activités:">
                                 <b-form-select multiple value-field="id" text-field="name" v-model="form.activities" :options="activities" size="sm" class=""></b-form-select>
+                            </b-form-group> -->
+                            <b-form-group label="Activités:">
+                                <multiselect
+                                    tag-placeholder="Add this as new tag"
+                                    placeholder="Search or add a tag"
+                                    label="name"
+                                    track-by="id"
+                                    :options="activitiesArray"
+                                    :multiple="true"
+                                    :taggable="true"
+                                    v-model="sponsorActivities"
+                                ></multiselect>
                             </b-form-group>
                         </b-col>
                     </b-row>
@@ -92,18 +104,13 @@ import Form from 'vform'
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker'
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css'
 
-// Pretty checkboxes
-import PrettyCheck from 'pretty-checkbox-vue/check'
-
 // Multiselect
 import Multiselect from 'vue-multiselect'
-import 'vue-multiselect/dist/vue-multiselect.min.css'
 
 export default {
     layout: 'backend',
     components: {
         VueCtkDateTimePicker,
-        'p-check': PrettyCheck,
         Multiselect
     },
     async created() {      
@@ -123,7 +130,7 @@ export default {
         console.log('this.sponsor: ', this.sponsor)
         console.log('this.form: ', this.form)
         this.form.fill(this.sponsor)
-        this.form.activities = this.sponsor.activities.map(activity => activity.id)
+        this.sponsorActivities = this.sponsor.activities
     },
     data() {
         return {
@@ -136,7 +143,8 @@ export default {
                 new_image: null,
                 is_active: false,
                 activities: []
-            })
+            }),
+            sponsorActivities: []
         }
     },
     computed: {
@@ -151,6 +159,11 @@ export default {
         },
         sponsor() {
             return this.$store.getters['sponsors/sponsors'][this.$route.params.id]
+        },
+        activitiesArray () {
+            var arr = []
+            Object.keys(this.activities).forEach(key => arr.push(this.activities[key]))
+            return arr
         }
     },
     methods: {
@@ -168,6 +181,7 @@ export default {
                 console.log('this.form: ', this.form)
                 // return
                 this.$store.commit('loading/SET_LOADING', true)
+                this.form['activities'] = this.sponsorActivities.map(activity => parseInt(activity.id))
                 // const { data } = await axios.post('/api/users', this.form)
                 // console.log('data: ', data)
                 await this.$store.dispatch('sponsors/updateSponsor', this.form)

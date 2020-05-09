@@ -7,13 +7,13 @@ import { objectToFormData } from 'object-to-formdata'
 export const state = {
     // sponsors: [],
     sponsors: {},
-    sponsor: {}
+    // sponsor: {}
 }
 
 // getters
 export const getters = {
     sponsors: state => state.sponsors,
-    sponsor: state => state.sponsor
+    // sponsor: state => state.sponsor
 }
 
 // mutations
@@ -120,7 +120,7 @@ export const actions = {
             throw error
         }
     },
-    async updateSponsor ({ commit }, form) {
+    async updateSponsor ({ commit, dispatch }, form) {
         try {
             console.log('updateSponsor form: ', form)
             // const config = {
@@ -145,8 +145,9 @@ export const actions = {
                     }
                 ]
             })
-            console.log('data: ', data)
+            console.log('data3: ', data)
             commit('UPDATE_SPONSOR', data.updatedSponsor)
+            dispatch('activities/fetchActivities', {}, { root: true })
         } catch (error) {
             console.log('error from vuex: ', error)
             throw error
