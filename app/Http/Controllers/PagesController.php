@@ -98,6 +98,12 @@ class PagesController extends Controller
             'name' => ['required', Rule::unique('pages')->ignore($id)],
         ]);
 
+        // return response()->json([
+        //     'success' => true,
+        //     'id' => $id,
+        //     'request' => $request,
+        // ], 201);
+
         $page = Page::find($id);
 
         $page->updateOrCreate(
@@ -127,7 +133,7 @@ class PagesController extends Controller
             }
         }
 
-        $updatedPage = Page::find($id);
+        $updatedPage = Page::with('sections')->find($id);
 
         return response()->json([
             'success' => true,

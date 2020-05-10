@@ -9,15 +9,15 @@
         </b-breadcrumb>
         <h2 class="text-center">Créer une nouvelle page</h2>
         
-        showImagesModal: {{ showImagesModal }} <b-button size="sm" @click="showImagesModal = false">Fermer</b-button><br /><br />
+        <!-- showImagesModal: {{ showImagesModal }} <b-button size="sm" @click="showImagesModal = false">Fermer</b-button><br /><br />
         showDocumentsModal: {{ showDocumentsModal }} <b-button size="sm" @click="showDocumentsModal = false">Fermer</b-button><br /><br />
         showImagePropertiesToast: {{ showImagePropertiesToast }} <b-button size="sm" @click="showImagePropertiesToast = false">Fermer</b-button> <b-button size="sm" @click="showImagePropertiesToast = true">Ouvrir</b-button><br /><br />
         selectedImageNode: {{ selectedImageNode }}<br /><br />
         selectedImageProps: {{ selectedImageProps }}<br /><br />
-        focused: {{ focused }}<br /><br />
+        focused: {{ focused }}<br /><br /> -->
 
-        <a href="/documents/38959262-real3d-flipbook-jquery-plugin-license.pdf" type="application/pdf" title="38959262-real3d-flipbook-jquery-plugin-license" target="_blank">38959262-real3d-flipbook-jquery-plugin-license</a>
-        <a href="/documents/38959262-real3d-flipbook-jquery-plugin-license.pdf" type="application/pdf" title="abc">Mon Fichier</a>
+        <!-- <a href="/documents/38959262-real3d-flipbook-jquery-plugin-license.pdf" type="application/pdf" title="38959262-real3d-flipbook-jquery-plugin-license" target="_blank">38959262-real3d-flipbook-jquery-plugin-license</a>
+        <a href="/documents/38959262-real3d-flipbook-jquery-plugin-license.pdf" type="application/pdf" title="abc">Mon Fichier</a> -->
 
         <b-row class="justify-content-center" v-if="showImagesModal" style="border: 1px solid #000;">
             <b-col cols="6" md="3" lg="2">
@@ -129,7 +129,7 @@
                             <font-awesome-icon size="1x" icon="code" />
                         </b-button>
 
-                        <button @click.prevent="insertDiv('12')">Insert div</button>
+                        <!-- <button @click.prevent="insertDiv('12')">Insert div</button> -->
 
                         Link - Number list - Bullet point list - Citation - Styles - Format
                         
@@ -432,7 +432,13 @@ export default {
             try {
                 // console.log('document.getElementById("textBox").innerHTML2: ', document.getElementById('textBox').innerHTML)
                 this.$store.commit('loading/SET_LOADING', true)
-                const content = document.getElementById('textBox').innerHTML
+                let content
+                if (!this.showHTML) {
+                    content = document.getElementById('textBox').innerHTML
+                } else {
+                    content = document.getElementById('textBox').innerText
+                }
+                // const content = document.getElementById('textBox').innerHTML
                 // console.log('content: ', content)
                 this.form['content'] = content
                 console.log('this.form: ', this.form)

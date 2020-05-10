@@ -30,7 +30,7 @@
 			</template>
 
 	    	<template v-slot:cell(content)="row">
-				{{ row.item.content.substring(0, 20) }} ...
+				{{ row.item.content ? `${row.item.content.substring(0, 20)} ...` : '-' }}
 			</template>
 
 			<template v-slot:cell(is_published)="row">

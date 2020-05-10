@@ -21,18 +21,6 @@
                 </b-col>
 
                 <b-col cols="12" class="my-2">
-                    <!-- <b-form-select v-model="form.sections" :options="sections"></b-form-select> -->
-                    <!-- sectionsArray: {{ sectionsArray }} -->
-                    <!-- <b-form-group label="Sections:">
-                        <b-form-select multiple value-field="id" text-field="name" v-model="form.sections" :options="sectionsArray" size="sm" class=""></b-form-select>
-                    </b-form-group> -->
-                    <!-- <multiselect :multiple="true" :options="sectionsArray" label="name" v-model="form.sections"  >
-                        <template slot="selection" slot-scope="{ values, search, isOpen }">
-                            {{ value }}
-                        </template>
-                    </multiselect> -->
-                    <!-- values: {{ values }}<br /><br /> -->
-                    <!-- form.sections: {{ form.sections }} -->
                     <b-form-group label="Sections:">
                         <multiselect
                             tag-placeholder="Add this as new tag"
@@ -112,12 +100,16 @@
                 </b-col>
             </b-row>
             <b-row class="justify-content-center my-2">
+                <!-- showHTML: {{ showHTML }} -->
                 <b-button variant="primary" :disabled="loading" type="submit">
                     <b-spinner small type="grow" v-if="loading"></b-spinner>
                     Editer la page
                 </b-button>
             </b-row>
         </b-form>
+
+        <images-modal @insertFile="insertImage" @closeImagesModal="showImagesModal = false" v-if="showImagesModal" />
+        <documents-modal @insertFile="insertFile" @closeDocumentsModal="showDocumentsModal = false" v-if="showDocumentsModal" />
     </b-container>
 </template>
 
@@ -171,6 +163,7 @@ export default {
                 is_published: false
             }),
             showHTML: false,
+            // content: '',
             focused: false,
             showImagesModal: false,
             showDocumentsModal: false,
@@ -227,11 +220,23 @@ export default {
         }
     },
     methods: {
+        formatDoc(sCmd, sValue) {
+            // console.log('sCmd: ', sCmd)
+            // console.log('sValue: ', sValue)
+            // console.log('document.compForm: ', document.compForm)
+            // document.execCommand('defaultParagraphSeparator', false, "p");
+            // if (sCmd === 'justifyleft') {
+            //     return
+            // }
+            document.execCommand(sCmd, false, sValue)
+
+            // if (validateMode()) { document.execCommand(sCmd, false, sValue); oDoc.focus(); }
+        },
         toggleShowHTML() {
             if (!this.showHTML) {
-                this.content = document.getElementById('textBox').innerHTML
+                this.form.content = document.getElementById('textBox').innerHTML
             } else {
-                this.content = document.getElementById('textBox').innerText
+                this.form.content = document.getElementById('textBox').innerText
             }
             this.showHTML = !this.showHTML
         },
@@ -330,8 +335,21 @@ export default {
                 // return
 
                 this.$store.commit('loading/SET_LOADING', true)
-                const content = document.getElementById('textBox').innerHTML
+                
                 // console.log('content: ', content)
+                // if (!this.showHTML) {
+                //     this.toggleShowHTML()
+                // }
+                let content
+                if (!this.showHTML) {
+                    content = document.getElementById('textBox').innerHTML
+                } else {
+                    content = document.getElementById('textBox').innerText
+                }
+                // const content = document.getElementById('textBox').innerHTML
+                console.log('content: ', content)
+                // return
+
                 this.form['content'] = content
                 this.form['sections'] = this.pageSections.map(section => parseInt(section.id))
                 console.log('this.form: ', this.form)
@@ -342,7 +360,7 @@ export default {
                 // console.log('data: ', data)
                 this.$store.commit('loading/SET_LOADING', false)
                 this.$noty.success('Page mise à jour avec succès!')
-                // this.$router.push('/admin/pages')
+                this.$router.push('/admin/pages')
             } catch (error) {
                 this.$store.commit('loading/SET_LOADING', false)
                 console.log('error: ', error)
