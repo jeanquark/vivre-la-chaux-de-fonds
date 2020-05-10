@@ -4,7 +4,7 @@
             <b-col cols="12" md="8">
                 <b-card style="border: none; border-radius: 15px; background-color: rgba(255, 255, 255, .8);">
                     <b-card-text class="text-center">
-                        <h3 class="my-2" style=""><span class="secondary-color">L’Association</span> Vivre La Chaux-de-Fonds 2 <span class="secondary-color">vous souhaite une cordiale bienvenue</span></h3>
+                        <h3 class="my-2" style=""><span class="secondary-color">L’Association</span> Vivre La Chaux-de-Fonds <span class="secondary-color">vous souhaite une cordiale bienvenue</span></h3>
                         <h5 style="">
                             Favoriser le développement et l’animation de la ville de La Chaux-de-Fonds, créer des ponts, tisser des liens entre les différents milieux actifs en ville et la population,
                             tels sont les buts principaux de l’Association Vivre La Chaux-de-Fonds.
