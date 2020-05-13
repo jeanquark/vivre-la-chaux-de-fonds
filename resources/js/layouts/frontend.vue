@@ -83,7 +83,7 @@
             <h2>Footer</h2>
         </div> -->
         <footer>
-            <h5 class="text-center my-0 py-2">vlcf.ch &copy;2020</h5>
+            <h5 class="text-center my-0 py-2">vlcf.ch &copy;{{ new Date().getFullYear() }}</h5>
         </footer>
     </div>
 </template>

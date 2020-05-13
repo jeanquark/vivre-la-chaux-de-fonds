@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
+ */
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', 'Auth\LoginController@logout');
@@ -39,7 +39,6 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 });
 
-
 Route::get('/activities', 'ActivitiesController@getActivities');
 Route::get('/activities/{id}', 'ActivitiesController@getActivityById');
 Route::get('/activities/slug/{slug}', 'ActivitiesController@getActivityBySlug');
@@ -58,11 +57,6 @@ Route::get('/sections/slug/{slugId}', 'SectionsController@getSectionBySlug');
 Route::get('/sections/page/{pageId}', 'SectionsController@getSectionsByPageId');
 
 Route::post('/send-contact-form', 'ContactMessageController@send');
-Route::get('/list-all-images', 'FilesController@getImages');
-Route::get('/list-all-documents', 'FilesController@getDocuments');
-
-
-
 
 Route::group(['middleware' => 'role:admin'], function () {
     // Users
@@ -83,16 +77,35 @@ Route::group(['middleware' => 'role:admin'], function () {
     Route::delete('/sponsors/{id}', 'SponsorsController@deleteSponsor');
 
     // Pages
-    Route::post('/pages', 'PagesController@createPage'); 
+    Route::post('/pages', 'PagesController@createPage');
     Route::put('/pages/{id}', 'PagesController@updatePage');
     Route::delete('/pages/{id}', 'PagesController@deletePage');
     Route::post('/pages/upload-image', 'FilesController@uploadImage');
     Route::post('/pages/upload-document', 'FilesController@uploadDocument');
 
     // Sections
-    Route::post('/sections', 'SectionsController@createSection'); 
+    Route::post('/sections', 'SectionsController@createSection');
     Route::put('/sections/{id}', 'SectionsController@updateSection');
     Route::delete('/sections/{id}', 'SectionsController@deleteSection');
     Route::post('/sections/upload-image', 'FilesController@uploadImage');
     Route::post('/sections/upload-document', 'FilesController@uploadDocument');
+
+    // Images
+    // Route::get('/list-all-images', 'FilesController@getImages');
+    Route::get('/images', 'ImagesController@getImages');
+    // Route::post('/list-all-images-by-folder', 'FilesController@getImagesByFolder');
+    Route::post('/images', 'ImagesController@uploadImage');
+    Route::post('/images/delete', 'ImagesController@deleteImage');
+    Route::post('/images/folder', 'ImagesController@createFolder');
+    Route::post('/images/folder/images', 'ImagesController@getImagesByFolder');
+    Route::post('/images/folder/delete', 'ImagesController@deleteFolder');
+
+    // Documents
+    // Route::get('/list-all-documents', 'FilesController@getDocuments');
+    Route::get('/documents', 'DocumentsController@getDocuments');
+    Route::post('/documents', 'DocumentsController@uploadDocument');
+    Route::post('/documents/delete', 'DocumentsController@deleteDocument');
+    Route::post('/documents/folder', 'DocumentsController@createFolder');
+    Route::post('/documents/folder/documents', 'DocumentsController@getDocumentsByFolder');
+    Route::post('/documents/folder/delete', 'DocumentsController@deleteFolder');
 });

@@ -80,27 +80,25 @@
 
                         <!-- <button @click.prevent="insertDiv('12')">Insert div</button> -->
 
-                        <b-row class="justify-content-center my-2" v-if="showImagePropertiesToast">
-                            <b-col cols="12" md="6">
-                                <image-properties-toast
+                        <b-row class="justify-content-center my-2" v-if="selectedImageNode">
+                            <b-col cols="12">
+                                <image-properties
                                     :selectedImageProps="selectedImageProps"
                                     @updateSelectedImageProperties="updateSelectedImageProperties"
                                     @closeImagePropertiesToast="showImagePropertiesToast = false"
-                                    style=""
                                 />
                             </b-col>
                         </b-row>
 
-                        <div contenteditable="true" id="textBox" v-html="form.content" @focus="focused = true" @blur="focused = false" @dblclick="selectedElement" class="mt-1" v-if="!showHTML"></div>
+                        <div contenteditable="true" id="textBox" v-html="form.content" @focus="focused = true" @blur="focused = false" @click="selectElement" class="mt-1" v-if="!showHTML"></div>
 
-                        <div contenteditable="true" id="textBox" @focus="focused = true" @blur="focused = false" @dblclick="selectedElement" class="mt-1" v-else>
+                        <div contenteditable="true" id="textBox" @focus="focused = true" @blur="focused = false" class="mt-1" v-else>
                             <pre style="">{{ form.content }}</pre>
                         </div>
                     </b-form-group>
                 </b-col>
             </b-row>
             <b-row class="justify-content-center my-2">
-                <!-- showHTML: {{ showHTML }} -->
                 <b-button variant="primary" :disabled="loading" type="submit">
                     <b-spinner small type="grow" v-if="loading"></b-spinner>
                     Editer la page
@@ -108,8 +106,9 @@
             </b-row>
         </b-form>
 
-        <images-modal @insertFile="insertImage" @closeImagesModal="showImagesModal = false" v-if="showImagesModal" />
-        <documents-modal @insertFile="insertFile" @closeDocumentsModal="showDocumentsModal = false" v-if="showDocumentsModal" />
+        <images-modal @insertImage="insertImage" @closeImagesModal="showImagesModal = false" v-if="showImagesModal" />
+        <documents-modal @insertDocument="insertDocument" @closeDocumentsModal="showDocumentsModal = false" v-if="showDocumentsModal" />
+        <create-link-modal @insertLink="insertLink" v-if="showCreateLinkModal" />
     </b-container>
 </template>
 
@@ -119,11 +118,11 @@ import Form from 'vform'
 
 // Multiselect
 import Multiselect from 'vue-multiselect'
-// import 'vue-multiselect/dist/vue-multiselect.min.css'
 
 import ImagesModal from '~/components/ImagesModal'
 import DocumentsModal from '~/components/DocumentsModal'
-import ImagePropertiesToast from '~/components/ImagePropertiesToast'
+import CreateLinkModal from '~/components/CreateLinkModal'
+import ImageProperties from '~/components/ImageProperties'
 
 export default {
     // layout: 'backend',
@@ -131,7 +130,8 @@ export default {
         Multiselect,
         ImagesModal,
         DocumentsModal,
-        ImagePropertiesToast
+        CreateLinkModal,
+        ImageProperties
     },
     async created() {},
     async mounted() {
@@ -167,8 +167,9 @@ export default {
             focused: false,
             showImagesModal: false,
             showDocumentsModal: false,
-            showImagePropertiesToast: false,
+            // showImagePropertiesToast: false,
             selectedImageNode: null,
+            showCreateLinkModal: false,
             selectedImageProps: {
                 width: 0,
                 height: 0,
@@ -195,25 +196,6 @@ export default {
             return this.$store.getters['sections/sections']
         },
         sectionsArray() {
-            // const array = []
-            // array.push(this.sections)
-            // return array
-
-            // return [
-            //     {
-            //         id: 1,
-            //         name: 'abc'
-            //     },
-            //     {
-            //         id: 2,
-            //         name: 'def'
-            //     }
-            // ]
-
-            // return Object.entries(this.sections)
-
-            // return Object.entries(this.sections).map(entry => entry[key])
-
             var arr = []
             Object.keys(this.sections).forEach(key => arr.push(this.sections[key]))
             return arr
@@ -221,16 +203,7 @@ export default {
     },
     methods: {
         formatDoc(sCmd, sValue) {
-            // console.log('sCmd: ', sCmd)
-            // console.log('sValue: ', sValue)
-            // console.log('document.compForm: ', document.compForm)
-            // document.execCommand('defaultParagraphSeparator', false, "p");
-            // if (sCmd === 'justifyleft') {
-            //     return
-            // }
             document.execCommand(sCmd, false, sValue)
-
-            // if (validateMode()) { document.execCommand(sCmd, false, sValue); oDoc.focus(); }
         },
         toggleShowHTML() {
             if (!this.showHTML) {
@@ -255,21 +228,37 @@ export default {
                 this.selectedImageNode.style.float = value
             }
         },
-        selectedElement(event) {
-            console.log('event.target: ', event.target)
+        selectElement (event) {
+            this.selectedImageNode = null
+            console.log('selectElement: ', event)
             const element = event.target.tagName.toLowerCase()
             console.log('element: ', element)
             if (element === 'img') {
                 console.log('img!')
-
                 this.selectedImageNode = event.target
                 this.selectedImageProps['width'] = event.target.width
                 this.selectedImageProps['height'] = event.target.height
-                this.selectedImageProps['style']['margin'] = event.target.style.margin.match(/\d/g).join('')
+                this.selectedImageProps['style']['margin-left'] = event.target.style['margin-left'] ? event.target.style['margin-left'].match(/\d/g).join('') : 0
+                this.selectedImageProps['style']['margin-right'] = event.target.style['margin-right'] ? event.target.style['margin-right'].match(/\d/g).join('') : 0
                 this.selectedImageProps['style']['float'] = event.target.style.float
-                this.openImagePropertiesToast()
+                // this.openImagePropertiesToast()
             }
         },
+        // selectedElement(event) {
+        //     console.log('event.target: ', event.target)
+        //     const element = event.target.tagName.toLowerCase()
+        //     console.log('element: ', element)
+        //     if (element === 'img') {
+        //         console.log('img!')
+
+        //         this.selectedImageNode = event.target
+        //         this.selectedImageProps['width'] = event.target.width
+        //         this.selectedImageProps['height'] = event.target.height
+        //         this.selectedImageProps['style']['margin'] = event.target.style.margin.match(/\d/g).join('')
+        //         this.selectedImageProps['style']['float'] = event.target.style.float
+        //         this.openImagePropertiesToast()
+        //     }
+        // },
         updateSelectedImageProperties(value, type) {
             console.log('updateSelectedImageProperties2: ', value, type)
             console.log('selectedImageNode: ', this.selectedImageNode)
@@ -302,13 +291,13 @@ export default {
                 this.$bvModal.show('documentsModal')
             }, 300)
         },
-        openImagePropertiesToast() {
-            console.log('openImagePropertiesToast')
-            this.showImagePropertiesToast = true
-            setTimeout(() => {
-                this.$bvToast.show('example-toast')
-            }, 300)
-        },
+        // openImagePropertiesToast() {
+        //     console.log('openImagePropertiesToast')
+        //     this.showImagePropertiesToast = true
+        //     setTimeout(() => {
+        //         this.$bvToast.show('example-toast')
+        //     }, 300)
+        // },
         insertImage(value) {
             console.log('insertImage: ', value)
             // this.showModal = false
@@ -316,12 +305,13 @@ export default {
             const image = `/images/${value}`
             document.execCommand('insertImage', false, image)
         },
-        insertFile(filePath, fileType, fileName) {
-            console.log('insertFile', filePath, fileType, fileName)
-            // const abc = fileName
-            // document.execCommand('insertHTML', false, `<a href="/documents/38959262-real3d-flipbook-jquery-plugin-license.pdf" type="application/pdf" title="abc" target="_blank">Mon Fichier</a>`)
-            // document.execCommand('insertHTML', false, `<a href="/documents/${filePath}" type="${fileType}" title="abc" target="_blank">abc</a>`)
-            document.execCommand('insertHTML', false, `<a href="/documents/${filePath}" type="${fileType}" title="${fileName}" target="_blank">${fileName}</a>`)
+        insertDocument(filePath, fileType, fileName) {
+            console.log('insertDocument', filePath, fileType, fileName)
+            this.formatDoc('insertHTML', `<a href="/documents/${filePath}" type="${fileType}" title="${fileName}" target="_blank">${fileName}</a>`)
+        },
+        insertLink(url) {
+            console.log('insertLink: ', url)
+            this.formatDoc('createLink', url)
         },
         insertDiv(value) {
             document.execCommand('formatBlock', false, 'div')

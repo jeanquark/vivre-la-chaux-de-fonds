@@ -35,8 +35,8 @@
         </b-row>
 
         <b-row no-gutters class="my-2">
+            Rendu du contenu HTML:<br />
             <div v-html="page ? page['content'] : ''" id="textBox" class="p-3" style=""></div>
-            <!-- <div v-html="page ? page['sections'] : ''" style="width: 100%; border: 1px solid red;"></div> -->
         </b-row>
     </b-container>
 </template>

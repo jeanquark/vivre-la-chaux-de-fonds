@@ -62,7 +62,7 @@
 
                         <b-row class="justify-content-center my-2" v-if="showImagePropertiesToast">
                             <b-col cols="12" md="6">
-                                <image-properties-toast
+                                <image-properties
                                     :selectedImageProps="selectedImageProps"
                                     @updateSelectedImageProperties="updateSelectedImageProperties"
                                     @closeImagePropertiesToast="showImagePropertiesToast = false"
@@ -99,7 +99,7 @@ import Multiselect from 'vue-multiselect'
 
 import ImagesModal from '~/components/ImagesModal'
 import DocumentsModal from '~/components/DocumentsModal'
-import ImagePropertiesToast from '~/components/ImagePropertiesToast'
+import ImageProperties from '~/components/ImageProperties'
 
 export default {
     components: {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdatePage;
 use App\Page;
 use App\Section;
+use File;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
