@@ -15,18 +15,40 @@ class SectionsTableSeeder extends Seeder
         $sections = [
             [
                 'page_id' => 1,
+                'name' => 'Bienvenue',
+                'slug' => 'bienvenue',
+                'image' => '',
+                'content' => '<h3 style="text-align: center;"><span style="color: #E1B124;">L’Association</span> Vivre La Chaux-de-Fonds <span style="color: #E1B124;">vous souhaite une cordiale bienvenue</span></h3>
+                <h5 style="text-align: center;">
+                    Favoriser le développement et l’animation de la ville de La Chaux-de-Fonds, créer des ponts, tisser des liens entre les différents milieux actifs en ville et la population,
+                    tels sont les buts principaux de l’Association Vivre La Chaux-de-Fonds.
+                </h5>',
+            ],
+            [
+                'page_id' => 1,
+                'name' => 'Informations',
+                'slug' => 'informations',
+                'image' => '',
+                'content' => '<h3 style="text-align: center;">Assemblée Générale 2020</h3>Nous avons le regret de vous informer que notre Assemblée générale prévue le 28 avril 2020 est annulée et décalée pour une date encore inconnue.<br />
+
+                Nous ne manquerons pas de vous informer de la suite dès que sera passée cette crise sanitaire. Le comité vous souhaite courage pour cette épreuve!<br />
+                
+                Meilleures salutations.',
+            ],
+            [
+                'page_id' => 2,
                 'name' => 'Présentation',
                 'slug' => 'presentation',
-                'image' => 'presentation.jpg',
+                'image' => 'pages/presentation.jpg',
                 'content' => "L’Association <b>Vivre La Chaux-de-Fonds</b> a été créée en 2000/2001 et elle est active depuis cette période. A ce jour, elle a déjà organisé plus de 150 événements dont les Vivamitiés avec un regard sur l’Italie en 2002, Wallonie-Flandres-Bruxelles Capitale en 2004, Helvetissima et ses suissitudes en 2007, ainsi qu’une multitude d’autres manifestations impliquant l’ensemble des ressortissants des montagnes neuchâteloises mais aussi des communautés étrangères.<br />L’Association compte actuellement plus de 500 bénévoles qui mettent à sa disposition leurs compétences et savoir-faire. Ce sont environ 7000 heures de bénévolat annuel que l’Association peut relever.<br />Cette Association, à but non lucratif a pour buts de <br />
                 <ul>
                 <li>favoriser le développement de l’image des montagnes neuchâteloises et de La Chaux-de-Fonds/Le Locle en particulier;</li><li>de promouvoir le développement et l'extension du commerce local par l'organisation de manifestations adéquates;</li><li>de développer l'extension de toutes les activités de nature à animer la ville: entreprises commerciales, artisanales, financières, industrielles et de services, professions libérales, animations culturelles, etc.;</li><li>de resserrer les liens de solidarité qui doivent unir tous les milieux concernés;</li><li>d'assurer la liaison et la collaboration avec les autres institutions travaillant à la défense des intérêts généraux de la cité.</li><br />Vous trouverez tous les renseignements concernant notre association dans ses statuts, sur ce site ainsi qu’un résumé des différents paramètres dans menu Manifestations",
             ],
             [
-                'page_id' => 1,
+                'page_id' => 2,
                 'name' => 'Cotisations annuelles',
                 'slug' => 'cotisations',
-                'image' => 'cotisation.jpg',
+                'image' => 'pages/cotisation.jpg',
                 'content' => "L’assemblée générale a la compétence de prévoir une cotisation annuelle et en fixe le montant.<br />
                 Actuellement, le barème des cotisations annuelles est le suivant:<br /><b>Personnes individuelle, particulier:</b><br />
                 Cotisation annuelle minimale de CHF 50.–, sans plafonnement.<br /><b>Sociétés locales, associations:</b><br />
@@ -34,10 +56,10 @@ class SectionsTableSeeder extends Seeder
                 Cotisation annuelle minimale de CHF 250.– sans plafonnement<br /><nuxt-link to='/devenir-membre'>Adhérer</nuxt-link>",
             ],
             [
-                'page_id' => 1,
+                'page_id' => 2,
                 'name' => 'Historique',
                 'slug' => 'historique',
-                'image' => 'historique.jpg',
+                'image' => 'pages/historique.jpg',
                 'content' => "Il y a plus de 25 ans, naissait une association ayant pour but la mise en commun des forces commerciales de la cité horlogère.<br />
                 Très rapidement, faute de combattants, cette dernière périclita faute d’avoir su déterminer des objectifs communs à l’ensemble du commerce chaux-de-fonnier.<br />
                 En 1999/2000, Monsieur Charles Augsburger, alors Président de la ville de La Chaux-de-Fonds, réunissait des membres de toutes les entités commerciales connues à La Chaux-de-Fonds afin de relancer l’idée d’une association ayant pour objectif non seulement le développement commercial, mais aussi le rayonnement de la cité au dehors de ces frontières.<br />
@@ -46,10 +68,10 @@ class SectionsTableSeeder extends Seeder
                 En 2004, L’association prend son envol seule, sans le soutien de la ville et de la chancellerie communale. Elle doit maintenant évoluer seule et s’auto financer. Les premières recherches de membres soutiens se développent pour arriver au résultat que l’on connaît maintenant.",
             ],
             [
-                'page_id' => 1,
+                'page_id' => 2,
                 'name' => 'Le Comité',
                 'slug' => 'le-comite',
-                'image' => 'comite.jpg',
+                'image' => 'pages/comite.jpg',
                 'content' => "<b>Le comité</b> est composé de 5 membres au minimum, représentatifs de milieux différents.<br />Le comité comprend au moins:<br />
                 <ul>
                     <li>une personne à la présidence,</li>
@@ -74,14 +96,14 @@ class SectionsTableSeeder extends Seeder
                 Les membres du comité directeur pilotent des sous-commissions lorsqu’elles s’avèrent nécessaires à la réalisation d’un événement.",
             ],
             [
-                'page_id' => 1,
+                'page_id' => 2,
                 'name' => 'Statuts',
                 'slug' => 'statuts',
-                'image' => 'statuts.jpg',
+                'image' => 'pages/statuts.jpg',
                 'content' => "",
             ],
             [
-                'page_id' => 2,
+                'page_id' => 3,
                 'name' => 'Dossier de presse',
                 'slug' => 'dossier-de-presse',
                 'image' => '',
@@ -97,24 +119,24 @@ class SectionsTableSeeder extends Seeder
                 </table>",
             ],
             [
-                'page_id' => 2,
+                'page_id' => 3,
                 'name' => 'Bulletin/VivInfo',
                 'slug' => 'bulletin-vivinfo',
                 'image' => '',
                 'content' => "",
             ],
             [
-                'page_id' => 2,
+                'page_id' => 3,
                 'name' => 'PV Assemblées Générales',
                 'slug' => 'pv-assemblees-generales',
                 'image' => '',
                 'content' => "",
             ],
             [
-                'page_id' => 3,
+                'page_id' => 4,
                 'name' => 'Devenir bénévole',
                 'slug' => 'devenir-benevole',
-                'image' => 'benevole.jpg',
+                'image' => 'pages/benevole.jpg',
                 'content' => "Le Bénévolat est la clé de voute de notre édifice.<br />
 
                 Sans ce volontariat, notre association n’aurait pas les moyens de mettre en œuvre ce qu’elle réalise depuis plus de 10 ans.<br />
@@ -133,10 +155,10 @@ class SectionsTableSeeder extends Seeder
                 Formulaire adhésion (PDF)",
             ],
             [
-                'page_id' => 3,
+                'page_id' => 4,
                 'name' => 'Devenir membre',
                 'slug' => 'devenir-membre',
-                'image' => 'membre.jpg',
+                'image' => 'pages/membre.jpg',
                 'content' => "Peuvent être membres de l’Association Vivre La Chaux-de-Fonds, à condition d’avoir des buts pleinement compatibles avec ceux de l’Association :
 
                 <ol>
@@ -151,10 +173,10 @@ class SectionsTableSeeder extends Seeder
                 Adhésion individuelle (PDF)",
             ],
             [
-                'page_id' => NULL,
+                'page_id' => 4,
                 'name' => 'Partenariat',
                 'slug' => 'partenariat',
-                'image' => 'partenariat.jpg',
+                'image' => 'pages/partenariat.jpg',
                 'content' => "Comme son nom l’indique, le partenariat est un engagement plus énergique que le sponsoring qui le plus souvent désigne un soutien financier ou matériel apporté à un événement par un annonceur en échange de différentes formes de visibilité.<br />
 
                 Nous cherchons à développer cette notion d’énergie au travers de partenariat sérieux, ou l’un et l’autre des répondants manifeste sa volonté ferme de mettre en valeur nos performances conjointes afin de mettre en exergues les forces et l’énergie des partenaires.<br />

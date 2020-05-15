@@ -10,15 +10,15 @@
         </b-form-group>
 
         <template v-slot:modal-footer>
-            <b-row>
-            <div class="w-100">
-            <b-button variant="primary" size="md" class="float-right" @click="insertLink">
-                    Insérer
-                </b-button>
-                <b-button variant="dark" size="md" class="float-right ml-2" @click="closeModal">
-                    Fermer
-                </b-button>
-            </div>
+            <b-row class="">
+                <!-- <div > -->
+                    <b-button variant="dark" size="md" class="float-right mr-2" @click="closeModal">
+                        Fermer
+                    </b-button>
+                    <b-button variant="primary" size="md" class="float-right" @click="insertLink">
+                        Insérer
+                    </b-button>
+                <!-- </div> -->
             </b-row>
         </template>
     </b-modal>
@@ -44,14 +44,14 @@ export default {
         }
     },
     methods: {
-        insertLink () {
+        insertLink() {
             this.$emit('insertLink', this.url)
             this.$bvModal.hide('createLinkModal')
         },
         closeModal() {
             console.log('closeModal')
-            this.$emit('closeDocumentsModal', false)
-            this.$bvModal.hide('documentsModal')
+            this.$emit('closeLinkModal', false)
+            this.$bvModal.hide('createLinkModal')
         }
     }
 }

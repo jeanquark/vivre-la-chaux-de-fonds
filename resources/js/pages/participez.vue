@@ -3,10 +3,17 @@
         <b-row>
             <b-col cols="3" style="border: 0px solid blue;">
                 <b-carousel :indicators="false" :interval="2000" fade id="carousel-fade" style="text-shadow: 0px 0px 2px #000">
-                    <b-carousel-slide :img-src="`/images/partenaires/${sponsor.image}`" v-for="sponsor in sponsors" :key="sponsor.id"></b-carousel-slide>
+                    <b-carousel-slide :img-src="`/images/${sponsor.image}`" v-for="sponsor in sponsors" :key="sponsor.id"></b-carousel-slide>
                 </b-carousel>
             </b-col>
-            <b-col cols="9" style="border: 0px solid green;">
+            <!-- Loading spinner -->
+            <b-col cols="12" md="9" v-if="loading">
+                <b-row no-gutters align-v="center" class="justify-content-center" style="height: 15em; background-color:rgba(0, 0, 0, 0.5);">
+                    <b-spinner type="grow" label="Loading..."></b-spinner>
+                </b-row>
+            </b-col>
+
+            <b-col cols="9" style="border: 0px solid green;" v-else>
                 <b-row no-gutters style="background-color:rgba(0, 0, 0, 0.5);">
                     <b-col cols="6" class="p-2" style="border: 0px solid red;">
                         <!-- {{ pages }} -->
@@ -16,11 +23,13 @@
                             <b-button pill variant="primary" size="sm" class="m-1" @click="selectSection(section)" :class="{ active: section.id === selectedSection.id }">{{ section.name }}</b-button
                             ><br />
                         </div>
-                        <h2 class="text-secondary" style="position: absolute; bottom: 0;">{{ selectedSection.name }}</h2>
+                        <div style="position: absolute; bottom: 0;">
+                            <h2 class="text-secondary" style="">{{ selectedSection.name }}</h2>
+                        </div>
                     </b-col>
 
                     <b-col cols="6" style="border: 0px solid orange;">
-                        <b-img right :src="`/images/pages/${selectedSection.image}`" fluid :alt="selectedSection.name" class=""></b-img>
+                        <b-img right :src="`/images/${selectedSection.image}`" fluid :alt="selectedSection.name" class=""></b-img>
                     </b-col>
                 </b-row>
                 <b-row no-gutters>
@@ -43,35 +52,38 @@ export default {
     metaInfo() {
         return { title: 'Participez!' }
     },
-    async created() {},
-    async mounted() {
-        // if (!this.$store.getters['pages/pages'][this.$route.path.substring(1)]) {
-        if (!this.page) {
-            await this.$store.dispatch('pages/fetchPageBySlug', { pageSlug: this.$route.path.substring(1) })
+    async created() {
+        try {
+            this.$store.commit('loading/SET_LOADING', true)
+            if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {
+                await this.$store.dispatch('sponsors/fetchSponsors')
+            }
+            if (!this.page) {
+                await this.$store.dispatch('pages/fetchPageBySlug', { pageSlug: this.$route.path.substring(1) })
+            }
+            this.selectedSection = this.pageSections[0]
+            this.$store.commit('loading/SET_LOADING', false)
+        } catch (error) {
+            this.$store.commit('loading/SET_LOADING', false)
         }
-
-        if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {
-            await this.$store.dispatch('sponsors/fetchSponsors')
-        }
-        this.selectedSection = this.pageSections[0]
-        // console.log('Done!')
-        // console.log('this.$route.params: ', this.$route.params)
     },
+    async mounted() {},
     data() {
         return {
             selectedSection: {}
         }
     },
     computed: {
+        loading() {
+            return this.$store.getters['loading/loading']
+        },
         pages() {
             return this.$store.getters['pages/pages']
-            
         },
-        page () {
-            return Object.values(this.$store.getters['pages/pages']).find(page => page.slug === this.$route.path.substring(1));
+        page() {
+            return Object.values(this.$store.getters['pages/pages']).find(page => page.slug === this.$route.path.substring(1))
         },
-        pageSections () {
-            // return this.$store.getters['pages/pages'][this.$route.path.substring(1)] ? this.$store.getters['pages/pages'][this.$route.path.substring(1)]['sections'] : ''
+        pageSections() {
             return this.page ? this.page['sections'] : []
         },
         sponsors() {

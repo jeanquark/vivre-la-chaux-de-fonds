@@ -3,7 +3,7 @@
         <b-row class="justify-content-center">
             <b-col cols="12" md="8" v-if="activity">
                 <!-- activity: {{ activity }}<br /><br /> -->
-                <b-card :img-src="`/images/activities/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" style="border: none;" >
+                <b-card :img-src="`/images/${activity.image}`" :img-alt="`${activity.name}`" img-top tag="article" class="mb-2" style="border: none;" >
                     <b-card-text class="text-center">
                         <h5>{{ activity.name }}</h5>
                         <span v-html="activity.content"></span>

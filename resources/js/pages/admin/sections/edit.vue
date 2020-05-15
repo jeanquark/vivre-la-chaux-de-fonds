@@ -20,60 +20,88 @@
                     </b-form-group>
                 </b-col>
 
+                <b-col cols="12" class="my-2">
+                            <p class="text-center">Image actuelle:</p>
+                            <b-img center :src="`/images/${form.image}`" width="200" class=""></b-img>
+                        </b-col>
+                <b-col cols="12" class="my-2">
+                    <b-form-group label="Image:" label-for="image">
+                        <b-form-file
+                            name="image"
+                            accept="image/jpeg, image/png"
+                            placeholder="Choisir un fichier..."
+                            drop-placeholder="Placer le fichier ici..."
+                            @change="selectFile"
+                            :class="{ 'is-invalid': form.errors.has('image') }"
+                        ></b-form-file>
+                        <has-error :form="form" field="image" />
+                    </b-form-group>
+                </b-col>
+
                 <b-col cols="12" class="">
                     <b-form-group label="Contenu de la section:" label-for="newPageContent">
-                        <b-button variant="primary" v-b-tooltip.hover title="Gras" @click.prevent="formatDoc('bold')">
+                        <b-button variant="primary" v-b-tooltip.hover title="Gras" class="mx-.5" @click.prevent="formatDoc('bold')">
                             <font-awesome-icon size="1x" icon="bold" class="" />
                         </b-button>
 
-                        <b-button variant="primary" v-b-tooltip.hover title="Italic" @click.prevent="formatDoc('italic')">
+                        <b-button variant="primary" v-b-tooltip.hover title="Italic" class="mx-.5" @click.prevent="formatDoc('italic')">
                             <font-awesome-icon size="1x" icon="italic" class="" />
                         </b-button>
 
-                        <b-button variant="primary" v-b-tooltip.hover title="Souligné" @click.prevent="formatDoc('underline')">
+                        <b-button variant="primary" v-b-tooltip.hover title="Souligné" class="mx-.5" @click.prevent="formatDoc('underline')">
                             <font-awesome-icon size="1x" icon="underline" class="" />
                         </b-button>
 
-                        <b-button variant="primary" v-b-tooltip.hover title="Aligner à gauche" @click.prevent="formatDoc('justifyleft')">
+                        <b-button variant="primary" v-b-tooltip.hover title="Aligner à gauche" class="mx-.5" @click.prevent="formatDoc('justifyleft')">
                             <font-awesome-icon size="1x" icon="align-left" class="" />
                         </b-button>
 
-                        <b-button variant="primary" v-b-tooltip.hover title="Aligner au centre" @click.prevent="formatDoc('justifycenter')">
+                        <b-button variant="primary" v-b-tooltip.hover title="Aligner au centre" class="mx-.5" @click.prevent="formatDoc('justifycenter')">
                             <font-awesome-icon size="1x" icon="align-center" class="" />
                         </b-button>
 
-                        <b-button variant="primary" v-b-tooltip.hover title="Aligner à droite" @click.prevent="formatDoc('justifyright')">
+                        <b-button variant="primary" v-b-tooltip.hover title="Aligner à droite" class="mx-.5" @click.prevent="formatDoc('justifyright')">
                             <font-awesome-icon size="1x" icon="align-right" class="" />
                         </b-button>
 
-                        <b-button variant="secondary" v-b-tooltip.hover title="Ajouter image" :disabled="!focused" @mousedown.prevent="focused = true" @click.prevent="openImagesModal">
+                        <b-button variant="primary" title="Liste point" class="mx-.5" @click.prevent="formatDoc('insertUnorderedList')">
+                                <font-awesome-icon size="1x" icon="list-ul" />
+                            </b-button>
+
+                            <b-button variant="primary" title="Liste nombre" class="mx-.5" @click.prevent="formatDoc('insertOrderedList')">
+                                <font-awesome-icon size="1x" icon="list-ol" />
+                            </b-button>
+
+                            <b-button variant="primary" title="Lien" class="mx-.5" @click.prevent="openCreateLinkModal">
+                                <font-awesome-icon size="1x" icon="link" />
+                            </b-button>
+
+                        <b-button variant="secondary" v-b-tooltip.hover title="Ajouter image" :disabled="!focused" class="mx-.5" @mousedown.prevent="focused = true" @click.prevent="openImagesModal">
                             <font-awesome-icon size="1x" icon="image" class="" />
                         </b-button>
 
-                        <b-button variant="secondary" v-b-tooltip.hover title="Ajouter PDF" :disabled="!focused" @mousedown.prevent="focused = true" @click.prevent="openDocumentsModal">
+                        <b-button variant="secondary" v-b-tooltip.hover title="Ajouter PDF" :disabled="!focused" class="mx-.5" @mousedown.prevent="focused = true" @click.prevent="openDocumentsModal">
                             <font-awesome-icon size="1x" icon="file-pdf" class="" />
                         </b-button>
 
-                        <b-button variant="dark" v-b-tooltip.hover title="Voir code" @click="toggleShowHTML">
+                        <b-button variant="dark" v-b-tooltip.hover title="Voir code" class="mx-.5" @click="toggleShowHTML">
                             <font-awesome-icon size="1x" icon="code" />
                         </b-button>
 
                         <!-- <button @click.prevent="insertDiv('12')">Insert div</button> -->
 
-                        <b-row class="justify-content-center my-2" v-if="showImagePropertiesToast">
-                            <b-col cols="12" md="6">
+                        <b-row class="justify-content-center my-2" v-if="selectedImageNode">
+                            <b-col cols="12">
                                 <image-properties
                                     :selectedImageProps="selectedImageProps"
                                     @updateSelectedImageProperties="updateSelectedImageProperties"
-                                    @closeImagePropertiesToast="showImagePropertiesToast = false"
-                                    style=""
                                 />
                             </b-col>
                         </b-row>
 
-                        <div contenteditable="true" id="textBox" v-html="form.content" @focus="focused = true" @blur="focused = false" @dblclick="selectedElement" class="mt-1" v-if="!showHTML"></div>
+                        <div contenteditable="true" id="textBox" v-html="form.content" @focus="focused = true" @blur="focused = false" @click="selectElement" class="mt-1" v-if="!showHTML"></div>
 
-                        <div contenteditable="true" id="textBox" @focus="focused = true" @blur="focused = false" @dblclick="selectedElement" class="mt-1" v-else>
+                        <div contenteditable="true" id="textBox" @focus="focused = true" @blur="focused = false" class="mt-1" v-else>
                             <pre style="">{{ form.content }}</pre>
                         </div>
                     </b-form-group>
@@ -86,6 +114,10 @@
                 </b-button>
             </b-row>
         </b-form>
+
+        <images-modal @insertImage="insertImage" @closeImagesModal="showImagesModal = false" v-if="showImagesModal" />
+        <documents-modal @insertDocument="insertDocument" @closeDocumentsModal="showDocumentsModal = false" v-if="showDocumentsModal" />
+        <create-link-modal @insertLink="insertLink" @closeLinkModal="showCreateLinkModal = false" v-if="showCreateLinkModal" />
     </b-container>
 </template>
 
@@ -99,6 +131,7 @@ import Multiselect from 'vue-multiselect'
 
 import ImagesModal from '~/components/ImagesModal'
 import DocumentsModal from '~/components/DocumentsModal'
+import CreateLinkModal from '~/components/CreateLinkModal'
 import ImageProperties from '~/components/ImageProperties'
 
 export default {
@@ -106,7 +139,7 @@ export default {
         Multiselect,
         ImagesModal,
         DocumentsModal,
-        ImagePropertiesToast
+        CreateLinkModal,
     },
     async created() {},
     async mounted() {
@@ -135,7 +168,8 @@ export default {
             focused: false,
             showImagesModal: false,
             showDocumentsModal: false,
-            showImagePropertiesToast: false,
+            showCreateLinkModal: false,
+            // showImagePropertiesToast: false,
             selectedImageNode: null,
             selectedImageProps: {
                 width: 0,
@@ -169,6 +203,9 @@ export default {
         }
     },
     methods: {
+        selectFile(e) {
+            this.form.image = e.target.files[0]
+        },
         toggleShowHTML() {
             if (!this.showHTML) {
                 this.content = document.getElementById('textBox').innerHTML
@@ -177,46 +214,60 @@ export default {
             }
             this.showHTML = !this.showHTML
         },
-        updateSelectedImage(value, type) {
-            console.log('updateSelectedImage: ', value, type)
-            if (type === 'width' || type === 'height') {
-                this.selectedImageNode[type] = value
-            }
-            if (type === 'margin') {
-                this.selectedImageNode.style.margin = `${value}px`
-            }
-            if (type === 'marginRight') {
-                this.selectedImageNode.style.marginRight = `${value}px`
-            }
-            if (type === 'float') {
-                this.selectedImageNode.style.float = value
-            }
-        },
-        selectedElement(event) {
-            console.log('event.target: ', event.target)
+        // updateSelectedImage(value, type) {
+        //     console.log('updateSelectedImage: ', value, type)
+        //     if (type === 'width' || type === 'height') {
+        //         this.selectedImageNode[type] = value
+        //     }
+        //     if (type === 'margin') {
+        //         this.selectedImageNode.style.margin = `${value}px`
+        //     }
+        //     if (type === 'marginRight') {
+        //         this.selectedImageNode.style.marginRight = `${value}px`
+        //     }
+        //     if (type === 'float') {
+        //         this.selectedImageNode.style.float = value
+        //     }
+        // },
+        selectElement (event) {
+            this.selectedImageNode = null
+            console.log('selectElement: ', event)
             const element = event.target.tagName.toLowerCase()
             console.log('element: ', element)
             if (element === 'img') {
                 console.log('img!')
-
                 this.selectedImageNode = event.target
                 this.selectedImageProps['width'] = event.target.width
                 this.selectedImageProps['height'] = event.target.height
-                this.selectedImageProps['style']['margin'] = event.target.style.margin.match(/\d/g).join('')
+                this.selectedImageProps['style']['margin-left'] = event.target.style['margin-left'] ? event.target.style['margin-left'].match(/\d/g).join('') : 0
+                this.selectedImageProps['style']['margin-right'] = event.target.style['margin-right'] ? event.target.style['margin-right'].match(/\d/g).join('') : 0
                 this.selectedImageProps['style']['float'] = event.target.style.float
-                this.openImagePropertiesToast()
+                // this.openImagePropertiesToast()
             }
         },
+        // selectedElement(event) {
+        //     console.log('event.target: ', event.target)
+        //     const element = event.target.tagName.toLowerCase()
+        //     console.log('element: ', element)
+        //     if (element === 'img') {
+        //         console.log('img!')
+
+        //         this.selectedImageNode = event.target
+        //         this.selectedImageProps['width'] = event.target.width
+        //         this.selectedImageProps['height'] = event.target.height
+        //         this.selectedImageProps['style']['margin'] = event.target.style.margin.match(/\d/g).join('')
+        //         this.selectedImageProps['style']['float'] = event.target.style.float
+        //         this.openImagePropertiesToast()
+        //     }
+        // },
         updateSelectedImageProperties(value, type) {
             console.log('updateSelectedImageProperties2: ', value, type)
             console.log('selectedImageNode: ', this.selectedImageNode)
-            // this.selectedImageProps[type] = value
-            // this.selectedImageNode[type] = value
             if (type === 'width' || type === 'height') {
                 this.selectedImageNode[type] = value
             }
-            if (type === 'margin') {
-                this.selectedImageNode.style.margin = `${value}px`
+            if (type === 'marginLeft') {
+                this.selectedImageNode.style.marginLeft = `${value}px`
             }
             if (type === 'marginRight') {
                 this.selectedImageNode.style.marginRight = `${value}px`
@@ -239,13 +290,20 @@ export default {
                 this.$bvModal.show('documentsModal')
             }, 300)
         },
-        openImagePropertiesToast() {
-            console.log('openImagePropertiesToast')
-            this.showImagePropertiesToast = true
+        openCreateLinkModal() {
+            console.log('openCreateLinkModal')
+            this.showCreateLinkModal = true
             setTimeout(() => {
-                this.$bvToast.show('example-toast')
+                this.$bvModal.show('createLinkModal')
             }, 300)
         },
+        // openImagePropertiesToast() {
+        //     console.log('openImagePropertiesToast')
+        //     this.showImagePropertiesToast = true
+        //     setTimeout(() => {
+        //         this.$bvToast.show('example-toast')
+        //     }, 300)
+        // },
         insertImage(value) {
             console.log('insertImage: ', value)
             // this.showModal = false
@@ -253,17 +311,21 @@ export default {
             const image = `/images/${value}`
             document.execCommand('insertImage', false, image)
         },
-        insertFile(filePath, fileType, fileName) {
-            console.log('insertFile', filePath, fileType, fileName)
-            // const abc = fileName
-            // document.execCommand('insertHTML', false, `<a href="/documents/38959262-real3d-flipbook-jquery-plugin-license.pdf" type="application/pdf" title="abc" target="_blank">Mon Fichier</a>`)
-            // document.execCommand('insertHTML', false, `<a href="/documents/${filePath}" type="${fileType}" title="abc" target="_blank">abc</a>`)
-            document.execCommand('insertHTML', false, `<a href="/documents/${filePath}" type="${fileType}" title="${fileName}" target="_blank">${fileName}</a>`)
+        insertDocument(filePath, fileType, fileName) {
+            console.log('insertDocument', filePath, fileType, fileName)
+            this.formatDoc('insertHTML', `<a href="/documents/${filePath}" type="${fileType}" title="${fileName}" target="_blank">${fileName}</a>`)
         },
-        insertDiv(value) {
-            document.execCommand('formatBlock', false, 'div')
-            const selectedElement = window.getSelection().focusNode.parentNode
-            selectedElement.className = 'col-6'
+        insertLink(url) {
+            console.log('insertLink: ', url)
+            this.formatDoc('createLink', url)
+        },
+        // insertDiv(value) {
+        //     document.execCommand('formatBlock', false, 'div')
+        //     const selectedElement = window.getSelection().focusNode.parentNode
+        //     selectedElement.className = 'col-6'
+        // },
+        formatDoc(sCmd, sValue) {
+            document.execCommand(sCmd, false, sValue)
         },
         async updatePage() {
             try {

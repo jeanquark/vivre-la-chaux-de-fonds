@@ -31,7 +31,8 @@ export const mutations = {
         console.log('DELETE_PAGE: ', payload)
         const { pageId } = payload
         console.log('pageId: ', pageId)
-        Vue.set(state.pages, pageId, null)
+		// Vue.set(state.pages, pageId, null)
+		Vue.delete(state.pages, pageId)
     }
 }
 
@@ -62,13 +63,21 @@ export const actions = {
 	},
 	async fetchPageBySlug ({ commit }, payload) {
 		try {
+			// commit('loading/SET_LOADING', true, { root: true })
 			console.log('fetchPageBySlug vuex action: ', payload)
-			const { pageSlug } = payload
+			let { pageSlug } = payload
+			if (!pageSlug) {
+				pageSlug = 'accueil'
+			}
 			const { data } = await axios.get(`/api/pages/slug/${pageSlug}`)
 			console.log('data: ', data)
 			commit('SET_PAGE', data.page)
+			// commit('loading/SET_LOADING', false, { root: true })
+
 		} catch (error) {
 			console.log('error: ', error)
+			// commit('loading/SET_LOADING', false, { root: true })
+
 			throw error
 		}
 	},
@@ -84,7 +93,7 @@ export const actions = {
                 ]
             })
             console.log('data: ', data)
-            commit('SET_PAGE', data.page)
+            commit('SET_PAGE', data.newPage)
         } catch (error) {
             console.log('error: ', error)
             throw error

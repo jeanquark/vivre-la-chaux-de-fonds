@@ -14,6 +14,12 @@ class PagesTableSeeder extends Seeder
     {
         $pages = [
             [
+                'name'          => 'Accueil',
+                'slug'          => 'accueil',
+                'content'       => '',
+                'is_published'  => true
+            ],
+            [
                 'name'          => 'Association',
                 'slug'          => 'association',
                 'content'       => '',
@@ -23,7 +29,8 @@ class PagesTableSeeder extends Seeder
                 'name'          => 'On parle de nous',
                 'slug'          => 'on-parle-de-nous',
                 'content'       => '<h4>Les maîtres du temps.</h4><br />
-                                <iframe width="420" height="345" src="https://www.youtube.com/watch?v=hdz8Q_1NDyM&feature=emb_logo"></iframe>',
+                <iframe width="420" height="345" src="https://www.youtube.com/embed/tgbNymZ7vqY">
+                    </iframe>',
                 'is_published'  => true
             ],
             [

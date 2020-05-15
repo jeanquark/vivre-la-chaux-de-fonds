@@ -76,7 +76,7 @@
 
                         <b-col cols="12" class="my-2">
                             <p class="text-center">Image actuelle:</p>
-                            <b-img center :src="`/images/activities/${form.image}`" width="200" class=""></b-img>
+                            <b-img center :src="`/images/${form.image}`" width="200" class=""></b-img>
                         </b-col>
                         <b-col cols="12" class="my-2">
                             <b-form-file
@@ -91,9 +91,6 @@
                         </b-col>
 
                         <b-col cols="12" class="my-2">
-                            <!-- <b-form-group label="Sponsors:">
-                                <b-form-select multiple value-field="id" text-field="name" v-model="form.sponsors" :options="sponsors" size="sm" class=""></b-form-select>
-                            </b-form-group> -->
                             <b-form-group label="Sponsors:">
                                 <multiselect
                                     tag-placeholder="Add this as new tag"
@@ -106,22 +103,6 @@
                                     v-model="activitySponsors"
                                 ></multiselect>
                             </b-form-group>
-                            <!-- <multiselect
-                                label="name"
-                                track-by="id"
-                                :options="sponsors"
-                                :multiple="true"
-                                :close-on-select="false"
-                                :clear-on-select="false"
-                                :preserve-search="true"
-                                :preselect-first="true"
-                                placeholder="Sélectionner un sponsor"
-                                selectLabel="Appuyer sur Entrée pour sélectionner"
-                                selectedLabel="Sélectionné"
-                                deselectLabel="Appuyer sur entrée pour désélectionner"
-                                v-model="form.sponsors"
-                            >
-                            </multiselect> -->
                         </b-col>
                     </b-row>
                     <b-row class="justify-content-center my-2">

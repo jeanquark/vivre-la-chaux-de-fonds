@@ -10,7 +10,7 @@
 
         <b-table show-empty small stacked="md" :items="activitiesArray" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" class="nowrap" v-if="!loading">
             <template v-slot:cell(image)="row">
-                <img :src="`/images/activities/${row.item.image}`" style="max-width: 100px; max-height: 50px;" v-if="row.item.image" />
+                <img :src="`/images/${row.item.image}`" style="max-width: 100px; max-height: 50px;" v-if="row.item.image" />
                 <span v-else><i>Pas d'image</i></span>
             </template>
 
@@ -39,11 +39,7 @@
                 <router-link :to="`/admin/activities/${data.item.id}`" class="btn btn-warning my-1" style="display: inline-block;">
                     <font-awesome-icon icon="eye" />
                 </router-link>
-                <!-- <b-link :to="`/admin/activities/${data.item.slug}`" class="btn btn-warning my-1" style="display: inline-block;">
-                    <font-awesome-icon icon="eye" />
-                </b-link> -->
-                <!-- <b-button variant="primary" class="my-2" :to="{ name: 'activity', params: { slug: activity.slug } }">En savoir plus &rarr;</b-button> -->
-
+                
                 <router-link :to="`/admin/activities/${data.item.id}/edit`" class="btn btn-success my-1" style="display: inline-block;">
                     <font-awesome-icon icon="edit" />
                 </router-link>

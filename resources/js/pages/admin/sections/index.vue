@@ -7,6 +7,7 @@
 
 		<!-- sections: {{ sections }}<br /><br /> -->
 		<!-- contentsArray: {{ contentsArray }}<br /><br /> -->
+		<b-alert show dismissible variant="info">Les sections sont les éléments d'une page.</b-alert>
 
 		<b-button to="/admin/sections/create" variant="primary" class="my-3">Créer une nouvelle section</b-button>
 

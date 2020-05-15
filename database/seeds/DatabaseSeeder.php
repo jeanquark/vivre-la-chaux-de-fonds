@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call('UsersTableSeeder');
         $this->call('ConnectRelationshipsSeeder');
         $this->call('ActivitiesTableSeeder');
-        // $this->call('SponsorsTableSeeder');
         $this->call('PagesTableSeeder');
         $this->call('SectionsTableSeeder');
 

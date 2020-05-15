@@ -19,7 +19,8 @@ class CreateSponsorsTable extends Migration
             $table->string('slug')->unique();
             $table->string('image')->nullable();
             $table->string('contribution')->nullable();
-            $table->date('end_date')->nullable();
+            $table->datetime('start_date')->nullable();
+            $table->datetime('end_date')->nullable();
             $table->boolean('is_active')->default(0);
             $table->timestamps();
         });

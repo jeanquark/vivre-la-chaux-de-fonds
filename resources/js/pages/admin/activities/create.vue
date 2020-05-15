@@ -78,25 +78,25 @@
                             <has-error :form="form" field="image" />
                         </b-col>
 
-                        <b-col cols="12" class="my-2">
+                        <!-- <b-col cols="12" class="my-2">
                             <b-form-select multiple value-field="id" text-field="name" v-model="form.sponsors" :options="sponsors" size="sm" class="mt-3"></b-form-select>
-                            <!-- <multiselect
-                                label="name"
-                                track-by="id"
-                                :options="sponsors"
-                                :multiple="true"
-                                :close-on-select="false"
-                                :clear-on-select="false"
-                                :preserve-search="true"
-                                :preselect-first="true"
-                                placeholder="Sélectionner un sponsor"
-                                selectLabel="Appuyer sur Entrée pour sélectionner"
-                                selectedLabel="Sélectionné"
-                                deselectLabel="Appuyer sur entrée pour désélectionner"
-                                v-model="form.sponsors"
-                            >
-                            </multiselect> -->
+                        </b-col> -->
+
+                        <b-col cols="12" class="my-2">
+                            <b-form-group label="Activités:">
+                                <multiselect
+                                    tag-placeholder="Ajouter comme nouveau tag"
+                                    placeholder="Chercher et ajouter un tag"
+                                    label="name"
+                                    track-by="id"
+                                    :options="sponsorsArray"
+                                    :multiple="true"
+                                    :taggable="true"
+                                    v-model="activitySponsors"
+                                ></multiselect>
+                            </b-form-group>
                         </b-col>
+
                     </b-row>
                     <b-row class="justify-content-center my-2">
                         <b-button variant="primary" :disabled="loading" type="submit">
@@ -126,10 +126,11 @@ export default {
         VueCtkDateTimePicker,
         Multiselect
     },
-    created() {
-        if (this.$store.getters['sponsors/sponsors'].length < 2) {
-            this.$store.dispatch('sponsors/fetchSponsors')
+    async created() {
+        if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {
+            await this.$store.dispatch('sponsors/fetchSponsors')
         }
+        
     },
     mounted() {},
     data() {
@@ -143,7 +144,8 @@ export default {
                 image: null,
                 is_published: false,
                 sponsors: []
-            })
+            }),
+            activitySponsors: []
         }
     },
     computed: {
@@ -152,6 +154,11 @@ export default {
         },
         sponsors() {
             return this.$store.getters['sponsors/sponsors']
+        },
+        sponsorsArray() {
+            var arr = []
+            Object.keys(this.sponsors).forEach(key => arr.push(this.sponsors[key]))
+            return arr
         }
     },
     methods: {

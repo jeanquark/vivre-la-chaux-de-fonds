@@ -66,7 +66,8 @@ export const mutations = {
         console.log('DELETE_ACTIVITY mutation: ', payload)
         const { activityId } = payload
         console.log('activityId: ', activityId)
-        Vue.set(state.activities, activityId, null)
+        // Vue.set(state.activities, activityId, null)
+        Vue.delete(state.activities, activityId)
     }
 }
 

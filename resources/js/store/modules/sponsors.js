@@ -6,19 +6,19 @@ import { objectToFormData } from 'object-to-formdata'
 // state
 export const state = {
     // sponsors: [],
-    sponsors: {},
+    sponsors: {}
     // sponsor: {}
 }
 
 // getters
 export const getters = {
-    sponsors: state => state.sponsors,
+    sponsors: state => state.sponsors
     // sponsor: state => state.sponsor
 }
 
 // mutations
 export const mutations = {
-    SET_SPONSORS (state, payload) {
+    SET_SPONSORS(state, payload) {
         // console.log('setSponsors mutation: ', payload)
         // state.sponsors = payload
         console.log('SET_SPONSORS mutation', payload)
@@ -29,7 +29,7 @@ export const mutations = {
             })
         })
     },
-    SET_SPONSOR (state, payload) {
+    SET_SPONSOR(state, payload) {
         // console.log('setSponsor mutation: ', payload)
         // state.sponsor = payload
         console.log('SET_SPONSOR mutation', payload)
@@ -41,7 +41,7 @@ export const mutations = {
     //     console.log('Add sponsor mutation: ', payload)
     //     state.sponsors.push(payload)
     // },
-    UPDATE_SPONSOR (state, payload) {
+    UPDATE_SPONSOR(state, payload) {
         // console.log('Update sponsor mutation: ', payload)
         // const sponsorId = parseInt(payload.id)
         // const index = state.sponsors.findIndex(sponsor => sponsor.id === sponsorId)
@@ -52,7 +52,7 @@ export const mutations = {
             [payload.id]: payload
         })
     },
-    DELETE_SPONSOR (state, payload) {
+    DELETE_SPONSOR(state, payload) {
         // const sponsorId = parseInt(payload)
         // console.log('sponsorId: ', sponsorId)
         // const index = state.sponsors.findIndex(sponsor => sponsor.id === sponsorId)
@@ -62,13 +62,15 @@ export const mutations = {
         console.log('DELETE_SPONSOR: ', payload)
         const { sponsorId } = payload
         console.log('sponsorId: ', sponsorId)
-        Vue.set(state.sponsors, sponsorId, null)
+        // Vue.set(state.sponsors, sponsorId, null)
+        Vue.delete(state.sponsors, sponsorId)
+        // delete(state.sponsors[sponsorId])
     }
 }
 
 // actions
 export const actions = {
-    async fetchSponsors ({ commit }) {
+    async fetchSponsors({ commit }) {
         try {
             console.log('fetchSponsors action')
             const { data } = await axios.get('/api/sponsors')
@@ -79,7 +81,7 @@ export const actions = {
             throw error
         }
     },
-    async fetchSponsorById ({ commit }, payload) {
+    async fetchSponsorById({ commit }, payload) {
         try {
             console.log('fetchSponsorById action: ', payload)
             const { sponsorId } = payload
@@ -103,24 +105,41 @@ export const actions = {
             throw error
         }
     },
-    async createSponsor ({ commit }, payload) {
+    async createSponsor({ commit }, form) {
         try {
-            console.log('payload: ', payload)
-            const config = {
-                headers: { 'content-type': 'multipart/form-data' }
-            }
-            const { formData } = payload
-            // console.log('formData: ', formData)
-
-            const { data } = await axios.post('/api/sponsors', formData, config)
+            console.log('createSponsor action: ', form)
+            const { data } = await form.submit('post', `/api/sponsors`, {
+                transformRequest: [
+                    function(data, headers) {
+                        return objectToFormData(data)
+                    }
+                ]
+            })
             console.log('data: ', data)
-            commit('SET_SPONSOR', data.sponsor)
+            commit('SET_SPONSOR', data.newSponsor)
         } catch (error) {
-            console.log('error')
+            console.log('error: ', error)
             throw error
         }
     },
-    async updateSponsor ({ commit, dispatch }, form) {
+    // async createSponsor2({ commit }, payload) {
+    //     try {
+    //         console.log('payload: ', payload)
+    //         const config = {
+    //             headers: { 'content-type': 'multipart/form-data' }
+    //         }
+    //         const { formData } = payload
+    //         // console.log('formData: ', formData)
+
+    //         const { data } = await axios.post('/api/sponsors', formData, config)
+    //         console.log('data: ', data)
+    //         commit('SET_SPONSOR', data.sponsor)
+    //     } catch (error) {
+    //         console.log('error')
+    //         throw error
+    //     }
+    // },
+    async updateSponsor({ commit, dispatch }, form) {
         try {
             console.log('updateSponsor form: ', form)
             // const config = {
@@ -153,13 +172,13 @@ export const actions = {
             throw error
         }
     },
-    async deleteSponsor ({ commit }, payload) {
+    async deleteSponsor({ commit }, payload) {
         try {
-            const { sponsorId } = payload 
+            const { sponsorId } = payload
             console.log('sponsorId: ', sponsorId)
             const sponsor = await axios.delete(`/api/sponsors/${sponsorId}`)
             console.log('sponsor: ', sponsor)
-            commit('DELETE_SPONSOR', sponsorId)
+            commit('DELETE_SPONSOR', { sponsorId })
         } catch (error) {
             console.log('error from vuex: ', error)
             throw error

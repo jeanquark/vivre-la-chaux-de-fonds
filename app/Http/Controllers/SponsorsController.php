@@ -9,6 +9,7 @@ use File;
 use App\Http\Requests\StoreSponsor;
 use App\Http\Requests\UpdateSponsor;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 
 class SponsorsController extends Controller
@@ -65,58 +66,102 @@ class SponsorsController extends Controller
     }
 
     protected function createSponsor(Request $request) {
-        $newSponsor = json_decode($request->form);
+        $validatedData = $request->validate([
+            'name' => 'required|unique:sponsors',
+        ]);
 
         $sponsor = new Sponsor;
 
-        $sponsor->name = $newSponsor->name;
-        $sponsor->slug = str_slug($newSponsor->name);
-        $sponsor->contribution = $newSponsor->contribution;
-        $sponsor->is_active = false;
-        if ($newSponsor->end_date) {
-            $sponsor->end_date = date_create_from_format('Y-m-d', $newSponsor->end_date);
+        $sponsor->name = $request->name;
+        $sponsor->slug = str_slug($request->name);
+        $sponsor->contribution = $request->contribution;
+        $sponsor->is_active = (int)$request->is_active;
+        
+        if ($request->start_date) {
+            $sponsor->start_date = date_create_from_format('Y-m-d', $request->start_date);
+        }
+        if ($request->end_date) {
+            $sponsor->end_date = date_create_from_format('Y-m-d', $request->end_date);
         }
 
         // Upload image if present
         if (File::exists($request->image)) {
-            // $imageName = time().'.'. $request->image->getClientOriginalExtension();
-            // $request->image->move(public_path('images/sponsors'), $imageName);
-            // $sponsor->image = $imageName;
-
-            // Upload image
-            $file = Storage::disk('uploads')->put('sponsors', $request->image);
+            $file = Storage::disk('images')->put('partenaires', $request->image);
             $sponsor->image = $file;
         }
 
         $sponsor->save();
 
         // Save sponsors relationships
-        if ($newSponsor->activities) {
-            foreach ($newSponsor->activities as $activity) {
-                $sponsor->activities()->attach($activity->id);
-            }    
-        }
-
-        // if ($newActivity->sponsors) {
-        //     foreach ($newActivity->sponsors as $sponsor) {
-        //         $activity->sponsors()->attach($sponsor->id);
+        $sponsor->activities()->sync($request->activities);
+        // if ($request->sponsors) {
+        //     foreach ($request->sponsors as $sponsor) {
+        //         $sponsor->sponsors()->attach($sponsor);
         //     }
         // }
         
+        $newSponsor = Sponsor::with('activities')->find($sponsor->id);
+
         return response()->json([
             'success' => true,
-            'sponsor' => $sponsor,
             'newSponsor' => $newSponsor,
-            '$request->image' => $request->image,
+            'request' => $request,
+            'request->image' => $request->image,
         ], 201);
     }
 
+    // protected function createSponsor2(Request $request) {
+    //     $newSponsor = json_decode($request->form);
+
+    //     $sponsor = new Sponsor;
+
+    //     $sponsor->name = $newSponsor->name;
+    //     $sponsor->slug = str_slug($newSponsor->name);
+    //     $sponsor->contribution = $newSponsor->contribution;
+    //     $sponsor->is_active = false;
+    //     if ($newSponsor->end_date) {
+    //         $sponsor->end_date = date_create_from_format('Y-m-d', $newSponsor->end_date);
+    //     }
+
+    //     // Upload image if present
+    //     if (File::exists($request->image)) {
+    //         // $imageName = time().'.'. $request->image->getClientOriginalExtension();
+    //         // $request->image->move(public_path('images/sponsors'), $imageName);
+    //         // $sponsor->image = $imageName;
+
+    //         // Upload image
+    //         $file = Storage::disk('uploads')->put('sponsors', $request->image);
+    //         $sponsor->image = $file;
+    //     }
+
+    //     $sponsor->save();
+
+    //     // Save sponsors relationships
+    //     $sponsor->activities()->sync($request->activities);
+        
+    //     return response()->json([
+    //         'success' => true,
+    //         'sponsor' => $sponsor,
+    //         'newSponsor' => $newSponsor,
+    //         '$request->image' => $request->image,
+    //     ], 201);
+    // }
+
     protected function updateSponsor(Request $request, $id) {
+        $validatedData = $request->validate([
+            'name' => ['required', Rule::unique('sponsors')->ignore($id)],
+        ]);
+
         $sponsor = Sponsor::find($id);
+        
+        $start_date = null;
+        if ($request->start_date) {
+            $start_date = date_create_from_format('Y-m-d', $request->start_date);
+        }
 
         $end_date = null;
         if ($request->end_date) {
-            $end_date = date_create_from_format('Y-m-d H:i:s', $request->end_date);
+            $end_date = date_create_from_format('Y-m-d', $request->end_date);
         }
 
         // Upload new image if present
@@ -128,7 +173,7 @@ class SponsorsController extends Controller
             }
 
             // Upload new image
-            $file = Storage::disk('uploads')->put('sponsors2', $request->new_image);
+            $file = Storage::disk('uploads')->put('partenaires', $request->new_image);
             $request->image = $file;
         }
 
@@ -139,7 +184,9 @@ class SponsorsController extends Controller
                 'slug' => str_slug($request->name),
                 'contribution' => $request->contribution,
                 'image' => $request->image,
+                'start_date' => $start_date,
                 'end_date' => $end_date,
+                'is_active' => (int)$request->is_active,
                 'updated_at' => \Carbon\Carbon::now()
             ]
         );
@@ -210,8 +257,8 @@ class SponsorsController extends Controller
         $sponsor = Sponsor::find($id);
 
         // Delete image if it exists
-        if (Storage::disk('uploads')->exists($sponsor->image)) {
-            Storage::disk('uploads')->delete($sponsor->image);
+        if (Storage::disk('images')->exists($sponsor->image)) {
+            Storage::disk('images')->delete($sponsor->image);
         }
 
         $sponsor->delete();

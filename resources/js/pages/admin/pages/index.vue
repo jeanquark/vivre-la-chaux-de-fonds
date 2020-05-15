@@ -7,9 +7,11 @@
 
 		<!-- pages: {{ pages }}<br /><br /> -->
 		<!-- contentsArray: {{ contentsArray }}<br /><br /> -->
+		<b-alert show dismissible variant="info">Les pages correspondent aux éléments de la barre de menu. Chaque page est composée d'une ou plusieurs sections.</b-alert>
 
 		<b-button to="/admin/pages/create" variant="primary" class="my-3">Créer une nouvelle page</b-button>
 		<!-- <b-button to="/admin/pages/create_ORIGINAL" variant="primary" class="my-3">Créer une nouvelle page ORIGINAL</b-button> -->
+
 
 		<b-table
 	      responsive="sm"

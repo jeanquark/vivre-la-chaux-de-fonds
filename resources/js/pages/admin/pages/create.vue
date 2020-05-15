@@ -33,40 +33,40 @@
                 </b-col>
                 <b-col cols="12" class="">
                     <b-form-group label="Contenu de la page:" label-for="newPageContent">
-                        <b-row no-gutters class="justify-content-start">
-                            <b-button variant="primary" v-b-tooltip.hover title="Gras" class="mx-1" @click.prevent="formatDoc('bold')">
+                        <!-- <b-row no-gutters class="justify-content-start"> -->
+                            <b-button variant="primary" v-b-tooltip.hover title="Gras" class="mx-.5" @click.prevent="formatDoc('bold')">
                                 <font-awesome-icon size="1x" icon="bold" class="" />
                             </b-button>
 
-                            <b-button variant="primary" v-b-tooltip.hover title="Italic" class="mx-1" @click.prevent="formatDoc('italic')">
+                            <b-button variant="primary" v-b-tooltip.hover title="Italic" class="mx-.5" @click.prevent="formatDoc('italic')">
                                 <font-awesome-icon size="1x" icon="italic" class="" />
                             </b-button>
 
-                            <b-button variant="primary" v-b-tooltip.hover title="Souligné" class="mx-1" @click.prevent="formatDoc('underline')">
+                            <b-button variant="primary" v-b-tooltip.hover title="Souligné" class="mx-.5" @click.prevent="formatDoc('underline')">
                                 <font-awesome-icon size="1x" icon="underline" class="" />
                             </b-button>
 
-                            <b-button variant="primary" v-b-tooltip.hover title="Aligner à gauche" class="mx-1" @click.prevent="formatDoc('justifyleft')">
+                            <b-button variant="primary" v-b-tooltip.hover title="Aligner à gauche" class="mx-.5" @click.prevent="formatDoc('justifyleft')">
                                 <font-awesome-icon size="1x" icon="align-left" class="" />
                             </b-button>
 
-                            <b-button variant="primary" v-b-tooltip.hover title="Aligner au centre" class="mx-1" @click.prevent="formatDoc('justifycenter')">
+                            <b-button variant="primary" v-b-tooltip.hover title="Aligner au centre" class="mx-.5" @click.prevent="formatDoc('justifycenter')">
                                 <font-awesome-icon size="1x" icon="align-center" class="" />
                             </b-button>
 
-                            <b-button variant="primary" v-b-tooltip.hover title="Aligner à droite" class="mx-1" @click.prevent="formatDoc('justifyright')">
+                            <b-button variant="primary" v-b-tooltip.hover title="Aligner à droite" class="mx-.5" @click.prevent="formatDoc('justifyright')">
                                 <font-awesome-icon size="1x" icon="align-right" class="" />
                             </b-button>
 
-                            <b-button variant="primary" title="Liste point" class="mx-1" @click.prevent="formatDoc('insertUnorderedList')">
+                            <b-button variant="primary" title="Liste point" class="mx-.5" @click.prevent="formatDoc('insertUnorderedList')">
                                 <font-awesome-icon size="1x" icon="list-ul" />
                             </b-button>
 
-                            <b-button variant="primary" title="Liste nombre" class="mx-1" @click.prevent="formatDoc('insertOrderedList')">
+                            <b-button variant="primary" title="Liste nombre" class="mx-.5" @click.prevent="formatDoc('insertOrderedList')">
                                 <font-awesome-icon size="1x" icon="list-ol" />
                             </b-button>
 
-                            <b-button variant="primary" title="Lien" class="mx-1" @click.prevent="openCreateLinkModal">
+                            <b-button variant="primary" title="Lien" class="mx-.5" @click.prevent="openCreateLinkModal">
                                 <font-awesome-icon size="1x" icon="link" />
                             </b-button>
 
@@ -78,22 +78,22 @@
                             <font-awesome-icon size="1x" icon="copy" />
                         </b-button> -->
 
-                            <b-button variant="secondary" v-b-tooltip.hover title="Ajouter image" :disabled="!focused" @mousedown.prevent="focused = true" class="mx-1" @click.prevent="openImagesModal">
+                            <b-button variant="secondary" v-b-tooltip.hover title="Ajouter image" :disabled="!focused" @mousedown.prevent="focused = true" class="mx-.5" @click.prevent="openImagesModal">
                                 <font-awesome-icon size="1x" icon="image" class="" />
                             </b-button>
 
-                            <b-button variant="secondary" v-b-tooltip.hover title="Ajouter PDF" :disabled="!focused" @mousedown.prevent="focused = true" class="mx-1" @click.prevent="openDocumentsModal">
+                            <b-button variant="secondary" v-b-tooltip.hover title="Ajouter PDF" :disabled="!focused" @mousedown.prevent="focused = true" class="mx-.5" @click.prevent="openDocumentsModal">
                                 <font-awesome-icon size="1x" icon="file-pdf" class="" />
                             </b-button>
 
-                            <b-button variant="dark" v-b-tooltip.hover title="Voir code" class="mx-1" @click="toggleShowHTML">
+                            <b-button variant="dark" v-b-tooltip.hover title="Voir code" class="mx-.5" @click="toggleShowHTML">
                                 <font-awesome-icon size="1x" icon="code" />
                             </b-button>
 
-                            <button @click.prevent="insertDiv('12')">Insert div</button>
+                            <!-- <button @click.prevent="insertDiv('12')">Insert div</button> -->
 
                             <!-- Citation - Styles - Format - Cut - Copy -->
-                        </b-row>
+                        <!-- </b-row> -->
                         <b-row no-gutters class="justify-content-center my-2" v-if="selectedImageNode">
                             <b-col cols="12">
                                 <image-properties
@@ -122,7 +122,7 @@
 
         <images-modal @insertImage="insertImage" @closeImagesModal="showImagesModal = false" v-if="showImagesModal" />
         <documents-modal @insertDocument="insertDocument" @closeDocumentsModal="showDocumentsModal = false" v-if="showDocumentsModal" />
-        <create-link-modal @insertLink="insertLink" v-if="showCreateLinkModal" />
+        <create-link-modal @insertLink="insertLink" @closeLinkModal="showCreateLinkModal = false" v-if="showCreateLinkModal" />
 
     </b-container>
 </template>
@@ -164,8 +164,8 @@ export default {
             showImagesModal: false,
             showDocumentsModal: false,
             // showImagePropertiesToast: false,
-            selectedImageNode: null,
             showCreateLinkModal: false,
+            selectedImageNode: null,
             selectedImageProps: {
                 width: 0,
                 height: 0,
@@ -197,21 +197,21 @@ export default {
             }
             this.showHTML = !this.showHTML
         },
-        updateSelectedImage(value, type) {
-            console.log('updateSelectedImage: ', value, type)
-            if (type === 'width' || type === 'height') {
-                this.selectedImageNode[type] = value
-            }
-            if (type === 'margin') {
-                this.selectedImageNode.style.margin = `${value}px`
-            }
-            if (type === 'marginRight') {
-                this.selectedImageNode.style.marginRight = `${value}px`
-            }
-            if (type === 'float') {
-                this.selectedImageNode.style.float = value
-            }
-        },
+        // updateSelectedImage(value, type) {
+        //     console.log('updateSelectedImage: ', value, type)
+        //     if (type === 'width' || type === 'height') {
+        //         this.selectedImageNode[type] = value
+        //     }
+        //     if (type === 'margin') {
+        //         this.selectedImageNode.style.margin = `${value}px`
+        //     }
+        //     if (type === 'marginRight') {
+        //         this.selectedImageNode.style.marginRight = `${value}px`
+        //     }
+        //     if (type === 'float') {
+        //         this.selectedImageNode.style.float = value
+        //     }
+        // },
         selectElement(event) {
             this.selectedImageNode = null
             console.log('selectElement: ', event)
@@ -359,22 +359,10 @@ export default {
 img.intLink {
     border: 1px solid #000;
 }
-.resizable {
-    display: inline-block;
-    background: red;
-    resize: both;
-    overflow: hidden;
-    line-height: 0;
-}
-
-.resizable img {
-    width: 100%;
-    height: 100%;
-}
-.button2:hover {
-    cursor: pointer;
-    color: orange;
-}
+// .button2:hover {
+//     cursor: pointer;
+//     color: orange;
+// }
 .disabled:hover {
     cursor: not-allowed;
     color: #000;

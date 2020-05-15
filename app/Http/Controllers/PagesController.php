@@ -32,8 +32,8 @@ class PagesController extends Controller
 
     public function getPageById(Request $request, $id)
     {
-        $page = Page::find($id);
-        $page['sections'] = $page->sections;
+        $page = Page::with('sections')->findOrFail($id);
+        // $page['sections'] = $page->sections;
 
         // $page = Page::where('id', '=', $id)->with('sections')->first();
 
@@ -47,7 +47,7 @@ class PagesController extends Controller
     {
         $page = Page::where('slug', '=', $slug)->with('sections')->first();
         // $page = Page::where('slug', '=', $slug)->with('sections:id,name,page_id')->first();
-
+        // sleep(3);
         return response()->json([
             'success' => true,
             'page' => $page,
@@ -84,9 +84,11 @@ class PagesController extends Controller
 
         $page->save();
 
+        $newPage = Page::with('sections')->find($page->id);
+
         return response()->json([
             'success' => true,
-            'page' => $page,
+            'newPage' => $newPage,
         ], 201);
     }
 

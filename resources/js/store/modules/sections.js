@@ -31,8 +31,9 @@ export const mutations = {
         console.log('DELETE_SECTION: ', payload)
         const { sectionId } = payload
         console.log('sectionId: ', sectionId)
-        Vue.set(state.sections, sectionId, null)
-    }
+		// Vue.set(state.sections, sectionId, null)
+		Vue.delete(state.sections, sectionId)
+	}
 }
 
 // actions

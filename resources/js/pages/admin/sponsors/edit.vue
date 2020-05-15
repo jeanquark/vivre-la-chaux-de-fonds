@@ -13,7 +13,6 @@
         <b-row class="justify-content-center">
             <b-col cols="12" md="8" lg="6">
                 <b-form @submit.prevent="updateSponsor">
-
                     <b-row align-v="center" class="justify-content-start my-3 px-3">
                         <b-col cols="12">
                             <b-form-group label="Nom:" label-for="name">
@@ -22,11 +21,26 @@
                             </b-form-group>
                         </b-col>
                         <b-col cols="12">
-                            <b-form-group label="Contribution:" label-for="contribution">
+                            <b-form-group label="Contribution (en francs):" label-for="contribution" :description="`${parseFloat(form.contribution).toFixed(2)} CHF`">
                                 <b-form-input type="number" id="contribution" placeholder="" :class="{ 'is-invalid': form.errors.has('contribution') }" v-model="form.contribution"></b-form-input>
                                 <has-error :form="form" field="contribution" />
                             </b-form-group>
                         </b-col>
+
+                        <b-col cols="12" md="6">
+                            <b-form-group label="Date de début:" label-for="startDate">
+                                <VueCtkDateTimePicker
+                                    label="Cliquer pour choisir une date"
+                                    format="YYYY-MM-DD"
+                                    formatted="YYYY-MM-DD"
+                                    button-now-translation="Aujourd'hui"
+                                    only-date
+                                    id="startDate"
+                                    v-model="form.start_date"
+                                />
+                            </b-form-group>
+                        </b-col>
+
                         <b-col cols="12" md="6">
                             <b-form-group label="Date de fin:" label-for="endDate">
                                 <VueCtkDateTimePicker
@@ -47,9 +61,9 @@
                             </b-form-checkbox>
                         </b-col>
 
-                        <b-col cols="12" class="my-2">
+                        <b-col cols="12" class="my-2" v-if="form.image">
                             <p class="text-center">Image actuelle:</p>
-                            <b-img center :src="`/images/partenaires/${form.image}`" width="200" class=""></b-img>
+                            <b-img center :src="`/images/${form.image}`" width="200" class=""></b-img>
                         </b-col>
 
                         <b-col cols="12" class="my-2">
@@ -69,8 +83,8 @@
                             </b-form-group> -->
                             <b-form-group label="Activités:">
                                 <multiselect
-                                    tag-placeholder="Add this as new tag"
-                                    placeholder="Search or add a tag"
+                                    tag-placeholder="Ajouter comme nouveau tag"
+                                    placeholder="Chercher et ajouter un tag"
                                     label="name"
                                     track-by="id"
                                     :options="activitiesArray"
@@ -87,8 +101,6 @@
                             Editer sponsor
                         </b-button>
                     </b-row>
-
-                    
                 </b-form>
             </b-col>
         </b-row>
@@ -98,7 +110,6 @@
 <script>
 // vform
 import Form from 'vform'
-
 
 // Datepicker
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker'
@@ -113,8 +124,7 @@ export default {
         VueCtkDateTimePicker,
         Multiselect
     },
-    async created() {      
-    },
+    async created() {},
     async mounted() {
         const sponsorId = parseInt(this.$route.params.id)
         console.log('sponsorId: ', sponsorId)
@@ -138,6 +148,7 @@ export default {
                 id: '',
                 name: '',
                 contribution: 0,
+                start_date: '',
                 end_date: '',
                 image: null,
                 new_image: null,
@@ -148,7 +159,7 @@ export default {
         }
     },
     computed: {
-        loading () {
+        loading() {
             return this.$store.getters['loading/loading']
         },
         activities() {
@@ -160,23 +171,23 @@ export default {
         sponsor() {
             return this.$store.getters['sponsors/sponsors'][this.$route.params.id]
         },
-        activitiesArray () {
+        activitiesArray() {
             var arr = []
             Object.keys(this.activities).forEach(key => arr.push(this.activities[key]))
             return arr
         }
     },
     methods: {
-        uploadImage(event) {
-            console.log('uploadImage', event)
-            console.log(event.target)
-            console.log(event.target.files[0])
-            this.new_image = event.target.files[0]
-        },
+        // uploadImage(event) {
+        //     console.log('uploadImage', event)
+        //     console.log(event.target)
+        //     console.log(event.target.files[0])
+        //     this.new_image = event.target.files[0]
+        // },
         selectFile(e) {
             this.form.new_image = e.target.files[0]
         },
-        async updateSponsor () {
+        async updateSponsor() {
             try {
                 console.log('this.form: ', this.form)
                 // return
@@ -193,17 +204,17 @@ export default {
                 console.log('error: ', error)
                 this.$noty.error("Une erreur est survenue et le sponsor n'a pas pu être mise à jour.")
             }
-        },
-        async updateSponsor2() {
-            try {
-                await this.$store.dispatch('sponsors/updateSponsor', { sponsor: this.sponsor, image: this.new_image })
-                this.$noty.success('Sponsor mis à jour avec succè!')
-                this.$router.push('/admin/sponsors')
-            } catch (error) {
-                console.log('error: ', error)
-                this.$noty.error("Une erreur est survenue et le sponsor n'a pas pu être mise à jour.")
-            }
         }
+        // async updateSponsor2() {
+        //     try {
+        //         await this.$store.dispatch('sponsors/updateSponsor', { sponsor: this.sponsor, image: this.new_image })
+        //         this.$noty.success('Sponsor mis à jour avec succè!')
+        //         this.$router.push('/admin/sponsors')
+        //     } catch (error) {
+        //         console.log('error: ', error)
+        //         this.$noty.error("Une erreur est survenue et le sponsor n'a pas pu être mise à jour.")
+        //     }
+        // }
     }
 }
 </script>

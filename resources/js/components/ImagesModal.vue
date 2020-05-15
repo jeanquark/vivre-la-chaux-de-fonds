@@ -4,11 +4,11 @@
             <span class="unselectable">Gestion des images</span>
         </template>
         <!-- showSidebar: {{ showSidebar }}<br /><br /> -->
-        selectedFile: {{ selectedFile }}<br /><br />
         <!-- selectedFolder: {{ selectedFolder }}<br /><br /> -->
         <!-- folders: {{ folders }}<br /><br /> -->
         <!-- path: {{ path }}<br /><br /> -->
         <!-- currentPath: {{ currentPath }}<br /><br /> -->
+        <!-- selectedFile: {{ selectedFile }}<br /><br /> -->
 
         <b-tabs content-class="mt-3" v-model="tabIndex">
             <b-tab title="Gallerie d'images" active>

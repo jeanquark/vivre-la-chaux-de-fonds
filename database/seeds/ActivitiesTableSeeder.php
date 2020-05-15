@@ -21,7 +21,7 @@ class ActivitiesTableSeeder extends Seeder
                 'slug'              => 'st_nicolas_2019',
                 'subtitle'          => 'Un événement à ne pas rater',
                 'content'           => 'Le 10 octobre aura lieu le tournoi annuel de Jass.',
-                'image'             => 'st_nicolas_2019.jpg',
+                'image'             => 'activities/st_nicolas_2019.jpg',
                 // 'start_date'    => '',
                 // 'end_date'      => '',
                 'is_published'      => true,
@@ -32,7 +32,7 @@ class ActivitiesTableSeeder extends Seeder
                 'slug'              => 'st_patrick_2019',
                 'subtitle'          => 'Un événement à ne pas rater',
                 'content'           => 'Le 10 octobre aura lieu le tournoi annuel de Jass.',
-                'image'             => 'st_patrick_2019.jpg',
+                'image'             => 'activities/st_patrick_2019.jpg',
                 // 'start_date'    => '',
                 // 'end_date'      => '',
                 'is_published'      => true,
@@ -43,7 +43,7 @@ class ActivitiesTableSeeder extends Seeder
                 'slug'              => 'ola_portugal',
                 'subtitle'          => 'Un événement à ne pas rater',
                 'content'           => 'Le 10 octobre aura lieu le tournoi annuel de Jass.',
-                'image'             => 'ola_portugal_2019.png',
+                'image'             => 'activities/ola_portugal_2019.png',
                 // 'start_date'    => '',
                 // 'end_date'      => '',
                 'is_published'      => true,
@@ -65,7 +65,7 @@ class ActivitiesTableSeeder extends Seeder
             [
                 'name'          => 'La Semeuse',
                 'slug'          => 'la_semeuse',
-                'image'         => 'la_semeuse.jpg',
+                'image'         => 'partenaires/la_semeuse.jpg',
                 'contribution'  => 20000,
                 // 'end_date'      => '',
                 'is_active'     => true
@@ -73,7 +73,7 @@ class ActivitiesTableSeeder extends Seeder
             [
                 'name'          => 'Axa',
                 'slug'          => 'axa',
-                'image'         => 'axa.jpg',
+                'image'         => 'partenaires/axa.jpg',
                 'contribution'  => 45000,
                 // 'end_date'      => '',
                 'is_active'     => true
@@ -81,7 +81,7 @@ class ActivitiesTableSeeder extends Seeder
             [
                 'name'          => 'Loterie Romande',
                 'slug'          => 'loterie_romande',
-                'image'         => 'loterie_romande.png',
+                'image'         => 'partenaires/loterie_romande.png',
                 'contribution'  => 50000,
                 // 'end_date'      => '',
                 'is_active'     => true

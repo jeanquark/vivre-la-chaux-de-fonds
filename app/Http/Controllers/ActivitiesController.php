@@ -9,6 +9,7 @@ use File;
 use App\Http\Requests\StoreActivity;
 use App\Http\Requests\UpdateActivity;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 
 class ActivitiesController extends Controller
@@ -54,7 +55,9 @@ class ActivitiesController extends Controller
     }
 
     protected function createActivity(StoreActivity $request) {
-
+        $validatedData = $request->validate([
+            'name' => 'required|unique:activities',
+        ]);
         // return response()->json([
         //     'success' => true,
         //     'request' => $request,
@@ -69,7 +72,7 @@ class ActivitiesController extends Controller
         $activity->subtitle = $request->subtitle;
         $activity->slug = str_slug($request->name);
         $activity->content = $request->content;
-        $activity->is_published = false;
+        $activity->is_published = (int)$request->is_published;
         if ($request->start_date) {
             $activity->start_date = date_create_from_format('Y-m-d H:i:s', $request->start_date);
         }
@@ -109,6 +112,10 @@ class ActivitiesController extends Controller
     }
 
     protected function updateActivity(Request $request, $id) {
+        $validatedData = $request->validate([
+            'name' => ['required', Rule::unique('activities')->ignore($id)],
+        ]);
+
         $activity = Activity::find($id);
 
         $start_date = null;
@@ -144,7 +151,7 @@ class ActivitiesController extends Controller
                 'image' => $request->image,
                 'start_date' => $start_date,
                 'end_date' => $end_date,
-                'is_published' => $request->is_published,
+                'is_published' => (int)$request->is_published,
                 'is_on_frontpage' => $request->is_on_frontpage,
                 'updated_at' => \Carbon\Carbon::now()
             ]

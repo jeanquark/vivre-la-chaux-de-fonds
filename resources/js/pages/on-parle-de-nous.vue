@@ -1,16 +1,22 @@
 <template>
     <b-container>
-        <h1 class="text-center">On parle de nous</h1>
+        <!-- <h1 class="text-center">On parle de nous</h1> -->
 
-        <b-row class="mt-5">
-            <b-col cols="3">
+        <b-row>
+            <b-col cols="3" class="d-none d-md-block">
                 <b-carousel :indicators="false" :interval="2000" fade id="carousel-fade" style="text-shadow: 0px 0px 2px #000">
-                    <b-carousel-slide :img-src="`/images/partenaires/${sponsor.image}`" v-for="sponsor in sponsors" :key="sponsor.id"></b-carousel-slide>
+                    <b-carousel-slide :img-src="`/images/${sponsor.image}`" v-for="sponsor in sponsors" :key="sponsor.id"></b-carousel-slide>
                 </b-carousel>
             </b-col>
-            <b-col cols="9">
+            <!-- Loading spinner -->
+            <b-col cols="12" md="9" v-if="loading">
+                <b-row no-gutters align-v="center" class="justify-content-center" style="height: 15em; background-color:rgba(0, 0, 0, 0.5);">
+                    <b-spinner type="grow" label="Loading..."></b-spinner>
+                </b-row>
+            </b-col>
+
+            <b-col cols="12" md="9" v-else>
                 <div role="tablist">
-                    <!-- pageSections: {{ pageSections }} -->
                     <b-card no-body class="m-0 p-0">
                         <b-card-body>
                             <b-card-text v-html="page ? page['content'] : ''"></b-card-text>
@@ -27,8 +33,6 @@
                             </b-card-body>
                         </b-collapse>
                     </b-card>
-
-                    
                 </div>
             </b-col>
         </b-row>
@@ -42,39 +46,38 @@ export default {
         return { title: 'On parle de nous' }
     },
     async created() {
-        
-    },
-    async mounted() {
-        // if (!this.$store.getters['pages/pages'][this.$route.path.substring(1)]) {
-        if (!this.page) {
-            await this.$store.dispatch('pages/fetchPageBySlug', { pageSlug: this.$route.path.substring(1) })
+        try {
+            this.$store.commit('loading/SET_LOADING', true)
+            if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {
+                await this.$store.dispatch('sponsors/fetchSponsors')
+            }
+            if (!this.page) {
+                await this.$store.dispatch('pages/fetchPageBySlug', { pageSlug: this.$route.path.substring(1) })
+            }
+            this.selectedSection = this.pageSections[0]
+            this.$store.commit('loading/SET_LOADING', false)
+        } catch (error) {
+            this.$store.commit('loading/SET_LOADING', false)
         }
-        if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {
-            await this.$store.dispatch('sponsors/fetchSponsors')
-        }
-        this.selectedSection = this.pageSections[0]
-        console.log('Done!')
     },
+    async mounted() {},
     data() {
         return {
             selectedSection: {}
         }
     },
     computed: {
+        loading () {
+            return this.$store.getters['loading/loading']
+        },
         pages() {
             return this.$store.getters['pages/pages']
         },
         page() {
-            // return this.$store.getters['pages/pages'][this.$route.path.substring(1)]
-            return Object.values(this.$store.getters['pages/pages']).find(page => page.slug === this.$route.path.substring(1));
+            return Object.values(this.$store.getters['pages/pages']).find(page => page.slug === this.$route.path.substring(1))
         },
-        
+
         pageSections() {
-            // return this.$store.getters['pages/pages'][this.$route.path.substring(1)] ? this.$store.getters['pages/pages'][this.$route.path.substring(1)]['sections'] : ''
-            // if (this.$store.getters['pages/pages'][this.$route.path.substring(1)]) {
-            //     return this.$store.getters['pages/pages'][this.$route.path.substring(1)]['sections']
-            // }
-            // return
             return this.page ? this.page['sections'] : []
         },
         sponsors() {

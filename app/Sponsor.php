@@ -12,7 +12,7 @@ class Sponsor extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'slug', 'image', 'contribution', 'end_date', 'is_active'
+        'name', 'slug', 'image', 'contribution', 'start_date', 'end_date', 'is_active'
     ];
 
     /**
