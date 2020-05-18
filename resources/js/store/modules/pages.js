@@ -99,7 +99,7 @@ export const actions = {
             throw error
         }
 	},
-	async updatePage ({ commit }, form) {
+	async updatePage ({ commit, dispatch }, form) {
 		try {
 			console.log('updatedPage vuex action: ', form)
 			const updatedPage = form
@@ -117,6 +117,7 @@ export const actions = {
 			// const { data } = await axios.put(`/api/pages/${updatedPage.id}`, { updatedPage })
 			console.log('data3: ', data)
 			commit('SET_PAGE', data.updatedPage)
+			dispatch('sections/fetchSections', {}, { root: true })
 		} catch (error) {
 			console.log('error: ', error)
 			throw error

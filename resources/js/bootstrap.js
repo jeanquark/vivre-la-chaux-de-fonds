@@ -33,11 +33,9 @@ function errorResponseHandler(error) {
         // If token has expired, logout
         if (error.response.status === 401 || error.response.status === 403) {
             const token = store.getters['auth/token']
-            console.log('token: ', token)
-            // const decoded = jwt_decode(token)
-            // console.log('decoded: ', decoded)
+            // console.log('token: ', token)
             const { exp } = jwt_decode(token)
-            console.log('exp: ', exp)
+            // console.log('exp: ', exp)
             if (Date.now() >= exp * 1000) {
                 // store.dispatch('auth/logout')
                 // store.commit('auth/SET_USER', null)

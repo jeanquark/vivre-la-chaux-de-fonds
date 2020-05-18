@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Response;
 
 class Handler extends ExceptionHandler
 {
@@ -65,7 +66,7 @@ class Handler extends ExceptionHandler
                     '$exception->getCode()' => $exception->getCode(),
                     '$exception->getMessage()' => $exception->getMessage(),
                     '$userLevelCheck' => $userLevelCheck,
-                    'Auth::user()' => Auth::user()
+                    // 'Auth::user()' => Auth::user()
                 ), 403);
             }
 

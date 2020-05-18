@@ -135,9 +135,7 @@ import Form from 'vform'
 import axios from 'axios'
 import { objectToFormData } from 'object-to-formdata'
 export default {
-    // props: ['showDocumentsModal'],
-    async created() {},
-    async mounted() {
+    async created() {
         console.log('DocumentsModal mounted!')
         // const { data } = await axios.get('/api/list-all-documents')
         const { data } = await axios.get('/api/documents')
@@ -145,6 +143,9 @@ export default {
         this.files = data.files
         this.folders = data.rootDirectories
         this.path = [{ name: 'Dossier Racine', folder: '/', active: true }]
+    },
+    async mounted() {
+        
     },
     data() {
         return {

@@ -2,7 +2,7 @@
     <b-container>
         <b-breadcrumb>
             <b-breadcrumb-item to="/admin/sections" class="navigation">
-                <font-awesome-icon icon="file-alt" />
+                <font-awesome-icon icon="columns" />
                 <span>Sections</span>
             </b-breadcrumb-item>
             <b-breadcrumb-item active>Créer</b-breadcrumb-item>
@@ -105,9 +105,6 @@
             </b-row>
         </b-form>
 
-        <!-- <images-modal @insertFile="insertImage" @closeImagesModal="showImagesModal = false" v-if="showImagesModal" />
-        <documents-modal @insertFile="insertFile" @closeDocumentsModal="showDocumentsModal = false" v-if="showDocumentsModal" /> -->
-
         <images-modal @insertImage="insertImage" @closeImagesModal="showImagesModal = false" v-if="showImagesModal" />
         <documents-modal @insertDocument="insertDocument" @closeDocumentsModal="showDocumentsModal = false" v-if="showDocumentsModal" />
         <create-link-modal @insertLink="insertLink" @closeLinkModal="showCreateLinkModal = false" v-if="showCreateLinkModal" />
@@ -153,14 +150,12 @@ export default {
             showDocumentsModal: false,
             showCreateLinkModal: false,
             selectedImageNode: null,
-            // showImagePropertiesToast: false,
             selectedImageProps: {
                 width: 0,
                 height: 0,
                 style: {}
             },
             focused: false
-            // sectionSections: []
         }
     },
     computed: {
@@ -188,21 +183,6 @@ export default {
             }
             this.showHTML = !this.showHTML
         },
-        updateSelectedImage(value, type) {
-            console.log('updateSelectedImage: ', value, type)
-            if (type === 'width' || type === 'height') {
-                this.selectedImageNode[type] = value
-            }
-            if (type === 'margin') {
-                this.selectedImageNode.style.margin = `${value}px`
-            }
-            if (type === 'marginRight') {
-                this.selectedImageNode.style.marginRight = `${value}px`
-            }
-            if (type === 'float') {
-                this.selectedImageNode.style.float = value
-            }
-        },
         selectElement(event) {
             this.selectedImageNode = null
             console.log('selectElement: ', event)
@@ -219,20 +199,6 @@ export default {
                 // this.openImagePropertiesToast()
             }
         },
-        // selectedElement(event) {
-        //     console.log('event.target: ', event.target)
-        //     const element = event.target.tagName.toLowerCase()
-        //     console.log('element: ', element)
-        //     if (element === 'img') {
-        //         console.log('img!')
-        //         this.selectedImageNode = event.target
-        //         this.selectedImageProps['width'] = event.target.width
-        //         this.selectedImageProps['height'] = event.target.height
-        //         this.selectedImageProps['style']['margin'] = event.target.style.margin.match(/\d/g).join('')
-        //         this.selectedImageProps['style']['float'] = event.target.style.float
-        //         this.openImagePropertiesToast()
-        //     }
-        // },
         updateSelectedImageProperties(value, type) {
             console.log('updateSelectedImageProperties2: ', value, type)
             console.log('selectedImageNode: ', this.selectedImageNode)
@@ -270,13 +236,6 @@ export default {
                 this.$bvModal.show('createLinkModal')
             }, 300)
         },
-        // openImagePropertiesToast() {
-        //     console.log('openImagePropertiesToast')
-        //     this.showImagePropertiesToast = true
-        //     setTimeout(() => {
-        //         this.$bvToast.show('example-toast')
-        //     }, 300)
-        // },
         insertImage(filePath) {
             console.log('insertImage2: ', filePath)
 
@@ -293,59 +252,16 @@ export default {
             console.log('insertLink: ', url)
             this.formatDoc('createLink', url)
         },
-        // insertDiv(value) {
-        //     document.execCommand('formatBlock', false, 'div')
-        //     const selectedElement = window.getSelection().focusNode.parentNode
-        //     selectedElement.className = 'col-6'
-        // },
         formatDoc(sCmd, sValue) {
-            // console.log('sCmd: ', sCmd)
-            // console.log('sValue: ', sValue)
-            // console.log('document.compForm: ', document.compForm)
             document.execCommand(sCmd, false, sValue)
         },
-        // setDocMode(bToSource) {
-        //     console.log('bToSource: ', bToSource)
-        //     console.log('this.checked: ', this.checked)
-        //     var oDoc = document.getElementById('textBox')
-        //     console.log('oDoc: ', oDoc)
-        //     // return
-        //     var oContent
-        //     if (bToSource) {
-        //         oContent = document.createTextNode(oDoc.innerHTML)
-        //         console.log('oContent: ', oContent)
-        //         oDoc.innerHTML = ''
-        //         var oPre = document.createElement('pre')
-        //         oDoc.contentEditable = false
-        //         oPre.id = 'sourceText'
-        //         oPre.contentEditable = true
-        //         oPre.appendChild(oContent)
-        //         oDoc.appendChild(oPre)
-        //         document.execCommand('defaultParagraphSeparator', false, 'div')
-        //     } else {
-        //         if (document.all) {
-        //             oDoc.innerHTML = oDoc.innerText
-        //         } else {
-        //             oContent = document.createRange()
-        //             oContent.selectNodeContents(oDoc.firstChild)
-        //             oDoc.innerHTML = oContent.toString()
-        //         }
-        //         oDoc.contentEditable = true
-        //     }
-        //     oDoc.focus()
-        // },
-
         async createNewSection() {
             try {
-                // console.log('document.getElementById("textBox").innerHTML2: ', document.getElementById('textBox').innerHTML)
                 this.$store.commit('loading/SET_LOADING', true)
                 const content = document.getElementById('textBox').innerHTML
-                // console.log('content: ', content)
                 this.form['content'] = content
-                console.log('this.form: ', this.form)
-                // return
+                // console.log('this.form: ', this.form)
                 await this.$store.dispatch('sections/createSection', this.form)
-                // await this.$store.dispatch('activities/createActivity', this.form)
 
                 this.$store.commit('loading/SET_LOADING', false)
                 this.$noty.success('Nouvelle section créée avec succès!')
@@ -387,15 +303,10 @@ export default {
 img.intLink {
     border: 1px solid #000;
 }
-// .button2:hover {
-//     cursor: pointer;
-//     color: orange;
-// }
 .disabled:hover {
     cursor: not-allowed;
     color: #000;
 }
-
 pre {
     overflow-x: auto;
     white-space: pre-wrap;

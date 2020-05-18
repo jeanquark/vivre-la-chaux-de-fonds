@@ -129,7 +129,6 @@ class SectionsController extends Controller
                 'name' => $request->name,
                 'slug' => str_slug($request->name),
                 'content' => $request->content,
-                'is_published' => $request->is_published,
                 'updated_at' => \Carbon\Carbon::now()
             ]
         );

@@ -2,7 +2,7 @@
     <b-container>
         <b-breadcrumb>
             <b-breadcrumb-item to="/admin/sections" class="navigation">
-                <font-awesome-icon icon="file-alt" />
+                <font-awesome-icon icon="columns" />
                 <span>Sections</span>
             </b-breadcrumb-item>
             <b-breadcrumb-item active>Editer</b-breadcrumb-item>
@@ -20,11 +20,12 @@
                     </b-form-group>
                 </b-col>
 
-                <b-col cols="12" class="my-2">
-                            <p class="text-center">Image actuelle:</p>
-                            <b-img center :src="`/images/${form.image}`" width="200" class=""></b-img>
-                        </b-col>
-                <b-col cols="12" class="my-2">
+                <b-col cols="12" md="6" class="my-2" v-if="form.image">
+                    <p class="text-center">Image actuelle:</p>
+                    <b-img center :src="`/images/${form.image}`" width="200" class=""></b-img>
+                </b-col>
+
+                <b-col cols="12" md="6" class="my-2">
                     <b-form-group label="Image:" label-for="image">
                         <b-form-file
                             name="image"
@@ -36,6 +37,10 @@
                         ></b-form-file>
                         <has-error :form="form" field="image" />
                     </b-form-group>
+                </b-col>
+
+                <b-col cols="12" class="my-2" v-if="section.page">
+                    Lié à la page: <router-link :to="`/admin/pages/${section.page.id}/edit`">{{ section.page.name }}</router-link>
                 </b-col>
 
                 <b-col cols="12" class="">
@@ -65,16 +70,16 @@
                         </b-button>
 
                         <b-button variant="primary" title="Liste point" class="mx-.5" @click.prevent="formatDoc('insertUnorderedList')">
-                                <font-awesome-icon size="1x" icon="list-ul" />
-                            </b-button>
+                            <font-awesome-icon size="1x" icon="list-ul" />
+                        </b-button>
 
-                            <b-button variant="primary" title="Liste nombre" class="mx-.5" @click.prevent="formatDoc('insertOrderedList')">
-                                <font-awesome-icon size="1x" icon="list-ol" />
-                            </b-button>
+                        <b-button variant="primary" title="Liste nombre" class="mx-.5" @click.prevent="formatDoc('insertOrderedList')">
+                            <font-awesome-icon size="1x" icon="list-ol" />
+                        </b-button>
 
-                            <b-button variant="primary" title="Lien" class="mx-.5" @click.prevent="openCreateLinkModal">
-                                <font-awesome-icon size="1x" icon="link" />
-                            </b-button>
+                        <b-button variant="primary" title="Lien" class="mx-.5" @click.prevent="openCreateLinkModal">
+                            <font-awesome-icon size="1x" icon="link" />
+                        </b-button>
 
                         <b-button variant="secondary" v-b-tooltip.hover title="Ajouter image" :disabled="!focused" class="mx-.5" @mousedown.prevent="focused = true" @click.prevent="openImagesModal">
                             <font-awesome-icon size="1x" icon="image" class="" />
@@ -92,10 +97,7 @@
 
                         <b-row class="justify-content-center my-2" v-if="selectedImageNode">
                             <b-col cols="12">
-                                <image-properties
-                                    :selectedImageProps="selectedImageProps"
-                                    @updateSelectedImageProperties="updateSelectedImageProperties"
-                                />
+                                <image-properties :selectedImageProps="selectedImageProps" @updateSelectedImageProperties="updateSelectedImageProperties" />
                             </b-col>
                         </b-row>
 
@@ -122,12 +124,10 @@
 </template>
 
 <script>
-// vForm
 import Form from 'vform'
 
 // Multiselect
 import Multiselect from 'vue-multiselect'
-// import 'vue-multiselect/dist/vue-multiselect.min.css'
 
 import ImagesModal from '~/components/ImagesModal'
 import DocumentsModal from '~/components/DocumentsModal'
@@ -139,22 +139,15 @@ export default {
         Multiselect,
         ImagesModal,
         DocumentsModal,
-        CreateLinkModal,
+        CreateLinkModal
     },
     async created() {},
     async mounted() {
         if (!this.$store.getters['sections/sections'][this.$route.params.id]) {
             await this.$store.dispatch('sections/fetchSectionById', { sectionId: this.$route.params.id })
         }
-
-        // if (Object.keys(this.$store.getters['sections/sections']).length < 2) {
-        //     await this.$store.dispatch('sections/fetchSections')
-        // }
-
-        console.log('this.section: ', this.section)
-        console.log('this.form: ', this.form)
         this.form.fill(this.section)
-        this.sectionSections = this.section.sections
+        // this.sectionSections = this.section.pages
     },
     data() {
         return {
@@ -169,15 +162,12 @@ export default {
             showImagesModal: false,
             showDocumentsModal: false,
             showCreateLinkModal: false,
-            // showImagePropertiesToast: false,
             selectedImageNode: null,
             selectedImageProps: {
                 width: 0,
                 height: 0,
                 style: {}
-            },
-            sectionSections: [],
-            options: [{ name: 'Vue.js', code: 'vu' }, { name: 'Javascript', code: 'js' }, { name: 'Open Source', code: 'os' }]
+            }
         }
     },
     computed: {
@@ -193,9 +183,6 @@ export default {
         section() {
             return this.$store.getters['sections/sections'][this.$route.params.id]
         },
-        sections() {
-            return this.$store.getters['sections/sections']
-        },
         sectionsArray() {
             var arr = []
             Object.keys(this.sections).forEach(key => arr.push(this.sections[key]))
@@ -208,28 +195,13 @@ export default {
         },
         toggleShowHTML() {
             if (!this.showHTML) {
-                this.content = document.getElementById('textBox').innerHTML
+                this.form.content = document.getElementById('textBox').innerHTML
             } else {
-                this.content = document.getElementById('textBox').innerText
+                this.form.content = document.getElementById('textBox').innerText
             }
             this.showHTML = !this.showHTML
         },
-        // updateSelectedImage(value, type) {
-        //     console.log('updateSelectedImage: ', value, type)
-        //     if (type === 'width' || type === 'height') {
-        //         this.selectedImageNode[type] = value
-        //     }
-        //     if (type === 'margin') {
-        //         this.selectedImageNode.style.margin = `${value}px`
-        //     }
-        //     if (type === 'marginRight') {
-        //         this.selectedImageNode.style.marginRight = `${value}px`
-        //     }
-        //     if (type === 'float') {
-        //         this.selectedImageNode.style.float = value
-        //     }
-        // },
-        selectElement (event) {
+        selectElement(event) {
             this.selectedImageNode = null
             console.log('selectElement: ', event)
             const element = event.target.tagName.toLowerCase()
@@ -245,21 +217,6 @@ export default {
                 // this.openImagePropertiesToast()
             }
         },
-        // selectedElement(event) {
-        //     console.log('event.target: ', event.target)
-        //     const element = event.target.tagName.toLowerCase()
-        //     console.log('element: ', element)
-        //     if (element === 'img') {
-        //         console.log('img!')
-
-        //         this.selectedImageNode = event.target
-        //         this.selectedImageProps['width'] = event.target.width
-        //         this.selectedImageProps['height'] = event.target.height
-        //         this.selectedImageProps['style']['margin'] = event.target.style.margin.match(/\d/g).join('')
-        //         this.selectedImageProps['style']['float'] = event.target.style.float
-        //         this.openImagePropertiesToast()
-        //     }
-        // },
         updateSelectedImageProperties(value, type) {
             console.log('updateSelectedImageProperties2: ', value, type)
             console.log('selectedImageNode: ', this.selectedImageNode)
@@ -297,16 +254,8 @@ export default {
                 this.$bvModal.show('createLinkModal')
             }, 300)
         },
-        // openImagePropertiesToast() {
-        //     console.log('openImagePropertiesToast')
-        //     this.showImagePropertiesToast = true
-        //     setTimeout(() => {
-        //         this.$bvToast.show('example-toast')
-        //     }, 300)
-        // },
         insertImage(value) {
             console.log('insertImage: ', value)
-            // this.showModal = false
             // const image = 'http://dummyimage.com/160x90'
             const image = `/images/${value}`
             document.execCommand('insertImage', false, image)
@@ -319,34 +268,25 @@ export default {
             console.log('insertLink: ', url)
             this.formatDoc('createLink', url)
         },
-        // insertDiv(value) {
-        //     document.execCommand('formatBlock', false, 'div')
-        //     const selectedElement = window.getSelection().focusNode.parentNode
-        //     selectedElement.className = 'col-6'
-        // },
         formatDoc(sCmd, sValue) {
             document.execCommand(sCmd, false, sValue)
         },
         async updatePage() {
             try {
                 console.log('updatePage: ', this.form)
-                // console.log('this.form: ', this.form)
-                // return
-
                 this.$store.commit('loading/SET_LOADING', true)
-                const content = document.getElementById('textBox').innerHTML
-                // console.log('content: ', content)
+                let content
+                if (!this.showHTML) {
+                    content = document.getElementById('textBox').innerHTML
+                } else {
+                    content = document.getElementById('textBox').innerText
+                }
                 this.form['content'] = content
-                this.form['sections'] = this.sectionSections.map(section => parseInt(section.id))
                 console.log('this.form: ', this.form)
-                // return
-
-                // const { data } = await axios.post('/api/users', this.form)
-                await this.$store.dispatch('sections/updatePage', this.form)
-                // console.log('data: ', data)
+                await this.$store.dispatch('sections/updateSection', this.form)
                 this.$store.commit('loading/SET_LOADING', false)
-                this.$noty.success('Page mise à jour avec succès!')
-                // this.$router.push('/admin/sections')
+                this.$noty.success('Section mise à jour avec succès!')
+                this.$router.push('/admin/sections')
             } catch (error) {
                 this.$store.commit('loading/SET_LOADING', false)
                 console.log('error: ', error)
@@ -357,7 +297,6 @@ export default {
 }
 </script>
 
-<!--<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>-->
 <style lang="scss" scoped>
 @import './resources/sass/_variables.scss';
 #textBox {

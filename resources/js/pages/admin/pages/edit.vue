@@ -2,7 +2,7 @@
     <b-container>
         <b-breadcrumb>
             <b-breadcrumb-item to="/admin/pages" class="navigation">
-                <font-awesome-icon icon="folder" />
+                <font-awesome-icon icon="file" />
                 <span>Pages</span>
             </b-breadcrumb-item>
             <b-breadcrumb-item active>Editer</b-breadcrumb-item>
@@ -213,7 +213,6 @@ export default {
         }
     },
     methods: {
-        
         toggleShowHTML() {
             if (!this.showHTML) {
                 this.form.content = document.getElementById('textBox').innerHTML
@@ -222,21 +221,6 @@ export default {
             }
             this.showHTML = !this.showHTML
         },
-        // updateSelectedImage(value, type) {
-        //     console.log('updateSelectedImage: ', value, type)
-        //     if (type === 'width' || type === 'height') {
-        //         this.selectedImageNode[type] = value
-        //     }
-        //     if (type === 'margin') {
-        //         this.selectedImageNode.style.margin = `${value}px`
-        //     }
-        //     if (type === 'marginRight') {
-        //         this.selectedImageNode.style.marginRight = `${value}px`
-        //     }
-        //     if (type === 'float') {
-        //         this.selectedImageNode.style.float = value
-        //     }
-        // },
         selectElement (event) {
             this.selectedImageNode = null
             console.log('selectElement: ', event)
@@ -253,31 +237,14 @@ export default {
                 // this.openImagePropertiesToast()
             }
         },
-        // selectedElement(event) {
-        //     console.log('event.target: ', event.target)
-        //     const element = event.target.tagName.toLowerCase()
-        //     console.log('element: ', element)
-        //     if (element === 'img') {
-        //         console.log('img!')
-
-        //         this.selectedImageNode = event.target
-        //         this.selectedImageProps['width'] = event.target.width
-        //         this.selectedImageProps['height'] = event.target.height
-        //         this.selectedImageProps['style']['margin'] = event.target.style.margin.match(/\d/g).join('')
-        //         this.selectedImageProps['style']['float'] = event.target.style.float
-        //         this.openImagePropertiesToast()
-        //     }
-        // },
         updateSelectedImageProperties(value, type) {
             console.log('updateSelectedImageProperties2: ', value, type)
             console.log('selectedImageNode: ', this.selectedImageNode)
-            // this.selectedImageProps[type] = value
-            // this.selectedImageNode[type] = value
             if (type === 'width' || type === 'height') {
                 this.selectedImageNode[type] = value
             }
-            if (type === 'margin') {
-                this.selectedImageNode.style.margin = `${value}px`
+            if (type === 'marginLeft') {
+                this.selectedImageNode.style.marginLeft = `${value}px`
             }
             if (type === 'marginRight') {
                 this.selectedImageNode.style.marginRight = `${value}px`

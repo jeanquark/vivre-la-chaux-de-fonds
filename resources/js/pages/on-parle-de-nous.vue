@@ -20,6 +20,7 @@
                     <b-card no-body class="m-0 p-0">
                         <b-card-body>
                             <b-card-text v-html="page ? page['content'] : ''"></b-card-text>
+                            <!-- <b-table hover :items="items"></b-table> -->
                         </b-card-body>
                     </b-card>
 
@@ -63,11 +64,28 @@ export default {
     async mounted() {},
     data() {
         return {
-            selectedSection: {}
+            selectedSection: {},
+            // items: [
+            //     { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
+            //     { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
+            //     {
+            //         age: 89,
+            //         first_name: 'Geneva',
+            //         last_name: 'Wilson',
+            //         _rowVariant: 'danger'
+            //     },
+            //     {
+            //         age: 40,
+            //         first_name: 'Thor',
+            //         last_name: 'MacDonald',
+            //         _cellVariants: { age: 'info', first_name: 'warning' }
+            //     },
+            //     { age: 29, first_name: 'Dick', last_name: 'Dunlap' }
+            // ]
         }
     },
     computed: {
-        loading () {
+        loading() {
             return this.$store.getters['loading/loading']
         },
         pages() {

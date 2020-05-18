@@ -2,7 +2,7 @@
     <b-container>
         <b-breadcrumb>
             <b-breadcrumb-item to="/admin/sections" class="navigation">
-                <font-awesome-icon icon="file-alt" />
+                <font-awesome-icon icon="columns" />
                 <span>Sections</span>
             </b-breadcrumb-item>
             <b-breadcrumb-item active>Montrer</b-breadcrumb-item>
@@ -41,7 +41,6 @@
 export default {
     async created() {
         if (!this.$store.getters['sections/sections'][this.$route.params.id]) {
-            // this.$store.dispatch('sections/fetchSectionBySlug', { sectionSlug: this.$route.params.slug })
             await this.$store.dispatch('sections/fetchSectionById', { sectionId: this.$route.params.id })
         }
     },

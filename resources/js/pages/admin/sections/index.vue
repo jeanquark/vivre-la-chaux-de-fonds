@@ -1,7 +1,7 @@
 <template>
 	<b-container>
 		<b-breadcrumb>
-            <b-breadcrumb-item active><font-awesome-icon icon="file-alt" />&nbsp;Sections</b-breadcrumb-item>
+            <b-breadcrumb-item active><font-awesome-icon icon="columns" />&nbsp;Sections</b-breadcrumb-item>
         </b-breadcrumb>
 		<h2 class="text-center">Gestion des sections</h2>
 
