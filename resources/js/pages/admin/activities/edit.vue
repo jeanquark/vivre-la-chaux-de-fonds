@@ -13,7 +13,7 @@
         <!-- form.sponsors: {{ form.sponsors }}<br /><br /> -->
 
         <b-row class="justify-content-center">
-            <b-col cols="12" md="8" lg="6">
+            <b-col cols="12" md="8">
                 <b-form @submit.prevent="updateActivity">
                     <!-- form.id: {{ form.id }}<br /><br /> -->
                     <!-- form.image: {{ form.image }}<br /><br /> -->
@@ -40,8 +40,8 @@
                             <b-form-group label="Date de début:" label-for="startDate">
                                 <VueCtkDateTimePicker
                                     label="Cliquer pour choisir une date"
-                                    format="DD-MM-YYYY HH:mm"
-                                    formatted="DD-MM-YYYY HH-mm"
+                                    format="YYYY-MM-DD HH:mm"
+                                    formatted="YYYY-MM-DD HH:mm"
                                     button-now-translation="Aujourd'hui"
                                     id="startDate"
                                     v-model="form.start_date"
@@ -52,8 +52,8 @@
                             <b-form-group label="Date de fin:" label-for="endDate">
                                 <VueCtkDateTimePicker
                                     label="Cliquer pour choisir une date"
-                                    format="YYYY-MM-DD"
-                                    formatted="YYYY-MM-DD"
+                                    format="YYYY-MM-DD HH:mm"
+                                    formatted="YYYY-MM-DD HH:mm"
                                     button-now-translation="Aujourd'hui"
                                     only-date
                                     id="endDate"
@@ -70,19 +70,19 @@
 
                         <b-col cols="12" class="my-2">
                             <b-form-checkbox id="is_on_frontpage" name="is_on_frontpage" value="1" unchecked-value="0" v-model="form.is_on_frontpage">
-                                En première page?
+                                En page d'accueil?
                             </b-form-checkbox>
                         </b-col>
 
-                        <b-col cols="12" class="my-2">
+                        <b-col cols="12" class="my-2" v-if="form.image">
                             <p class="text-center">Image actuelle:</p>
                             <b-img center :src="`/images/${form.image}`" width="200" class=""></b-img>
                         </b-col>
                         <b-col cols="12" class="my-2">
                             <b-form-file
                                 accept="image/jpeg, image/png"
-                                placeholder="Choisir un nouveau fichier..."
-                                drop-placeholder="Placez votre fichier ici..."
+                                placeholder="Choisir une nouvelle image..."
+                                drop-placeholder="Placez votre image ici..."
                                 @change="selectFile"
                                 :class="{ 'is-invalid': form.errors.has('image_new') }"
                             ></b-form-file>
@@ -111,6 +111,9 @@
                             Editer activité
                         </b-button>
                     </b-row>
+                    <b-row class="justify-content-center">
+                <b-alert variant="danger" dismissible :show="form.errors.any()">Erreur lors de l'envoi. Veuillez vérifier la validité des champs.</b-alert>
+            </b-row>
                 </b-form>
             </b-col>
         </b-row>

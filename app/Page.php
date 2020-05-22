@@ -11,10 +11,11 @@ class Page extends Model
     protected $guarded = [];
 
     /**
-     * Get the sections for the page.
+     * The sections that belong to the page.
      */
     public function sections()
     {
-        return $this->hasMany('App\Section', 'page_id');
+        // return $this->hasMany('App\Section', 'page_id');
+        return $this->belongsToMany('App\Section', 'page_section', 'page_id', 'section_id' )->withTimestamps();
     }
 }

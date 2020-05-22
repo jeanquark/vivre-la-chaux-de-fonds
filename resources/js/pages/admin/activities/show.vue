@@ -16,7 +16,7 @@
             <b-col cols="12">
                 <b-table show-empty responsive="sm" :items="activityArray" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" class="nowrap" :stacked="true">
                     <template v-slot:cell(image)="row">
-                        <img :src="`/images/activities/${row.item.image}`" width="200" />
+                        <img :src="`/images/${row.item.image}`" width="200" />
                     </template>
                     <template v-slot:cell(is_published)="row">
                         {{ row.item.is_published ? 'Oui' : 'Non' }}
@@ -26,7 +26,7 @@
                     </template>
                     <template v-slot:cell(sponsors)="row">
                         <div v-for="sponsor in row.item.sponsors" :key="sponsor.id" class="p-1">
-                            <img :src="`/images/partenaires/${sponsor.image}`" width="100" />
+                            <img :src="`/images/${sponsor.image}`" width="100" />
                             {{ sponsor.name }}
                         </div>
                     </template>

@@ -15,8 +15,11 @@
         <b-row no-gutters class="justify-content-center">
             <b-col cols="12">
                 <b-table show-empty responsive="sm" :items="sectionArray" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" class="nowrap" :stacked="true">
-                    <template v-slot:cell(page)="row">
-                        {{ row.item.page ? row.item.page.name : '' }}
+
+                    <template v-slot:cell(pages)="row">
+                        <div v-for="page in row.item.pages" :key="page.id">
+                            {{ page.name }}
+                        </div>
                     </template>
 
                     <template v-slot:cell(created_at)="row">
@@ -52,7 +55,7 @@ export default {
                 { key: 'id', label: 'ID', sortable: true },
                 { key: 'name', label: 'Nom', sortable: true },
                 { key: 'slug', label: 'Slug', sortable: true },
-                { key: 'page', label: 'Page', sortable: false },
+                { key: 'pages', label: 'Pages', sortable: false },
                 { key: 'content', label: 'Contenu', sortable: true },
                 { key: 'created_at', label: 'Date de création', sortable: true },
                 { key: 'updated_at', label: 'Dernière modification', sortable: true }

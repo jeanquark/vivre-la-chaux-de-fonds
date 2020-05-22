@@ -27,19 +27,16 @@ class SectionsController extends Controller
 
     public function getSections()
     {
-        $sections = Section::with('page:id,name,slug,id')->get();
-        // $sections = Section::with('sections')->get();
-        // $sections = Section::all();
+        $sections = Section::with('pages')->get();
+        // $sections = Section::with('pages:page_id AS id,slug,name')->get();
 
         return response()->json($sections, 200);
     }
 
     public function getSectionById(Request $request, $id)
     {
-        $section = Section::with('page:id,name,slug,id')->find($id);
-        // $section['sections'] = $section->sections;
-
-        // $section = Section::where('id', '=', $id)->with('sections')->first();
+        $section = Section::with('pages')->find($id);
+        // $section = Section::with('pages:page_id AS id,slug,name')->find($id);
 
         return response()->json([
             'success' => true,
@@ -49,8 +46,8 @@ class SectionsController extends Controller
 
     public function getSectionBySlug(Request $request, $slug)
     {
-        $section = Section::where('slug', '=', $slug)->with('page:id,name,slug,id')->first();
-        // $section['sections'] = $section->sections;
+        $section = Section::where('slug', '=', $slug)->with('sections')->first();
+        // $section = Section::where('slug', '=', $slug)->with('pages:page_id AS id,slug,name')->first();
 
         return response()->json([
             'success' => true,
@@ -60,7 +57,8 @@ class SectionsController extends Controller
 
     public function getSectionsByPageId (Request $request, $pageId)
     {
-        $sections = Section::where('page_id', '=', $pageId)->get();
+        $sections = Section::where('page_id', '=', $pageId)->with('pages')->get();
+        // $sections = Section::where('page_id', '=', $pageId)->with('pages:page_id AS id,slug,name')->get();
 
         return response()->json([
             'success' => true,
@@ -71,13 +69,8 @@ class SectionsController extends Controller
 
         $validatedData = $request->validate([
             'name' => 'required|unique:sections',
+            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
         ]);
-        // return response()->json([
-        //     'success' => true,
-        //     'request' => $request,
-        //     'request->name' => $request->name,
-        //     'request->content' => $request->content
-        // ], 201);
 
         $section = new Section;
 
@@ -87,13 +80,15 @@ class SectionsController extends Controller
 
         // Upload image if present
         if (File::exists($request->image)) {
-            $image = Storage::disk('images')->put('sections', $request->image);
-            $section->image = $image;
+            $imageName = $request->image->getClientOriginalName(); //Get Image Name
+            $file = Storage::disk('images')->putFileAs('sections', $request->image, $imageName);
+            $activity->image = $file;
         }
 
         $section->save();
 
-        $newSection = Section::with('page:id,name,slug,id')->find($section->id);
+        $newSection = Section::with('pages')->find($section->id);
+        // $newSection = Section::with('pages:page_id AS id,slug,name')->find($section->id);
 
         return response()->json([
             'success' => true,
@@ -108,20 +103,25 @@ class SectionsController extends Controller
     protected function updateSection(Request $request, $id) {
 
         $validatedData = $request->validate([
-            // 'name' => 'required|unique:sections',
-            // 'name' => 'required|unique:sections' . $id,
             'name' => ['required', Rule::unique('sections')->ignore($id)],
+            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
         ]);
 
-        // return response()->json([
-        //     'success' => true,
-        //     'request' => $request,
-        //     'id' => $id,
-        //     'request->name' => $request->name,
-        //     'request->content' => $request->content
-        // ], 201);
-
         $section = Section::find($id);
+        
+        // Upload new image if present
+        if (File::exists($request->new_image)) {
+            // Delete old image
+            $old_image = $request->image;
+            if (Storage::disk('images')->exists($request->image)) {
+                Storage::disk('images')->delete($request->image);
+            }
+
+            // Upload new image
+            $imageName = $request->new_image->getClientOriginalName(); //Get Image Name
+            $file = Storage::disk('images')->putFileAs('sections', $request->new_image, $imageName);
+            $activity->image = $file;
+        }
 
         $section->updateOrInsert(
             ['id' => $id],
@@ -133,11 +133,11 @@ class SectionsController extends Controller
             ]
         );
 
-        $updatedSection = Section::find($id);
+        $updatedSection = Section::with('pages')->find($id);
+        // $updatedSection = Section::with('pages:page_id AS id,slug,name')->find($id);
 
         return response()->json([
             'success' => true,
-            // 'section' => $section,
             'updatedSection' => $updatedSection,
         ], 201);
     }

@@ -15,8 +15,8 @@ class CreateSectionsTable extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('page_id')->index()->nullable();
-            $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
+            // $table->unsignedBigInteger('page_id')->index()->nullable();
+            // $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('content')->nullable();

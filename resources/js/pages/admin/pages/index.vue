@@ -116,6 +116,7 @@ export default {
                 // console.log('value: ', value)
                 if (value) {
                     await this.$store.dispatch('pages/deletePage', { pageId: page.id })
+                    // await this.$store.dispatch('pages/deletePage', page.id )
                     this.$noty.success('Page supprimée avec succès!')
                 }
             } catch (error) {

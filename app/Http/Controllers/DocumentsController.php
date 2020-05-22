@@ -57,7 +57,7 @@ class DocumentsController extends Controller
 
         $folders = Storage::disk('documents')->directories($folder);
         $folderFiles = Storage::disk('documents')->files($folder);
-        // $path = array();
+
         foreach ($folderFiles as $file) {
             $array = array();
             $fileType = Storage::disk('documents')->mimeType($file);
@@ -75,8 +75,7 @@ class DocumentsController extends Controller
             'success' => true,
             'folder' => $folder,
             'folders' => $folders,
-            'files' => $files,
-            // 'folderDirectories' => $folderDirectories,
+            'files' => $files
         ], 200);
     }
 
@@ -86,11 +85,6 @@ class DocumentsController extends Controller
             'document' => 'required|file',
         ]);
 
-        // return response()->json([
-        //     'success' => true,
-        //     'request->document' => $request->document,
-        //     'request->path' => $request->path
-        // ], 200);
         $newDocumentArray = array();
 
         // Upload document
@@ -110,12 +104,8 @@ class DocumentsController extends Controller
         return response()->json([
             'success' => true,
             'request' => $request,
-            'request->path' => $request->path,
-            'request->document' => $request->document,
-            // 'request->file' => $request->file,
-            // 'documentName' => $documentName,
-            // 'uploadedFile' => $uploadedFile,
-            // 'newFile' => $newFile,
+            // 'request->path' => $request->path,
+            // 'request->document' => $request->document,
             'newDocumentArray' => $newDocumentArray,
         ], 200);
     }
@@ -162,10 +152,7 @@ class DocumentsController extends Controller
         Storage::disk('documents')->deleteDirectory($request->folderName);
 
         return response()->json([
-            'success' => true,
-            // 'request' => $request,
-            // 'request->name' => $request->name,
-            // 'request->fileType' => $request->fileType
+            'success' => true
         ], 200);
     }
 

@@ -75,7 +75,7 @@ export default {
                 { key: 'name', label: 'Nom', sortable: true },
                 { key: 'image', label: 'Image', sortable: true },
                 { key: 'is_published', label: 'Publié?', sortable: true },
-                { key: 'is_on_frontpage', label: 'En première page?', sortable: true },
+                { key: 'is_on_frontpage', label: 'En page d\'accueil?', sortable: true },
                 { key: 'updated_at', label: 'Dernière modification', sortable: true },
                 { key: 'actions', sortable: false }
             ]

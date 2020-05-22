@@ -11,10 +11,11 @@ class Section extends Model
     protected $guarded = [];
 
     /**
-     * Get the page that owns the section.
+     * The pages that belong to the activity.
      */
-    public function page()
+    public function pages()
     {
-        return $this->belongsTo('App\Page', 'page_id');
+        // return $this->belongsTo('App\Page', 'page_id');
+        return $this->belongsToMany('App\Page', 'page_section', 'section_id', 'page_id')->withTimestamps();
     }
 }

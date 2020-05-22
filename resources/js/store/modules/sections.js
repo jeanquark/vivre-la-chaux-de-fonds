@@ -31,7 +31,6 @@ export const mutations = {
         console.log('DELETE_SECTION: ', payload)
         const { sectionId } = payload
         console.log('sectionId: ', sectionId)
-		// Vue.set(state.sections, sectionId, null)
 		Vue.delete(state.sections, sectionId)
 	}
 }
@@ -118,7 +117,6 @@ export const actions = {
                 ]
             })
 
-			// const { data } = await axios.put(`/api/sections/${updatedSection.id}`, { updatedSection })
 			console.log('data3: ', data)
 			commit('SET_SECTION', data.updatedSection)
 		} catch (error) {

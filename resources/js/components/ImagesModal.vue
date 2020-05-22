@@ -13,8 +13,13 @@
         <b-tabs content-class="mt-3" v-model="tabIndex">
             <b-tab title="Gallerie d'images" active>
                 <!-- Tab image gallery -->
-                <b-sidebar aria-controls="details" title="Détails" shadow v-model="showSidebar">
-                    <div class="px-3 py-2" v-if="selectedFile">
+                <b-sidebar aria-controls="details" shadow v-model="showSidebar">
+                    <template v-slot:title class="">
+                        <div class="text-center unselectable">
+                            <h3 class="">Détails</h3>
+                        </div>
+                    </template>
+                    <div class="px-3 py-2 unselectable" v-if="selectedFile">
                         <b-img :src="`/images/${selectedFile[0]}`" fluid thumbnail ref="selectedImage" class="mb-3" @load="onImageLoad"></b-img>
                         <p class="text-dark">
                             Taille: <b>{{ selectedFile[2] / 1000 }} Ko</b><br />
@@ -248,8 +253,7 @@ export default {
             this.tabIndex = 0
             this.openFolder(folder)
         },
-        
-        
+
         async openFolder(folder) {
             console.log('openFolder: ', folder)
             // console.log('abc: ', folder.split('/').join(':'))
@@ -323,7 +327,7 @@ export default {
                 this.$noty.error("Une erreur est survenue et l'image n'a pas pu être uploadée.")
             }
         },
-        
+
         async deleteImage(fileName) {
             try {
                 console.log('deleteImage: ', fileName)

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
-// use App\Role;
 use View;
 use jeremykenedy\LaravelRoles\Models\Role;
 use App\Http\Requests\StoreUser;
@@ -43,21 +42,6 @@ class UsersController extends Controller
 
     protected function createUser(StoreUser $request) {
 
-        // return response()->json([
-        //     'success' => true,
-        //     'request' => $request,
-        // ], 201);
-
-        // $user = json_decode($request->form);
-
-        // $newUser = new User;
-
-        // $newUser->firstname = $request->firstname;
-        // $newUser->lastname = $request->lastname;
-        // $newUser->email = $request->email;
-        // $newUser->password = Hash::make($request->password);
-        // $newUser->save();
-
         $user = User::create([
             'firstname' => $request['firstname'],
             'lastname' => $request['lastname'],
@@ -79,20 +63,9 @@ class UsersController extends Controller
 
     protected function update(Request $request, $id)
     {
-
-        // $updatedUser = json_decode($request->form);
         $user = $request->user;
         $newRole = $request->newRole;
         $userToUpdate = User::find($id);
-
-        // return response()->json([
-        //     'success' => true,
-        //     'updatedUser' => $updatedUser,
-        //     'updatedUser["firstname"]' => $updatedUser['firstname'],
-        //     'user' => $user,
-        //     'id' => $id,
-        //     'request->newRole' => $request->newRole
-        // ], 201);
 
         if ($newRole) {
             // Update role
@@ -108,16 +81,6 @@ class UsersController extends Controller
             );
         }
 
-
-
-        
-
-        // Update users relationships
-        // $showIdArray = [];
-        // foreach($updatedUser->shows as $show) {
-        //     array_push($showIdArray, $show->id);
-        // }
-        // $user->users()->sync($showIdArray);
         $updatedUser = User::with('roles')->find($id);
 
         return response()->json([

@@ -69,8 +69,8 @@
                         <b-col cols="12" class="my-2">
                             <b-form-file
                                 accept="image/jpeg, image/png"
-                                placeholder="Choisir un nouveau fichier..."
-                                drop-placeholder="Placez votre fichier ici..."
+                                placeholder="Choisir une nouvelle image..."
+                                drop-placeholder="Placez votre image ici..."
                                 :class="{ 'is-invalid': form.errors.has('image_new') }"
                                 @change="selectFile"
                             ></b-form-file>
@@ -101,6 +101,9 @@
                             Editer sponsor
                         </b-button>
                     </b-row>
+                    <b-row class="justify-content-center">
+                <b-alert variant="danger" dismissible :show="form.errors.any()">Erreur lors de l'envoi. Veuillez vérifier la validité des champs.</b-alert>
+            </b-row>
                 </b-form>
             </b-col>
         </b-row>

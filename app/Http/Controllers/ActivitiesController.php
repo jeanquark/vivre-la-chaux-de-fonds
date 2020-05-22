@@ -35,7 +35,6 @@ class ActivitiesController extends Controller
     public function getActivityById(Request $request, $id)
     {
         $activity = Activity::with('sponsors')->find($id);
-        // $activity['sponsors'] = $activity->sponsors;
 
         return response()->json([
             'success' => true,
@@ -46,7 +45,6 @@ class ActivitiesController extends Controller
     public function getActivityBySlug(Request $request, $slug)
     {
         $activity = Activity::where('slug', '=', $slug)->with('sponsors')->first();
-        // $activity['sponsors'] = $activity->sponsors;
 
         return response()->json([
             'success' => true,
@@ -54,17 +52,11 @@ class ActivitiesController extends Controller
         ], 200);
     }
 
-    protected function createActivity(StoreActivity $request) {
+    protected function createActivity(Request $request) {
         $validatedData = $request->validate([
             'name' => 'required|unique:activities',
+            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
         ]);
-        // return response()->json([
-        //     'success' => true,
-        //     'request' => $request,
-        //     'request->image' => $request->image,
-        // ], 201);
-
-        // $newActivity = json_decode($request->form);
 
         $activity = new Activity;
 
@@ -74,71 +66,70 @@ class ActivitiesController extends Controller
         $activity->content = $request->content;
         $activity->is_published = (int)$request->is_published;
         if ($request->start_date) {
-            $activity->start_date = date_create_from_format('Y-m-d H:i:s', $request->start_date);
+            $activity->start_date = date_create_from_format('Y-m-d H:i', $request->start_date);
         }
         if ($request->end_date) {
-            $activity->end_date = date_create_from_format('Y-m-d H:i:s', $request->end_date);
+            $activity->end_date = date_create_from_format('Y-m-d H:i', $request->end_date);
         }
 
         // Upload image if present
         if (File::exists($request->image)) {
-            // $imageName = time().'.'. $request->image->getClientOriginalExtension();
-            // $request->image->move(public_path('images/activities'), $imageName);
-            // $activity->image = $imageName;
-
-            $file = Storage::disk('uploads')->put('activities', $request->image);
+            // $file = Storage::disk('images')->put('activities', $request->image);
+            // $activity->image = $file;
+            
+            $imageName = $request->image->getClientOriginalName(); //Get Image Name
+            $file = Storage::disk('images')->putFileAs('activities', $request->image, $imageName);
             $activity->image = $file;
-
         }
 
         $activity->save();
-
-        // Save sponsors relationships
-        if ($request->sponsors) {
-            foreach ($request->sponsors as $sponsor) {
-                $activity->sponsors()->attach($sponsor);
-            }
-        }
+        
+        $activity->sponsors()->sync($request->sponsors);
         
         $newActivity = Activity::with('sponsors')->find($activity->id);
 
         return response()->json([
             'success' => true,
             'newActivity' => $newActivity,
-            'request' => $request,
-            'request->image' => $request->image,
-            'request->sponsors' => $request->sponsors
+            // 'request' => $request,
+            // 'request->image' => $request->image,
+            // 'request->sponsors' => $request->sponsors
         ], 201);
     }
 
     protected function updateActivity(Request $request, $id) {
         $validatedData = $request->validate([
             'name' => ['required', Rule::unique('activities')->ignore($id)],
+            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
         ]);
 
         $activity = Activity::find($id);
 
         $start_date = null;
         if ($request->start_date) {
-            $start_date = date_create_from_format('Y-m-d H:i:s', $request->start_date);
+            $start_date = date_create_from_format('Y-m-d H:i', $request->start_date);
         }
 
         $end_date = null;
         if ($request->end_date) {
-            $end_date = date_create_from_format('Y-m-d H:i:s', $request->end_date);
+            $end_date = date_create_from_format('Y-m-d H:i', $request->end_date);
         }
 
         // Upload new image if present
         if (File::exists($request->new_image)) {
             // Delete old image
             $old_image = $request->image;
-            if (Storage::disk('uploads')->exists($request->image)) {
-                Storage::disk('uploads')->delete($request->image);
+            if (Storage::disk('images')->exists($request->image)) {
+                Storage::disk('images')->delete($request->image);
             }
 
             // Upload new image
-            $file = Storage::disk('uploads')->put('activities', $request->new_image);
-            $request->image = $file;
+            // $file = Storage::disk('images')->put('activities', $request->new_image);
+            // $request->image = $file;
+
+            $imageName = $request->new_image->getClientOriginalName(); //Get Image Name
+            $file = Storage::disk('images')->putFileAs('activities', $request->new_image, $imageName);
+            $activity->image = $file;
         }
 
         $activity->updateOrInsert(
@@ -157,13 +148,6 @@ class ActivitiesController extends Controller
             ]
         );
 
-        // Update sponsors relationships
-        // $sponsorIdArray = [];
-        // foreach($request->sponsors as $sponsorId) {
-        //     array_push($sponsorIdArray, $sponsorId);
-        // }
-        // $activity->sponsors()->sync($sponsorIdArray);
-
         $activity->sponsors()->sync($request->sponsors);
 
 
@@ -171,9 +155,7 @@ class ActivitiesController extends Controller
 
         return response()->json([
             'success' => true,
-            // 'activity' => $activity,
             'updatedActivity' => $updatedActivity,
-            // 'request->sponsors' => $request->sponsors
         ], 201);
     }
 
@@ -181,8 +163,8 @@ class ActivitiesController extends Controller
         $activity = Activity::find($id);
 
         // Delete image if it exists
-        if (Storage::disk('uploads')->exists($activity->image)) {
-            Storage::disk('uploads')->delete($activity->image);
+        if (Storage::disk('images')->exists($activity->image)) {
+            Storage::disk('images')->delete($activity->image);
         }
 
         $activity->delete();

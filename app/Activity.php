@@ -12,7 +12,7 @@ class Activity extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'slug', 'subtitle', 'content', 'image', 'video', 'start_date', 'end_date', 'is_online'
+        'name', 'slug', 'subtitle', 'content', 'image', 'video', 'link', 'start_date', 'end_date', 'is_published', 'is_on_frontpage'
     ];
 
     /**

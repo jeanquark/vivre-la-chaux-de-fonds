@@ -39,8 +39,8 @@
                             <b-form-group label="Date de début:" label-for="startDate">
                                 <VueCtkDateTimePicker
                                     label="Cliquer pour choisir une date"
-                                    format="DD-MM-YYYY HH:mm"
-                                    formatted="DD-MM-YYYY HH-mm"
+                                    format="YYYY-MM-DD HH:mm"
+                                    formatted="YYYY-MM-DD HH:mm"
                                     button-now-translation="Aujourd'hui"
                                     id="startDate"
                                     v-model="form.start_date"
@@ -51,8 +51,8 @@
                             <b-form-group label="Date de fin:" label-for="endDate">
                                 <VueCtkDateTimePicker
                                     label="Cliquer pour choisir une date"
-                                    format="DD-MM-YYYY HH:mm"
-                                    formatted="DD-MM-YYYY HH-mm"
+                                    format="YYYY-MM-DD HH:mm"
+                                    formatted="YYYY-MM-DD HH:mm"
                                     button-now-translation="Aujourd'hui"
                                     id="endDate"
                                     v-model="form.end_date"
@@ -61,7 +61,7 @@
                         </b-col>
 
                         <b-col cols="12" class="my-2">
-                            <b-form-checkbox id="is_published" name="is_published" v-model="form.is_published">
+                            <b-form-checkbox id="is_published" name="is_published" value="1" unchecked-value="0" v-model="form.is_published">
                                 Publié?
                             </b-form-checkbox>
                         </b-col>
@@ -69,18 +69,13 @@
                         <b-col cols="12" class="my-2">
                             <b-form-file
                                 accept="image/jpeg, image/png"
-                                placeholder="Choisir un fichier..."
-                                drop-placeholder="Placer le fichier ici..."
+                                placeholder="Choisir une nouvelle image..."
+                                drop-placeholder="Placer votre image ici..."
                                 @change="selectFile"
                                 :class="{ 'is-invalid': form.errors.has('image') }"
                             ></b-form-file>
-                            <!-- <div class="mt-3">Selected file: {{ form.file ? form.file.name : '' }}</div> -->
                             <has-error :form="form" field="image" />
                         </b-col>
-
-                        <!-- <b-col cols="12" class="my-2">
-                            <b-form-select multiple value-field="id" text-field="name" v-model="form.sponsors" :options="sponsors" size="sm" class="mt-3"></b-form-select>
-                        </b-col> -->
 
                         <b-col cols="12" class="my-2">
                             <b-form-group label="Activités:">
@@ -104,6 +99,9 @@
                             Créer nouvelle activité
                         </b-button>
                     </b-row>
+                    <b-row class="justify-content-center">
+                <b-alert variant="danger" dismissible :show="form.errors.any()">Erreur lors de l'envoi. Veuillez vérifier la validité des champs.</b-alert>
+            </b-row>
                 </b-form>
             </b-col>
         </b-row>
@@ -168,7 +166,9 @@ export default {
         async createActivity() {
             try {
                 console.log('this.form: ', this.form)
+                // return
                 this.$store.commit('loading/SET_LOADING', true)
+                this.form['sponsors'] = this.activitySponsors.map(sponsor => parseInt(sponsor.id))
                 // const { data } = await axios.post('/api/users', this.form)
                 // console.log('data: ', data)
                 await this.$store.dispatch('activities/createActivity', this.form)
@@ -215,15 +215,6 @@ export default {
 }
 ::v-deep .time-picker-column-item-effect {
     background-color: $primary !important;
-}
-
-// Multiselect style
-::v-deep .multiselect__tag {
-    background: $primary;
-}
-::v-deep .multiselect__tag-icon {
-    background: $light;
-    line-height: 19px;
 }
 
 // Image upload

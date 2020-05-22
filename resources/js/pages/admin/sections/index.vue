@@ -23,12 +23,17 @@
 	      class="nowrap"
 	      v-if="!loading"
 	    >
-			<template v-slot:cell(page_id)="row">
+			<!-- <template v-slot:cell(page_id)="row">
 				<span v-if="row.item.page">
 					<router-link :to="`/admin/pages/${row.item.page.id}/edit`">{{ row.item.page.name }}</router-link>
 				</span>
 				<span v-else>-</span>
-			</template>
+			</template> -->
+			<template v-slot:cell(pages)="row">
+                <div v-for="page in row.item.pages" :key="page.id">
+                    <router-link :to="`/admin/pages/${page.id}/edit`">{{ page.name }}</router-link>
+                </div>
+            </template>
 
 	    	<template v-slot:cell(content)="row">
 				{{ row.item.content ? `${row.item.content.substring(0, 20)} ...` : '-' }}
@@ -91,7 +96,7 @@
 					{ key: 'id', label: 'ID', sortable: true },
 					{ key: 'name', label: 'Nom' ,sortable: true },
 					// { key: 'slug', label: 'Slug', sortable: true },
-					{ key: 'page_id', label: 'Page', sortable: false },
+					{ key: 'pages', label: 'Pages', sortable: false },
 					{ key: 'content', label: 'Contenu', sortable: false },
 					{ key: 'updated_at', label: 'Dernière modification', sortable: true },
 					{ key: 'actions', sortable: false }
