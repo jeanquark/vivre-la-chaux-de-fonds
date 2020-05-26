@@ -44,8 +44,8 @@
                             </b-form-checkbox>
                         </b-col>
                         <!-- <b-col cols="12" class="" v-if="form && form.content"> -->
-                        <b-col cols="12" class="">
-                            <text-editor :formContent="page.content" />
+                        <b-col cols="12" class="" v-if="page">
+                            <text-editor @toggleShowHTML="toggleShowHTML" :formContent="page.content" />
                         </b-col>
                     </b-row>
                     <b-row class="justify-content-center my-2">
@@ -110,6 +110,7 @@ export default {
                 content: '',
                 is_published: false
             }),
+            showHTML: false,
             pageSections: []
             // showContent: false
         }
@@ -137,6 +138,10 @@ export default {
         }
     },
     methods: {
+        toggleShowHTML (value) {
+            console.log('toggleShowHTML2: ', value)
+            this.showHTML = value
+        },
         async updatePage() {
             try {
                 console.log('updatePage: ', this.form)

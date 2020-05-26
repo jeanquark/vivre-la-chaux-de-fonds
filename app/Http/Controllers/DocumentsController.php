@@ -24,8 +24,6 @@ class DocumentsController extends Controller
         $files = array();
         $allowedFileTypes = ['application/pdf', 'application/msword', 'application/vnd.ms-excel'];
 
-        // $diskFiles = Storage::disk('documents')->allfiles('pages');
-        // $diskFiles = Storage::disk('documents')->allfiles();
         $rootDirectories = Storage::disk('documents')->directories();
         $rootFiles = Storage::disk('documents')->files();
         foreach ($rootFiles as $file) {
@@ -90,10 +88,8 @@ class DocumentsController extends Controller
         // Upload document
         if (File::exists($request->document)) {
             $documentName = $request->document->getClientOriginalName(); //Get Document Name
-            // $uploadedFile = Storage::disk('documents')->putFileAs('pages', $request->document, $documentName);
             $uploadedFile = Storage::disk('documents')->putFileAs($request->path, $request->document, $documentName);
 
-            // // $file = Storage::disk('uploads')->put('pages', $request->document);
             array_push($newDocumentArray, $uploadedFile);
             array_push($newDocumentArray, Storage::disk('documents')->mimeType($uploadedFile));
             array_push($newDocumentArray, Storage::disk('documents')->size($uploadedFile));
@@ -104,8 +100,6 @@ class DocumentsController extends Controller
         return response()->json([
             'success' => true,
             'request' => $request,
-            // 'request->path' => $request->path,
-            // 'request->document' => $request->document,
             'newDocumentArray' => $newDocumentArray,
         ], 200);
     }
@@ -116,22 +110,10 @@ class DocumentsController extends Controller
             'name' => 'required|max:32',
         ]);
 
-        // return response()->json([
-        //     'success' => true,
-        //     'request' => $request,
-        //     'request->name' => $request->name,
-        //     'request->path' => $request->path,
-        //     // 'request->typeType' => $request->fileType
-        // ], 200);
-
         Storage::disk('documents')->makeDirectory($request->path . '/' . $request->name);
 
         return response()->json([
             'success' => true,
-            // 'request' => $request,
-            // 'request->name' => $request->name,
-            // 'request->path' => $request->path,
-            // 'request->typeType' => $request->fileType
         ], 200);
     }
 
@@ -142,8 +124,8 @@ class DocumentsController extends Controller
         return response()->json([
             'success' => true,
             'request' => $request,
-            'request->fileType' => $request->fileType,
-            'request->fileName' => $request->fileName,
+            // 'request->fileType' => $request->fileType,
+            // 'request->fileName' => $request->fileName,
         ], 200);
     }
 

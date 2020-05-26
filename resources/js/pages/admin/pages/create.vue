@@ -29,7 +29,7 @@
                             :taggable="true"
                             v-model="form.sections"
                         ></multiselect>
-                            <!-- v-model="pageSections" -->
+                        <!-- v-model="pageSections" -->
                     </b-form-group>
                 </b-col>
                 <b-col cols="12" class="">
@@ -41,7 +41,6 @@
                     <b-spinner small type="grow" v-if="loading"></b-spinner>
                     Créer nouvelle page
                 </b-button>
-                
             </b-row>
             <b-row class="justify-content-center">
                 <b-alert variant="danger" dismissible :show="form.errors.any()">Erreur lors de l'envoi. Veuillez vérifier la validité des champs.</b-alert>
@@ -74,7 +73,7 @@ export default {
             form: new Form({
                 name: '',
                 content: ''
-            }),
+            })
             // pageSections: [],
         }
     },
@@ -92,15 +91,6 @@ export default {
         }
     },
     methods: {
-        // toggleShowHTML() {
-        //     if (!this.showHTML) {
-        //         this.content = document.getElementById('textBox').innerHTML
-        //     } else {
-        //         this.content = document.getElementById('textBox').innerText
-        //     }
-        //     this.showHTML = !this.showHTML
-        // },
-
         async createNewPage() {
             try {
                 console.log('createNewPage')
@@ -133,6 +123,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

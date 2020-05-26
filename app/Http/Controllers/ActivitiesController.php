@@ -27,7 +27,11 @@ class ActivitiesController extends Controller
 
     public function getActivities()
     {
+        // return response()->json([
+        //     'success' => true,
+        // ], 200);
         $activities = Activity::with('sponsors')->get();
+        // dd($activities);
 
         return response()->json($activities, 200);
     }

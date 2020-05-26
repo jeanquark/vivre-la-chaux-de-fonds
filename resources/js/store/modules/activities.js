@@ -47,9 +47,9 @@ export const mutations = {
 export const actions = {
     async fetchActivities({ commit }) {
         try {
-            console.log('fetchActivities action')
+            console.log('fetchActivities action called')
             const { data } = await axios.get('/api/activities')
-            console.log('data: ', data)
+            console.log('data2: ', data)
             commit('SET_ACTIVITIES', data)
         } catch (error) {
             console.log('vuex error: ', error)

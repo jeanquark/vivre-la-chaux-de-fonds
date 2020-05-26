@@ -3,6 +3,7 @@
         <template v-slot:modal-title>
             <span class="unselectable">Gestion des images</span>
         </template>
+        <!-- loading: {{ loading }}<br /><br /> -->
         <!-- showSidebar: {{ showSidebar }}<br /><br /> -->
         <!-- selectedFolder: {{ selectedFolder }}<br /><br /> -->
         <!-- folders: {{ folders }}<br /><br /> -->
@@ -58,7 +59,7 @@
                         </b-breadcrumb>
                     </b-col>
                 </b-row>
-                <b-row class="justify-content-start my-3">
+                <b-row class="justify-content-start my-3" v-if="!loading">
                     <b-col cols="6" md="3" lg="2" v-for="(folder, index) of folders" :key="`folder_${index}`" @click="handleClick(folder)">
                         <b-img fluid src="/images/icons/folder.png" class="folder"></b-img>
                         <p class="text-center" style="word-break: break-word;">{{ formatFileName(folder) }}</p>
@@ -67,6 +68,9 @@
                         <b-img thumbnail fluid :src="`/images/${file[0]}`" class="image"></b-img>
                         <p class="text-center" style="word-break: break-word;">{{ formatFileName(file[0]) }}</p>
                     </b-col>
+                </b-row>
+                <b-row align-v="center" class="justify-content-center" style="height: 15em;" v-else>
+                    <b-spinner type="grow" label="Loading..."></b-spinner>
                 </b-row>
             </b-tab>
             <b-tab title="Uploader une image"
@@ -141,12 +145,18 @@ import { objectToFormData } from 'object-to-formdata'
 export default {
     async created() {},
     async mounted() {
-        console.log('FilesModal mounted!')
-        const { data } = await axios.get('/api/images')
-        console.log('data: ', data)
-        this.files = data.files
-        this.folders = data.rootDirectories
-        this.path = [{ name: 'Dossier Racine', folder: '/', active: true }]
+        try {
+            this.$store.commit('loading/SET_LOADING', true)
+            console.log('FilesModal mounted!')
+            const { data } = await axios.get('/api/images')
+            console.log('data: ', data)
+            this.files = data.files
+            this.folders = data.rootDirectories
+            this.path = [{ name: 'Dossier Racine', folder: '/', active: true }]
+            this.$store.commit('loading/SET_LOADING', false)
+        } catch {
+            this.$store.commit('loading/SET_LOADING', false)
+        }
     },
     data() {
         return {

@@ -123,6 +123,7 @@ export default {
                 this.content = document.getElementById('textBox').innerText
             }
             this.showHTML = !this.showHTML
+            this.$emit('toggleShowHTML', this.showHTML)
         },
         selectElement(event) {
             this.selectedImageNode = null

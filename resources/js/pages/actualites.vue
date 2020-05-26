@@ -1,8 +1,7 @@
 <template>
     <b-container>
-        <!-- <b-row class="justify-content-center"> -->
-            <h1 class="text-center">Actualités & Manifestations</h1>
-        <!-- </b-row> -->
+        <h1 class="text-center">Actualités & Manifestations</h1>
+        <!-- activities: {{ activities }}<br /><br /> -->
         <b-row class="justify-content-center mt-5">
             <b-col cols="12" sm="6" md="4" lg="4" class="px-5" v-for="activity in activities" :key="activity.id">
                 <b-card :img-src="`/images/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" style="border: none;">

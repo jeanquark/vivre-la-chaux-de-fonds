@@ -63,7 +63,6 @@ export const actions = {
 	},
 	async fetchPageBySlug ({ commit }, payload) {
 		try {
-			// commit('loading/SET_LOADING', true, { root: true })
 			console.log('fetchPageBySlug vuex action: ', payload)
 			let { pageSlug } = payload
 			if (!pageSlug) {
@@ -72,12 +71,8 @@ export const actions = {
 			const { data } = await axios.get(`/api/pages/slug/${pageSlug}`)
 			console.log('data: ', data)
 			commit('SET_PAGE', data.page)
-			// commit('loading/SET_LOADING', false, { root: true })
-
 		} catch (error) {
 			console.log('error: ', error)
-			// commit('loading/SET_LOADING', false, { root: true })
-
 			throw error
 		}
 	},

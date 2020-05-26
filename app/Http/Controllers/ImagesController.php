@@ -24,8 +24,6 @@ class ImagesController extends Controller
         $files = array();
         $allowedFileTypes = ['image/jpeg', 'image/gif', 'image/png'];
 
-        // $diskFiles = Storage::disk('images')->allfiles('pages');
-        // $diskFiles = Storage::disk('images')->allfiles();
         $rootDirectories = Storage::disk('images')->directories();
         $rootFiles = Storage::disk('images')->files();
         foreach ($rootFiles as $file) {
@@ -57,7 +55,6 @@ class ImagesController extends Controller
 
         $folders = Storage::disk('images')->directories($folder);
         $folderFiles = Storage::disk('images')->files($folder);
-        // $path = array();
         foreach ($folderFiles as $file) {
             $array = array();
             $fileType = Storage::disk('images')->mimeType($file);
@@ -76,7 +73,6 @@ class ImagesController extends Controller
             'folder' => $folder,
             'folders' => $folders,
             'files' => $files,
-            // 'folderDirectories' => $folderDirectories,
         ], 200);
     }
 
@@ -86,20 +82,12 @@ class ImagesController extends Controller
             'image' => 'required|image',
         ]);
 
-        // return response()->json([
-        //     'success' => true,
-        //     'request->image' => $request->image,
-        //     'request->path' => $request->path
-        // ], 200);
         $newImageArray = array();
 
         // Upload image
         if (File::exists($request->image)) {
             $imageName = $request->image->getClientOriginalName(); //Get Image Name
-            // $uploadedFile = Storage::disk('images')->putFileAs('pages', $request->image, $imageName);
             $uploadedFile = Storage::disk('images')->putFileAs($request->path, $request->image, $imageName);
-
-            // // $file = Storage::disk('uploads')->put('pages', $request->image);
             array_push($newImageArray, $uploadedFile);
             array_push($newImageArray, Storage::disk('images')->mimeType($uploadedFile));
             array_push($newImageArray, Storage::disk('images')->size($uploadedFile));
@@ -112,10 +100,6 @@ class ImagesController extends Controller
             'request' => $request,
             'request->path' => $request->path,
             'request->image' => $request->image,
-            // 'request->file' => $request->file,
-            // 'imageName' => $imageName,
-            // 'uploadedFile' => $uploadedFile,
-            // 'newFile' => $newFile,
             'newImageArray' => $newImageArray,
         ], 200);
     }
@@ -130,10 +114,6 @@ class ImagesController extends Controller
 
         return response()->json([
             'success' => true,
-            // 'request' => $request,
-            // 'request->name' => $request->name,
-            // 'request->path' => $request->path,
-            // 'request->typeType' => $request->fileType
         ], 200);
     }
 
@@ -144,8 +124,8 @@ class ImagesController extends Controller
         return response()->json([
             'success' => true,
             'request' => $request,
-            'request->fileType' => $request->fileType,
-            'request->fileName' => $request->fileName,
+            // 'request->fileType' => $request->fileType,
+            // 'request->fileName' => $request->fileName,
         ], 200);
     }
 
@@ -155,9 +135,6 @@ class ImagesController extends Controller
 
         return response()->json([
             'success' => true,
-            // 'request' => $request,
-            // 'request->name' => $request->name,
-            // 'request->fileType' => $request->fileType
         ], 200);
     }
 

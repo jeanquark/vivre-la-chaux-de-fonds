@@ -91,9 +91,7 @@ Route::group(['middleware' => 'role:admin'], function () {
     Route::post('/sections/upload-document', 'FilesController@uploadDocument');
 
     // Images
-    // Route::get('/list-all-images', 'FilesController@getImages');
     Route::get('/images', 'ImagesController@getImages');
-    // Route::post('/list-all-images-by-folder', 'FilesController@getImagesByFolder');
     Route::post('/images', 'ImagesController@uploadImage');
     Route::post('/images/delete', 'ImagesController@deleteImage');
     Route::post('/images/folder', 'ImagesController@createFolder');
@@ -101,7 +99,6 @@ Route::group(['middleware' => 'role:admin'], function () {
     Route::post('/images/folder/delete', 'ImagesController@deleteFolder');
 
     // Documents
-    // Route::get('/list-all-documents', 'FilesController@getDocuments');
     Route::get('/documents', 'DocumentsController@getDocuments');
     Route::post('/documents', 'DocumentsController@uploadDocument');
     Route::post('/documents/delete', 'DocumentsController@deleteDocument');
