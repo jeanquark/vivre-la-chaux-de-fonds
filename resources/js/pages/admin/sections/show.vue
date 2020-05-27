@@ -10,11 +10,16 @@
 
         <!-- section: {{ section }}<br /><br /> -->
         <!-- sectionArray: {{ sectionArray }}<br /><br /> -->
-        <h2 class="text-center" v-if="section">Section "{{ section.name }}"</h2>
+        <h2 class="text-center" v-if="section">Section <span class="primary-color">{{ section.name }}</span></h2>
 
         <b-row no-gutters class="justify-content-center">
-            <b-col cols="12">
+            <b-col cols="12" v-if="section">
                 <b-table show-empty responsive="sm" :items="sectionArray" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" class="nowrap" :stacked="true">
+                    
+                    <template v-slot:cell(image)="row">
+                        <img :src="`/images/${row.item.image}`" width="200" v-if="row.item.image" />
+                        <span v-else>-</span>
+                    </template>
 
                     <template v-slot:cell(pages)="row">
                         <div v-for="page in row.item.pages" :key="page.id">
@@ -55,8 +60,9 @@ export default {
                 { key: 'id', label: 'ID', sortable: true },
                 { key: 'name', label: 'Nom', sortable: true },
                 { key: 'slug', label: 'Slug', sortable: true },
+                { key: 'image', label: 'Image', sortable: false },
                 { key: 'pages', label: 'Pages', sortable: false },
-                { key: 'content', label: 'Contenu', sortable: true },
+                { key: 'content', label: 'Contenu (HTML)', sortable: true },
                 { key: 'created_at', label: 'Date de création', sortable: true },
                 { key: 'updated_at', label: 'Dernière modification', sortable: true }
             ]
@@ -84,5 +90,8 @@ export default {
 #textBox {
     width: 100%;
     border: 6px double $secondary;
+}
+.primary-color {
+    color: $primary;
 }
 </style>

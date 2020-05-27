@@ -81,7 +81,7 @@ class PagesController extends Controller
 
     protected function updatePage(Request $request, $id)
     {
-
+        
         $validatedData = $request->validate([
             'name' => ['required', Rule::unique('pages')->ignore($id)],
         ]);

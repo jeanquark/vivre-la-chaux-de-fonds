@@ -1,21 +1,18 @@
 <template>
     <b-container>
+        <!-- page: {{ page }}<br /> -->
+        <b-row class="justify-content-center">
+            <b-col cols="12" md="8" v-if="page && page.content">
+                <b-card class="card mb-3">
+                    <b-card-text v-html="page.content"> </b-card-text>
+                </b-card>
+            </b-col>
+        </b-row>
         <b-row class="justify-content-center">
             <b-col cols="12" md="8" v-if="page && page.sections">
-                <!-- page: {{ page }}<br /> -->
-                <b-card class="card mb-3" v-for="section in page.sections" :key="section.id" >
-                    <b-card-text v-html="section.content">
-                    </b-card-text>
+                <b-card class="card mb-3" v-for="section in page.sections" :key="section.id">
+                    <b-card-text v-html="section.content"> </b-card-text>
                 </b-card>
-                <!-- <b-card style="border: none; border-radius: 15px; background-color: rgba(255, 255, 255, .8);">
-                    <b-card-text class="text-center">
-                        <h3 class="my-2" style=""><span class="secondary-color">L’Association</span> Vivre La Chaux-de-Fonds <span class="secondary-color">vous souhaite une cordiale bienvenue</span></h3>
-                        <h5 style="">
-                            Favoriser le développement et l’animation de la ville de La Chaux-de-Fonds, créer des ponts, tisser des liens entre les différents milieux actifs en ville et la population,
-                            tels sont les buts principaux de l’Association Vivre La Chaux-de-Fonds.
-                        </h5>
-                    </b-card-text>
-                </b-card> -->
             </b-col>
         </b-row>
         <b-row class="justify-content-center">
@@ -51,10 +48,10 @@ export default {
         pages() {
             return this.$store.getters['pages/pages']
         },
-        page () {
-            return Object.values(this.$store.getters['pages/pages']).find(page => page.slug === 'accueil');
+        page() {
+            return Object.values(this.$store.getters['pages/pages']).find(page => page.slug === 'accueil')
         },
-        pageSections () {
+        pageSections() {
             return this.page ? this.page['sections'] : []
         },
         activities() {
@@ -73,6 +70,8 @@ export default {
     color: $secondary;
 }
 .card {
-    border: none; border-radius: 15px; background-color: rgba(255, 255, 255, .8)
+    border: none;
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.8);
 }
 </style>

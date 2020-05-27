@@ -7,7 +7,7 @@
             </b-breadcrumb-item>
             <b-breadcrumb-item active>Editer</b-breadcrumb-item>
         </b-breadcrumb>
-        <h2 class="text-center" v-if="section">Editer section "{{ section.name }}"</h2>
+        <h2 class="text-center" v-if="section">Editer section <span class="primary-color">{{ section.name }}</span></h2>
         <!-- section: {{ section }}<br /><br /> -->
         <!-- sectionPages: {{ sectionPages }}<br /><br /> -->
         <!-- sections: {{ sections }}<br /><br /> -->
@@ -15,7 +15,7 @@
 
         <b-row class="justify-content-center">
             <b-col cols="12" md="8">
-                <b-form @submit.prevent="updatePage">
+                <b-form @submit.prevent="updateSection">
                     <b-row align-v="center" class="justify-content-start my-3 px-3">
                         <b-col cols="12" md="12">
                             <b-form-group label="Titre:" label-for="name">
@@ -58,7 +58,7 @@
                             </b-form-group>
                         </b-col>
 
-                        <b-col cols="12" class="">
+                        <b-col cols="12" class="" v-if="section">
                             <text-editor :formContent="section.content" />
                         </b-col>
                     </b-row>
@@ -108,6 +108,8 @@ export default {
             form: new Form({
                 id: '',
                 name: '',
+                image: '',
+                new_image: '',
                 content: '',
                 is_published: false
             }),
@@ -138,11 +140,11 @@ export default {
     },
     methods: {
         selectFile(e) {
-            this.form.image = e.target.files[0]
+            this.form.new_image = e.target.files[0]
         },
-        async updatePage() {
+        async updateSection() {
             try {
-                console.log('updatePage: ', this.form)
+                console.log('updateSection: ', this.form)
                 this.$store.commit('loading/SET_LOADING', true)
                 let content
                 if (!this.showHTML) {
@@ -168,5 +170,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+@import './resources/sass/_variables.scss';
+.primary-color {
+    color: $primary;
+}
 </style>

@@ -32,14 +32,12 @@
                 </b-row>
                 <b-row no-gutters style="background-color:rgba(0, 0, 0, 0.5);" v-if="pageSections.length > 0">
                     <b-col cols="6" class="p-2" style="border: 0px solid red;">
+                        <h2 class="text-secondary" style="">{{ selectedSection.name }}</h2>
                         <div v-for="section in pageSections" :key="section.id">
-                            <b-button pill variant="primary" size="sm" class="m-1" @click="selectSection(section)" :class="{ active: section.id === selectedSection.id }">{{ section.name }}</b-button
-                            ><br />
-                        </div>
-                        <div style="position: absolute; bottom: 0;">
-                            <h2 class="text-secondary" style="">{{ selectedSection.name }}</h2>
+                            <b-button pill variant="primary" size="sm" class="m-1" @click="selectSection(section)" :class="{ active: section.id === selectedSection.id }">{{ section.name }}</b-button>
                         </div>
                     </b-col>
+                    <!-- <div style="position: absolute; bottom: 0;"> -->
 
                     <b-col cols="6" style="border: 0px solid orange;">
                         <b-img right :src="`/images/${selectedSection.image}`" fluid :alt="selectedSection.name" class=""></b-img>
@@ -56,6 +54,14 @@
                 </b-row>
             </b-col>
         </b-row>
+
+        <!-- <b-row style="border: 1px solid red;">
+            <b-col cols="6" align-self="start">
+                <b-col cols="12" align-self="end">abc</b-col>
+            </b-col>
+            <b-col cols="6" align-self="center" style="border: 1px solid blue;"><b-img right src="/images/logo.png" fluid></b-img></b-col>
+        </b-row> -->
+
     </b-container>
 </template>
 

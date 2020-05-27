@@ -113,6 +113,10 @@ export const actions = {
 			console.log('data3: ', data)
 			commit('SET_PAGE', data.updatedPage)
 			dispatch('sections/fetchSections', {}, { root: true })
+			// for (let section of data.updatedPage.sections) {
+			// 	console.log('section3: ', section)
+            //     dispatch('sections/fetchSectionById', { sectionId: section.id }, { root: true })
+            // }
 		} catch (error) {
 			console.log('error: ', error)
 			throw error

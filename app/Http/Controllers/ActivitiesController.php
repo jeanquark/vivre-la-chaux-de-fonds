@@ -27,11 +27,7 @@ class ActivitiesController extends Controller
 
     public function getActivities()
     {
-        // return response()->json([
-        //     'success' => true,
-        // ], 200);
         $activities = Activity::with('sponsors')->get();
-        // dd($activities);
 
         return response()->json($activities, 200);
     }
@@ -104,7 +100,7 @@ class ActivitiesController extends Controller
     protected function updateActivity(Request $request, $id) {
         $validatedData = $request->validate([
             'name' => ['required', Rule::unique('activities')->ignore($id)],
-            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
+            'new_image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
         ]);
 
         $activity = Activity::find($id);
@@ -122,7 +118,7 @@ class ActivitiesController extends Controller
         // Upload new image if present
         if (File::exists($request->new_image)) {
             // Delete old image
-            $old_image = $request->image;
+            // $old_image = $request->image;
             if (Storage::disk('images')->exists($request->image)) {
                 Storage::disk('images')->delete($request->image);
             }
@@ -133,7 +129,7 @@ class ActivitiesController extends Controller
 
             $imageName = $request->new_image->getClientOriginalName(); //Get Image Name
             $file = Storage::disk('images')->putFileAs('activities', $request->new_image, $imageName);
-            $activity->image = $file;
+            $request->image = $file;
         }
 
         $activity->updateOrInsert(

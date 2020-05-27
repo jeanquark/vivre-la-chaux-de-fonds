@@ -57,7 +57,7 @@ export default {
                 { key: 'name', label: 'Nom', sortable: true },
                 { key: 'slug', label: 'Slug', sortable: true },
                 { key: 'sections', label: 'Sections', sortable: false },
-                { key: 'content', label: 'Contenu', sortable: true },
+                { key: 'content', label: 'Contenu (HTML)', sortable: true },
                 { key: 'is_published', label: 'Publié?', sortable: true },
                 { key: 'created_at', label: 'Date de création', sortable: true },
                 { key: 'updated_at', label: 'Dernière modification', sortable: true }

@@ -8,7 +8,7 @@
             <b-breadcrumb-item active>Montrer</b-breadcrumb-item>
         </b-breadcrumb>
 
-        <h2 class="text-center" v-if="sponsor">Sponsor "{{ sponsor.name }}"</h2>
+        <h2 class="text-center" v-if="sponsor">Sponsor <span class="primary-color">{{ sponsor.name }}</span></h2>
 
         <b-row class="justify-content-center">
             <b-col cols="12">
@@ -77,4 +77,9 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import './resources/sass/_variables';
+.primary-color {
+    color: $primary;
+}
+</style>

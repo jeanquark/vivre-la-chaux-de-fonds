@@ -10,7 +10,7 @@
 
         <!-- activity: {{ activity }}<br /><br /> -->
         <!-- activityArray: {{ activityArray }}<br /><br /> -->
-        <h2 class="text-center" v-if="activity">Activité "{{ activity.name }}"</h2>
+        <h2 class="text-center" v-if="activity">Activité <span class="primary-color">{{ activity.name }}</span></h2>
 
         <b-row class="justify-content-center">
             <b-col cols="12">
@@ -80,9 +80,6 @@ export default {
             return this.$store.getters['activities/activities'][this.$route.params.id]
         },
         activityArray() {
-            // return this.activity
-            // return Object.values(this.$store.getters['activities/activities'])
-            // return Object.entries(this.activity)
             const array = []
             array.push(this.activity)
             return array
@@ -91,4 +88,9 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import './resources/sass/_variables.scss';
+    .primary-color {
+        color: $primary;
+    }
+</style>

@@ -7,7 +7,7 @@
             </b-breadcrumb-item>
             <b-breadcrumb-item active>Editer</b-breadcrumb-item>
         </b-breadcrumb>
-        <h2 class="text-center" v-if="activity">Editer activité "{{ activity.name }}"</h2>
+        <h2 class="text-center" v-if="activity">Editer activité <span class="primary-color">{{ activity.name }}</span></h2>
         <!-- activity: {{ activity }}<br /><br /> -->
         <!-- activity.sponsors: {{ activity.sponsors }}<br /><br /> -->
         <!-- form.sponsors: {{ form.sponsors }}<br /><br /> -->
@@ -15,8 +15,6 @@
         <b-row class="justify-content-center">
             <b-col cols="12" md="8">
                 <b-form @submit.prevent="updateActivity">
-                    <!-- form.id: {{ form.id }}<br /><br /> -->
-                    <!-- form.image: {{ form.image }}<br /><br /> -->
                     <b-row align-v="center" class="justify-content-start my-3 px-3">
                         <b-col cols="12">
                             <b-form-group label="Nom:" label-for="name">
@@ -222,6 +220,9 @@ export default {
 
 <style lang="scss" scoped>
 @import './resources/sass/_variables.scss';
+.primary-color {
+    color: $primary;
+}
 // Datetime picker style
 ::v-deep .header-picker {
     background-color: $primary !important;

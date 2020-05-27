@@ -102,17 +102,26 @@ class SectionsController extends Controller
 
     protected function updateSection(Request $request, $id) {
 
+        // return response()->json([
+        //     'success' => true,
+        //     'request' => $request,
+        //     'request->pages' => $request->pages,
+        //     'request->image' => $request->image,
+        //     'request->new_image' => $request->new_image
+        // ], 201);
+
         $validatedData = $request->validate([
             'name' => ['required', Rule::unique('sections')->ignore($id)],
-            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
+            'new_image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
         ]);
 
         $section = Section::find($id);
         
         // Upload new image if present
+        // $file;
         if (File::exists($request->new_image)) {
             // Delete old image
-            $old_image = $request->image;
+            // $old_image = $request->image;
             if (Storage::disk('images')->exists($request->image)) {
                 Storage::disk('images')->delete($request->image);
             }
@@ -120,7 +129,7 @@ class SectionsController extends Controller
             // Upload new image
             $imageName = $request->new_image->getClientOriginalName(); //Get Image Name
             $file = Storage::disk('images')->putFileAs('sections', $request->new_image, $imageName);
-            $activity->image = $file;
+            $request->image = $file;
         }
 
         $section->updateOrInsert(
@@ -128,10 +137,13 @@ class SectionsController extends Controller
             [
                 'name' => $request->name,
                 'slug' => str_slug($request->name),
+                'image' => $request->image,
                 'content' => $request->content,
                 'updated_at' => \Carbon\Carbon::now()
             ]
         );
+
+        $section->pages()->sync($request->pages);
 
         $updatedSection = Section::with('pages')->find($id);
         // $updatedSection = Section::with('pages:page_id AS id,slug,name')->find($id);
@@ -139,6 +151,7 @@ class SectionsController extends Controller
         return response()->json([
             'success' => true,
             'updatedSection' => $updatedSection,
+            'file' => $file
         ], 201);
     }
 

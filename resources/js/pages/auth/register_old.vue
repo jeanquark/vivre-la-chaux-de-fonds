@@ -66,7 +66,7 @@
                                     S'enregistrer
                                 </v-button>
         
-                                <login-with-github />
+                                <!-- <login-with-github /> -->
                             </div>
                         </div>
                     </form>
@@ -78,13 +78,13 @@
 
 <script>
     import Form from 'vform'
-    import LoginWithGithub from '~/components/LoginWithGithub'
+    // import LoginWithGithub from '~/components/LoginWithGithub'
 
     export default {
         middleware: 'guest',
         layout: 'frontend',
         components: {
-            LoginWithGithub
+            // LoginWithGithub
         },
         metaInfo () {
             return { title: "S'enregistrer" }

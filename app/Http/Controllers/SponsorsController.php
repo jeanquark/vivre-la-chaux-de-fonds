@@ -97,7 +97,7 @@ class SponsorsController extends Controller
     protected function updateSponsor(Request $request, $id) {
         $validatedData = $request->validate([
             'name' => ['required', Rule::unique('sponsors')->ignore($id)],
-            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
+            'new_image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
         ]);
 
         $sponsor = Sponsor::find($id);
@@ -115,7 +115,7 @@ class SponsorsController extends Controller
         // Upload new image if present
         if (File::exists($request->new_image)) {
             // Delete old image
-            $old_image = $request->image;
+            // $old_image = $request->image;
             if (Storage::disk('images')->exists($request->image)) {
                 Storage::disk('images')->delete($request->image);
             }
@@ -123,7 +123,7 @@ class SponsorsController extends Controller
             // Upload new image
             $imageName = $request->new_image->getClientOriginalName(); //Get Image Name
             $file = Storage::disk('images')->putFileAs('partenaires', $request->new_image, $imageName);
-            $activity->image = $file;
+            $request->image = $file;
         }
 
         $sponsor->updateOrInsert(

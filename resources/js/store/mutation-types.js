@@ -10,13 +10,13 @@ export const UPDATE_USER = 'UPDATE_USER'
 export const SET_LOCALE = 'SET_LOCALE'
 
 // tables.js
-export const FETCH_TABLES = 'FETCH_TABLES'
+// export const FETCH_TABLES = 'FETCH_TABLES'
 
-// plan-tables.js
-export const FETCH_PLAN_TABLES = 'FETCH_PLAN_TABLES'
+// // plan-tables.js
+// export const FETCH_PLAN_TABLES = 'FETCH_PLAN_TABLES'
 
-// plan-seats.js
-export const FETCH_PLAN_SEATS = 'FETCH_PLAN_SEATS'
-export const FETCH_USER_SEATS = 'FETCH_USER_SEATS'
-// export const ADD_USER_SEAT = 'ADD_USER_SEAT'
-export const FETCH_SEATS_BY_TABLE = 'FETCH_SEATS_BY_TABLE'
+// // plan-seats.js
+// export const FETCH_PLAN_SEATS = 'FETCH_PLAN_SEATS'
+// export const FETCH_USER_SEATS = 'FETCH_USER_SEATS'
+// // export const ADD_USER_SEAT = 'ADD_USER_SEAT'
+// export const FETCH_SEATS_BY_TABLE = 'FETCH_SEATS_BY_TABLE'

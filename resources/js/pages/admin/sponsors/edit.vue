@@ -7,7 +7,7 @@
             </b-breadcrumb-item>
             <b-breadcrumb-item active>Editer</b-breadcrumb-item>
         </b-breadcrumb>
-        <h2 class="text-center" v-if="sponsor">Editer sponsor "{{ sponsor.name }}"</h2>
+        <h2 class="text-center" v-if="sponsor">Editer sponsor <span class="primary-color">{{ sponsor.name }}</span></h2>
 
         <!-- sponsor: {{ sponsor }}<br /><br /> -->
         <b-row class="justify-content-center">
@@ -78,9 +78,6 @@
                         </b-col>
 
                         <b-col cols="12" class="my-2">
-                            <!-- <b-form-group label="Activités:">
-                                <b-form-select multiple value-field="id" text-field="name" v-model="form.activities" :options="activities" size="sm" class=""></b-form-select>
-                            </b-form-group> -->
                             <b-form-group label="Activités:">
                                 <multiselect
                                     tag-placeholder="Ajouter comme nouveau tag"
@@ -181,23 +178,14 @@ export default {
         }
     },
     methods: {
-        // uploadImage(event) {
-        //     console.log('uploadImage', event)
-        //     console.log(event.target)
-        //     console.log(event.target.files[0])
-        //     this.new_image = event.target.files[0]
-        // },
         selectFile(e) {
             this.form.new_image = e.target.files[0]
         },
         async updateSponsor() {
             try {
                 console.log('this.form: ', this.form)
-                // return
                 this.$store.commit('loading/SET_LOADING', true)
                 this.form['activities'] = this.sponsorActivities.map(activity => parseInt(activity.id))
-                // const { data } = await axios.post('/api/users', this.form)
-                // console.log('data: ', data)
                 await this.$store.dispatch('sponsors/updateSponsor', this.form)
                 this.$store.commit('loading/SET_LOADING', false)
                 this.$noty.success('Sponsor mis à jour avec succès!')
@@ -208,18 +196,13 @@ export default {
                 this.$noty.error("Une erreur est survenue et le sponsor n'a pas pu être mise à jour.")
             }
         }
-        // async updateSponsor2() {
-        //     try {
-        //         await this.$store.dispatch('sponsors/updateSponsor', { sponsor: this.sponsor, image: this.new_image })
-        //         this.$noty.success('Sponsor mis à jour avec succè!')
-        //         this.$router.push('/admin/sponsors')
-        //     } catch (error) {
-        //         console.log('error: ', error)
-        //         this.$noty.error("Une erreur est survenue et le sponsor n'a pas pu être mise à jour.")
-        //     }
-        // }
     }
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import './resources/sass/_variables.scss';
+.primary-color {
+    color: $primary;
+}
+</style>
