@@ -151,7 +151,7 @@ class SectionsController extends Controller
         return response()->json([
             'success' => true,
             'updatedSection' => $updatedSection,
-            'file' => $file
+            // 'file' => $file
         ], 201);
     }
 

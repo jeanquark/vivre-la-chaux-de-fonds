@@ -10,6 +10,7 @@
         <!-- path: {{ path }}<br /><br /> -->
         <!-- currentPath: {{ currentPath }}<br /><br /> -->
         <!-- selectedFile: {{ selectedFile }}<br /><br /> -->
+        <!-- files: {{ files }}<br /><br /> -->
 
         <b-tabs content-class="mt-3" v-model="tabIndex">
             <b-tab title="Gallerie d'images" active>
@@ -101,7 +102,7 @@
                 </b-row>
                 <b-row class="justify-content-center my-3">
                     <b-button variant="dark" size="sm" class="mx-2" @click="clearFileInput">Effacer</b-button>
-                    <b-button variant="primary" @click.prevent="uploadImage">Uploader</b-button>
+                    <b-button variant="primary" @click.prevent="uploadImage" :disabled="loading"><b-spinner small type="grow" v-if="loading"></b-spinner> Uploader</b-button>
                 </b-row>
             </b-tab>
             <b-tab title="Ajouter dossier"
@@ -328,7 +329,7 @@ export default {
 
                 // const { all } = await axios.get('/api/list-all-files')
                 // this.files = data.files
-                // this.files.unshift(data.newImageArray)
+                this.files.unshift(data.newImageArray)
                 this.$store.commit('loading/SET_LOADING', false)
                 this.$noty.success('Image ajoutée avec succès.')
             } catch (error) {
