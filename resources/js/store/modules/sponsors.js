@@ -44,7 +44,8 @@ export const mutations = {
 
 // actions
 export const actions = {
-    async fetchSponsors({ commit }, payload) {
+    async fetchSponsors({ commit }) {
+    // async fetchSponsors({ commit }, payload) {
         try {
             console.log('fetchSponsors action')
             const { data } = await axios.get('/api/sponsors')

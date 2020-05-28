@@ -25,19 +25,24 @@ class ActivitiesController extends Controller
     }
 
 
-    public function getActivities(Request $request, $params = NULL)
+    public function getActivities()
+    // public function getActivities(Request $request, $params = NULL)
     {
-        if ($params) {
-            $array = explode("=", $params);
-            $key = $array[0];
-            $value = $array[1];
-
-            $activities = Activity::where($key, '=', $value)->with('sponsors')->get();
-        } else {
-            $activities = Activity::with('sponsors')->get();
-        }
+        $activities = Activity::with('sponsors')->get();
 
         return response()->json($activities, 200);
+
+        // if ($params) {
+        //     $array = explode("=", $params);
+        //     $key = $array[0];
+        //     $value = $array[1];
+
+        //     $activities = Activity::where($key, '=', $value)->with('sponsors')->get();
+        // } else {
+        //     $activities = Activity::with('sponsors')->get();
+        // }
+
+        // return response()->json($activities, 200);
 
         // return response()->json([
         //     'success' => true,
@@ -47,31 +52,29 @@ class ActivitiesController extends Controller
         //     'value' => $value
         // ], 200);
 
-        // $activities = Activity::with('sponsors')->get();
-
-        // return response()->json($activities, 200);
+        
     }
 
 
-    // public function getActivityById(Request $request, $id)
-    // {
-    //     $activity = Activity::with('sponsors')->find($id);
+    public function getActivityById(Request $request, $id)
+    {
+        $activity = Activity::with('sponsors')->find($id);
 
-    //     return response()->json([
-    //         'success' => true,
-    //         'activity' => $activity,
-    //     ], 200);
-    // }
+        return response()->json([
+            'success' => true,
+            'activity' => $activity,
+        ], 200);
+    }
 
-    // public function getActivityBySlug(Request $request, $slug)
-    // {
-    //     $activity = Activity::where('slug', '=', $slug)->with('sponsors')->first();
+    public function getActivityBySlug(Request $request, $slug)
+    {
+        $activity = Activity::where('slug', '=', $slug)->with('sponsors')->first();
 
-    //     return response()->json([
-    //         'success' => true,
-    //         'activity' => $activity,
-    //     ], 200);
-    // }
+        return response()->json([
+            'success' => true,
+            'activity' => $activity,
+        ], 200);
+    }
 
     protected function createActivity(Request $request) {
         $validatedData = $request->validate([

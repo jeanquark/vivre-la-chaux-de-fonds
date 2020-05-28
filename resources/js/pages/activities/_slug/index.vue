@@ -24,8 +24,8 @@ export default {
         // if (!this.$store.getters['activities/activities'][this.$route.params.slug]) {
         if (!this.activity) {
             console.log('load')
-            // await this.$store.dispatch('activities/fetchActivityBySlug', { activitySlug: this.$route.params.slug })
-            await this.$store.dispatch('activities/fetchActivities', { slug: this.$route.params.slug })
+            await this.$store.dispatch('activities/fetchActivityBySlug', { activitySlug: this.$route.params.slug })
+            // await this.$store.dispatch('activities/fetchActivities', { slug: this.$route.params.slug })
         }
     },
     mounted() {

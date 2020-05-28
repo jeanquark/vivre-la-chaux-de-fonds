@@ -43,8 +43,8 @@ export default {
     layout: 'backend',
     mounted() {
         if (!this.$store.getters['sponsors/sponsors'][this.$route.params.id]) {
-            // this.$store.dispatch('sponsors/fetchSponsor', { sponsorId: this.$route.params.id })
-            this.$store.dispatch('sponsors/fetchSponsors', { id: this.$route.params.id })
+            this.$store.dispatch('sponsors/fetchSponsorById', { sponsorId: this.$route.params.id })
+        //     this.$store.dispatch('sponsors/fetchSponsors', { id: this.$route.params.id })
         }
     },
     data() {

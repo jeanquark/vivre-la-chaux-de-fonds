@@ -45,18 +45,24 @@ export const mutations = {
 
 // actions
 export const actions = {
-    async fetchActivities({ commit }, payload) {
+    async fetchActivities({ commit }) {
+    // async fetchActivities({ commit }, payload) {
         try {
-            console.log('fetchActivities: ', payload)
-            let param = ''
-            if (payload) {
-                param = JSON.stringify(payload).replace(/[{}""]/g, '').replace(/[:]/g, '=')
-            }
-            const { data } = await axios.get(`/api/activities/${param}`)
-
-            // const { data } = await axios.get(`/api/activities`)
-            console.log('data2: ', data)
+            console.log('fetchActivities')
+            const { data } = await axios.get('/api/activities')
+            console.log('data: ', data)
             commit('SET_ACTIVITIES', data)
+
+            // console.log('fetchActivities: ', payload)
+            // let param = ''
+            // if (payload) {
+            //     param = JSON.stringify(payload).replace(/[{}""]/g, '').replace(/[:]/g, '=')
+            // }
+            // const { data } = await axios.get(`/api/activities/${param}`)
+
+            // // const { data } = await axios.get(`/api/activities`)
+            // console.log('data2: ', data)
+            // commit('SET_ACTIVITIES', data)
         } catch (error) {
             console.log('vuex error: ', error)
             throw error

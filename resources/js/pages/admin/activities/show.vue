@@ -48,8 +48,8 @@ export default {
     // layout: 'backend',
     mounted() {
         if (!this.$store.getters['activities/activities'][this.$route.params.id]) {
-            // this.$store.dispatch('activities/fetchActivity', { activityId: this.$route.params.id })
-            this.$store.dispatch('activities/fetchActivities', { id: this.$route.params.id })
+            this.$store.dispatch('activities/fetchActivityById', { activityId: this.$route.params.id })
+            // this.$store.dispatch('activities/fetchActivities', { id: this.$route.params.id })
         }
     },
     data() {
