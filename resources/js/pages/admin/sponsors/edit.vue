@@ -10,7 +10,7 @@
         <h2 class="text-center" v-if="sponsor">Editer sponsor <span class="primary-color">{{ sponsor.name }}</span></h2>
 
         <!-- sponsor: {{ sponsor }}<br /><br /> -->
-        <b-row class="justify-content-center">
+        <b-row class="justify-content-center" v-if="sponsor">
             <b-col cols="12" md="8" lg="6">
                 <b-form @submit.prevent="updateSponsor">
                     <b-row align-v="center" class="justify-content-start my-3 px-3">
@@ -130,7 +130,8 @@ export default {
         console.log('sponsorId: ', sponsorId)
 
         if (!this.$store.getters['sponsors/sponsors'][this.$route.params.id]) {
-            await this.$store.dispatch('sponsors/fetchSponsorById', { sponsorId: this.$route.params.id })
+            // await this.$store.dispatch('sponsors/fetchSponsorById', { sponsorId: this.$route.params.id })
+            await this.$store.dispatch('sponsors/fetchSponsors', { id: this.$route.params.id })
         }
 
         if (Object.keys(this.$store.getters['activities/activities']).length < 2) {

@@ -7,7 +7,9 @@
             </b-breadcrumb-item>
             <b-breadcrumb-item active>Editer</b-breadcrumb-item>
         </b-breadcrumb>
-        <h2 class="text-center" v-if="activity">Editer activité <span class="primary-color">{{ activity.name }}</span></h2>
+        <h2 class="text-center" v-if="activity">
+            Editer activité <span class="primary-color">{{ activity.name }}</span>
+        </h2>
         <!-- activity: {{ activity }}<br /><br /> -->
         <!-- activity.sponsors: {{ activity.sponsors }}<br /><br /> -->
         <!-- form.sponsors: {{ form.sponsors }}<br /><br /> -->
@@ -110,8 +112,8 @@
                         </b-button>
                     </b-row>
                     <b-row class="justify-content-center">
-                <b-alert variant="danger" dismissible :show="form.errors.any()">Erreur lors de l'envoi. Veuillez vérifier la validité des champs.</b-alert>
-            </b-row>
+                        <b-alert variant="danger" dismissible :show="form.errors.any()">Erreur lors de l'envoi. Veuillez vérifier la validité des champs.</b-alert>
+                    </b-row>
                 </b-form>
             </b-col>
         </b-row>
@@ -141,7 +143,8 @@ export default {
         console.log('activityId: ', activityId)
 
         if (!this.$store.getters['activities/activities'][this.$route.params.id]) {
-            await this.$store.dispatch('activities/fetchActivityById', { activityId: this.$route.params.id })
+            // await this.$store.dispatch('activities/fetchActivityById', { activityId: this.$route.params.id })
+            await this.$store.dispatch('activities/fetchActivities', { id: this.$route.params.id })
         }
 
         if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {
@@ -151,7 +154,6 @@ export default {
         console.log('this.activity: ', this.activity)
         console.log('this.form: ', this.form)
         this.form.fill(this.activity)
-        // this.form.sponsors = this.activity.sponsors.map(sponsor => sponsor.id)
         this.activitySponsors = this.activity.sponsors
     },
     data() {
@@ -176,7 +178,7 @@ export default {
         loading() {
             return this.$store.getters['loading/loading']
         },
-        
+
         activities() {
             return this.$store.getters['activities/activities']
         },
@@ -186,7 +188,7 @@ export default {
         sponsors() {
             return this.$store.getters['sponsors/sponsors']
         },
-        sponsorsArray () {
+        sponsorsArray() {
             var arr = []
             Object.keys(this.sponsors).forEach(key => arr.push(this.sponsors[key]))
             return arr

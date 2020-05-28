@@ -44,12 +44,22 @@ export const mutations = {
 
 // actions
 export const actions = {
-    async fetchSponsors({ commit }) {
+    async fetchSponsors({ commit }, payload) {
         try {
-            console.log('fetchSponsors action')
-            const { data } = await axios.get('/api/sponsors')
+            // console.log('fetchSponsors action')
+            // const { data } = await axios.get('/api/sponsors')
+            // console.log('data: ', data)
+            // commit('SET_SPONSORS', data)
+
+            console.log('fetchSponsors: ', payload)
+            let param = ''
+            if (payload) {
+                param = JSON.stringify(payload).replace(/[{}""]/g, '').replace(/[:]/g, '=')
+            }
+            const { data } = await axios.get(`/api/sponsors/${param}`)
             console.log('data: ', data)
             commit('SET_SPONSORS', data)
+            
         } catch (error) {
             console.log('vuex error: ', error)
             throw error

@@ -10,18 +10,18 @@
 
         <h2 class="text-center" v-if="sponsor">Sponsor <span class="primary-color">{{ sponsor.name }}</span></h2>
 
-        <b-row class="justify-content-center">
+        <b-row class="justify-content-center" v-if="sponsor">
             <b-col cols="12">
                 <b-table show-empty responsive="sm" :items="sponsorArray" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" class="nowrap" :stacked="true">
                     <template v-slot:cell(image)="row">
-                        <img :src="`/images/partenaires/${row.item.image}`" width="200" />
+                        <img :src="`/images/${row.item.image}`" width="200" />
                     </template>
                     <template v-slot:cell(is_active)="row">
                         {{ row.item.is_active ? 'Oui' : 'Non' }}
                     </template>
                     <template v-slot:cell(activities)="row">
                         <div v-for="activity in row.item.activities" :key="activity.id" class="p-1">
-                            <img :src="`/images/activities/${activity.image}`" width="100" />
+                            <img :src="`/images/${activity.image}`" width="100" />
                             {{ activity.name }}
                         </div>
                     </template>
@@ -43,7 +43,8 @@ export default {
     layout: 'backend',
     mounted() {
         if (!this.$store.getters['sponsors/sponsors'][this.$route.params.id]) {
-            this.$store.dispatch('sponsors/fetchSponsor', { sponsorId: this.$route.params.id })
+            // this.$store.dispatch('sponsors/fetchSponsor', { sponsorId: this.$route.params.id })
+            this.$store.dispatch('sponsors/fetchSponsors', { id: this.$route.params.id })
         }
     },
     data() {

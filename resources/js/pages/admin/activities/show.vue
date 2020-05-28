@@ -12,7 +12,7 @@
         <!-- activityArray: {{ activityArray }}<br /><br /> -->
         <h2 class="text-center" v-if="activity">Activité <span class="primary-color">{{ activity.name }}</span></h2>
 
-        <b-row class="justify-content-center">
+        <b-row class="justify-content-center" v-if="activity">
             <b-col cols="12">
                 <b-table show-empty responsive="sm" :items="activityArray" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" class="nowrap" :stacked="true">
                     <template v-slot:cell(image)="row">
@@ -48,7 +48,8 @@ export default {
     // layout: 'backend',
     mounted() {
         if (!this.$store.getters['activities/activities'][this.$route.params.id]) {
-            this.$store.dispatch('activities/fetchActivity', { activityId: this.$route.params.id })
+            // this.$store.dispatch('activities/fetchActivity', { activityId: this.$route.params.id })
+            this.$store.dispatch('activities/fetchActivities', { id: this.$route.params.id })
         }
     },
     data() {

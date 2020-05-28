@@ -23,7 +23,10 @@ export default {
     },
     async created() {
         if (Object.keys(this.$store.getters['activities/activities']).length < 2) {
-            await this.$store.dispatch('activities/fetchActivities')
+            // await this.$store.dispatch('activities/fetchActivities')
+            await this.$store.dispatch('activities/fetchActivities', { is_published: 1 })
+            // await this.$store.dispatch('activities/fetchActivities', { id: 1 })
+            // await this.$store.dispatch('activities/fetchActivities', { slug: 'ola-portugal' })
         }
     },
     data() {
@@ -32,7 +35,10 @@ export default {
     computed: {
         activities() {
             return this.$store.getters['activities/activities']
-        }
+        },
+        // publishedActivities () {
+        //     return this.activities.filter(activity => activity.is_published === true)
+        // }
     }
 }
 </script>
