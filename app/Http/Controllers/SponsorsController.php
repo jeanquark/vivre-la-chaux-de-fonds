@@ -25,23 +25,24 @@ class SponsorsController extends Controller
     }
 
 
-    public function getSponsors(Request $request, $params = NULL)
+    public function getSponsors()
+    // public function getSponsors(Request $request, $params = NULL)
     {
-        if ($params) {
-            $array = explode("=", $params);
-            $key = $array[0];
-            $value = $array[1];
-            $sponsors = Sponsor::where($key, '=', $value)->with('activities')->get();
-        } else {
-            $sponsors = Sponsor::with('activities')->get();
-        }
+        // if ($params) {
+        //     $array = explode("=", $params);
+        //     $key = $array[0];
+        //     $value = $array[1];
+        //     $sponsors = Sponsor::where($key, '=', $value)->with('activities')->get();
+        // } else {
+        //     $sponsors = Sponsor::with('activities')->get();
+        // }
 
-
-        return response()->json($sponsors, 200);
-
-        // $sponsors = Sponsor::with('activities')->get();
 
         // return response()->json($sponsors, 200);
+
+        $sponsors = Sponsor::with('activities')->get();
+
+        return response()->json($sponsors, 200);
     }
 
     public function getSponsorById(Request $request, $id)
