@@ -72,6 +72,6 @@ export default {
 .card {
     border: none;
     border-radius: 15px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.90);
 }
 </style>
