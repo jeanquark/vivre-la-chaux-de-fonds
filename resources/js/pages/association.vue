@@ -17,7 +17,7 @@
                 <!-- {{ pages }} -->
                 <!-- page: {{ page }}<br /><br /> -->
                 <!-- pageSections: {{ pageSections }}<br /><br /> -->
-                <!-- {{ sponsors }} -->
+                <!-- sponsors: {{ sponsors }}<br /><br /> -->
                 <!-- selectedPage: {{ selectedPage }}<br /> -->
                 <!-- selectedSection: {{ selectedSection }}<br /><br /> -->
 
@@ -117,7 +117,7 @@ export default {
             return this.page ? this.page['sections'] : []
         },
         sponsors() {
-            return this.$store.getters['sponsors/sponsors']
+            return Object.values(this.$store.getters['sponsors/sponsors']).filter(sponsor => sponsor.is_active == true)
         }
     },
     methods: {
