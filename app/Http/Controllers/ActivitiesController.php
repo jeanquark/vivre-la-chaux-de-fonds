@@ -25,34 +25,30 @@ class ActivitiesController extends Controller
     }
 
 
-    public function getActivities()
-    // public function getActivities(Request $request, $params = NULL)
+    // public function getActivities()
+    public function getActivities(Request $request, $params = NULL)
     {
-        $activities = Activity::with('sponsors')->get();
+        $is_published = (int)filter_var($request->query('is_published'), FILTER_VALIDATE_BOOLEAN);
+        $slug = $request->query('slug');
+        $id = $request->query('id');
+
+        $activities = Activity::with('sponsors')
+            ->when($is_published, function ($query) use ($is_published) {
+                return $query->where('is_published', '=', $is_published);
+            })
+            ->when($slug, function ($query) use ($slug) {
+                return $query->where('slug', '=', $slug);
+            })
+            ->when($id, function ($query) use ($id) {
+                return $query->where('id', '=', $id);
+            })
+            ->get();
 
         return response()->json($activities, 200);
 
-        // if ($params) {
-        //     $array = explode("=", $params);
-        //     $key = $array[0];
-        //     $value = $array[1];
-
-        //     $activities = Activity::where($key, '=', $value)->with('sponsors')->get();
-        // } else {
-        //     $activities = Activity::with('sponsors')->get();
-        // }
+        // $activities = Activity::with('sponsors')->get();
 
         // return response()->json($activities, 200);
-
-        // return response()->json([
-        //     'success' => true,
-        //     'params' => $params,
-        //     'array' => $array,
-        //     'key' => $key,
-        //     'value' => $value
-        // ], 200);
-
-        
     }
 
 

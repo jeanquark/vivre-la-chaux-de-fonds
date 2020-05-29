@@ -143,8 +143,8 @@ export default {
         console.log('activityId: ', activityId)
 
         if (!this.$store.getters['activities/activities'][this.$route.params.id]) {
-            await this.$store.dispatch('activities/fetchActivityById', { activityId: this.$route.params.id })
-            // await this.$store.dispatch('activities/fetchActivities', { id: this.$route.params.id })
+            // await this.$store.dispatch('activities/fetchActivityById', { activityId: this.$route.params.id })
+            await this.$store.dispatch('activities/fetchActivities', { id: this.$route.params.id })
         }
 
         if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {

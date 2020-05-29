@@ -45,23 +45,31 @@ export const mutations = {
 
 // actions
 export const actions = {
-    async fetchActivities({ commit }) {
-    // async fetchActivities({ commit }, payload) {
+    // async fetchActivities({ commit }) {
+    async fetchActivities({ commit }, payload) {
         try {
-            console.log('fetchActivities')
-            const { data } = await axios.get('/api/activities')
+            console.log('fetchActivities: ', payload)
+            let queryString = ''
+            if (payload) {
+                queryString = Object.keys(payload).map(key => key + '=' + payload[key]).join('&');
+
+            }
+            console.log('queryString: ', queryString)
+
+            const { data } = await axios.get(`/api/activities?${queryString}`)
+
+            // return
+            // const { data } = await axios.get(`/api/sponsors`)
+            // const { data } = await axios.get(`/api/sponsors?is_active=true&slug=axa&id=2`)
+            // const { data } = await axios.get(`/api/sponsors?is_active=true&slug=axa`)
+            // const { data } = await axios.get(`/api/sponsors?is_active=true`)
             console.log('data: ', data)
             commit('SET_ACTIVITIES', data)
 
-            // console.log('fetchActivities: ', payload)
-            // let param = ''
-            // if (payload) {
-            //     param = JSON.stringify(payload).replace(/[{}""]/g, '').replace(/[:]/g, '=')
-            // }
-            // const { data } = await axios.get(`/api/activities/${param}`)
 
-            // // const { data } = await axios.get(`/api/activities`)
-            // console.log('data2: ', data)
+            // console.log('fetchActivities')
+            // const { data } = await axios.get('/api/activities')
+            // console.log('data: ', data)
             // commit('SET_ACTIVITIES', data)
         } catch (error) {
             console.log('vuex error: ', error)

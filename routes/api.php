@@ -39,10 +39,10 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 });
 
-// Route::get('/activities/{params?}', 'ActivitiesController@getActivities');
-Route::get('/activities', 'ActivitiesController@getActivities');
-Route::get('/activities/{id}', 'ActivitiesController@getActivityById');
-Route::get('/activities/slug/{slug}', 'ActivitiesController@getActivityBySlug');
+Route::get('/activities/{params?}', 'ActivitiesController@getActivities');
+// Route::get('/activities', 'ActivitiesController@getActivities');
+// Route::get('/activities/{id}', 'ActivitiesController@getActivityById');
+// Route::get('/activities/slug/{slug}', 'ActivitiesController@getActivityBySlug');
 
 Route::get('/sponsors/{params?}', 'SponsorsController@getSponsors');
 // Route::get('/sponsors', 'SponsorsController@getSponsors');

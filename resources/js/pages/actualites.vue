@@ -24,8 +24,8 @@ export default {
     },
     async created() {
         if (Object.keys(this.$store.getters['activities/activities']).length < 2) {
-            await this.$store.dispatch('activities/fetchActivities')
-            // await this.$store.dispatch('activities/fetchActivities', { is_published: 1 })
+            // await this.$store.dispatch('activities/fetchActivities')
+            await this.$store.dispatch('activities/fetchActivities', { is_published: 1 })
             // await this.$store.dispatch('activities/fetchActivities', { id: 1 })
             // await this.$store.dispatch('activities/fetchActivities', { slug: 'ola-portugal' })
         }

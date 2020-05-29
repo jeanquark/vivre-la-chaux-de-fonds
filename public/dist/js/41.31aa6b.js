@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[41],{106:function(t,e,n){"use strict";n.r(e);var s={},a=n(1),c=Object(a.a)(s,function(){var t=this.$createElement,e=this._self._c||t;return e("b-container",[e("h2",{staticClass:"text-center"},[this._v("Tableau de bord VLCF")])])},[],!1,null,"45580dbc",null);e.default=c.exports}}]);

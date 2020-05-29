@@ -30,19 +30,33 @@
                         </b-card>
                     </b-col>
                 </b-row>
-                <b-row no-gutters style="background-color:rgba(0, 0, 0, 0.5);" v-if="pageSections.length > 0">
+                <!-- <b-row no-gutters style="background-color:rgba(0, 0, 0, 0.5);" v-if="pageSections.length > 0">
                     <b-col cols="6" class="p-2" style="border: 0px solid red;">
                         <h2 class="text-secondary" style="">{{ selectedSection.name }}</h2>
                         <div v-for="section in pageSections" :key="section.id">
                             <b-button pill variant="primary" size="sm" class="m-1" @click="selectSection(section)" :class="{ active: section.id === selectedSection.id }">{{ section.name }}</b-button>
                         </div>
                     </b-col>
-                    <!-- <div style="position: absolute; bottom: 0;"> -->
 
                     <b-col cols="6" style="border: 0px solid orange;">
                         <b-img right :src="`/images/${selectedSection.image}`" fluid :alt="selectedSection.name" class=""></b-img>
                     </b-col>
+                </b-row> -->
+
+                <b-row no-gutters class="flex-body" style="background-color:rgba(0, 0, 0, 0.5);" v-if="pageSections.length > 0">
+                    <b-col cols="6" class="flex-column p-2">
+                        <div style="flex-grow: 1;">
+                        <div v-for="section in pageSections" :key="section.id" >
+                            <b-button pill variant="primary" size="sm" class="m-1" @click="selectSection(section)" :class="{ active: section.id === selectedSection.id }">{{ section.name }}</b-button>
+                        </div>
+                        </div>
+                        <h2 class="text-secondary -0" style="border: 0px solid green;">{{ selectedSection.name }}</h2>
+                    </b-col>
+                    <b-col cols="6" class="flex-row">
+                        <b-img right :src="`/images/${selectedSection.image}`" fluid :alt="selectedSection.name" class=""></b-img>
+                    </b-col>
                 </b-row>
+
                 <b-row no-gutters v-if="selectedSection">
                     <b-col cols="12">
                         <b-card>
@@ -54,14 +68,6 @@
                 </b-row>
             </b-col>
         </b-row>
-
-        <!-- <b-row style="border: 1px solid red;">
-            <b-col cols="6" align-self="start">
-                <b-col cols="12" align-self="end">abc</b-col>
-            </b-col>
-            <b-col cols="6" align-self="center" style="border: 1px solid blue;"><b-img right src="/images/logo.png" fluid></b-img></b-col>
-        </b-row> -->
-
     </b-container>
 </template>
 
@@ -123,4 +129,23 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.flex-row {
+    flex-direction: row;
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+    display: flex;
+}
+
+.flex-body {
+    display: flex;
+}
+
+
+
+
+
+</style>

@@ -47,16 +47,7 @@ export const actions = {
     // async fetchSponsors({ commit }) {
     async fetchSponsors({ commit }, payload) {
         try {
-            // console.log('fetchSponsors action')
-            // const { data } = await axios.get('/api/sponsors')
-            // console.log('data: ', data)
-            // commit('SET_SPONSORS', data)
-
             console.log('fetchSponsors: ', payload)
-            // let param = ''
-            // if (payload) {
-            //     param = JSON.stringify(payload).replace(/[{}""]/g, '').replace(/[:]/g, '=')
-            // }
             let queryString = ''
             if (payload) {
                 queryString = Object.keys(payload).map(key => key + '=' + payload[key]).join('&');
