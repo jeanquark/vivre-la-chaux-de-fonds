@@ -44,22 +44,35 @@ export const mutations = {
 
 // actions
 export const actions = {
-    async fetchSponsors({ commit }) {
-    // async fetchSponsors({ commit }, payload) {
+    // async fetchSponsors({ commit }) {
+    async fetchSponsors({ commit }, payload) {
         try {
-            console.log('fetchSponsors action')
-            const { data } = await axios.get('/api/sponsors')
-            console.log('data: ', data)
-            commit('SET_SPONSORS', data)
+            // console.log('fetchSponsors action')
+            // const { data } = await axios.get('/api/sponsors')
+            // console.log('data: ', data)
+            // commit('SET_SPONSORS', data)
 
-            // console.log('fetchSponsors: ', payload)
+            console.log('fetchSponsors: ', payload)
             // let param = ''
             // if (payload) {
             //     param = JSON.stringify(payload).replace(/[{}""]/g, '').replace(/[:]/g, '=')
             // }
-            // const { data } = await axios.get(`/api/sponsors/${param}`)
-            // console.log('data: ', data)
-            // commit('SET_SPONSORS', data)
+            let queryString = ''
+            if (payload) {
+                queryString = Object.keys(payload).map(key => key + '=' + payload[key]).join('&');
+
+            }
+            console.log('queryString: ', queryString)
+
+            const { data } = await axios.get(`/api/sponsors?${queryString}`)
+
+            // return
+            // const { data } = await axios.get(`/api/sponsors`)
+            // const { data } = await axios.get(`/api/sponsors?is_active=true&slug=axa&id=2`)
+            // const { data } = await axios.get(`/api/sponsors?is_active=true&slug=axa`)
+            // const { data } = await axios.get(`/api/sponsors?is_active=true`)
+            console.log('data: ', data)
+            commit('SET_SPONSORS', data)
             
         } catch (error) {
             console.log('vuex error: ', error)

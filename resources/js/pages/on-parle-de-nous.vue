@@ -50,7 +50,7 @@ export default {
         try {
             this.$store.commit('loading/SET_LOADING', true)
             if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {
-                await this.$store.dispatch('sponsors/fetchSponsors')
+                await this.$store.dispatch('sponsors/fetchSponsors', { is_active: true })
             }
             if (!this.page) {
                 await this.$store.dispatch('pages/fetchPageBySlug', { pageSlug: this.$route.path.substring(1) })

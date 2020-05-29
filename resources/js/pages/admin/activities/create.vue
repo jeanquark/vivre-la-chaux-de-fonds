@@ -134,9 +134,9 @@ export default {
     data() {
         return {
             form: new Form({
-                name: 'Tournoi de Jass',
-                subtitle: 'Un événement à ne pas rater!',
-                content: 'Le 10 octobre aura lieu notre tournoi annuel de Jass.',
+                name: '',
+                subtitle: '',
+                content: '',
                 start_date: '',
                 end_date: '',
                 image: null,

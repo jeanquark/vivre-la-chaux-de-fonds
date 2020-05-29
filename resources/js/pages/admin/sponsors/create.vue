@@ -133,8 +133,8 @@ export default {
         return {
             image: {},
             form: new Form({
-                name: 'Loterie Romande 2',
-                contribution: 2000,
+                name: '',
+                contribution: 0,
                 start_date: '',
                 end_date: '',
                 image: null,

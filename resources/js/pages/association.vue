@@ -76,8 +76,11 @@ export default {
             this.$store.commit('loading/SET_LOADING', true)
             console.log('abc: ', this.$route.path)
             if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {
-                await this.$store.dispatch('sponsors/fetchSponsors')
-                // await this.$store.dispatch('sponsors/fetchSponsors', { is_active: 1 })
+                // await this.$store.dispatch('sponsors/fetchSponsors')
+                // await this.$store.dispatch('sponsors/fetchSponsors', { is_active: true, slug: 'axa', id: 2 })
+                // await this.$store.dispatch('sponsors/fetchSponsors', { is_active: true, slug: 'axa' })
+                await this.$store.dispatch('sponsors/fetchSponsors', { is_active: true })
+                // await this.$store.dispatch('sponsors/fetchSponsors')
             }
             if (!this.page) {
                 await this.$store.dispatch('pages/fetchPageBySlug', { pageSlug: this.$route.path.substring(1) })
