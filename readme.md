@@ -1,4 +1,4 @@
-# vlcf
+# vlcf.ch
 
 "Vivre La Chaux-de-Fonds" est une association à but non lucratif basée à la Chaux-de-Fonds.
 
@@ -30,8 +30,6 @@ To create and populate database tables:
 
 To open database, launch MySQL Workbench
 To see the app, visit vivre-la-chaux-de-fonds.test in the browser
-
-## Going live
 
 
 ## Team
