@@ -20,7 +20,8 @@
                 <b-card :img-src="`/images/${activity.image}`" :img-alt="`${activity.name}`" img-top style="border: none;">
                     <b-card-text class="text-center">
                         <h5 class="my-2">{{ activity.name }}</h5>
-                        <b-button variant="primary" size="sm" class="my-2" :to="{ name: 'activity', params: { slug: activity.slug } }">En savoir plus &rarr;</b-button>
+                        <!-- <b-button variant="primary" size="sm" class="my-2" :to="{ name: 'actualite', params: { slug: activity.slug } }">En savoir plus &rarr;</b-button> -->
+                        <b-button variant="primary" size="sm" class="my-2" :to="`/actualites/${activity.slug}`">En savoir plus &rarr;</b-button>
                     </b-card-text>
                 </b-card>
             </b-col>

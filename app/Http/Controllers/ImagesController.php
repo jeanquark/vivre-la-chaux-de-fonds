@@ -78,30 +78,29 @@ class ImagesController extends Controller
 
     public function uploadImage(Request $request)
     {
-        $validatedData = $request->validate([
-            'image' => 'required|image',
-        ]);
+        if (File::exists($request->image)) { // Upload single image
 
-        $newImageArray = array();
+            $validatedData = $request->validate([
+                'image' => 'required|image',
+            ]);
 
-        // Upload image
-        if (File::exists($request->image)) {
+            $newImageArray = array();
+
             $imageName = $request->image->getClientOriginalName(); //Get Image Name
             $uploadedFile = Storage::disk('images')->putFileAs($request->path, $request->image, $imageName);
             array_push($newImageArray, $uploadedFile);
             array_push($newImageArray, Storage::disk('images')->mimeType($uploadedFile));
             array_push($newImageArray, Storage::disk('images')->size($uploadedFile));
             array_push($newImageArray, Storage::disk('images')->lastModified($uploadedFile));
+
+            return response()->json([
+                'success' => true,
+                'request' => $request,
+                'request->path' => $request->path,
+                'request->image' => $request->image,
+                'newImageArray' => $newImageArray,
+            ], 200);
         }
-
-
-        return response()->json([
-            'success' => true,
-            'request' => $request,
-            'request->path' => $request->path,
-            'request->image' => $request->image,
-            'newImageArray' => $newImageArray,
-        ], 200);
     }
 
     public function createFolder(Request $request)

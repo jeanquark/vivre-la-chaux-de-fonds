@@ -29,10 +29,12 @@ export default [
 
     { path: '/accueil', name: 'accueil', component: page('accueil') },
     { path: '/association', name: 'association', component: page('association') },
-    { path: '/actualites', name: 'actualites', component: page('actualites') },
+    // { path: '/actualites', name: 'actualites', component: page('actualites') },
 
-    { path: '/activites', name: 'activities', component: page('activities') },
-    { path: '/activites/:slug', name: 'activity', component: page('activities/_slug/index') },
+    // { path: '/activites', name: 'activities', component: page('activities') },
+    // { path: '/activites/:slug', name: 'activity', component: page('activities/_slug/index') },
+    { path: '/actualites', name: 'actualites', component: page('actualites') },
+    { path: '/actualites/:slug', name: 'actualite', component: page('actualites/_slug/index') },
 
     { path: '/on-parle-de-nous', name: 'on-parle-de-nous', component: page('on-parle-de-nous') },
     { path: '/participez', name: 'participez', component: page('participez') },

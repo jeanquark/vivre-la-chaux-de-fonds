@@ -81,7 +81,7 @@ export const actions = {
             console.log('fetchActivityById action: ', payload)
             const { activityId } = payload
             const { data } = await axios.get(`/api/activities/${activityId}`)
-            console.log('data: ', data)
+            console.log('data2: ', data)
             commit('SET_ACTIVITY', data.activity)
         } catch (error) {
             console.log('vuex error: ', error)

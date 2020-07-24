@@ -56,9 +56,13 @@ class ActivitiesController extends Controller
     {
         $activity = Activity::with('sponsors')->find($id);
 
+        // Retrieve all images related to a specific activity
+        $activity['images'] = Storage::disk('images')->files('activities/' . $activity->slug);
+
         return response()->json([
             'success' => true,
             'activity' => $activity,
+            // 'images' => $images
         ], 200);
     }
 
@@ -66,9 +70,13 @@ class ActivitiesController extends Controller
     {
         $activity = Activity::where('slug', '=', $slug)->with('sponsors')->first();
 
+        // Retrieve all images related to a specific activity
+        $activity['images'] = Storage::disk('images')->files('activities/' . $activity->slug);
+
         return response()->json([
             'success' => true,
             'activity' => $activity,
+            // 'images' => $images
         ], 200);
     }
 
@@ -77,6 +85,15 @@ class ActivitiesController extends Controller
             'name' => 'required|unique:activities',
             'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
         ]);
+
+        // if (File::exists($request->images)) {
+
+        // }
+
+        // return response()->json([
+        //     'success' => true,
+        //     'request->images' => $request->images
+        // ], 201);
 
         $activity = new Activity;
 
@@ -108,12 +125,21 @@ class ActivitiesController extends Controller
         
         $newActivity = Activity::with('sponsors')->find($activity->id);
 
+        // Upload images for image gallery
+        foreach($request->images as $image) {
+            if (File::exists($image)) {
+                $imageName = $image->getClientOriginalName(); //Get Image Name
+                $file = Storage::disk('images')->putFileAs('activities/' . $activity->slug, $image, $imageName);
+            }
+        }
+
         return response()->json([
             'success' => true,
             'newActivity' => $newActivity,
             // 'request' => $request,
-            // 'request->image' => $request->image,
+            'request->image' => $request->image,
             // 'request->sponsors' => $request->sponsors
+            'request->images' => $request->images
         ], 201);
     }
 

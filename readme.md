@@ -2,7 +2,7 @@
 
 "Vivre La Chaux-de-Fonds" est une association à but non lucratif basée à la Chaux-de-Fonds.
 
-![homepage](public/images/homepage.png)
+![homepage](public/images/homepage.jpg)
 
 ## Content
 

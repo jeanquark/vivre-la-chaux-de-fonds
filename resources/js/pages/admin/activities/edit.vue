@@ -105,6 +105,13 @@
                             </b-form-group>
                         </b-col>
                     </b-row>
+
+                    <b-row class="justify-content-center my-2">
+                        <b-col cols="12">
+                            <h3 class="text-center">Gallerie</h3>
+                            {{ activity.images }}
+                        </b-col>
+                    </b-row>
                     <b-row class="justify-content-center my-2">
                         <b-button variant="primary" :disabled="loading" type="submit">
                             <b-spinner small type="grow" v-if="loading"></b-spinner>
@@ -143,8 +150,8 @@ export default {
         console.log('activityId: ', activityId)
 
         if (!this.$store.getters['activities/activities'][this.$route.params.id]) {
-            // await this.$store.dispatch('activities/fetchActivityById', { activityId: this.$route.params.id })
-            await this.$store.dispatch('activities/fetchActivities', { id: this.$route.params.id })
+            await this.$store.dispatch('activities/fetchActivityById', { activityId: this.$route.params.id })
+            // await this.$store.dispatch('activities/fetchActivities', { id: this.$route.params.id })
         }
 
         if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {

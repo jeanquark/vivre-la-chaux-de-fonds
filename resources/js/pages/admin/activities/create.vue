@@ -67,9 +67,13 @@
                         </b-col>
 
                         <b-col cols="12" class="my-2">
+                            form.image: {{ form.image }}
+                            <div id="preview">
+    <img v-if="url" :src="url" style="width: 150px;" />
+  </div>
                             <b-form-file
                                 accept="image/jpeg, image/png"
-                                placeholder="Choisir une nouvelle image..."
+                                placeholder="Sélectionner une nouvelle image..."
                                 drop-placeholder="Placer votre image ici..."
                                 @change="selectFile"
                                 :class="{ 'is-invalid': form.errors.has('image') }"
@@ -78,10 +82,10 @@
                         </b-col>
 
                         <b-col cols="12" class="my-2">
-                            <b-form-group label="Activités:">
+                            <b-form-group label="Sponsors:">
                                 <multiselect
-                                    tag-placeholder="Ajouter comme nouveau tag"
-                                    placeholder="Chercher et ajouter un tag"
+                                    tag-placeholder="Ajouter comme nouveau sponsor"
+                                    placeholder="Chercher et ajouter un sponsor"
                                     label="name"
                                     track-by="id"
                                     :options="sponsorsArray"
@@ -91,8 +95,51 @@
                                 ></multiselect>
                             </b-form-group>
                         </b-col>
-
                     </b-row>
+
+                    <b-row class="justify-content-center my-3 px-3">
+                        <b-col cols="12" class="my-0">
+                            Gallerie d'images:
+                            images: {{ images }}<br />
+                            form.images: {{ form.images }}<br />
+                            url2: {{ url2 }}<br />
+                            <div v-for="(image, index) in form.images" :key="index">
+                                {{ image.name }}
+                            </div>
+                            <!-- <vue-upload-multiple-image
+                                dragText="Drag"
+                                browseText="Browse"
+                                primaryText=""
+                                markIsPrimaryText=""
+                                popupText=""
+                                dropText=""
+                                :maxImage="10"
+                                :data-images="form.images"
+                                @upload-success="uploadImageSuccess"
+                                @before-remove="beforeRemove"
+                                @edit-image="editImage"
+                            ></vue-upload-multiple-image> -->
+                            <b-form-file
+                                accept="image/jpeg, image/png"
+                                placeholder="Sélectionner de nouvelles images..."
+                                drop-placeholder="Placer vos images ici..."
+                                multiple
+                                @change="selectFiles"
+                                :class="{ 'is-invalid': form.errors.has('image') }"
+                            ></b-form-file>
+
+
+
+<div v-for="(image, key) in form.images" style="border: 1px dashed red;">
+    <div>
+        <img class="preview" v-bind:ref="'image' +parseInt( key )" /> 
+        {{ image.name }}
+    </div>
+</div>
+
+                        </b-col>
+                    </b-row>
+
                     <b-row class="justify-content-center my-2">
                         <b-button variant="primary" :disabled="loading" type="submit">
                             <b-spinner small type="grow" v-if="loading"></b-spinner>
@@ -109,6 +156,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Form from 'vform'
 
 // Datepicker
@@ -118,11 +166,15 @@ import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css'
 // Multiselect
 import Multiselect from 'vue-multiselect'
 
+// Multiple image upload
+// import VueUploadMultipleImage from 'vue-upload-multiple-image'
+
 export default {
     layout: 'backend',
     components: {
         VueCtkDateTimePicker,
-        Multiselect
+        Multiselect,
+        // VueUploadMultipleImage
     },
     async created() {
         if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {
@@ -134,16 +186,24 @@ export default {
     data() {
         return {
             form: new Form({
-                name: '',
+                name: 'abc',
                 subtitle: '',
                 content: '',
                 start_date: '',
                 end_date: '',
                 image: null,
                 is_published: false,
-                sponsors: []
+                sponsors: [],
+                images: [],
             }),
-            activitySponsors: []
+            activitySponsors: [],
+            images: [],
+                url: null,
+                url2: []
+            // formNewImage: new Form({
+            //     image: null,
+            //     path: ''
+            // }),
         }
     },
     computed: {
@@ -162,22 +222,88 @@ export default {
     methods: {
         selectFile(e) {
             this.form.image = e.target.files[0]
+            this.url = URL.createObjectURL(e.target.files[0])
         },
+        selectFiles (e) {
+            console.log('e: ', e.target.files)
+            this.form.images = e.target.files
+            
+
+
+            // var selectedFiles = e.target.files;
+            // for (var i=0; i < selectedFiles.length; i++){
+            //     this.form.images.push(selectedFiles[i]);
+            // }
+
+            // for (var i=0; i<this.form.images.length; i++){
+            //     let reader = new FileReader(); //instantiate a new file reader
+            //     reader.addEventListener('load', function(){
+            //       this.$refs['image' + parseInt( i )][0].src = reader.result;
+            //     }.bind(this), false);  //add event listener
+
+            //     reader.readAsDataURL(this.form.images[i]);
+            // }
+
+
+
+        },
+        // uploadImageSuccess(formData, index, fileList) {
+        //     console.log('data', formData, index, fileList)
+        //     console.log('formData', formData)
+        //     // this.form.images = fileList
+        //     this.images = fileList
+
+        //   // this.form.images.push(formData)
+        //   // Upload image api
+        //   // axios.post('http://your-url-upload', formData).then(response => {
+        //   //   console.log(response)
+        //   // })
+        // },
+        // beforeRemove (index, done, fileList) {
+        //     console.log('index', index, fileList)
+        //     var r = confirm("remove image")
+        //     if (r == true) {
+        //         done()
+        //     } else {
+        //     }
+        // },
+        // editImage (formData, index, fileList) {
+        //   console.log('edit data', formData, index, fileList)
+        // },
         async createActivity() {
             try {
                 console.log('this.form: ', this.form)
+                // this.form.images = this.form.images.map(image => image.path)
+                // console.log('form.images: ', this.form.images)
+                console.log('images: ', this.images)
                 // return
+
                 this.$store.commit('loading/SET_LOADING', true)
                 this.form['sponsors'] = this.activitySponsors.map(sponsor => parseInt(sponsor.id))
-                // const { data } = await axios.post('/api/users', this.form)
-                // console.log('data: ', data)
                 await this.$store.dispatch('activities/createActivity', this.form)
+
+                // let formData = new FormData()
+                // for( var i = 0; i < this.images.length; i++ ){
+                //     let file = this.images[i];
+
+                //     formData.append('files[' + i + ']', file);
+                // }
+                // console.log('formData: ', formData)
+                // // return
+
+                // const abc = await axios.post('/api/images', formData, {
+                //     headers: {
+                //         'Content-Type': 'multipart/form-data'
+                //     }
+                // })
+                // console.log('abc: ', abc)
                 this.$store.commit('loading/SET_LOADING', false)
                 this.$noty.success('Nouvelle activité créée avec succès!')
                 this.$router.push('/admin/activities')
             } catch (error) {
                 this.$store.commit('loading/SET_LOADING', false)
                 console.log('error: ', error)
+                console.log('error.response: ', error.response)
                 this.$noty.error("Une erreur est survenue et l'activité n'a pas pu être créée.")
             }
         }

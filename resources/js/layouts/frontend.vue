@@ -9,7 +9,7 @@
             </router-link>
             <ul>
                 <li>
-                    <router-link to="/">Accueil</router-link>
+                    <router-link to="/" exact>Accueil</router-link>
                 </li>
                 <li>
                     <router-link to="/association">Association</router-link>
@@ -210,7 +210,7 @@ a {
 .dropdown:hover .dropbtn {
     background-color: transparent;
 }
-a.router-link-exact-active {
+a.router-link-active {
     color: $primary;
 }
 .primary-color {
