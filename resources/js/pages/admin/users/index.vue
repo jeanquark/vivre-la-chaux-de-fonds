@@ -86,7 +86,7 @@ export default {
         async deleteUser(userId) {
             try {
                 const value = await this.$bvModal.msgBoxConfirm(`Etes-vous sûr de vouloir supprimer l utilisateur ${userId}?`, {
-                    okTitle: 'OK',
+                    okTitle: 'Oui',
                     cancelTitle: 'Annuler'
                 })
                 console.log('value: ', value)

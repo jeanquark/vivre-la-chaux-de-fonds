@@ -67,10 +67,10 @@
                         </b-col>
 
                         <b-col cols="12" class="my-2">
-                            form.image: {{ form.image }}
+                            <!-- form.image: {{ form.image }} -->
                             <div id="preview">
-    <img v-if="url" :src="url" style="width: 150px;" />
-  </div>
+                                <img v-if="imagePreview" :src="imagePreview" style="width: 150px;" />
+                            </div>
                             <b-form-file
                                 accept="image/jpeg, image/png"
                                 placeholder="Sélectionner une nouvelle image..."
@@ -99,43 +99,42 @@
 
                     <b-row class="justify-content-center my-3 px-3">
                         <b-col cols="12" class="my-0">
-                            Gallerie d'images:
-                            images: {{ images }}<br />
+                            Gallerie d'images:<br />
                             form.images: {{ form.images }}<br />
-                            url2: {{ url2 }}<br />
-                            <div v-for="(image, index) in form.images" :key="index">
-                                {{ image.name }}
-                            </div>
-                            <!-- <vue-upload-multiple-image
-                                dragText="Drag"
-                                browseText="Browse"
-                                primaryText=""
-                                markIsPrimaryText=""
-                                popupText=""
-                                dropText=""
-                                :maxImage="10"
-                                :data-images="form.images"
-                                @upload-success="uploadImageSuccess"
-                                @before-remove="beforeRemove"
-                                @edit-image="editImage"
-                            ></vue-upload-multiple-image> -->
+                            imagePreviewArray: {{ imagePreviewArray }}<br />
                             <b-form-file
                                 accept="image/jpeg, image/png"
                                 placeholder="Sélectionner de nouvelles images..."
                                 drop-placeholder="Placer vos images ici..."
                                 multiple
+                                ref="fileInput"
                                 @change="selectFiles"
-                                :class="{ 'is-invalid': form.errors.has('image') }"
                             ></b-form-file>
 
+                            <!-- <div id="preview">
+                                <img v-if="url" :src="url" width="100" />
+                            </div> -->
 
-
-<div v-for="(image, key) in form.images" style="border: 1px dashed red;">
-    <div>
-        <img class="preview" v-bind:ref="'image' +parseInt( key )" /> 
-        {{ image.name }}
-    </div>
-</div>
+                            <b-row>
+                                <b-col cols="12" sm="4" v-for="(image, index) in form.images" :key="index">
+                                    <b-card
+                                        title=""
+                                        :img-src="imagePreviewArray[index]"
+                                        img-alt="Image"
+                                        img-top
+                                        tag="article"
+                                        style=""
+                                        class="mb-2"
+                                    >
+                                        <b-card-text class="text-center">
+                                            {{ image.name }}
+                                        </b-card-text>
+                                        <div class="text-center">
+                                            <b-button small variant="danger" @click="removeImage(image.name)">Remove</b-button>
+                                        </div>
+                                    </b-card>
+                                </b-col>
+                            </b-row>
 
                         </b-col>
                     </b-row>
@@ -186,7 +185,7 @@ export default {
     data() {
         return {
             form: new Form({
-                name: 'abc',
+                name: '',
                 subtitle: '',
                 content: '',
                 start_date: '',
@@ -195,11 +194,13 @@ export default {
                 is_published: false,
                 sponsors: [],
                 images: [],
+                // images: new FormData()
             }),
             activitySponsors: [],
-            images: [],
-                url: null,
-                url2: []
+            imagePreview: null,
+            imagePreviewArray: [],
+            // images: [],
+            // url2: []
             // formNewImage: new Form({
             //     image: null,
             //     path: ''
@@ -222,30 +223,25 @@ export default {
     methods: {
         selectFile(e) {
             this.form.image = e.target.files[0]
-            this.url = URL.createObjectURL(e.target.files[0])
+            this.imagePreview = URL.createObjectURL(e.target.files[0])
         },
         selectFiles (e) {
-            console.log('e: ', e.target.files)
-            this.form.images = e.target.files
-            
-
-
-            // var selectedFiles = e.target.files;
-            // for (var i=0; i < selectedFiles.length; i++){
-            //     this.form.images.push(selectedFiles[i]);
-            // }
-
-            // for (var i=0; i<this.form.images.length; i++){
-            //     let reader = new FileReader(); //instantiate a new file reader
-            //     reader.addEventListener('load', function(){
-            //       this.$refs['image' + parseInt( i )][0].src = reader.result;
-            //     }.bind(this), false);  //add event listener
-
-            //     reader.readAsDataURL(this.form.images[i]);
-            // }
-
-
-
+            console.log('selectFiles e: ', e)
+            // console.log('e.target.files: ', e.target.files)
+            // console.log('e.target.files[0]: ', e.target.files[0])
+            if (e.target.files.length > 0) {
+                for (let i = 0; i < e.target.files.length; i++) {
+                    this.form.images.push(e.target.files[i])
+                }
+                this.$refs.fileInput.reset()
+            }
+            for (let i = 0; i < this.form.images.length; i++) {
+                this.imagePreviewArray[i] = URL.createObjectURL(this.form.images[i])            
+            }
+        },
+        removeImage (selectedImageName) {
+            console.log('removeImage: ', selectedImageName)
+            this.form.images = this.form.images.filter(image => image.name !== selectedImageName)
         },
         // uploadImageSuccess(formData, index, fileList) {
         //     console.log('data', formData, index, fileList)
@@ -272,10 +268,17 @@ export default {
         // },
         async createActivity() {
             try {
-                console.log('this.form: ', this.form)
+                console.log('form: ', this.form)
                 // this.form.images = this.form.images.map(image => image.path)
                 // console.log('form.images: ', this.form.images)
-                console.log('images: ', this.images)
+                console.log('form.images: ', this.form.images)
+                // console.log('form.images[0]: ', this.form.images[0])
+                // console.log('...form.images: ', ...this.form.images)
+                const abc = []
+
+                // for (let i = 0; i < this.form.images[0].length; i++) {
+                //     console.log('i: ', i)
+                // }
                 // return
 
                 this.$store.commit('loading/SET_LOADING', true)

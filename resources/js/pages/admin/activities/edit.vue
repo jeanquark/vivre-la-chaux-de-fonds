@@ -10,9 +10,14 @@
         <h2 class="text-center" v-if="activity">
             Editer activité <span class="primary-color">{{ activity.name }}</span>
         </h2>
-        <!-- activity: {{ activity }}<br /><br /> -->
-        <!-- activity.sponsors: {{ activity.sponsors }}<br /><br /> -->
-        <!-- form.sponsors: {{ form.sponsors }}<br /><br /> -->
+
+        <p v-if="activity">
+            activity: {{ activity }}<br /><br />
+            <!-- activity.sponsors: {{ activity.sponsors }}<br /><br /> -->
+            <!-- form.sponsors: {{ form.sponsors }}<br /><br /> -->
+            activity.images: {{ activity.images }}<br /><br />
+            form.images: {{ form.images }}<br /><br />
+        </p>
 
         <b-row class="justify-content-center">
             <b-col cols="12" md="8">
@@ -105,13 +110,68 @@
                             </b-form-group>
                         </b-col>
                     </b-row>
-
-                    <b-row class="justify-content-center my-2">
+                    
+                    <!-- <b-row class="justify-content-start my-2 px-3">
                         <b-col cols="12">
-                            <h3 class="text-center">Gallerie</h3>
-                            {{ activity.images }}
+                            <h4 class="text-center">Gallerie d'images</h4>
+                        </b-col>
+                        <b-col cols="12" sm="3" v-for="(image, index) in activity.images" :key="index">
+                            <b-card
+                                title=""
+                                :img-src="`/images/${image}`"
+                                img-alt="Image"
+                                img-top
+                                tag="article"
+                                style=""
+                                class="mb-2"
+                            >
+                                <div class="text-center">
+                                    <b-button small variant="danger" @click="removeImage(image)">Remove</b-button>
+                                </div>
+                            </b-card>
+                        </b-col>
+                    </b-row> -->
+
+
+                    <b-row class="justify-content-start my-3 px-3">
+                        <b-col cols="12" class="my-2">
+                            Gallerie d'images:<br />
+                            form.images: {{ form.images }}<br />
+                            imagePreviewArray: {{ imagePreviewArray }}<br />
+                            <b-form-file
+                                accept="image/jpeg, image/png"
+                                placeholder="Sélectionner de nouvelles images..."
+                                drop-placeholder="Placer vos images ici..."
+                                multiple
+                                ref="fileInput"
+                                @change="selectFiles"
+                            ></b-form-file>
+                        </b-col>
+
+
+                        <b-col cols="12" sm="4" class="my-2" v-for="(image, index) in form.images" :key="index">
+                            <b-card
+                                title=""
+                                :img-src="imagePreviewArray[index]"
+                                img-alt="Image"
+                                img-top
+                                tag="article"
+                                style=""
+                                class="mb-2"
+                            >
+                                <b-card-text class="text-center">
+                                    {{ image }}
+                                </b-card-text>
+                                <div class="text-center">
+                                    <b-button small variant="danger" @click="removeImage(image)">Remove</b-button>
+                                </div>
+                            </b-card>
                         </b-col>
                     </b-row>
+
+                    
+
+
                     <b-row class="justify-content-center my-2">
                         <b-button variant="primary" :disabled="loading" type="submit">
                             <b-spinner small type="grow" v-if="loading"></b-spinner>
@@ -149,9 +209,9 @@ export default {
         const activityId = parseInt(this.$route.params.id)
         console.log('activityId: ', activityId)
 
-        if (!this.$store.getters['activities/activities'][this.$route.params.id]) {
+        // if (!this.$store.getters['activities/activities'][this.$route.params.id] || !!this.$store.getters['activities/activities'][this.$route.params.id]['images']) {
+        if (!this.activity || !this.activity.images) {
             await this.$store.dispatch('activities/fetchActivityById', { activityId: this.$route.params.id })
-            // await this.$store.dispatch('activities/fetchActivities', { id: this.$route.params.id })
         }
 
         if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {
@@ -162,6 +222,16 @@ export default {
         console.log('this.form: ', this.form)
         this.form.fill(this.activity)
         this.activitySponsors = this.activity.sponsors
+
+        for (let i = 0; i < this.form.images.length; i++) {
+            if (typeof this.form.images[i] === 'object') {
+
+                this.imagePreviewArray[i] = URL.createObjectURL(this.form.images[i])            
+            } else {
+                this.imagePreviewArray[i] = `/images/${this.form.images[i]}`
+            }
+        }
+        
     },
     data() {
         return {
@@ -176,9 +246,12 @@ export default {
                 new_image: null,
                 is_published: false,
                 is_on_frontpage: false,
-                sponsors: []
+                sponsors: [],
+                images: []
             }),
-            activitySponsors: []
+            activitySponsors: [],
+            imagePreview: null,
+            imagePreviewArray: [],
         }
     },
     computed: {
@@ -205,9 +278,32 @@ export default {
         selectFile(e) {
             this.form.new_image = e.target.files[0]
         },
+        selectFiles (e) {
+            console.log('selectFiles e: ', e)
+            if (e.target.files.length > 0) {
+                for (let i = 0; i < e.target.files.length; i++) {
+                    this.form.images.push(e.target.files[i])
+                }
+                this.$refs.fileInput.reset()
+            }
+            for (let i = 0; i < this.form.images.length; i++) {
+                if (typeof this.form.images[i] === 'object') {
+
+                    this.imagePreviewArray[i] = URL.createObjectURL(this.form.images[i])            
+                } else {
+                    this.imagePreviewArray[i] = `/images/${this.form.images[i]}`
+                }
+            }
+        },
+        removeImage (selectedImageName) {
+            console.log('removeImage: ', selectedImageName)
+            this.form.images = this.form.images.filter(image => image.name !== selectedImageName)
+        },
         async updateActivity() {
             try {
-                console.log('this.form: ', this.form)
+                console.log('form: ', form)
+                console.log('form.images: ', form.images)
+                return
                 this.$store.commit('loading/SET_LOADING', true)
                 this.form['sponsors'] = this.activitySponsors.map(sponsor => parseInt(sponsor.id))
                 // return
