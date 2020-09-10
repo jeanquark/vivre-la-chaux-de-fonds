@@ -100,7 +100,7 @@ export default {
         async deleteActivity(activityId) {
             try {
                 const value = await this.$bvModal.msgBoxConfirm(`Etes-vous sûr de vouloir supprimer l'activité ${activityId}?`, {
-                    okTitle: 'OK',
+                    okTitle: 'Oui',
                     cancelTitle: 'Annuler'
                 })
                 console.log('value: ', value)

@@ -79,7 +79,7 @@ export default {
         async deleteSponsor(sponsorId) {
             try {
                 const value = await this.$bvModal.msgBoxConfirm(`Etes-vous sûr de vouloir supprimer le sponsor ${sponsorId}?`, {
-                    okTitle: 'OK',
+                    okTitle: 'Oui',
                     cancelTitle: 'Annuler'
                 })
                 console.log('value: ', value)

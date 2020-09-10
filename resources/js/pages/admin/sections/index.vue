@@ -124,7 +124,7 @@
 			async deleteSection (section) {
 				try {
 					const value = await this.$bvModal.msgBoxConfirm(`Etes-vous sûr de vouloir supprimer la section ${section.name}?`, {
-							okTitle: 'OK',
+							okTitle: 'Oui',
 							cancelTitle: 'Annuler',
 						}
 					)
