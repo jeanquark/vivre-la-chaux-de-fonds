@@ -1,91 +1,117 @@
 <template>
     <div>
-        <!-- <vue-navigation-bar :options="navbarOptions" /> -->
-
+        <!-- <b-container fluid> -->
         <!-- Navigation large screens -->
-        <nav class="d-none d-lg-block" style="">
-            <router-link to="/" id="logo">
-                <img src="/images/logo.png" width="150px" />
-            </router-link>
-            <ul>
-                <li>
-                    <router-link to="/" exact>Accueil</router-link>
-                </li>
-                <li>
-                    <router-link to="/association">Association</router-link>
-                </li>
-                <li>
-                    <router-link to="/actualites">
-                        Actualités & Manifestations
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/on-parle-de-nous">On parle de nous</router-link>
-                </li>
-                <!-- <li>
-                    <router-link to="/participez">Participez!</router-link>
-                </li> -->
-                <li>
-                    <div class="dropdown">
-                        <div class="dropbtn" :class="this.$route.path === '/participez' ? 'primary-color' : ''">
-                            Participez! <font-awesome-icon icon="chevron-down" />
-                        </div>
-                        <div class="dropdown-content">
-                            <router-link to="/participez">Devenir bénévole</router-link>
-                            <router-link to="/participez">Devenir membre</router-link>
-                            <router-link to="/participez">Partenariat</router-link>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <router-link to="/contact">Contact</router-link>
-                </li>
-                <li v-if="!authUser">
-                    <router-link to="/login">Login</router-link>
-                </li>
-                <li v-if="authUser && authUser.roles.includes('admin')">
-                    <router-link to="/admin">Admin</router-link>
-                </li>
-                <li v-if="authUser">
-                    <router-link to="/logout">Logout</router-link>
-                </li>
-            </ul>
-        </nav>
+        <b-row no-gutters align-h="center" align-v="center" class="" style="">
+            <b-col cols="2" style="border: 0px solid red;">
+                <router-link to="/">
+                    <img src="/images/logo.png" width="100%" style="border: 0px solid green;" />
+                </router-link>
+                <div class="d-md-none" style="text-align: center;">
+                    <img src="/images/svg/hamburger-menu.svg" width="25%" v-b-toggle.sidebar-1 class="hamburger-menu" />
+                </div>
+            </b-col>
+            <b-col cols="8" xs="6" md="9" class="" style="border: 0px solid orange; text-align: center;">
+                <nav class="d-none d-md-block">
+                    <ul class="">
+                        <li>
+                            <router-link to="/" exact>Accueil</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/association">Association</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/actualites">
+                                Actualités & Manifestations
+                            </router-link>
+                        </li>
+                        <li>
+                            <router-link to="/on-parle-de-nous">On parle de nous</router-link>
+                        </li>
+
+                        <li>
+                            <div class="dropdown">
+                                <div class="dropbtn" :class="this.$route.path === '/participez' ? 'primary-color' : ''">Participez! <font-awesome-icon icon="chevron-down" /></div>
+                                <div class="dropdown-content">
+                                    <router-link to="/participez">Devenir bénévole</router-link>
+                                    <router-link to="/participez">Devenir membre</router-link>
+                                    <router-link to="/participez">Partenariat</router-link>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <router-link to="/contact">Contact</router-link>
+                        </li>
+                        <li v-if="!authUser">
+                            <router-link to="/login">Login</router-link>
+                        </li>
+                        <li v-if="authUser && authUser.roles.includes('admin')">
+                            <router-link to="/admin">Admin</router-link>
+                        </li>
+                        <li v-if="authUser">
+                            <router-link to="/logout">Logout</router-link>
+                        </li>
+                    </ul>
+                </nav>
+            </b-col>
+            <b-col cols="2" xs="4" md="1" class="" style="border: 0px dashed orange; text-align: center;">
+                <router-link to="/">
+                    <img src="/images/svg/facebook.svg" width="40%" style="padding: 0 0em;" />
+                </router-link>
+                <router-link to="/">
+                    <img src="/images/svg/twitter.svg" width="40%" style="padding: 0 0em;" />
+                </router-link>
+            </b-col>
+        </b-row>
 
         <!-- Navigation small screens -->
-        <Bubble class="d-lg-none d-block" style="padding-bottom: 100px;">
-            <router-link to="/accueil" id="home">
-                <span>Accueil</span>
-            </router-link>
-            <router-link to="/association" id="home">
-                <span>Association</span>
-            </router-link>
-            <router-link to="/actualites" id="home">
-                <span>Actualités</span>
-            </router-link>
-            <router-link to="/on-parle-de-nous" id="home">
-                <span>On parle de nous</span>
-            </router-link>
-            <router-link to="/participez" id="home">
-                <span>Participez!</span>
-            </router-link>
-            <router-link to="/contact" id="home">
-                <span>Contact</span>
-            </router-link>
-        </Bubble>
+        <b-sidebar id="sidebar-1" title="VLCF Menu" shadow>
+            <ul style="list-style-type: none;">
+                <li style="display: block;">
+                    <router-link to="/" id="home">
+                        <span>Accueil</span>
+                    </router-link>
+                </li>
+                <li style="display: block;">
+                    <router-link to="/association" id="home">
+                        <span>Association</span>
+                    </router-link>
+                </li>
+                <li style="display: block;">
+                    <router-link to="/actualites" id="home">
+                        <span>Actualités</span>
+                    </router-link>
+                </li>
+                <li style="display: block;">
+                    <router-link to="/on-parle-de-nous" id="home">
+                        <span>On parle de nous</span>
+                    </router-link>
+                </li>
+                <li style="display: block;">
+                    <router-link to="/participez" id="home">
+                        <span>Participez!</span>
+                    </router-link>
+                </li>
+                <li style="display: block;">
+                    <router-link to="/contact" id="home">
+                        <span>Contact</span>
+                    </router-link>
+                </li>
+            </ul>
+        </b-sidebar>
 
         <!-- <p class="text-center">authUser: {{ authUser }}<br /><br /></p> -->
 
-        <child />
+        <b-row no-gutters class="mt-1" style="">
+            <child />
+        </b-row>
 
         <!-- <Footer /> -->
-        <!-- <div style="border: 2px solid green;">
-            <h2>Footer</h2>
-        </div> -->
         <footer>
             <h5 class="text-center my-0 py-2">vlcf.ch &copy;{{ new Date().getFullYear() }}</h5>
         </footer>
     </div>
+    <!-- </b-container> -->
 </template>
 
 <script>
@@ -136,20 +162,25 @@ body {
 <style lang="scss" scoped>
 @import './resources/sass/_variables.scss';
 nav {
-    padding: 50px;
+    padding: 0px;
 }
 nav ul {
     list-style-type: none;
-    float: right;
+    // float: right;
+    padding: 0px;
+    margin-bottom: 0px;
 }
 nav ul li {
-    float: left;
+    // float: left;
+    // display: inline;
+    display: inline-block;
+    padding: 10px 0px;
 }
 nav ul li a {
     color: #000;
-    padding: 0 16px;
-    font-size: 2.4em;
-    text-align: center;
+    padding: 0px 8px;
+    // font-size: 3.6em;
+    // text-align: center;
 }
 nav ul li a:hover {
     color: $primary;
@@ -216,6 +247,9 @@ a.router-link-active {
 .primary-color {
     color: $primary;
 }
+.hamburger-menu:hover {
+    cursor: pointer;
+}
 
 /* Small devices (phones) */
 @media only screen and (min-width: 576px) {
@@ -276,8 +310,8 @@ footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background: #FFF;
-    opacity: .7;
+    background: #fff;
+    opacity: 0.7;
     // border-top: 4px solid $primary;
 }
 </style>

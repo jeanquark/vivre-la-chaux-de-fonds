@@ -1,22 +1,22 @@
 <template>
-    <b-container>
-        <!-- page: {{ page }}<br /> -->
-        <b-row class="justify-content-center">
+    <b-container fluid>
+        <!-- <b-row class="justify-content-start">
             <b-col cols="12" md="8" v-if="page && page.content">
                 <b-card class="card mb-3">
                     <b-card-text v-html="page.content"> </b-card-text>
                 </b-card>
             </b-col>
-        </b-row>
-        <b-row class="justify-content-center">
-            <b-col cols="12" md="8" v-if="page && page.sections">
+        </b-row> -->
+        <!-- screenWidth: {{ screenWidth }}<br /> -->
+        <b-row :class="screenWidth <= 992 ? 'justify-content-center' : 'justify-content-center'">
+            <b-col cols="12" md="6" xl="4" v-if="page && page.sections">
                 <b-card class="card mb-3" v-for="section in page.sections" :key="section.id">
                     <b-card-text v-html="section.content"> </b-card-text>
                 </b-card>
             </b-col>
         </b-row>
         <b-row class="justify-content-center">
-            <b-col cols="12" md="6" lg="4" class="p-5" style="" v-for="activity in activities" :key="activity.id">
+            <b-col cols="12" md="6" xl="4" class="p-5" style="" v-for="activity in activities" :key="activity.id">
                 <b-card :img-src="`/images/${activity.image}`" :img-alt="`${activity.name}`" img-top style="border: none;">
                     <b-card-text class="text-center">
                         <h5 class="my-2">{{ activity.name }}</h5>
@@ -46,6 +46,9 @@ export default {
         return {}
     },
     computed: {
+        screenWidth() {
+            return window.innerWidth 
+        },
         pages() {
             return this.$store.getters['pages/pages']
         },
