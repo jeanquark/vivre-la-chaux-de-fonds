@@ -2,13 +2,13 @@
     <div>
         <!-- <b-container fluid> -->
         <!-- Navigation large screens -->
-        <b-row no-gutters align-h="center" align-v="center" class="" style="">
+        <b-row no-gutters align-h="center" align-v="center" class="mb-4" style="">
             <b-col cols="2" style="border: 0px solid red;">
                 <router-link to="/">
                     <img src="/images/logo.png" width="100%" style="border: 0px solid green;" />
                 </router-link>
                 <div class="d-md-none" style="text-align: center;">
-                    <img src="/images/svg/hamburger-menu.svg" width="25%" v-b-toggle.sidebar-1 class="hamburger-menu" />
+                    <img src="/images/svg/hamburger-menu.svg" width="35%" v-b-toggle.sidebar-1 class="hamburger-menu" />
                 </div>
             </b-col>
             <b-col cols="8" xs="6" md="9" class="" style="border: 0px solid orange; text-align: center;">
@@ -66,47 +66,44 @@
 
         <!-- Navigation small screens -->
         <b-sidebar id="sidebar-1" title="VLCF Menu" shadow>
-            <ul style="list-style-type: none;">
-                <li style="display: block;">
-                    <router-link to="/" id="home">
+            <ul style="list-style-type: none; padding-left: 1em;">
+                <li class="menu-small-screen" style="">
+                    <router-link to="/" exact>
                         <span>Accueil</span>
                     </router-link>
                 </li>
-                <li style="display: block;">
-                    <router-link to="/association" id="home">
+                <li class="menu-small-screen" style="">
+                    <router-link to="/association">
                         <span>Association</span>
                     </router-link>
                 </li>
-                <li style="display: block;">
-                    <router-link to="/actualites" id="home">
+                <li class="menu-small-screen" style="">
+                    <router-link to="/actualites">
                         <span>Actualités</span>
                     </router-link>
                 </li>
-                <li style="display: block;">
-                    <router-link to="/on-parle-de-nous" id="home">
+                <li class="menu-small-screen" style="">
+                    <router-link to="/on-parle-de-nous">
                         <span>On parle de nous</span>
                     </router-link>
                 </li>
-                <li style="display: block;">
-                    <router-link to="/participez" id="home">
+                <li class="menu-small-screen" style="">
+                    <router-link to="/participez">
                         <span>Participez!</span>
                     </router-link>
                 </li>
-                <li style="display: block;">
-                    <router-link to="/contact" id="home">
+                <li class="menu-small-screen" style="">
+                    <router-link to="/contact">
                         <span>Contact</span>
                     </router-link>
                 </li>
             </ul>
         </b-sidebar>
 
-        <!-- <p class="text-center">authUser: {{ authUser }}<br /><br /></p> -->
-
         <b-row no-gutters class="mt-1" style="">
             <child />
         </b-row>
 
-        <!-- <Footer /> -->
         <footer>
             <h5 class="text-center my-0 py-2">vlcf.ch &copy;{{ new Date().getFullYear() }}</h5>
         </footer>
@@ -115,14 +112,10 @@
 </template>
 
 <script>
-// import VueNavigationBar from "vue-navigation-bar";
-// import "vue-navigation-bar/dist/vue-navigation-bar.css";
-
-import { Slide, Bubble } from 'vue-burger-menu'
-import Footer from '~/components/Footer'
+import { Slide } from 'vue-burger-menu'
 export default {
     name: 'FrontendLayout',
-    components: { Slide, Bubble, Footer },
+    components: { Slide },
     created() {
         console.log('Using frontend layout!')
     },
@@ -161,26 +154,28 @@ body {
 </style>
 <style lang="scss" scoped>
 @import './resources/sass/_variables.scss';
+.menu-small-screen {
+    display: block;
+    padding: .8em 0em;
+}
+.menu-small-screen a{
+    color: $dark;
+}
 nav {
     padding: 0px;
 }
 nav ul {
     list-style-type: none;
-    // float: right;
     padding: 0px;
     margin-bottom: 0px;
 }
 nav ul li {
-    // float: left;
-    // display: inline;
     display: inline-block;
     padding: 10px 0px;
 }
 nav ul li a {
     color: #000;
     padding: 0px 8px;
-    // font-size: 3.6em;
-    // text-align: center;
 }
 nav ul li a:hover {
     color: $primary;
@@ -192,10 +187,7 @@ a {
 }
 
 .dropbtn {
-    /*background-color: #4CAF50;*/
     color: #000;
-    /*padding: 16px;*/
-    /*font-size: 16px;*/
     border: none;
     padding: 0 16px;
 }

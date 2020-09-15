@@ -3,14 +3,19 @@
         <b-row class="justify-content-center">
             <b-col cols="12" md="8" v-if="activity">
                 <!-- activity: {{ activity }}<br /><br /> -->
-                <b-card :img-src="`/images/${activity.image}`" :img-alt="`${activity.name}`" img-top tag="article" class="mb-2" style="border: none;" >
+                <div class="text-center mb-2">
+                    <router-link to="/actualites">&larr; Retour vers les manifestations</router-link>
+                </div>
+                <b-card :img-src="`/images/${activity.image}`" :img-alt="`${activity.name}`" img-top tag="article" class="mb-2" style="border: none;">
                     <b-card-text class="text-center">
                         <h5>{{ activity.name }}</h5>
                         <span v-html="activity.content"></span><br />
                         <!-- activity.images: {{ activity.images }} -->
                         <b-row class="mt-4">
                             <b-col cols="12" sm="4" md="3" v-for="(imagePath, index) in activity.images" :key="index">
-                              <b-img thumbnail fluid :src="`/images/${imagePath}`" alt="Image 1"></b-img>
+                                <router-link :to="`/images/${imagePath}`" target="_blank">
+                                    <b-img thumbnail fluid :src="`/images/${imagePath}`" alt="Image 1"></b-img>
+                                </router-link>
                             </b-col>
                         </b-row>
                     </b-card-text>
@@ -26,17 +31,13 @@ export default {
     metaInfo() {
         return { title: 'Actualité' }
     },
-    async created () {
-        // if (!this.$store.getters['activities/activities'][this.$route.params.slug]) {
+    async created() {
         if (!this.activity || !this.activity.images) {
-            // console.log('load')
             await this.$store.dispatch('activities/fetchActivityBySlug', { activitySlug: this.$route.params.slug })
-            // await this.$store.dispatch('activities/fetchActivities', { slug: this.$route.params.slug })
         }
     },
     mounted() {
         console.log(this.$route.params.slug)
-        
     },
     data() {
         return {
@@ -45,9 +46,6 @@ export default {
     },
     computed: {
         activity() {
-            // return this.$store.getters['activities/activities'][this.$route.params.slug]
-            // .find(activity => activity.slug === this.$route.params.slug)
-            // return Object.values(this.$store.getters['activities/activities'][1])
             return Object.values(this.$store.getters['activities/activities']).find(activity => activity.slug === this.$route.params.slug)
         }
     }

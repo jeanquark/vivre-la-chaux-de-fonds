@@ -4,7 +4,7 @@
         <!-- activities: {{ activities }}<br /><br /> -->
         <!-- publishedActivities: {{ publishedActivities }}<br /><br /> -->
         <b-row class="justify-content-center mt-5">
-            <b-col cols="12" sm="6" md="4" lg="4" class="px-5" v-for="activity in publishedActivities" :key="activity.id">
+            <b-col cols="12" sm="6" md="4" lg="4" class="my-3 px-5" v-for="activity in publishedActivities" :key="activity.id">
                 <b-card :img-src="`/images/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" style="border: none;">
                     <b-card-text class="text-center">
                         <h5 class="my-2">{{ activity.name }}</h5>
