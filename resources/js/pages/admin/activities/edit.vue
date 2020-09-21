@@ -12,11 +12,11 @@
         </h2>
 
         <p v-if="activity">
-            activity: {{ activity }}<br /><br />
+            <!-- activity: {{ activity }}<br /><br /> -->
             <!-- activity.sponsors: {{ activity.sponsors }}<br /><br /> -->
             <!-- form.sponsors: {{ form.sponsors }}<br /><br /> -->
-            activity.images: {{ activity.images }}<br /><br />
-            form.images: {{ form.images }}<br /><br />
+            <!-- activity.images: {{ activity.images }}<br /><br /> -->
+            <!-- form.images: {{ form.images }}<br /><br /> -->
         </p>
 
         <b-row class="justify-content-center">
@@ -110,7 +110,7 @@
                             </b-form-group>
                         </b-col>
                     </b-row>
-                    
+
                     <!-- <b-row class="justify-content-start my-2 px-3">
                         <b-col cols="12">
                             <h4 class="text-center">Gallerie d'images</h4>
@@ -132,12 +132,11 @@
                         </b-col>
                     </b-row> -->
 
-
                     <b-row class="justify-content-start my-3 px-3">
                         <b-col cols="12" class="my-2">
                             Gallerie d'images:<br />
-                            form.images: {{ form.images }}<br />
-                            imagePreviewArray: {{ imagePreviewArray }}<br />
+                            <!-- form.images: {{ form.images }}<br /> -->
+                            <!-- imagePreviewArray: {{ imagePreviewArray }}<br /> -->
                             <b-form-file
                                 accept="image/jpeg, image/png"
                                 placeholder="Sélectionner de nouvelles images..."
@@ -148,17 +147,8 @@
                             ></b-form-file>
                         </b-col>
 
-
                         <b-col cols="12" sm="4" class="my-2" v-for="(image, index) in form.images" :key="index">
-                            <b-card
-                                title=""
-                                :img-src="imagePreviewArray[index]"
-                                img-alt="Image"
-                                img-top
-                                tag="article"
-                                style=""
-                                class="mb-2"
-                            >
+                            <b-card title="" :img-src="imagePreviewArray[index]" img-alt="Image" img-top tag="article" style="" class="mb-2">
                                 <b-card-text class="text-center">
                                     {{ image }}
                                 </b-card-text>
@@ -168,9 +158,6 @@
                             </b-card>
                         </b-col>
                     </b-row>
-
-                    
-
 
                     <b-row class="justify-content-center my-2">
                         <b-button variant="primary" :disabled="loading" type="submit">
@@ -225,13 +212,11 @@ export default {
 
         for (let i = 0; i < this.form.images.length; i++) {
             if (typeof this.form.images[i] === 'object') {
-
-                this.imagePreviewArray[i] = URL.createObjectURL(this.form.images[i])            
+                this.imagePreviewArray[i] = URL.createObjectURL(this.form.images[i])
             } else {
                 this.imagePreviewArray[i] = `/images/${this.form.images[i]}`
             }
         }
-        
     },
     data() {
         return {
@@ -251,7 +236,7 @@ export default {
             }),
             activitySponsors: [],
             imagePreview: null,
-            imagePreviewArray: [],
+            imagePreviewArray: []
         }
     },
     computed: {
@@ -278,7 +263,7 @@ export default {
         selectFile(e) {
             this.form.new_image = e.target.files[0]
         },
-        selectFiles (e) {
+        selectFiles(e) {
             console.log('selectFiles e: ', e)
             if (e.target.files.length > 0) {
                 for (let i = 0; i < e.target.files.length; i++) {
@@ -288,22 +273,21 @@ export default {
             }
             for (let i = 0; i < this.form.images.length; i++) {
                 if (typeof this.form.images[i] === 'object') {
-
-                    this.imagePreviewArray[i] = URL.createObjectURL(this.form.images[i])            
+                    this.imagePreviewArray[i] = URL.createObjectURL(this.form.images[i])
                 } else {
                     this.imagePreviewArray[i] = `/images/${this.form.images[i]}`
                 }
             }
         },
-        removeImage (selectedImageName) {
+        removeImage(selectedImageName) {
             console.log('removeImage: ', selectedImageName)
             this.form.images = this.form.images.filter(image => image.name !== selectedImageName)
         },
         async updateActivity() {
             try {
-                console.log('form: ', form)
-                console.log('form.images: ', form.images)
-                return
+                console.log('form: ', this.form)
+                console.log('form.images: ', this.form.images)
+                // return
                 this.$store.commit('loading/SET_LOADING', true)
                 this.form['sponsors'] = this.activitySponsors.map(sponsor => parseInt(sponsor.id))
                 // return

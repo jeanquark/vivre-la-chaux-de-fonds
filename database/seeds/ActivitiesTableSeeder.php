@@ -22,8 +22,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Vivre La Chaux-de-Fonds présente la 1re édition du Festival 1000Jazz du 5 au 7 novembre 2020',
                 'content'           => '<p><strong>Vivre La Chaux-de-Fonds présente la 1re édition du Festival 1000Jazz du 5 au 7 novembre 2020</strong></p><p> </p><p><strong>Le premier week-end de novembre sera Jazz dans la Métropole horlogère. Le festival 1000Jazz voit le jour à l’initiative de l’association Vivre La Chaux-de-Fonds. En collaboration avec plusieurs partenaires culturels de la Ville, le festival mettra en avant la scène contemporaine du jazz et sa diversité de styles à travers neuf concerts en trois jours.</strong></p><p> </p><p>L’idée du festival 1000Jazz s’inscrit dans une volonté de pérenniser sous un nouveau regard la tradition du jazz à La Chaux-de-Fonds. Dès les années 30, ce style musical s’est en effet invité dans de nombreuses brasseries de la Métropole horlogère avec la présence de plusieurs artistes célèbres.</p><p> </p><p>Pourtant, 1000Jazz ne veut pas être un miroir du passé et ambitionne de diffuser, dans les salles chaux-de-fonnières, la diversité de styles du jazz actuel. La Chaux-de-Fonds accueillera sur trois jours une sélection de ce qu’il se fait de mieux sur la scène actuelle. La Suisse sera largement à l’honneur, puisque deux tiers des groupes programmés seront helvétiques.</p><p> </p><p>Pour mener à bien ce projet, l’association Vivre La Chaux-de-Fonds s’est entourée de plusieurs partenaires au sein de la culture locale. La programmation a été entièrement mise sur pied par Philippe Cattin, programmateur des Murs du son. Il s’agit d’une association active depuis plus de 20 ans dans l’organisation de concerts de Jazz en ville. Le festival se tiendra dans des salles à l’atmosphère intimiste grâce aux partenariats conclus avec le Théâtre populaire romand – Centre neuchâtelois des arts vivants (théâtre de L’Heure bleue), la Fondation Ton sur Ton (salle Ton sur Ton), le Centre ABC (Temple allemand), ou encore le restaurant La Différence (cave du Petit Paris).</p><p> </p><p>La programmation de 1000Jazz sera dévoilée à la mi-août. La billetterie ouvrira au même moment à des prix attractifs.</p>',
                 'image'             => 'activities/1000_jazz_2020.png',
-                // 'start_date'    => '',
-                // 'end_date'      => '',
+                'start_date'        => '2020-11-05',
+                'end_date'          => '2020-11-07',
                 'is_published'      => true,
                 'is_on_frontpage'   => true
             ],
@@ -33,6 +33,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Samedi 16 mars 2019',
                 'content'           => '',
                 'image'             => 'activities/saint_patrick_2019.jpg',
+                'start_date'        => '2019-03-16',
+                'end_date'          => '2019-03-16',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -42,6 +44,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Jeudi 6 décembre 2018',
                 'content'           => '',
                 'image'             => 'activities/saint_nicolas_2018.jpg',
+                'start_date'        => '2018-12-06',
+                'end_date'          => '2018-12-06',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -51,6 +55,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Mercredi 6 décembre 2017',
                 'content'           => '',
                 'image'             => 'activities/saint_nicolas_2017.jpg',
+                'start_date'        => '2017-12-06',
+                'end_date'          => '2017-12-06',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -60,6 +66,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Vendredi 15 septembre 2017 - Samedi 7 octobre 2017',
                 'content'           => '',
                 'image'             => 'activities/ola_portugal_2017.jpg',
+                'start_date'        => '2017-09-15',
+                'end_date'          => '2017-10-07',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -69,6 +77,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Mardi 6 décembre 2016',
                 'content'           => '',
                 'image'             => 'activities/saint_nicolas_2016.jpg',
+                'start_date'        => '2016-12-06',
+                'end_date'          => '2016-12-06',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -98,6 +108,8 @@ class ActivitiesTableSeeder extends Seeder
                     <p><img src="/sites/default/files/styles/large/public/PlonkReplonkpod01.jpg?itok=ytXsZWuY" alt="" class="image-large" /></p>
                     <h1>Ecologie et recyclage</h1><p>Convaincus que nous pouvons tous participer à la diminution du réchauffement climatique, nous proposons de compenser les émissions de carbone occasionnées par l’organisation de cet événement.</p><p>Grâce aux services d’une entreprise spécialisée, les émissions engendrées sont transformées en francs qui sont versés au service des Espaces Verts pour la plantation d’arbres dans les parcs chaux-de-fonniers.</p><p>Depuis 2010, nous n’utilisons que de la vaisselle recyclable et des gobelets réutilisables lors de nos manifestations. De même, nous mettons tout en œuvre afin de n’utiliser que des matériaux recyclables pour les constructions éphémères de nos manifestations.</p></div>',
                 'image'             => 'activities/ki_ke_koi_2016.jpg',
+                'start_date'        => '2016-06-04',
+                'end_date'          => '2019-08-06',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -107,6 +119,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Dimanche 6 décembre 2015',
                 'content'           => '',
                 'image'             => 'activities/saint_nicolas_2015.jpg',
+                'start_date'        => '2015-12-06',
+                'end_date'          => '2015-12-06',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -116,6 +130,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Jeudi 7 mai 2015',
                 'content'           => 'Les maîtres du temps',
                 'image'             => 'activities/soiree_de_gala_2015.jpg',
+                'start_date'        => '2015-05-07',
+                'end_date'          => '2015-05-07',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -125,6 +141,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Samedi 8 mars 2014',
                 'content'           => 'Dans le cadre de la 5e édition du festival de jeux « Ludeso » qui se tiendra du 7 au 9 mars 2014, Vivre la Chaux-de-Fonds vous propose « Histoires de Voir », un jeu de piste historique à travers les rues de la ville. <p><img alt="" class="file-icon" src="/images/svg/file-pdf.svg" title="application/pdf" /><a href="/documents/activities/chasse_au_tresor_2014/questions_et_reponses_des_postes.pdf" title="Réponses aux questions des postes">Réponses aux questions des postes</a></p><p><img alt="" class="file-icon" src="/images/svg/file-pdf.svg" title="application/pdf" /><a href="/documents/activities/chasse_au_tresor_2014/corrections_chasse_au_tresor.pdf" title="Réponses aux guides historiques">Réponses aux guides historiques</a></p>',
                 'image'             => 'activities/chasse_au_tresor_2014.jpg',
+                'start_date'        => '2014-03-08',
+                'end_date'          => '2014-03-08',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -134,6 +152,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Vendredi 6 décembre 2013',
                 'content'           => '',
                 'image'             => 'activities/saint_nicolas_2013.jpg',
+                'start_date'        => '2013-12-06',
+                'end_date'          => '2013-12-06',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -143,6 +163,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Vendredi 5 octobre 2012 - Dimanche 7 octobre 2012',
                 'content'           => '',
                 'image'             => 'activities/chasse_au_tresor_2012.jpg',
+                'start_date'        => '2012-10-05',
+                'end_date'          => '2012-10-07',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -152,6 +174,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Jeudi 1 décembre 2011 - Samedi 24 décembre 2011',
                 'content'           => '<h2>Noël dans tous les sens pour les dix ans de Vivre La Chaux-de-Fonds</h2><p>Pour le dixième anniversaire de sa renaissance, l’association Vivre La Chaux-de-Fonds offre un Noël dans tous les sens aux Chaux-de-Fonniers. Pendant 24 jours, un Calendrier de l’Avent géant et original va s’effeuiller sur la place Espacité, au cœur de la ville. Cet événement, en forme de cadeau à nos concitoyens, nous permettra de prolonger et de ponctuer les festivités de notre dixième anniversaire. Dix ans marqués par la création et le lancement de nombreuses manifestations ou animations ponctuelles et diverses. Faut-il rappeler ici le succès des Viv’Amitiés organisées sur le thème de la Belgique, l’Italie et Helvetissima? Ou encore celui de notre Chasse au trésor en 2010, de nos Saint-Sylvestre et de nos autres nombreux événements? Depuis 2001, notre association a proposé une cinquantaine d’animations. Vivre La Chaux-de-Fonds voulait témoigner de la vitalité de sa ville et stimuler la création de nouveaux événements. La liste des manifestations organisées témoignent de cette réussite.</p><h2>Un village de Noël féérique</h2><p>Comme annoncé, un nouveau Calendrier de l’Avent va égayer le centre-ville entre le 1er et le 24 décembre prochain. Le thème cette année est les cinq sens, enrichis d’un sens vital: l’humour. A l’image de nos autres animations, celle-ci se veut festive, rassembleuse et conviviale. Tous les jours, 24 personnalités de la ville se mettront en scène et feront partager un de leur souvenir sur le thème des cinq sens. Le tout avec une touche d’humour et dans la bonne humeur.</p><p>Un village de Noël féérique animera tous les jours la place Espacité. Dans une douzaine de chalets, divers artisans, producteurs ou agriculteurs se succèderont pour proposer leurs produits ou créations. Dans l’ambiance de Noël, nos citoyens pourront assister à des animations quotidiennes sur des sujets variés.</p><p>Le tout au cœur de leur ville!</p>',
                 'image'             => 'activities/calendrier_de_lavent_2011.jpg',
+                'start_date'        => '2011-12-01',
+                'end_date'          => '2011-12-24',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -161,6 +185,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Vendredi 21 octobre 2011',
                 'content'           => '',
                 'image'             => 'activities/soiree_de_gala_2011.jpg',
+                'start_date'        => '2011-10-21',
+                'end_date'          => '2011-10-21',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -170,6 +196,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Lundi 6 décembre 2010',
                 'content'           => '',
                 'image'             => 'activities/saint_nicolas_2010.jpg',
+                'start_date'        => '2010-12-06',
+                'end_date'          => '2010-12-06',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -179,6 +207,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Samedi 2 octobre 2010 - Dimanche 3 octobre 2010',
                 'content'           => '<h2>La Grande Chasse aux trésors a eu lieu!</h2><p>En famille, par groupe, en couple ou individuellement, chacun est parti à la découverte des moments et événements clés qui ont façonnés la ville. <strong>D’énigmes en questions, de quizz en jeux d’adresse ou de réflexion</strong>, les participants ont silloné la ville au gré de leurs réponses, découvrant ainsi des lieux jalonnés de spectacles et d’animations.</p><p><strong>Qui dit chasse au trésor, dit magot, bien sûr !</strong> Chaque équipe a reçu une bourse contenant quelques batz de départ, spécialement frappés pour l’occasion. Le but était de la faire déborder d’or. Chacun a du répondre à des énigmes, si les plus jeunes n\'ont pu que gagner des pièces sonnantes et trébuchantes... attention, les adultes distraits ont parfois perdu jusqu’à leur dernier centime ! Réflexion, adresse et cohésion étaient obligatoire dans les équipes !</p><p>En collaboration avec des acteurs et des musiciens, Vivre La Chaux-de-Fonds a eu la ferme volonté de créer un événement populaire et fédérateur. Les participants étaient encouragés à se déplacer d’un lieu à l’autre par la mobilité douce, à pied, à vélo, en roller ou en transport publics.</p><p><strong>Après la chasse et l’effort, le réconfort.</strong> Le dimanche était réservé à un fabuleux repas, comme l’aurait aimé Jacques Sandoz, fait de sangliers à la broche et d’autres spécialités d’époque. Une tente était aménagée sur la place Espacité pour que ce repas soit un vrai moment de convivialité pour tous, chaux-de-fonniers de toujours ou gens venus d’ailleurs, curieux de découvrir, sous une forme originale, une ville et ses acteurs en lesquels nous croyons.</p>',
                 'image'             => 'activities/chasse_au_tresor_2010.jpg',
+                'start_date'        => '2010-10-02',
+                'end_date'          => '2010-10-03',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -188,6 +218,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Dimanche 6 décembre 2009',
                 'content'           => 'Au parc Gallet',
                 'image'             => 'activities/saint_nicolas_2009.jpg',
+                'start_date'        => '2009-12-06',
+                'end_date'          => '2009-12-06',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -197,6 +229,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Lundi 1 décembre 2008 - Mercredi 31 décembre 2008',
                 'content'           => '',
                 'image'             => 'activities/calendrier_de_lavent_2008.jpg',
+                'start_date'        => '2008-12-01',
+                'end_date'          => '2008-12-31',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -206,6 +240,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Dimanche 1 avril 2007 - Dimanche 22 avril 2007',
                 'content'           => '<p><strong>Helvetissima, au travers des clichés helvétiques, un événement sur les multiples aspects culturel de notre pays, un succès largement relayé par les médias, au-delà de nos frontières. </strong></p><p>S’il est parfois plus difficile de croire en ses propres valeurs et qualités qu’en celles des autres, après L’Italie et La Belgique, la population chaux-de-fonnière a eu l’occasion de se rassurer quant à sa créativité et à son énergie. Fondue géante, éclipse musicale, débat sur la lecture de l’heure, mode traditionnelle revisitée, röstis, concerts classiques, folkloriques ou rock ont balisés de moments intenses un mois riche en suisses-attitudes dans lesquelles chacun a pu se reconnaître et découvrir une énergie communicative.</p>',
                 'image'             => 'activities/les_vivamities_helvetissima_2007.jpg',
+                'start_date'        => '2007-04-01',
+                'end_date'          => '2007-04-22',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -215,6 +251,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Mercredi 6 décembre 2006',
                 'content'           => '',
                 'image'             => 'activities/saint_nicolas_2006.jpg',
+                'start_date'        => '2006-12-06',
+                'end_date'          => '2006-12-06',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -224,6 +262,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Samedi 31 décembre 2005',
                 'content'           => '',
                 'image'             => 'activities/saint_sylvestre_2005.jpg',
+                'start_date'        => '2005-12-31',
+                'end_date'          => '2005-12-31',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -233,6 +273,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Samedi 17 décembre 2005',
                 'content'           => '',
                 'image'             => 'activities/vivanoel_2005.jpg',
+                'start_date'        => '2005-12-17',
+                'end_date'          => '2005-12-17',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -242,6 +284,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Jeudi 1 avril 2004 - Vendredi 30 avril 2004',
                 'content'           => '<h2>La Belgique et ses 3 communautés, Flandres-Wallonie-Bruxelles.</h2><p>L’occasion pour les chaux-de-fonniers de découvrir, au-delà des clichés, une région « jumelée » à la nôtre. Si la culture de la BD, du chocolat, du diamant et des moules – frites ne sont pas des légendes, comme ont pu le constater avec enthousiame les habitants de la région, ces semaines « belges » ont été autant d’occasions de reconnaître la créativité des Belges en matière d’arts : mode, cuisine et gastronomie, musique classique, populaire ou jazz, théatre, cinéma et humour.</p><p>Succès sur toute la ligne pour cette manifestation conviviale, ponctuée par une fabuleux final musical réunissant plus de 150 saxophonistes. L’engouement de la population par sa participation et son engagement n’est plus à prouver.</p>',
                 'image'             => 'activities/vivamities_2004.jpg',
+                'start_date'        => '2004-04-01',
+                'end_date'          => '2004-04-30',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -251,6 +295,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Dimanche 1 décembre 2002 - Mardi 24 décembre 2002',
                 'content'           => '',
                 'image'             => 'activities/calendrier_de_lavent_2002.jpg',
+                'start_date'        => '2002-12-01',
+                'end_date'          => '2002-12-24',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -260,6 +306,8 @@ class ActivitiesTableSeeder extends Seeder
                 'subtitle'          => 'Mardi 1 octobre 2002 - Jeudi 31 octobre 2002',
                 'content'           => '<h2>L’Italie est à l’honneur à La Chaux-de-Fonds.</h2><p>Plus de 50 événements ont lieu durant tout le mois d’octobre. Populaire ou plus intimiste chaque événement à connu le succès. Un risotto géant sur la place de la gare, des lectures de poésie italienne à la cave à mots, un stade de la charrière occupé par plus de 4000 spectateurs lors d’un match opposant La Suisse et L’Italie des M20, un plongeon dans l’univers de la mode, des conférences, des dégustations, des concerts, des expositions, les commerces, les restaurants, les écoles et la population dans son ensemble ont vécu un mois à l’heure italienne.</p><p>Tous ces moments forts ont permis de rappeller les liens étroits, qui unissent notre ville et la communauté transalpine dont le nombreux représentants en font aussi aujourd\'hui ce qu\'elle est.</p>',
                 'image'             => 'activities/vivamities_2002.jpg',
+                'start_date'        => '2002-10-01',
+                'end_date'          => '2002-10-31',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -280,7 +328,7 @@ class ActivitiesTableSeeder extends Seeder
                 'name'          => 'La Semeuse',
                 'slug'          => 'la_semeuse',
                 'image'         => 'partenaires/la_semeuse.jpg',
-                'contribution'  => 20000,
+                'contribution'  => 0,
                 // 'end_date'      => '',
                 'is_active'     => true
             ],
@@ -288,7 +336,7 @@ class ActivitiesTableSeeder extends Seeder
                 'name'          => 'Axa',
                 'slug'          => 'axa',
                 'image'         => 'partenaires/axa.jpg',
-                'contribution'  => 45000,
+                'contribution'  => 0,
                 // 'end_date'      => '',
                 'is_active'     => true
             ],
@@ -296,10 +344,74 @@ class ActivitiesTableSeeder extends Seeder
                 'name'          => 'Loterie Romande',
                 'slug'          => 'loterie_romande',
                 'image'         => 'partenaires/loterie_romande.png',
-                'contribution'  => 50000,
+                'contribution'  => 0,
                 // 'end_date'      => '',
                 'is_active'     => true
             ],
+            [
+                'name'          => 'Garage Proietti',
+                'slug'          => 'garage_proietti',
+                'image'         => 'partenaires/garage_proietti.png',
+                'contribution'  => 0,
+                // 'end_date'      => '',
+                'is_active'     => true
+            ],
+            [
+                'name'          => 'RTN',
+                'slug'          => 'rtn',
+                'image'         => 'partenaires/rtn.png',
+                'contribution'  => 0,
+                // 'end_date'      => '',
+                'is_active'     => true
+            ],
+            [
+                'name'          => 'La Chaux-de-Fonds Métropole horlogère',
+                'slug'          => 'metropole_horlogere',
+                'image'         => 'partenaires/metropole_horlogere.png',
+                'contribution'  => 0,
+                // 'end_date'      => '',
+                'is_active'     => true
+            ],
+            [
+                'name'          => 'RJB',
+                'slug'          => 'rjb',
+                'image'         => 'partenaires/rjb.png',
+                'contribution'  => 0,
+                // 'end_date'      => '',
+                'is_active'     => true
+            ],
+            [
+                'name'          => 'NSA Sécurité',
+                'slug'          => 'nsa_securite',
+                'image'         => 'partenaires/nsa_securite.jpg',
+                'contribution'  => 0,
+                // 'end_date'      => '',
+                'is_active'     => true
+            ],
+            [
+                'name'          => 'RFJ',
+                'slug'          => 'rfj',
+                'image'         => 'partenaires/rfj.png',
+                'contribution'  => 0,
+                // 'end_date'      => '',
+                'is_active'     => true
+            ],
+            [
+                'name'          => 'Mon école',
+                'slug'          => 'mon_ecole',
+                'image'         => 'partenaires/mon_ecole.png',
+                'contribution'  => 0,
+                // 'end_date'      => '',
+                'is_active'     => true
+            ],
+            [
+                'name'          => 'Viteos',
+                'slug'          => 'viteos',
+                'image'         => 'partenaires/viteos.png',
+                'contribution'  => 0,
+                // 'end_date'      => '',
+                'is_active'     => true
+            ]
         ];
 
         foreach ($sponsors as $sponsor) {

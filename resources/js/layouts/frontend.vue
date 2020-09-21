@@ -56,10 +56,10 @@
             </b-col>
             <b-col cols="2" xs="4" md="1" class="" style="border: 0px dashed orange; text-align: center;">
                 <router-link to="/">
-                    <img src="/images/svg/facebook.svg" width="40%" style="padding: 0 0em;" />
+                    <img src="/images/svg/facebook.svg" width="35%" style="padding: 0 0em;" />
                 </router-link>
                 <router-link to="/">
-                    <img src="/images/svg/twitter.svg" width="40%" style="padding: 0 0em;" />
+                    <img src="/images/svg/twitter.svg" width="35%" style="padding: 0 0em;" />
                 </router-link>
             </b-col>
         </b-row>
@@ -116,8 +116,11 @@ import { Slide } from 'vue-burger-menu'
 export default {
     name: 'FrontendLayout',
     components: { Slide },
-    created() {
+    async created() {
         console.log('Using frontend layout!')
+        if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {
+            await this.$store.dispatch('sponsors/fetchSponsors')
+        }
     },
     mounted() {},
     data() {
