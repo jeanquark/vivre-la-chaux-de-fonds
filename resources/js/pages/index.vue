@@ -18,22 +18,22 @@
             </b-col>
         </b-row> -->
         <b-row class="justify-content-center">
-            <b-col cols="12" md="6" lg="4" xl="3" v-if="page && page.sections" style="border: 2px solid orange;">
+            <b-col cols="12" md="6" lg="4" xl="3" v-if="page && page.sections" style="border: 0px solid orange;">
                 <b-card class="card mb-3" v-for="section in page.sections" :key="section.id">
                     <b-card-text v-html="section.content"> </b-card-text>
                 </b-card>
             </b-col>
-            <b-col cols="12" md="6" lg="8" xl="9" class="p-5" style="" v-for="activity in activities" :key="activity.id" style="border: 2px dashed green;">
+            <b-col cols="12" md="6" lg="8" xl="9" class="p-5" style="" v-for="activity in activities" :key="activity.id">
                 <b-row class="justify-content-center">
                     <b-col cols="12" md="6" lg="4">
-                        <b-card :img-src="`/images/activities/1000_jazz_2020.png`" :img-alt="`${activity.name}`" img-top style="border: none; ">
+                        <b-card :img-src="`/images/${activity.image}`" :img-alt="`${activity.name}`" img-top style="border: none; ">
                             <b-card-text class="text-center">
                                 <h5 class="my-2">{{ activity.name }}</h5>
                                 <b-button variant="primary" size="sm" class="my-2" :to="`/actualites/${activity.slug}`">En savoir plus &rarr;</b-button>
                             </b-card-text>
                         </b-card>
-                    </b-col></b-row
-                >
+                    </b-col>
+                </b-row>
             </b-col>
         </b-row>
     </b-container>
