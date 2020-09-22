@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\ContactMessage;
 
-class ContactForm extends Mailable
+class ContactFormSentConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -33,8 +33,8 @@ class ContactForm extends Mailable
     public function build()
     {
         $from = 'contact@vlcf.ch';
-        $subject = "vlcf.ch - Formulaire de contact";
+        $subject = "vlcf.ch - Formulaire de contact envoyé";
 
-        return $this->from($from)->subject($subject)->view('emails.contact');
+        return $this->from($from)->subject($subject)->view('emails.contact_message_sent');
     }
 }

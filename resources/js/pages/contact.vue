@@ -93,11 +93,14 @@ export default {
                 console.log('sendContactForm: ', this.form)
                 console.log('sendContactForm2: ', this.form['originalData'])
                 this.$store.commit('loading/SET_LOADING', true)
-				const abc = await axios.post('/api/send-contact-form', { formData: this.form['originalData'] })
-				console.log('abc: ', abc)
+                const data = await this.form.post('/api/send-contact-form')
+                console.log('data: ', data)
+                this.$noty.success('Votre message a bien été envoyé!')
+                this.form.reset()
                 this.$store.commit('loading/SET_LOADING', false)
             } catch (error) {
-				console.log('error: ', error)
+                console.log('error: ', error)
+                this.$noty.error('Votre message n\'a pas été envoyé. Veuillez vérifier les champs.')
                 this.$store.commit('loading/SET_LOADING', false)
             }
         }
