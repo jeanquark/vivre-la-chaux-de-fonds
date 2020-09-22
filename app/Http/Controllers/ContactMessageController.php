@@ -32,20 +32,9 @@ class ContactMessageController extends Controller
         ]);
 
         $senderAddress = env('MAIL_SENDING_ADDRESS');
-        // $object = [
-        //     'name' => 'abc',
-        //     'email' => 'def',
-        //     'object' => '',
-        //     'message' => ''
-        // ];
         
         // 1) Save message in database
         $contactMessage = new ContactMessage;
-
-        // $contactMessage->name = $request->formData['name'];
-        // $contactMessage->email = $request->formData['email'];
-        // $contactMessage->object = $request->formData['object'];
-        // $contactMessage->message = $request->formData['message'];
 
         $contactMessage->name = $request->name;
         $contactMessage->email = $request->email;
@@ -55,19 +44,11 @@ class ContactMessageController extends Controller
         $contactMessage->save();
         
         // 2) Send message as email
-        // Mail::to($senderAddress)->send(new ContactForm($contactMessage));
-        Mail::to('jm.kleger@gmail.com')->send(new ContactForm($contactMessage));
+        Mail::to($senderAddress)->send(new ContactForm($contactMessage));
         Mail::to($contactMessage->email)->send(new ContactFormSentConfirmation($contactMessage));
 
         return response()->json([
-            'success' => true,
-            'request' => $request,
-            'name' => $request->name,
-            'request->formData' => $request->formData,
-            'senderAddress' => $senderAddress,
-            // 'object' => $object
+            'success' => true
         ], 200);
     }
-
-    
 }

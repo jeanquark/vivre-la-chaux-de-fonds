@@ -19,7 +19,8 @@
 	<h2 style="text-align: center;"></h2>
 
 	{{-- $data: {{ $data }} --}}
-	<p>Votre message nous est bien parvenu avec les informations suivantes:</p>
+	<p>Bonjour,<br />
+		Votre message nous est bien parvenu avec les informations suivantes:</p>
 
 	<table>
 		<tr>
@@ -54,7 +55,7 @@
 
 	<p>Nous vous remercions de nous avoir contacté.</p>
 	<p>Avec nos meilleures salutations,<br />
-	Le comité de {{ config('app.name') }}</p>
+		Le comité de {{ config('app.name') }}</p>
 
 </body>
 
