@@ -3,12 +3,14 @@
         <b-row class="justify-content-center">
             <b-col cols="12" md="8" v-if="activity">
                 <!-- activity: {{ activity }}<br /><br /> -->
+                <!-- activity.link: {{ activity.link }}<br /><br /> -->
                 <div class="text-center mb-2">
                     <router-link to="/actualites">&larr; Retour vers les manifestations</router-link>
                 </div>
                 <b-card :img-src="`/images/${activity.image}`" :img-alt="`${activity.name}`" img-top tag="article" class="mb-2" style="border: none;">
                     <b-card-text class="text-center">
                         <h5>{{ activity.name }}</h5>
+                        <h6 v-if="activity.link"><a :href="activity.link" target="_blank">Lien vers le site de la manifestation &rarr;</a></h6>
                         <span v-html="activity.content"></span><br />
                         <!-- activity.images: {{ activity.images }} -->
                         <b-row class="mt-4">
