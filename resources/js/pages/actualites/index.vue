@@ -7,41 +7,38 @@
         <!-- today: {{ today }}<br /><br /> -->
         <b-row class="justify-content-center mt-5">
             <b-col cols="2">
-                <!-- <b-card :img-src="`/images/${sponsor.image}`" img-alt="Image" img-top tag="article" class="mb-2" style="border: none;" v-for="sponsor in sponsors" :key="sponsor.id">
-                </b-card> -->
-                <b-carousel
-                    id="carousel-1"
-                    :interval="2000"
-                    :fade="true"
-                    :controls="false"
-                    :indicators="false"
-                    style=""
-                >
+                <b-carousel id="carousel-1" :interval="2000" :fade="true" :controls="false" :indicators="false" style="">
                     <b-carousel-slide :img-src="`/images/${sponsor.image}`" v-for="sponsor in sponsors" :key="sponsor.id"></b-carousel-slide>
                 </b-carousel>
             </b-col>
             <b-col cols="10">
                 <b-row no-gutters class="justify-content-center">
-                    
                     <b-col cols="12" sm="6" md="4" class="my-3 px-5" v-for="activity in futureActivities" :key="activity.id">
-                        <b-card :img-src="`/images/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" style="border: none;">
+                        <b-card :img-src="`/images/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" style="" @click="goToLink(activity.slug)">
                             <b-card-text class="text-center">
-                                <h5 class="my-2">{{ activity.name }}</h5>
-                                <!-- <b-button variant="primary" size="sm" class="my-2" :to="{ name: 'activity', params: { slug: activity.slug } }">En savoir plus &rarr;</b-button> -->
-                                <b-button variant="primary" size="sm" class="my-2" :to="`/actualites/${activity.slug}`">En savoir plus &rarr;</b-button>
+                                <h5 class="my-2 abc" style="">{{ activity.name }}</h5>
+                                <p>
+                                    {{ activity.start_date | moment('Do MMMM YYYY') }}
+                                    <span v-if="activity.end_date && activity.end_date !== activity.start_date"> - <br />{{ activity.end_date | moment('Do MMMM YYYY') }}</span>
+                                </p>
                             </b-card-text>
                         </b-card>
                     </b-col>
                 </b-row>
-                <b-row no-gutters>
-                    <b-col cols="12">
-                        <h3 class="text-center">Historique</h3>
+                <b-row no-gutters class="mt-5 mb-3 justify-content-center">
+                    <b-col cols="12" class="text-center">
+                        <h3 class="title">Historique</h3>
                     </b-col>
+                </b-row>
+                <b-row no-gutters>
                     <b-col cols="12" sm="6" md="4" class="my-3 px-5" v-for="activity in pastActivities" :key="activity.id">
-                        <b-card :img-src="`/images/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" style="border: none;">
+                        <b-card :img-src="`/images/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" style="" @click="goToLink(activity.slug)">
                             <b-card-text class="text-center">
                                 <h5 class="my-2">{{ activity.name }}</h5>
-                                <b-button variant="primary" size="sm" class="my-2" :to="`/actualites/${activity.slug}`">En savoir plus &rarr;</b-button>
+                                <p>
+                                    {{ activity.start_date | moment('Do MMMM YYYY') }}
+                                    <span v-if="activity.end_date && activity.end_date !== activity.start_date"> - <br />{{ activity.end_date | moment('Do MMMM YYYY') }}</span>
+                                </p>
                             </b-card-text>
                         </b-card>
                     </b-col>
@@ -60,10 +57,7 @@ export default {
     },
     async created() {
         if (Object.keys(this.$store.getters['activities/activities']).length < 2) {
-            // await this.$store.dispatch('activities/fetchActivities')
             await this.$store.dispatch('activities/fetchActivities', { is_published: 1 })
-            // await this.$store.dispatch('activities/fetchActivities', { id: 1 })
-            // await this.$store.dispatch('activities/fetchActivities', { slug: 'ola-portugal' })
         }
     },
     data() {
@@ -87,8 +81,31 @@ export default {
         sponsors() {
             return this.$store.getters['sponsors/sponsors']
         }
+    },
+    methods: {
+        goToLink(activitySlug) {
+            this.$router.push(`/actualites/${activitySlug}`)
+            // window.open(link)
+        }
     }
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import './resources/sass/_variables.scss';
+.title {
+    color: $primary;
+    padding: 0.5rem 1rem;
+    border-radius: 0.8rem;
+    display: inline-block;
+    border: 0px solid red;
+    background: #fff;
+}
+.card {
+    border: none;
+}
+.card:hover {
+    cursor: pointer;
+    border: 3px solid $primary;
+}
+</style>

@@ -67,6 +67,13 @@
                             </b-form-group>
                         </b-col>
 
+                        <b-col cols="12">
+                            <b-form-group label="Lien vers le site web:" label-for="link" description="Doit commencer par http://www.">
+                                <b-form-input id="link" name="link" type="text" :class="{ 'is-invalid': form.errors.has('link') }" v-model="form.link"></b-form-input>
+                                <has-error :form="form" field="link" />
+                            </b-form-group>
+                        </b-col>
+
                         <b-col cols="12" class="my-2">
                             <b-form-checkbox id="is_published" name="is_published" value="1" unchecked-value="0" v-model="form.is_published">
                                 Publié?
@@ -227,6 +234,7 @@ export default {
                 content: '',
                 start_date: '',
                 end_date: '',
+                link: '',
                 image: null,
                 new_image: null,
                 is_published: false,

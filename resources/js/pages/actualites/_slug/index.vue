@@ -4,7 +4,7 @@
             <b-col cols="12" md="8" v-if="activity">
                 <!-- activity: {{ activity }}<br /><br /> -->
                 <!-- activity.link: {{ activity.link }}<br /><br /> -->
-                <div class="text-center mb-2">
+                <div class="text-center mb-3">
                     <router-link to="/actualites">&larr; Retour vers les manifestations</router-link>
                 </div>
                 <b-card :img-src="`/images/${activity.image}`" :img-alt="`${activity.name}`" img-top tag="article" class="mb-2" style="border: none;">

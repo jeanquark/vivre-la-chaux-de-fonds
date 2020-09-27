@@ -38,6 +38,8 @@
                             </b-form-group>
                         </b-col>
 
+                        
+
                         <b-col cols="12" class="my-2">
                             <b-form-checkbox id="is_published" name="is_published" value="1" unchecked-value="0" v-model="form.is_published">
                                 Publié?
@@ -138,7 +140,7 @@ export default {
         }
     },
     methods: {
-        toggleShowHTML (value) {
+        toggleShowHTML(value) {
             console.log('toggleShowHTML2: ', value)
             this.showHTML = value
         },
