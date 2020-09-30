@@ -127,7 +127,7 @@ export const actions = {
                     }
                 ]
             })
-            console.log('data: ', data)
+            console.log('data from vuex updateActivity: ', data)
             commit('UPDATE_ACTIVITY', data.updatedActivity)
             dispatch('sponsors/fetchSponsors', {}, { root: true })
         } catch (error) {

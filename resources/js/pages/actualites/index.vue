@@ -5,6 +5,7 @@
         <!-- sponsors: {{ sponsors }}<br /><br /> -->
         <!-- publishedActivities: {{ publishedActivities }}<br /><br /> -->
         <!-- today: {{ today }}<br /><br /> -->
+        <!-- futureActivities: {{ futureActivities }}<br /><br /> -->
         <b-row class="justify-content-center mt-5">
             <b-col cols="2">
                 <b-carousel id="carousel-1" :interval="2000" :fade="true" :controls="false" :indicators="false" style="">
@@ -25,7 +26,7 @@
                         </b-card>
                     </b-col>
                 </b-row>
-                <b-row no-gutters class="mt-5 mb-3 justify-content-center">
+                <b-row no-gutters class="mt-4 mb-4 justify-content-center">
                     <b-col cols="12" class="text-center">
                         <h3 class="title">Historique</h3>
                     </b-col>
@@ -70,7 +71,7 @@ export default {
             return this.$store.getters['activities/activities']
         },
         futureActivities() {
-            return Object.values(this.activities).filter(activity => activity.start_date > this.today)
+            return Object.values(this.activities).filter(activity => activity.start_date >= this.today)
         },
         pastActivities() {
             return Object.values(this.activities).filter(activity => activity.end_date < this.today)
@@ -99,7 +100,7 @@ export default {
     border-radius: 0.8rem;
     display: inline-block;
     border: 0px solid red;
-    background: #fff;
+    background-color: rgba(255, 255, 255, .8);
 }
 .card {
     border: none;

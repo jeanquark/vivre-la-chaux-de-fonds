@@ -61,31 +61,66 @@ class UsersController extends Controller
         ], 201);
     }
 
-    protected function update(Request $request, $id)
+    protected function updateUser(Request $request, $id)
     {
-        $user = $request->user;
-        $newRole = $request->newRole;
-        $userToUpdate = User::find($id);
+        $validatedData = $request->validate([
+            'new_password' => 'min:6|confirmed',
+        ]);
+        
 
-        if ($newRole) {
-            // Update role
-            $updatedRole = Role::where('slug', '=', $newRole)->first();
-            $userToUpdate->syncRoles($updatedRole);        
-        } else {
-            $userToUpdate->updateOrInsert(
-                ['id' => $id],
-                [
-                    'firstname' => $updatedUser['firstname'],
-                    'lastname' => $updatedUser['lastname'],
-                ]
-            );
+        $user = User::find($id)->makeVisible(['password']);
+        // $updatedUser = User::with('roles')->find($id);
+
+        // return response()->json([
+        //     'success' => true,
+        //     'request' => $request,
+        //     '$request->new_password' => $request->new_password,
+        //     'user' => $user,
+        //     'id' => $id,
+        //     'updatedUser' => $updatedUser
+        // ], 201);
+
+        $newRole = $request->newRole;
+        // $userToUpdate = User::find($id);
+
+        if ($request->new_password) {
+            if (Hash::check($request->current_password, $user->password)) {
+                $user->updateOrInsert(
+                    ['id' => $id],
+                    [
+                        'password' => Hash::make($request->new_password),
+                    ]
+                );
+            } else {
+                return response()->json([
+                    'success' => false
+                ], 401);
+            }
         }
+
+        if ($request->newRole) {
+            // Update role
+            $updatedRole = Role::where('slug', '=', $request->newRole)->first();
+            $user->syncRoles($updatedRole);        
+        } 
+        
+        // else {
+        //     $userToUpdate->updateOrInsert(
+        //         ['id' => $id],
+        //         [
+        //             'firstname' => $updatedUser['firstname'],
+        //             'lastname' => $updatedUser['lastname'],
+        //         ]
+        //     );
+        // }
 
         $updatedUser = User::with('roles')->find($id);
 
         return response()->json([
             'success' => true,
+            'user' => $user,
             'updatedUser' => $updatedUser,
+            'request->newPassword' => $request->newPassword
         ], 201);
     }
 

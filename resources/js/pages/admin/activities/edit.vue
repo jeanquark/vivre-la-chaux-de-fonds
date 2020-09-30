@@ -45,8 +45,8 @@
                             <b-form-group label="Date de début:" label-for="startDate">
                                 <VueCtkDateTimePicker
                                     label="Cliquer pour choisir une date"
-                                    format="YYYY-MM-DD HH:mm"
-                                    formatted="YYYY-MM-DD HH:mm"
+                                    format="YYYY-MM-DD HH:mm:ss"
+                                    formatted="YYYY-MM-DD HH:mm:ss"
                                     button-now-translation="Aujourd'hui"
                                     id="startDate"
                                     v-model="form.start_date"
@@ -57,8 +57,8 @@
                             <b-form-group label="Date de fin:" label-for="endDate">
                                 <VueCtkDateTimePicker
                                     label="Cliquer pour choisir une date"
-                                    format="YYYY-MM-DD HH:mm"
-                                    formatted="YYYY-MM-DD HH:mm"
+                                    format="YYYY-MM-DD HH:mm:ss"
+                                    formatted="YYYY-MM-DD HH:mm:ss"
                                     button-now-translation="Aujourd'hui"
                                     only-date
                                     id="endDate"
@@ -86,9 +86,17 @@
                             </b-form-checkbox>
                         </b-col>
 
-                        <b-col cols="12" class="my-2" v-if="form.image">
+                        <b-col cols="6" class="my-2" v-if="form.image">
                             <p class="text-center">Image actuelle:</p>
                             <b-img center :src="`/images/${form.image}`" width="200" class=""></b-img>
+                        </b-col>
+                        <b-col cols="6" class="my-2" v-if="form.image">
+                            <!-- <p class="text-center">Nouvelle image:</p>
+                            <b-img center :src="`/images/${form.image}`" width="200" class=""></b-img> -->
+                            <div id="preview" style="text-align: center; margin-bottom: 20px;" v-if="form.new_image">
+                                <p>Nouvelle image:</p>
+                                <img v-if="imagePreview" :src="imagePreview" style="width: 150px;" />
+                            </div>
                         </b-col>
                         <b-col cols="12" class="my-2">
                             <b-form-file
@@ -270,6 +278,7 @@ export default {
     methods: {
         selectFile(e) {
             this.form.new_image = e.target.files[0]
+            this.imagePreview = URL.createObjectURL(e.target.files[0])
         },
         selectFiles(e) {
             console.log('selectFiles e: ', e)
@@ -293,7 +302,7 @@ export default {
         },
         async updateActivity() {
             try {
-                console.log('form: ', this.form)
+                console.log('updateActivity form: ', this.form)
                 console.log('form.images: ', this.form.images)
                 // return
                 this.$store.commit('loading/SET_LOADING', true)

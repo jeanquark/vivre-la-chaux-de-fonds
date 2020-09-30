@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import axios from 'axios'
+import { objectToFormData } from 'object-to-formdata'
 
 // state
 export const state = {
-    users: [],
+    users: {},
     user: {}
 }
 
@@ -15,9 +16,17 @@ export const getters = {
 
 // mutations
 export const mutations = {
+    // SET_USERS (state, payload) {
+    //     console.log('Set users mutation: ', payload)
+    //     state.users = payload
+    // },
     SET_USERS (state, payload) {
-        console.log('Set users mutation: ', payload)
-        state.users = payload
+        console.log('SET_USERS mutation', payload)
+        payload.forEach(user => {
+            state.users = Object.assign({}, state.users, {
+                [user.id]: user
+            })
+        })
     },
     SET_USER (state, payload) {
         console.log('Set user mutation: ', payload)
@@ -28,19 +37,24 @@ export const mutations = {
         state.users.push(payload)
     },
     UPDATE_USER (state, payload) {
-        // console.log('Update user mutation: ', payload)
-        const userId = parseInt(payload.id)
-        const index = state.users.findIndex(user => user.id === userId)
-        // console.log('index: ', index)
-        Vue.set(state.users, index, payload)
+        // const userId = parseInt(payload.id)
+        // const index = state.users.findIndex(user => user.id === userId)
+        // Vue.set(state.users, index, payload)
+
+        state.users = Object.assign({}, state.users, {
+            [payload.id]: payload
+        })
     },
     DELETE_USER (state, payload) {
-        const userId = parseInt(payload)
-        console.log('userId: ', userId)
-        const index = state.users.findIndex(user => user.id === userId)
-        console.log('index: ', index)
-        console.log('state.users: ', state.users)
-        state.users.splice(index, 1)
+        // const userId = parseInt(payload)
+        // console.log('userId: ', userId)
+        // const index = state.users.findIndex(user => user.id === userId)
+        // console.log('index: ', index)
+        // console.log('state.users: ', state.users)
+        // state.users.splice(index, 1)
+
+        const { userId } = parseInt(payload)
+        Vue.delete(state.users, userId)
     }
 }
 
@@ -54,9 +68,10 @@ export const actions = {
             commit('SET_USERS', data)
         } catch (error) {
             console.log('vuex error: ', error)
+            throw error
         }
     },
-    async fetchUser ({ commit }, payload) {
+    async fetchUserById ({ commit }, payload) {
         try {
             console.log('fetchUser action: ', payload)
             const { userId } = payload
@@ -65,6 +80,7 @@ export const actions = {
             commit('SET_USER', data.user)
         } catch (error) {
             console.log('vuex error: ', error)
+            throw error
         }
     },
     async createUser ({ commit }, form) {
@@ -91,10 +107,19 @@ export const actions = {
             throw error
         }
     },
-    async updateUser ({ commit }, payload) {
+    async updateUser ({ commit }, form) {
         try {
-            console.log('updateUser: ', payload)
-            const { data } = await axios.put(`/api/users/${payload.user.id}`, payload)
+            console.log('updateUser: ', form)
+            // const { data } = await axios.put(`/api/users/${payload.user.id}`, payload)
+            const { data } = await form.submit('post', `/api/users/${form.user_id}`, {
+                transformRequest: [
+                    function(data, headers) {
+                        data['_method'] = 'PUT'
+                        return objectToFormData(data)
+                    }
+                ]
+            })
+
             console.log('data: ', data)
             commit('UPDATE_USER', data.updatedUser)
         } catch (error) {

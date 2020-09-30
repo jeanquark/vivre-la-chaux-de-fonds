@@ -8,9 +8,9 @@
                     <router-link to="/actualites">&larr; Retour vers les manifestations</router-link>
                 </div>
                 <b-card :img-src="`/images/${activity.image}`" :img-alt="`${activity.name}`" img-top tag="article" class="mb-2" style="border: none;">
-                    <b-card-text class="text-center">
-                        <h5>{{ activity.name }}</h5>
-                        <h6 v-if="activity.link"><a :href="activity.link" target="_blank">Lien vers le site de la manifestation &rarr;</a></h6>
+                    <b-card-text class="">
+                        <h5 class="text-center">{{ activity.name }}</h5>
+                        <h6 class="text-center" v-if="activity.link"><a :href="activity.link" target="_blank">Lien vers le site de la manifestation &rarr;</a></h6>
                         <span v-html="activity.content"></span><br />
                         <!-- activity.images: {{ activity.images }} -->
                         <b-row class="mt-4">

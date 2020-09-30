@@ -44,9 +44,19 @@
 export default {
     layout: 'backend',
     async created() {
-        if (this.$store.getters['users/users'].length < 1) {
-            this.$store.commit('loading/SET_LOADING', true)
-            await this.$store.dispatch('users/fetchUsers')
+        // if (this.$store.getters['users/users'].length < 1) {
+        //     this.$store.commit('loading/SET_LOADING', true)
+        //     await this.$store.dispatch('users/fetchUsers')
+        //     this.$store.commit('loading/SET_LOADING', false)
+        // }
+        try {
+            if (Object.keys(this.$store.getters['users/users']).length < 2) {
+                this.$store.commit('loading/SET_LOADING', true)
+                await this.$store.dispatch('users/fetchUsers')
+                this.$store.commit('loading/SET_LOADING', false)
+            }
+        } catch (error) {
+            console.log('error: ', error)
             this.$store.commit('loading/SET_LOADING', false)
         }
     },
@@ -69,7 +79,8 @@ export default {
             return this.$store.getters['loading/loading']
         },
         users() {
-            return this.$store.getters['users/users']
+            // return this.$store.getters['users/users']
+            return Object.values(this.$store.getters['users/users'])
         }
     },
     methods: {

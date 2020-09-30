@@ -39,8 +39,8 @@
                             <b-form-group label="Date de début:" label-for="startDate">
                                 <VueCtkDateTimePicker
                                     label="Cliquer pour choisir une date"
-                                    format="YYYY-MM-DD HH:mm"
-                                    formatted="YYYY-MM-DD HH:mm"
+                                    format="YYYY-MM-DD HH:mm:ss"
+                                    formatted="YYYY-MM-DD HH:mm:ss"
                                     button-now-translation="Aujourd'hui"
                                     id="startDate"
                                     v-model="form.start_date"
@@ -51,8 +51,8 @@
                             <b-form-group label="Date de fin:" label-for="endDate">
                                 <VueCtkDateTimePicker
                                     label="Cliquer pour choisir une date"
-                                    format="YYYY-MM-DD HH:mm"
-                                    formatted="YYYY-MM-DD HH:mm"
+                                    format="YYYY-MM-DD HH:mm:ss"
+                                    formatted="YYYY-MM-DD HH:mm:ss"
                                     button-now-translation="Aujourd'hui"
                                     id="endDate"
                                     v-model="form.end_date"
@@ -75,7 +75,8 @@
 
                         <b-col cols="12" class="my-2">
                             <!-- form.image: {{ form.image }} -->
-                            <div id="preview">
+                            <div id="preview" style="text-align: center; margin-bottom: 20px;" v-if="form.image">
+                                Nouvelle image:<br />
                                 <img v-if="imagePreview" :src="imagePreview" style="width: 150px;" />
                             </div>
                             <b-form-file
@@ -107,8 +108,8 @@
                     <b-row class="justify-content-center my-3 px-3">
                         <b-col cols="12" class="my-0">
                             Gallerie d'images:<br />
-                            form.images: {{ form.images }}<br />
-                            imagePreviewArray: {{ imagePreviewArray }}<br />
+                            <!-- form.images: {{ form.images }}<br /> -->
+                            <!-- imagePreviewArray: {{ imagePreviewArray }}<br /> -->
                             <b-form-file
                                 accept="image/jpeg, image/png"
                                 placeholder="Sélectionner de nouvelles images..."

@@ -15,7 +15,7 @@ class ActivitiesTableSeeder extends Seeder
     {
         // Populate activities
         // factory(App\Activity::class, 5)->create();
-        $activities = [
+        $activities = [   
             [
                 'name'              => '1000 Jazz 2020',
                 'slug'              => '1000_jazz_2020',
@@ -109,7 +109,7 @@ class ActivitiesTableSeeder extends Seeder
                     <h1>Ecologie et recyclage</h1><p>Convaincus que nous pouvons tous participer à la diminution du réchauffement climatique, nous proposons de compenser les émissions de carbone occasionnées par l’organisation de cet événement.</p><p>Grâce aux services d’une entreprise spécialisée, les émissions engendrées sont transformées en francs qui sont versés au service des Espaces Verts pour la plantation d’arbres dans les parcs chaux-de-fonniers.</p><p>Depuis 2010, nous n’utilisons que de la vaisselle recyclable et des gobelets réutilisables lors de nos manifestations. De même, nous mettons tout en œuvre afin de n’utiliser que des matériaux recyclables pour les constructions éphémères de nos manifestations.</p></div>',
                 'image'             => 'activities/ki_ke_koi_2016.jpg',
                 'start_date'        => '2016-06-04',
-                'end_date'          => '2019-08-06',
+                'end_date'          => '2016-08-06',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
             ],
@@ -310,7 +310,7 @@ class ActivitiesTableSeeder extends Seeder
                 'end_date'          => '2002-10-31',
                 'is_published'      => true,
                 'is_on_frontpage'   => false
-            ],
+            ]
         ];
 
         /*

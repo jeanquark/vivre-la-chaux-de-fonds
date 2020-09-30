@@ -42,7 +42,7 @@ class ActivitiesController extends Controller
             ->when($id, function ($query) use ($id) {
                 return $query->where('id', '=', $id);
             })
-            ->get();
+            ->orderBy('start_date', 'desc')->get();
 
         return response()->json($activities, 200);
 
@@ -105,10 +105,10 @@ class ActivitiesController extends Controller
         $activity->link = $request->link;
         $activity->is_published = (int)$request->is_published;
         if ($request->start_date) {
-            $activity->start_date = date_create_from_format('Y-m-d H:i', $request->start_date);
+            $activity->start_date = date_create_from_format('Y-m-d H:i:s', $request->start_date);
         }
         if ($request->end_date) {
-            $activity->end_date = date_create_from_format('Y-m-d H:i', $request->end_date);
+            $activity->end_date = date_create_from_format('Y-m-d H:i:s', $request->end_date);
         }
 
         // Upload image if present
@@ -149,19 +149,19 @@ class ActivitiesController extends Controller
         $validatedData = $request->validate([
             'name' => ['required', Rule::unique('activities')->ignore($id)],
             'new_image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
-            'link' => ['url']
+            'link' => ['nullable', 'url']
         ]);
 
         $activity = Activity::find($id);
 
         $start_date = null;
         if ($request->start_date) {
-            $start_date = date_create_from_format('Y-m-d H:i', $request->start_date);
+            $start_date = date_create_from_format('Y-m-d H:i:s', $request->start_date);
         }
 
         $end_date = null;
         if ($request->end_date) {
-            $end_date = date_create_from_format('Y-m-d H:i', $request->end_date);
+            $end_date = date_create_from_format('Y-m-d H:i:s', $request->end_date);
         }
 
         // Upload new image if present
