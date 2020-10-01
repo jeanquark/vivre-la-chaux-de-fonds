@@ -21,6 +21,7 @@ class CreateSponsorsTable extends Migration
             $table->string('contribution')->nullable();
             $table->datetime('start_date')->nullable();
             $table->datetime('end_date')->nullable();
+            $table->string('link')->nullable();
             $table->boolean('is_active')->default(0);
             $table->timestamps();
         });

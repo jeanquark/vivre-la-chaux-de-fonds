@@ -308,6 +308,7 @@ class ActivitiesTableSeeder extends Seeder
                 'image' => 'activities/1000_jazz_2020.png',
                 'start_date' => '2020-11-05',
                 'end_date' => '2020-11-07',
+                'link' => 'http://www.1000jazz.ch',
                 'is_published' => true,
                 'is_on_frontpage' => true,
             ]
