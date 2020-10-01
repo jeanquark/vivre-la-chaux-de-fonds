@@ -29,13 +29,17 @@ export const mutations = {
         })
     },
     SET_USER (state, payload) {
-        console.log('Set user mutation: ', payload)
-        state.user = payload
+        // console.log('Set user mutation: ', payload)
+        // state.user = payload
+        console.log('SET_USER mutation', payload)
+        state.users = Object.assign({}, state.users, {
+            [payload.id]: payload
+        })
     },
-    ADD_USER (state, payload) {
-        console.log('ADD_USER mutation: ', payload)
-        state.users.push(payload)
-    },
+    // ADD_USER (state, payload) {
+    //     console.log('ADD_USER mutation: ', payload)
+    //     state.users.push(payload)
+    // },
     UPDATE_USER (state, payload) {
         // const userId = parseInt(payload.id)
         // const index = state.users.findIndex(user => user.id === userId)
@@ -46,6 +50,7 @@ export const mutations = {
         })
     },
     DELETE_USER (state, payload) {
+        console.log('DELETE_USER: ', payload)
         // const userId = parseInt(payload)
         // console.log('userId: ', userId)
         // const index = state.users.findIndex(user => user.id === userId)
@@ -53,7 +58,8 @@ export const mutations = {
         // console.log('state.users: ', state.users)
         // state.users.splice(index, 1)
 
-        const { userId } = parseInt(payload)
+        const { userId } = payload
+        console.log('userId: ', userId)
         Vue.delete(state.users, userId)
     }
 }
@@ -89,7 +95,7 @@ export const actions = {
 
             const { data } = await form.post('/api/users')
             console.log('data: ', data)
-            commit('ADD_USER', data.newUser)
+            commit('SET_USER', data.newUser)
 
             // const config = {
             //     headers: { 'content-type': 'multipart/form-data' }
@@ -104,6 +110,7 @@ export const actions = {
             // console.log('data: ', data)
             // commit('ADD_USER', data.newUser)
         } catch (error) {
+            console.log('error from vuex: ', error)
             throw error
         }
     },
@@ -127,35 +134,35 @@ export const actions = {
             throw error
         }
     },
-    async updateUser2 ({ commit }, payload) {
-        try {
-            const config = {
-                headers: { 'content-type': 'multipart/form-data' }
-            }
-            console.log('payload: ', payload)
-            let formData = new FormData();
-            formData.append('new_image', payload.new_image)
-            // console.log('this.user: ', this.user)
-            formData.append('form', JSON.stringify(payload.user))
-            console.log('formData: ', formData)
+    // async updateUser2 ({ commit }, payload) {
+    //     try {
+    //         const config = {
+    //             headers: { 'content-type': 'multipart/form-data' }
+    //         }
+    //         console.log('payload: ', payload)
+    //         let formData = new FormData();
+    //         formData.append('new_image', payload.new_image)
+    //         // console.log('this.user: ', this.user)
+    //         formData.append('form', JSON.stringify(payload.user))
+    //         console.log('formData: ', formData)
 
-            formData.append('_method', 'PUT')
+    //         formData.append('_method', 'PUT')
 
-            const { data } = await axios.post(`/api/users/${payload.user.id}`, formData, config)
-            console.log('data: ', data)
-            commit('UPDATE_USER', data.user)
-        } catch (error) {
-            console.log('error from vuex: ', error)
-            throw error
-        }
-    },
+    //         const { data } = await axios.post(`/api/users/${payload.user.id}`, formData, config)
+    //         console.log('data: ', data)
+    //         commit('UPDATE_USER', data.user)
+    //     } catch (error) {
+    //         console.log('error from vuex: ', error)
+    //         throw error
+    //     }
+    // },
     async deleteUser ({ commit }, payload) {
         try {
             const { userId } = payload 
             console.log('userId: ', userId)
             const user = await axios.delete(`/api/users/${userId}`)
             console.log('user: ', user)
-            commit('DELETE_USER', userId)
+            commit('DELETE_USER', { userId })
         } catch (error) {
             console.log('error from vuex: ', error)
             throw error

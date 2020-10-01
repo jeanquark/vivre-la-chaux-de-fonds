@@ -102,6 +102,7 @@ class SponsorsController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|unique:sponsors',
             'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
+            'link' => ['nullable', 'url']
         ]);
 
         $sponsor = new Sponsor;
@@ -109,6 +110,7 @@ class SponsorsController extends Controller
         $sponsor->name = $request->name;
         $sponsor->slug = str_slug($request->name);
         $sponsor->contribution = $request->contribution;
+        $sponsor->link = $request->link;
         $sponsor->is_active = (int) $request->is_active;
 
         if ($request->start_date) {
@@ -145,6 +147,7 @@ class SponsorsController extends Controller
         $validatedData = $request->validate([
             'name' => ['required', Rule::unique('sponsors')->ignore($id)],
             'new_image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
+            'link' => ['nullable', 'url']
         ]);
 
         $sponsor = Sponsor::find($id);
@@ -179,6 +182,7 @@ class SponsorsController extends Controller
                 'name' => $request->name,
                 'slug' => str_slug($request->name),
                 'contribution' => $request->contribution,
+                'link' => $request->link,
                 'image' => $request->image,
                 'start_date' => $start_date,
                 'end_date' => $end_date,

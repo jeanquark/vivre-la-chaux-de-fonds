@@ -82,6 +82,13 @@
                         </b-col>
 
                         <b-col cols="12" class="my-2">
+                            <b-form-group label="Lien vers le site web:" label-for="link" description="Doit commencer par http://www.">
+                                <b-form-input id="link" name="link" type="text" :class="{ 'is-invalid': form.errors.has('link') }" v-model="form.link"></b-form-input>
+                                <has-error :form="form" field="link" />
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" class="my-2">
                             <b-form-checkbox id="is_active" name="is_active" :value="1" :unchecked-value="0" v-model="form.is_active">
                                 Actif?
                             </b-form-checkbox>
@@ -137,6 +144,7 @@ export default {
                 contribution: 0,
                 start_date: '',
                 end_date: '',
+                link: '',
                 image: null,
                 is_active: false,
                 activities: []

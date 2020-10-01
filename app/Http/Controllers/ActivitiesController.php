@@ -84,7 +84,7 @@ class ActivitiesController extends Controller
     protected function createActivity(Request $request) {
         $validatedData = $request->validate([
             'name' => 'required|unique:activities',
-            'link' => ['url'],
+            'link' => ['nullable', 'url'],
             'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
         ]);
 

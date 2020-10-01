@@ -132,7 +132,7 @@ class UsersController extends Controller
         ], 201);
     }
 
-    protected function delete(Request $request, $id)
+    protected function deleteUser(Request $request, $id)
     {
         $user = User::find($id);
 
