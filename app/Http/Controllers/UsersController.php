@@ -80,8 +80,16 @@ class UsersController extends Controller
         //     'updatedUser' => $updatedUser
         // ], 201);
 
-        $newRole = $request->newRole;
+        // $newRole = $request->newRole;
         // $userToUpdate = User::find($id);
+
+        $user->updateOrInsert(
+            ['id' => $id],
+            [
+                'firstname' => $request->firstname,
+                'lastname' => $request->lastname,
+            ]
+        );
 
         if ($request->new_password) {
             if (Hash::check($request->current_password, $user->password)) {
@@ -98,9 +106,9 @@ class UsersController extends Controller
             }
         }
 
-        if ($request->newRole) {
-            // Update role
-            $updatedRole = Role::where('slug', '=', $request->newRole)->first();
+        // Update role
+        if ($request->new_role) {
+            $updatedRole = Role::where('slug', '=', $request->new_role)->first();
             $user->syncRoles($updatedRole);        
         } 
         
@@ -120,7 +128,7 @@ class UsersController extends Controller
             'success' => true,
             'user' => $user,
             'updatedUser' => $updatedUser,
-            'request->newPassword' => $request->newPassword
+            'request->new_role' => $request->new_role
         ], 201);
     }
 

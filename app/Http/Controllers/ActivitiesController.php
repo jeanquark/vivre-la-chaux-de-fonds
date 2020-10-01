@@ -33,6 +33,7 @@ class ActivitiesController extends Controller
         $id = $request->query('id');
 
         $activities = Activity::with('sponsors')
+            // ->orderBy('start_date', 'desc')->get();
             ->when($is_published, function ($query) use ($is_published) {
                 return $query->where('is_published', '=', $is_published);
             })

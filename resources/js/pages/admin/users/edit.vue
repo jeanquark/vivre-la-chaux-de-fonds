@@ -2,7 +2,7 @@
     <b-container>
         <b-breadcrumb>
             <b-breadcrumb-item to="/admin/users" class="navigation">
-                <font-awesome-icon icon="file-alt" />
+                <font-awesome-icon icon="users" />
                 <span>Utilisateurs</span>
             </b-breadcrumb-item>
             <b-breadcrumb-item active>Editer</b-breadcrumb-item>
@@ -16,6 +16,18 @@
             <b-col cols="12" md="8" lg="6">
                 <b-form @submit.prevent="updateUser">
                     <b-row align-v="center" class="justify-content-start my-3 px-3">
+                        <b-col cols="12">
+                            <b-form-group label="Prénom:" label-for="firstname">
+                                <b-form-input id="firstname" type="text" :class="{ 'is-invalid': form.errors.has('firstname') }" v-model="form.firstname"></b-form-input>
+                                <has-error :form="form" field="firstname" />
+                            </b-form-group>
+                        </b-col>
+                        <b-col cols="12">
+                            <b-form-group label="Nom:" label-for="lastname">
+                                <b-form-input id="lastname" type="text" :class="{ 'is-invalid': form.errors.has('lastname') }" v-model="form.lastname"></b-form-input>
+                                <has-error :form="form" field="lastname" />
+                            </b-form-group>
+                        </b-col>
                         <b-col cols="12">
                             <b-form-group label="Nouveau mot de passe:" label-for="newPassword">
                                 <b-form-input id="newPassword" type="password" :class="{ 'is-invalid': form.errors.has('new_password') }" v-model="form.new_password"></b-form-input>
@@ -64,10 +76,13 @@ export default {
             // await this.$store.dispatch('users/fetchUserById', { userId: this.$route.params.id })
             await this.$store.dispatch('users/fetchUsers')
         }
+        this.form.fill(this.user)
     },
     data() {
         return {
             form: new Form({
+                firstname: '',
+                lastname: '',
                 current_password: '',
                 new_password: '',
                 new_password_confirmation: ''

@@ -9,6 +9,7 @@
         <!-- activities: {{ activities }}<br /><br /> -->
 
         <b-table show-empty small stacked="md" :items="activities" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" class="nowrap" v-if="!loading">
+        <!-- <b-table show-empty small stacked="md" :items="activities" :fields="fields" class="nowrap" v-if="!loading"> -->
             <template v-slot:cell(image)="row">
                 <img :src="`/images/${row.item.image}`" style="max-width: 100px; max-height: 50px;" v-if="row.item.image" />
                 <span v-else><i>Pas d'image</i></span>

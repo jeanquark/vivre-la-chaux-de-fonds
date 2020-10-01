@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import Form from 'vform'
 export default {
     layout: 'backend',
     async created() {
@@ -62,6 +63,9 @@ export default {
     },
     data() {
         return {
+            form: new Form({
+                new_role: ''
+            }),
             sortBy: 'id',
             sortDesc: true,
             fields: [
@@ -86,8 +90,12 @@ export default {
     methods: {
         async updateUserRole(user, newRole) {
             try {
-                console.log('updateUserRole: ', user, newRole)
-                await this.$store.dispatch('users/updateUser', { user, newRole })
+                this.form.user_id = user.id
+                this.form.new_role = newRole
+                console.log('updateUserRole: ', this.form)
+                // return
+                // await this.$store.dispatch('users/updateUser', { user, newRole })
+                await this.$store.dispatch('users/updateUser', this.form)
                 this.$noty.success('Utilisateur mis à jour avec succès!')
             } catch (error) {
                 console.log('error: ', error)
