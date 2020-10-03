@@ -8,8 +8,8 @@
                     <b-card-text class="text-center">
                         <p class="text-left" style="font-size: 1.15em;">
                             Association Vivre La Chaux-de-Fonds<br />
-                            Case postale<br />
-                            2300 La Chaux-de-Fonds<br />
+                            Case postale 38<br />
+                            2301 La Chaux-de-Fonds<br />
                         </p>
                         <p class="text-left">
                             <a href="contact@vlcf.ch">contact@vlcf.ch</a>

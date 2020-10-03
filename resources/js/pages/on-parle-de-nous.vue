@@ -4,8 +4,13 @@
 
         <b-row>
             <b-col cols="3" class="d-none d-md-block">
-                <b-carousel :indicators="false" :interval="2000" fade id="carousel-fade" style="text-shadow: 0px 0px 2px #000">
+                <!-- <b-carousel :indicators="false" :interval="2000" fade id="carousel-fade" style="text-shadow: 0px 0px 2px #000">
                     <b-carousel-slide :img-src="`/images/${sponsor.image}`" v-for="sponsor in sponsors" :key="sponsor.id"></b-carousel-slide>
+                </b-carousel> -->
+                <b-carousel :indicators="false" :interval="2000" fade id="carousel-fade" style="text-shadow: 0px 0px 2px #000">
+                    <b-carousel-slide v-for="sponsor in sponsors" :key="sponsor.id">
+                        <img slot="img" :src="`/images/${sponsor.image}`" :class="[sponsor.link ? 'link' : '']"  @click="goToExternalLink(sponsor.link)" />
+                    </b-carousel-slide>
                 </b-carousel>
             </b-col>
             <!-- Loading spinner -->
@@ -106,9 +111,15 @@ export default {
         selectSection(section) {
             console.log('selectSection: ', section)
             this.selectedSection = section
+        },
+        goToExternalLink(link) {
+            window.open(link, '_blank')
         }
     }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.link {
+    cursor: pointer;
+}</style>

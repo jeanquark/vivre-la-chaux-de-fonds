@@ -8,8 +8,13 @@
         <!-- futureActivities: {{ futureActivities }}<br /><br /> -->
         <b-row class="justify-content-center mt-5">
             <b-col cols="2">
-                <b-carousel id="carousel-1" :interval="2000" :fade="true" :controls="false" :indicators="false" style="">
+                <!-- <b-carousel id="carousel-1" :interval="2000" :fade="true" :controls="false" :indicators="false" style="">
                     <b-carousel-slide :img-src="`/images/${sponsor.image}`" v-for="sponsor in sponsors" :key="sponsor.id"></b-carousel-slide>
+                </b-carousel> -->
+                <b-carousel :indicators="false" :interval="2000" fade id="carousel-fade" style="text-shadow: 0px 0px 2px #000">
+                    <b-carousel-slide v-for="sponsor in sponsors" :key="sponsor.id">
+                        <img slot="img" :src="`/images/${sponsor.image}`" :class="[sponsor.link ? 'link' : '']"  @click="goToExternalLink(sponsor.link)" />
+                    </b-carousel-slide>
                 </b-carousel>
             </b-col>
             <b-col cols="10">
@@ -84,9 +89,8 @@ export default {
         }
     },
     methods: {
-        goToLink(activitySlug) {
-            this.$router.push(`/actualites/${activitySlug}`)
-            // window.open(link)
+        goToExternalLink(link) {
+            window.open(link, '_blank')
         }
     }
 }
@@ -108,5 +112,8 @@ export default {
 .card:hover {
     cursor: pointer;
     border: 3px solid $primary;
+}
+.link {
+    cursor: pointer;
 }
 </style>

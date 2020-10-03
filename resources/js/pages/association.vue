@@ -2,8 +2,13 @@
     <b-container>
         <b-row>
             <b-col cols="3" class="d-none d-md-block" style="border: 0px solid blue;">
-                <b-carousel :indicators="false" :interval="2000" fade id="carousel-fade" style="text-shadow: 0px 0px 2px #000">
+                <!-- <b-carousel :indicators="false" :interval="2000" fade id="carousel-fade" style="text-shadow: 0px 0px 2px #000">
                     <b-carousel-slide :img-src="`/images/${sponsor.image}`" v-for="sponsor in sponsors" :key="sponsor.id"></b-carousel-slide>
+                </b-carousel> -->
+                <b-carousel :indicators="false" :interval="2000" fade id="carousel-fade" style="text-shadow: 0px 0px 2px #000">
+                    <b-carousel-slide v-for="sponsor in sponsors" :key="sponsor.id">
+                        <img slot="img" :src="`/images/${sponsor.image}`" :class="[sponsor.link ? 'link' : '']"  @click="goToExternalLink(sponsor.link)" />
+                    </b-carousel-slide>
                 </b-carousel>
             </b-col>
 
@@ -46,9 +51,11 @@
                 <b-row no-gutters class="flex-body" style="background-color:rgba(0, 0, 0, 0.5);" v-if="pageSections.length > 0">
                     <b-col cols="6" class="flex-column p-2">
                         <div style="flex-grow: 1;">
-                        <div v-for="section in pageSections" :key="section.id" >
-                            <b-button pill variant="primary" size="sm" class="m-1" @click="selectSection(section)" :class="{ active: section.id === selectedSection.id }">{{ section.name }}</b-button>
-                        </div>
+                            <div v-for="section in pageSections" :key="section.id">
+                                <b-button pill variant="primary" size="sm" class="m-1" @click="selectSection(section)" :class="{ active: section.id === selectedSection.id }">{{
+                                    section.name
+                                }}</b-button>
+                            </div>
                         </div>
                         <h2 class="text-secondary -0" style="border: 0px solid green;">{{ selectedSection.name }}</h2>
                     </b-col>
@@ -124,6 +131,9 @@ export default {
         selectSection(section) {
             console.log('selectSection: ', section)
             this.selectedSection = section
+        },
+        goToExternalLink(link) {
+            window.open(link, '_blank')
         }
     }
 }
@@ -143,9 +153,8 @@ export default {
 .flex-body {
     display: flex;
 }
-
-
-
-
+.link {
+    cursor: pointer;
+}
 
 </style>
