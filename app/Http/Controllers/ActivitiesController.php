@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Activity;
-use File;
-use App\Http\Requests\StoreActivity;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateActivity;
+use File;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-
 
 class ActivitiesController extends Controller
 {
@@ -24,16 +22,15 @@ class ActivitiesController extends Controller
         // $this->middleware('guest');
     }
 
-
     // public function getActivities()
-    public function getActivities(Request $request, $params = NULL)
+    public function getActivities(Request $request, $params = null)
     {
-        $is_published = (int)filter_var($request->query('is_published'), FILTER_VALIDATE_BOOLEAN);
+        $is_published = (int) filter_var($request->query('is_published'), FILTER_VALIDATE_BOOLEAN);
         $slug = $request->query('slug');
         $id = $request->query('id');
 
         $activities = Activity::with('sponsors')
-            // ->orderBy('start_date', 'desc')->get();
+        // ->orderBy('start_date', 'desc')->get();
             ->when($is_published, function ($query) use ($is_published) {
                 return $query->where('is_published', '=', $is_published);
             })
@@ -51,7 +48,6 @@ class ActivitiesController extends Controller
 
         // return response()->json($activities, 200);
     }
-
 
     public function getActivityById(Request $request, $id)
     {
@@ -81,7 +77,8 @@ class ActivitiesController extends Controller
         ], 200);
     }
 
-    protected function createActivity(Request $request) {
+    protected function createActivity(Request $request)
+    {
         $validatedData = $request->validate([
             'name' => 'required|unique:activities',
             'link' => ['nullable', 'url'],
@@ -104,7 +101,7 @@ class ActivitiesController extends Controller
         $activity->slug = str_slug($request->name);
         $activity->content = $request->content;
         $activity->link = $request->link;
-        $activity->is_published = (int)$request->is_published;
+        $activity->is_published = (int) $request->is_published;
         if ($request->start_date) {
             $activity->start_date = date_create_from_format('Y-m-d H:i:s', $request->start_date);
         }
@@ -116,41 +113,45 @@ class ActivitiesController extends Controller
         if (File::exists($request->image)) {
             // $file = Storage::disk('images')->put('activities', $request->image);
             // $activity->image = $file;
-            
+
             $imageName = $request->image->getClientOriginalName(); //Get Image Name
             $file = Storage::disk('images')->putFileAs('activities', $request->image, $imageName);
             $activity->image = $file;
         }
 
-        $activity->save();
         
-        $activity->sponsors()->sync($request->sponsors);
-        
-        $newActivity = Activity::with('sponsors')->find($activity->id);
-
         // Upload images for image gallery
-        foreach($request->images as $image) {
-            if (File::exists($image)) {
-                $imageName = $image->getClientOriginalName(); //Get Image Name
-                $file = Storage::disk('images')->putFileAs('activities/' . $activity->slug, $image, $imageName);
+        if ($request->images) {
+            foreach ($request->images as $image) {
+                if (File::exists($image)) {
+                    $imageName = $image->getClientOriginalName(); //Get Image Name
+                    $file = Storage::disk('images')->putFileAs('activities/' . $activity->slug, $image, $imageName);
+                }
             }
         }
+        
+        $activity->save();
 
+        $activity->sponsors()->sync($request->sponsors);
+
+        $newActivity = Activity::with('sponsors')->find($activity->id);
+        
         return response()->json([
             'success' => true,
             'newActivity' => $newActivity,
             // 'request' => $request,
             'request->image' => $request->image,
             // 'request->sponsors' => $request->sponsors
-            'request->images' => $request->images
+            'request->images' => $request->images,
         ], 201);
     }
 
-    protected function updateActivity(Request $request, $id) {
+    protected function updateActivity(Request $request, $id)
+    {
         $validatedData = $request->validate([
             'name' => ['required', Rule::unique('activities')->ignore($id)],
             'new_image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
-            'link' => ['nullable', 'url']
+            'link' => ['nullable', 'url'],
         ]);
 
         $activity = Activity::find($id);
@@ -193,14 +194,13 @@ class ActivitiesController extends Controller
                 'image' => $request->image,
                 'start_date' => $start_date,
                 'end_date' => $end_date,
-                'is_published' => (int)$request->is_published,
+                'is_published' => (int) $request->is_published,
                 'is_on_frontpage' => $request->is_on_frontpage,
-                'updated_at' => \Carbon\Carbon::now()
+                'updated_at' => \Carbon\Carbon::now(),
             ]
         );
 
         $activity->sponsors()->sync($request->sponsors);
-
 
         $updatedActivity = Activity::with('sponsors')->find($id);
 
@@ -210,7 +210,8 @@ class ActivitiesController extends Controller
         ], 201);
     }
 
-    protected function deleteActivity(Request $request, $id) {
+    protected function deleteActivity(Request $request, $id)
+    {
         $activity = Activity::find($id);
 
         // Delete image if it exists

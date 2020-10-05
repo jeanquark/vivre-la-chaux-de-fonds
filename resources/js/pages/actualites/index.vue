@@ -7,7 +7,7 @@
         <!-- today: {{ today }}<br /><br /> -->
         <!-- futureActivities: {{ futureActivities }}<br /><br /> -->
         <b-row class="justify-content-center mt-5">
-            <b-col cols="2">
+            <b-col cols="3">
                 <!-- <b-carousel id="carousel-1" :interval="2000" :fade="true" :controls="false" :indicators="false" style="">
                     <b-carousel-slide :img-src="`/images/${sponsor.image}`" v-for="sponsor in sponsors" :key="sponsor.id"></b-carousel-slide>
                 </b-carousel> -->
@@ -17,9 +17,9 @@
                     </b-carousel-slide>
                 </b-carousel>
             </b-col>
-            <b-col cols="10">
+            <b-col cols="9">
                 <b-row no-gutters class="justify-content-center">
-                    <b-col cols="12" sm="6" md="4" class="my-3 px-5" v-for="activity in futureActivities" :key="activity.id">
+                    <b-col cols="12" md="6" class="my-3 px-5" v-for="activity in futureActivities" :key="activity.id">
                         <b-card :img-src="`/images/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" style="" @click="goToLink(activity.slug)">
                             <b-card-text class="text-center">
                                 <h5 class="my-2 abc" style="">{{ activity.name }}</h5>
@@ -104,14 +104,15 @@ export default {
     border-radius: 0.8rem;
     display: inline-block;
     border: 0px solid red;
-    background-color: rgba(255, 255, 255, .8);
+    background-color: rgba(255, 255, 255, .9);
 }
 .card {
     border: none;
 }
 .card:hover {
     cursor: pointer;
-    border: 3px solid $primary;
+    color: #fff;
+    background: $secondary;
 }
 .link {
     cursor: pointer;

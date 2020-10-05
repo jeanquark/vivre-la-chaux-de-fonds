@@ -124,7 +124,7 @@ class SponsorsController extends Controller
         if (File::exists($request->image)) {
             $imageName = $request->image->getClientOriginalName(); //Get Image Name
             $file = Storage::disk('images')->putFileAs('partenaires', $request->image, $imageName);
-            $activity->image = $file;
+            $sponsor->image = $file;
         }
 
         $sponsor->save();

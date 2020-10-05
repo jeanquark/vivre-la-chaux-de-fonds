@@ -55,12 +55,12 @@
                 </nav>
             </b-col>
             <b-col cols="2" xs="4" md="1" class="" style="border: 0px dashed orange; text-align: center;">
-                <router-link to="/">
+                <a href="https://www.facebook.com/VivreCDF/" target="_blank">
                     <img src="/images/svg/facebook.svg" width="35%" style="padding: 0 0em;" />
-                </router-link>
-                <router-link to="/">
+                </a>
+                <!-- <router-link to="/">
                     <img src="/images/svg/twitter.svg" width="35%" style="padding: 0 0em;" />
-                </router-link>
+                </router-link> -->
             </b-col>
         </b-row>
 
@@ -159,9 +159,9 @@ body {
 @import './resources/sass/_variables.scss';
 .menu-small-screen {
     display: block;
-    padding: .8em 0em;
+    padding: 0.8em 0em;
 }
-.menu-small-screen a{
+.menu-small-screen a {
     color: $dark;
 }
 nav {
