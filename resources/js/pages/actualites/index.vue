@@ -20,7 +20,7 @@
             <b-col cols="9">
                 <b-row no-gutters class="justify-content-center">
                     <b-col cols="12" md="6" class="my-3 px-5" v-for="activity in futureActivities" :key="activity.id">
-                        <b-card :img-src="`/images/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" style="" @click="goToLink(activity.slug)">
+                        <b-card :img-src="`/images/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" style="" @click="goToInternalLink(activity.slug)">
                             <b-card-text class="text-center">
                                 <h5 class="my-2 abc" style="">{{ activity.name }}</h5>
                                 <p>
@@ -38,7 +38,7 @@
                 </b-row>
                 <b-row no-gutters>
                     <b-col cols="12" sm="6" md="4" class="my-3 px-5" v-for="activity in pastActivities" :key="activity.id">
-                        <b-card :img-src="`/images/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" style="" @click="goToLink(activity.slug)">
+                        <b-card :img-src="`/images/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" style="" @click="goToInternalLink(activity.slug)">
                             <b-card-text class="text-center">
                                 <h5 class="my-2">{{ activity.name }}</h5>
                                 <p>
@@ -89,8 +89,14 @@ export default {
         }
     },
     methods: {
+        goToInternalLink(link) {
+            this.$router.push(`/actualites/${link}`)
+        },
         goToExternalLink(link) {
-            window.open(link, '_blank')
+            if (link) {
+
+                window.open(link, '_blank')
+            }
         }
     }
 }

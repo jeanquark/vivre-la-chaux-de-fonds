@@ -7,10 +7,10 @@
                 <div class="text-center mb-3">
                     <router-link to="/actualites">&larr; Retour vers les manifestations</router-link>
                 </div>
-                <b-card :img-src="`/images/${activity.image}`" :img-alt="`${activity.name}`" img-top tag="article" class="mb-2" style="border: none;">
+                <b-card :img-src="`/images/${activity.image}`" :img-alt="`${activity.name}`" img-top tag="article" class="mb-2" :class="[activity.link ? 'link' : ''] " style="border: none;" @click="goToExternalLink(activity.link)">
                     <b-card-text class="">
                         <h5 class="text-center">{{ activity.name }}</h5>
-                        <h6 class="text-center" v-if="activity.link"><a :href="activity.link" target="_blank">Lien vers le site de la manifestation &rarr;</a></h6>
+                        <h6 class="text-center" v-if="activity.link"><a :href="activity.link" target="_blank">Plus d'informations &rarr;</a></h6>
                         <span v-html="activity.content"></span><br />
                         <!-- activity.images: {{ activity.images }} -->
                         <b-row class="mt-4">
@@ -50,8 +50,21 @@ export default {
         activity() {
             return Object.values(this.$store.getters['activities/activities']).find(activity => activity.slug === this.$route.params.slug)
         }
+    },
+    methods: {
+        goToExternalLink(link) {
+            if (link) {
+
+                window.open(link, '_blank')
+            }
+        }
     }
+
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+    .link {
+        cursor: pointer;
+    }
+</style>
