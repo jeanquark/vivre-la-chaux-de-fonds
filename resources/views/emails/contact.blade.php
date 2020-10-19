@@ -53,7 +53,7 @@
 
 	<br />
 	Avec nos meilleures salutations,<br />
-	Le comité de {{ config('app.name') }}
+	Le comité de l'association <b>{{ config('app.name') }}</b>
 
 </body>
 

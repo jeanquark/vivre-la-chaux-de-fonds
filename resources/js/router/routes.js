@@ -95,6 +95,8 @@ export default [
         { path: 'sections/slug/:slug', name: '', component: page('admin/sections/show.vue') },
         { path: 'sections/:id/edit', name: '', component: page('admin/sections/edit.vue') },
 
+        { path: 'newsletters', name: '', component: page('admin/newsletters') },
+
         { path: '', redirect: '/admin/dashboard' },
 
     ]},

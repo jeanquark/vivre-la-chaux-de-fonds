@@ -10,7 +10,9 @@
 
         <!-- activity: {{ activity }}<br /><br /> -->
         <!-- activityArray: {{ activityArray }}<br /><br /> -->
-        <h2 class="text-center" v-if="activity">Activité <span class="primary-color">{{ activity.name }}</span></h2>
+        <h2 class="text-center" v-if="activity">
+            Activité <span class="primary-color">{{ activity.name }}</span>
+        </h2>
 
         <b-row class="justify-content-center" v-if="activity">
             <b-col cols="12">
@@ -91,7 +93,7 @@ export default {
 
 <style lang="scss" scoped>
 @import './resources/sass/_variables.scss';
-    .primary-color {
-        color: $primary;
-    }
+.primary-color {
+    color: $primary;
+}
 </style>

@@ -13,7 +13,7 @@
                 </b-carousel> -->
                 <b-carousel :indicators="false" :interval="2000" fade id="carousel-fade" style="text-shadow: 0px 0px 2px #000">
                     <b-carousel-slide v-for="sponsor in sponsors" :key="sponsor.id">
-                        <img slot="img" :src="`/images/${sponsor.image}`" :class="[sponsor.link ? 'link' : '']"  @click="goToExternalLink(sponsor.link)" />
+                        <img slot="img" :src="`/images/${sponsor.image}`" :class="[sponsor.link ? 'link' : '']" @click="goToExternalLink(sponsor.link)" />
                     </b-carousel-slide>
                 </b-carousel>
             </b-col>
@@ -38,7 +38,7 @@
                 </b-row>
                 <b-row no-gutters>
                     <b-col cols="12" sm="6" md="4" class="my-3 px-5" v-for="activity in pastActivities" :key="activity.id">
-                        <b-card :img-src="`/images/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" style="" @click="goToInternalLink(activity.slug)">
+                        <b-card :img-src="`/images/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" :class="[Math.random() < .5 ? 'primary-color' : 'secondary-color']" @click="goToInternalLink(activity.slug)">
                             <b-card-text class="text-center">
                                 <h5 class="my-2">{{ activity.name }}</h5>
                                 <p>
@@ -89,12 +89,15 @@ export default {
         }
     },
     methods: {
+        onMouseover() {
+            console.log('onMouseover: ', Math.random())
+
+        },
         goToInternalLink(link) {
             this.$router.push(`/actualites/${link}`)
         },
         goToExternalLink(link) {
             if (link) {
-
                 window.open(link, '_blank')
             }
         }
@@ -110,7 +113,7 @@ export default {
     border-radius: 0.8rem;
     display: inline-block;
     border: 0px solid red;
-    background-color: rgba(255, 255, 255, .9);
+    background-color: rgba(255, 255, 255, 0.9);
 }
 .card {
     border: none;
@@ -118,6 +121,12 @@ export default {
 .card:hover {
     cursor: pointer;
     color: #fff;
+    // background: $secondary;
+}
+.primary-color:hover {
+    background: $primary;
+}
+.secondary-color:hover {
     background: $secondary;
 }
 .link {

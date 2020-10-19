@@ -24,7 +24,7 @@ Route::get('/', function () {
 // 	return view('index');
 // });
 // Route::patch('/update-table-plan', 'TablePlanController@update2');
-Route::post('/submit', 'TablePlanController@update2');
+// Route::post('/submit', 'TablePlanController@update2');
 
 Route::get('{path}', function () {
     return view('index');

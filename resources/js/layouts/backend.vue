@@ -150,6 +150,18 @@ export default {
                 //     }
                 // },
                 {
+                    href: '/admin/newsletters',
+                    title: 'Newsletters',
+                    alias: ['/admin/newsletters'],
+                    icon: {
+                        element: 'font-awesome-icon',
+                        attributes: {
+                            icon: 'envelope',
+                            size: 'xs'
+                        }
+                    }
+                },
+                {
                     href: '/admin/users',
                     title: 'Utilisateurs',
                     alias: ['/admin/users', '/admin/users/create', '/admin/users/:id', '/admin/users/:id/edit'],

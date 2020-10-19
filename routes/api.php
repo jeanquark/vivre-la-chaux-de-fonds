@@ -58,7 +58,10 @@ Route::get('/sections/{id}', 'SectionsController@getSectionById');
 Route::get('/sections/slug/{slugId}', 'SectionsController@getSectionBySlug');
 Route::get('/sections/page/{pageId}', 'SectionsController@getSectionsByPageId');
 
+Route::get('/newsletters', 'NewslettersController@getNewsletters');
+
 Route::post('/send-contact-form', 'ContactMessageController@send');
+Route::post('/send-newsletter-form', 'NewslettersController@addSubscriptionToNewsletter');
 
 Route::group(['middleware' => 'role:admin'], function () {
     // Users
@@ -91,6 +94,11 @@ Route::group(['middleware' => 'role:admin'], function () {
     Route::delete('/sections/{id}', 'SectionsController@deleteSection');
     Route::post('/sections/upload-image', 'FilesController@uploadImage');
     Route::post('/sections/upload-document', 'FilesController@uploadDocument');
+
+    // Newsletters
+    Route::post('/newsletters', 'NewslettersController@createNewsletter');
+    Route::put('/newsletters/{id}', 'NewslettersController@updateNewsletter');
+    Route::delete('/newsletters/{id}', 'NewslettersController@deleteNewsletter');
 
     // Images
     Route::get('/images', 'ImagesController@getImages');
