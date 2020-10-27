@@ -1,72 +1,72 @@
 <template>
-    <div>
-        <!-- formContent: {{ formContent }} -->
-        <b-form-group label="Contenu de la page:">
-            <b-button variant="primary" v-b-tooltip.hover title="Gras" class="mx-.5" @click.prevent="formatDoc('bold')">
-                <font-awesome-icon size="1x" icon="bold" class="" />
-            </b-button>
+<div>
+    <!-- formContent: {{ formContent }} -->
+    <b-form-group label="">
+        <b-button variant="primary" v-b-tooltip.hover title="Gras" class="mx-.5" @click.prevent="formatDoc('bold')">
+            <font-awesome-icon size="1x" icon="bold" class="" />
+        </b-button>
 
-            <b-button variant="primary" v-b-tooltip.hover title="Italic" class="mx-.5" @click.prevent="formatDoc('italic')">
-                <font-awesome-icon size="1x" icon="italic" class="" />
-            </b-button>
+        <b-button variant="primary" v-b-tooltip.hover title="Italic" class="mx-.5" @click.prevent="formatDoc('italic')">
+            <font-awesome-icon size="1x" icon="italic" class="" />
+        </b-button>
 
-            <b-button variant="primary" v-b-tooltip.hover title="Souligné" class="mx-.5" @click.prevent="formatDoc('underline')">
-                <font-awesome-icon size="1x" icon="underline" class="" />
-            </b-button>
+        <b-button variant="primary" v-b-tooltip.hover title="Souligné" class="mx-.5" @click.prevent="formatDoc('underline')">
+            <font-awesome-icon size="1x" icon="underline" class="" />
+        </b-button>
 
-            <b-button variant="primary" v-b-tooltip.hover title="Aligner à gauche" class="mx-.5" @click.prevent="formatDoc('justifyleft')">
-                <font-awesome-icon size="1x" icon="align-left" class="" />
-            </b-button>
+        <b-button variant="primary" v-b-tooltip.hover title="Aligner à gauche" class="mx-.5" @click.prevent="formatDoc('justifyleft')">
+            <font-awesome-icon size="1x" icon="align-left" class="" />
+        </b-button>
 
-            <b-button variant="primary" v-b-tooltip.hover title="Aligner au centre" class="mx-.5" @click.prevent="formatDoc('justifycenter')">
-                <font-awesome-icon size="1x" icon="align-center" class="" />
-            </b-button>
+        <b-button variant="primary" v-b-tooltip.hover title="Aligner au centre" class="mx-.5" @click.prevent="formatDoc('justifycenter')">
+            <font-awesome-icon size="1x" icon="align-center" class="" />
+        </b-button>
 
-            <b-button variant="primary" v-b-tooltip.hover title="Aligner à droite" class="mx-.5" @click.prevent="formatDoc('justifyright')">
-                <font-awesome-icon size="1x" icon="align-right" class="" />
-            </b-button>
+        <b-button variant="primary" v-b-tooltip.hover title="Aligner à droite" class="mx-.5" @click.prevent="formatDoc('justifyright')">
+            <font-awesome-icon size="1x" icon="align-right" class="" />
+        </b-button>
 
-            <b-button variant="primary" title="Liste point" class="mx-.5" @click.prevent="formatDoc('insertUnorderedList')">
-                <font-awesome-icon size="1x" icon="list-ul" />
-            </b-button>
+        <b-button variant="primary" title="Liste point" class="mx-.5" @click.prevent="formatDoc('insertUnorderedList')">
+            <font-awesome-icon size="1x" icon="list-ul" />
+        </b-button>
 
-            <b-button variant="primary" title="Liste nombre" class="mx-.5" @click.prevent="formatDoc('insertOrderedList')">
-                <font-awesome-icon size="1x" icon="list-ol" />
-            </b-button>
+        <b-button variant="primary" title="Liste nombre" class="mx-.5" @click.prevent="formatDoc('insertOrderedList')">
+            <font-awesome-icon size="1x" icon="list-ol" />
+        </b-button>
 
-            <b-button variant="primary" title="Lien" class="mx-.5" @click.prevent="openCreateLinkModal">
-                <font-awesome-icon size="1x" icon="link" />
-            </b-button>
+        <b-button variant="primary" title="Lien" class="mx-.5" @click.prevent="openCreateLinkModal">
+            <font-awesome-icon size="1x" icon="link" />
+        </b-button>
 
-            <b-button variant="secondary" v-b-tooltip.hover title="Ajouter image" :disabled="!focused" @mousedown.prevent="focused = true" class="mx-.5" @click.prevent="openImagesModal">
-                <font-awesome-icon size="1x" icon="image" class="" />
-            </b-button>
+        <b-button variant="secondary" v-b-tooltip.hover title="Ajouter image" :disabled="!focused" @mousedown.prevent="focused = true" class="mx-.5" @click.prevent="openImagesModal">
+            <font-awesome-icon size="1x" icon="image" class="" />
+        </b-button>
 
-            <b-button variant="secondary" v-b-tooltip.hover title="Ajouter PDF" :disabled="!focused" @mousedown.prevent="focused = true" class="mx-.5" @click.prevent="openDocumentsModal">
-                <font-awesome-icon size="1x" icon="file-pdf" class="" />
-            </b-button>
+        <b-button variant="secondary" v-b-tooltip.hover title="Ajouter PDF" :disabled="!focused" @mousedown.prevent="focused = true" class="mx-.5" @click.prevent="openDocumentsModal">
+            <font-awesome-icon size="1x" icon="file-pdf" class="" />
+        </b-button>
 
-            <b-button variant="dark" v-b-tooltip.hover title="Voir code" class="mx-.5" @click="toggleShowHTML">
-                <font-awesome-icon size="1x" icon="code" />
-            </b-button>
+        <b-button variant="dark" v-b-tooltip.hover title="Voir code" class="mx-.5" @click="toggleShowHTML">
+            <font-awesome-icon size="1x" icon="code" />
+        </b-button>
 
-            <b-row no-gutters class="justify-content-center my-2" v-if="selectedImageNode">
-                <b-col cols="12">
-                    <image-properties :selectedImageProps="selectedImageProps" @updateSelectedImageProperties="updateSelectedImageProperties" />
-                </b-col>
-            </b-row>
+        <b-row no-gutters class="justify-content-center my-2" v-if="selectedImageNode">
+            <b-col cols="12">
+                <image-properties :selectedImageProps="selectedImageProps" @updateSelectedImageProperties="updateSelectedImageProperties" />
+            </b-col>
+        </b-row>
 
-            <div contenteditable="true" id="textBox" v-html="content" @focus="focused = true" @blur="focused = false" @click="selectElement" class="mt-1" v-if="!showHTML"></div>
+        <div contenteditable="true" id="textBox" v-html="content" @focus="focused = true" @blur="focused = false" @click="selectElement" class="mt-1" v-if="!showHTML"></div>
 
-            <div contenteditable="true" id="textBox" @focus="focused = true" @blur="focused = false" class="mt-1" v-else>
-                <pre style="">{{ content }}</pre>
-            </div>
-        </b-form-group>
+        <div contenteditable="true" id="textBox" @focus="focused = true" @blur="focused = false" class="mt-1" v-else>
+            <pre style="">{{ content }}</pre>
+        </div>
+    </b-form-group>
 
-        <images-modal @insertImage="insertImage" @closeImagesModal="showImagesModal = false" v-if="showImagesModal" />
-        <documents-modal @insertDocument="insertDocument" @closeDocumentsModal="showDocumentsModal = false" v-if="showDocumentsModal" />
-        <create-link-modal :selectedText="selectedText" @insertLink="insertLink" @closeLinkModal="showCreateLinkModal = false" v-if="showCreateLinkModal" />
-    </div>
+    <images-modal @insertImage="insertImage" @closeImagesModal="showImagesModal = false" v-if="showImagesModal" />
+    <documents-modal @insertDocument="insertDocument" @closeDocumentsModal="showDocumentsModal = false" v-if="showDocumentsModal" />
+    <create-link-modal :selectedText="selectedText" @insertLink="insertLink" @closeLinkModal="showCreateLinkModal = false" v-if="showCreateLinkModal" />
+</div>
 </template>
 
 <script>
@@ -81,16 +81,16 @@ export default {
         CreateLinkModal,
         ImageProperties
     },
-    props: [ 'formContent' ],
-    created () {
-            // this.content = this.formContent
+    props: ['formContent'],
+    created() {
+        // this.content = this.formContent
 
     },
-    mounted () {
+    mounted() {
         // this.content = '<img src="/images/favicon.png" style="margin-right: 20px;" /> Lien sur cette page.'
         // if (this.formContent !== '') {
 
-            this.content = this.formContent
+        this.content = this.formContent
         // }
     },
     data() {
@@ -191,7 +191,10 @@ export default {
             console.log('insertDocument', filePath, fileType, fileName)
             this.formatDoc('insertHTML', `<a href="/documents/${filePath}" type="${fileType}" title="${fileName}" target="_blank">${fileName}</a>`)
         },
-        insertLink({ linkType, linkPage }) {
+        insertLink({
+            linkType,
+            linkPage
+        }) {
             console.log('insertLink', linkType, linkPage)
             let link
             if (linkType === 'external') {
@@ -270,6 +273,7 @@ export default {
 
 <style lang="scss" scoped>
 @import './resources/sass/_variables.scss';
+
 #textBox {
     width: 100%;
     height: 350px;
@@ -277,12 +281,14 @@ export default {
     padding: 12px;
     overflow: scroll;
 }
+
 #textBox #sourceText {
     padding: 0;
     margin: 0;
     min-width: 498px;
     min-height: 200px;
 }
+
 .overlay {
     position: absolute;
     top: 0;
@@ -295,28 +301,35 @@ export default {
     transition: 0.5s ease;
     background-color: #008cba;
 }
+
 ::v-deep #textBox img:hover {
     cursor: pointer;
     opacity: 0.5;
     transition: 0.5s ease;
     background-color: $primary;
 }
+
 ::v-deep #textBox .link {
     color: #2c5cad;
 }
+
 ::v-deep #textBox .link:hover {
     color: #1c3c70;
     text-decoration: underline;
 }
+
 #editMode label {
     cursor: pointer;
 }
+
 .intLink {
     cursor: pointer;
 }
+
 img.intLink {
     border: 1px solid #000;
 }
+
 .disabled:hover {
     cursor: not-allowed;
     color: #000;

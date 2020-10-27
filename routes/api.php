@@ -96,7 +96,7 @@ Route::group(['middleware' => 'role:admin'], function () {
     Route::post('/sections/upload-document', 'FilesController@uploadDocument');
 
     // Newsletters
-    Route::post('/newsletters', 'NewslettersController@createNewsletter');
+    Route::post('/newsletters', 'NewslettersController@sendNewsletter');
     Route::put('/newsletters/{id}', 'NewslettersController@updateNewsletter');
     Route::delete('/newsletters/{id}', 'NewslettersController@deleteNewsletter');
 

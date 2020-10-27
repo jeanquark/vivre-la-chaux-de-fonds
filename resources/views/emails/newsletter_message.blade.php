@@ -12,14 +12,19 @@
 	<h2 style="text-align: center;"></h2>
 
 	<p>Bonjour,</p>
-	{{-- <p>$message: {{ $message }}</p> --}}
-	{{-- <p>$data: {{ $data }}</p> --}}
-	<p>Content: {!! $data['body'] !!}</p>
+	{{-- <p>{{ $data }}</p> --}}
+	<p>Recipient: {{ $data['email_encoded'] }}</p>
+	<p>Content: {!! $data['content'] !!}</p>
 
 
-	<p>Vous pourrez vous désinscrire à tout moment en cliquant sur le lien affiché en bas de page de chaque email reçu.</p>
-	<p>Avec nos meilleures salutations,<br />
-		Le comité de l'association <b>{{ config('app.name') }}</b></p>
+
+	<p>
+		Avec nos meilleures salutations,
+		<br />
+		Le comité de l'association <b>{{ config('app.name') }}</b>
+	</p>
+	<br />
+	<p><small>Pour vous désinscrire à la newsletter, cliquez <a href="{{ config('app.url') }}/newsletter/desinscription/{{ $data['email_encoded'] }}" target="_blank">ici</a></small></p>
 
 </body>
 

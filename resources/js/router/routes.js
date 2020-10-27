@@ -42,6 +42,8 @@ export default [
     { path: '/devenir-benevole', name: 'devenir-benevole', component: page('devenir-benevole.vue') },
     { path: '/devenir-membre', name: 'devenir-membre', component: page('devenir-membre.vue') },
     { path: '/partenariat', name: 'partenariat', component: page('partenariat.vue') },
+
+    { path: '/newsletter/desinscription/:email_encoded', name: 'newsletter-desinscription', component: page('newsletter/desinscription/_email_encoded/index') },
     
     // { path: '/admin', name: 'admin', component: page('admin/index.vue') },
 

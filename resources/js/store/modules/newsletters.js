@@ -36,7 +36,7 @@ export const mutations = {
     },
     DELETE_NEWSLETTER(state, payload) {
         console.log('DELETE_NEWSLETTER mutation: ', payload)
-        const { newsletterId } = parseInt(payload)
+        const { newsletterId } = payload
         console.log('newsletterId: ', newsletterId)
         Vue.delete(state.newsletters, newsletterId)
     }
@@ -79,6 +79,16 @@ export const actions = {
             throw error
         }
     },
+    async sendNewsletter({ commit }, payload) {
+        try {
+            console.log('payload: ', payload)
+            const { data } = await axios.post('/api/newsletters', payload)
+            console.log('data: ', data)
+        } catch (error) {
+            console.log('error: ', error)
+            throw error
+        }
+    },
     async createNewsletter({ commit }, form) {
         try {
             const { data } = await form.submit('post', '/api/newsletters', {
@@ -113,7 +123,7 @@ export const actions = {
             throw error
         }
     },
-    async deleteNewsletter({ commit, dispatch }, payload) {
+    async deleteSubscription({ commit, dispatch }, payload) {
         try {
             const { newsletterId } = payload
             console.log('newsletterId: ', newsletterId)
