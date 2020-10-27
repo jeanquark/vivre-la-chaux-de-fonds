@@ -4,6 +4,7 @@ import router from '~/router'
 import i18n from '~/plugins/i18n'
 import App from '~/components/App'
 // import SvgVue from 'svg-vue'
+import VueGtag from "vue-gtag"
 
 import '~/plugins'
 import '~/components'
@@ -44,13 +45,17 @@ Vue.config.productionTip = false
 
 // import vuetify from './plugins/vuetify'
 
+Vue.use(VueGtag, {
+	config: { id: "G-HT8VEMTP0Z" }
+});
+
 /* eslint-disable no-new */
 new Vue({
 	// SvgVue,
-  	i18n,
-  	store,
-  	router,
-    // vuetify,
-  	...App
+	i18n,
+	store,
+	router,
+	// vuetify,
+	...App
 })
 // Vue.use(SvgVue)

@@ -1,16 +1,8 @@
 <template>
     <b-container>
         <h1 class="text-center">Actualités & Manifestations</h1>
-        <!-- activities: {{ activities }}<br /><br /> -->
-        <!-- sponsors: {{ sponsors }}<br /><br /> -->
-        <!-- publishedActivities: {{ publishedActivities }}<br /><br /> -->
-        <!-- today: {{ today }}<br /><br /> -->
-        <!-- futureActivities: {{ futureActivities }}<br /><br /> -->
         <b-row class="justify-content-center mt-5">
             <b-col cols="3">
-                <!-- <b-carousel id="carousel-1" :interval="2000" :fade="true" :controls="false" :indicators="false" style="">
-                    <b-carousel-slide :img-src="`/images/${sponsor.image}`" v-for="sponsor in sponsors" :key="sponsor.id"></b-carousel-slide>
-                </b-carousel> -->
                 <b-carousel :indicators="false" :interval="2000" fade id="carousel-fade" style="text-shadow: 0px 0px 2px #000">
                     <b-carousel-slide v-for="sponsor in sponsors" :key="sponsor.id">
                         <img slot="img" :src="`/images/${sponsor.image}`" :class="[sponsor.link ? 'link' : '']" @click="goToExternalLink(sponsor.link)" />
@@ -31,13 +23,16 @@
                         </b-card>
                     </b-col>
                 </b-row>
-                <b-row no-gutters class="mt-4 mb-4 justify-content-center">
+                
+            </b-col>
+        </b-row>
+        <b-row no-gutters class="my-4 justify-content-center">
                     <b-col cols="12" class="text-center">
                         <h3 class="title">Historique</h3>
                     </b-col>
                 </b-row>
                 <b-row no-gutters>
-                    <b-col cols="12" sm="6" md="4" class="my-3 px-5" v-for="activity in pastActivities" :key="activity.id">
+                    <b-col cols="12" sm="6" md="4" lg="3" class="my-3 px-5" v-for="activity in pastActivities" :key="activity.id">
                         <b-card :img-src="`/images/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" :class="[Math.random() < .5 ? 'primary-color' : 'secondary-color']" @click="goToInternalLink(activity.slug)">
                             <b-card-text class="text-center">
                                 <h5 class="my-2">{{ activity.name }}</h5>
@@ -49,8 +44,6 @@
                         </b-card>
                     </b-col>
                 </b-row>
-            </b-col>
-        </b-row>
     </b-container>
 </template>
 

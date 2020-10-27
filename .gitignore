@@ -13,5 +13,8 @@ npm-debug.log
 yarn-error.log
 phpunit.dusk.xml
 *.code-workspace
-/public/images
+/public/images/pages
+/public/images/sections
+/public/images/partenaires
+/public/images/activities
 /public/documents
