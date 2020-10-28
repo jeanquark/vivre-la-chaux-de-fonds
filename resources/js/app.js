@@ -46,9 +46,9 @@ Vue.config.productionTip = false
 // import vuetify from './plugins/vuetify'
 
 Vue.use(VueGtag, {
-	config: { id: "UA-71694605-10" }
+	config: { id: "G-HT8VEMTP0Z" }
 	// G-HT8VEMTP0Z Vivre La Chaux-de-Fonds
-	// UA-71694605-10 Vivre La Chaux-de-Fonds2
+	// UA-71694605-10 Vivre La Chaux-de-Fonds 2
 });
 
 

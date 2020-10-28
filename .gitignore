@@ -18,3 +18,4 @@ phpunit.dusk.xml
 /public/images/partenaires
 /public/images/activities
 /public/documents
+service-account-credentials.json
