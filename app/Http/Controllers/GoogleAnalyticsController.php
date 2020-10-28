@@ -10,6 +10,7 @@ class GoogleAnalyticsController extends Controller
         $analytics = $this->initializeAnalytics();
         $response = $this->getReport($analytics);
         // $this->printResults($response);
+        // return response()->json($analytics, 200);
         return response()->json($response, 200);
 
     }
@@ -36,7 +37,8 @@ class GoogleAnalyticsController extends Controller
     {
 
         // Replace with your view ID, for example XXXX.
-        $VIEW_ID = "231939111";
+        // $VIEW_ID = "2130670580"; // Vivre La Chaux-de-Fonds
+        $VIEW_ID = "231939111"; // Vivre La Chaux-de-Fonds 2
 
         // Create the DateRange object.
         $dateRange = new \Google_Service_AnalyticsReporting_DateRange();
