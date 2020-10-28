@@ -115,4 +115,7 @@ Route::group(['middleware' => 'role:admin'], function () {
     Route::post('/documents/folder', 'DocumentsController@createFolder');
     Route::post('/documents/folder/documents', 'DocumentsController@getDocumentsByFolder');
     Route::post('/documents/folder/delete', 'DocumentsController@deleteFolder');
+
+    // Google Analytics API
+    Route::get('/google-analytics-data', 'GoogleAnalyticsController@getData');
 });
