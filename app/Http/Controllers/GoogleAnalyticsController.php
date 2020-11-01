@@ -40,8 +40,8 @@ class GoogleAnalyticsController extends Controller
 
         // Replace with your view ID, for example XXXX.
         // $VIEW_ID = "2130670580"; // Vivre La Chaux-de-Fonds
-        // $VIEW_ID = "231939111"; // Vivre La Chaux-de-Fonds 2
-        $VIEW_ID = "199421687"; // KB-Avocats
+        $VIEW_ID = "232130649"; // Vivre La Chaux-de-Fonds 2
+        // $VIEW_ID = "199421687"; // KB-Avocats
 
         // Create the DateRange object.
         $dateRange1 = new \Google_Service_AnalyticsReporting_DateRange();
