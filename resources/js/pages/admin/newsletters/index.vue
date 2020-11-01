@@ -23,11 +23,6 @@
             </template>
         </template>
 
-        <template v-slot:cell(is_active)="row">
-            <span class="text-success" v-if="row.item.is_active"> Oui </span>
-            <span class="text-danger" v-else> Non </span>
-        </template>
-
         <template v-slot:cell(updated_at)="row">
             {{ row.item.updated_at | moment('from', 'now') }}
         </template>
@@ -41,13 +36,18 @@
     <p>
         <b-button variant="primary" size="sm" @click="selectAllRows">Tout sélectionner</b-button>
         <b-button variant="secondary" size="sm" @click="clearSelected">Tout désélectionner</b-button>
+        <b-button variant="dark" size="sm" @click="generateEmailsList">Générer liste d'emails</b-button>
     </p>
-    <br /><br />
-    <div>
+    
+    <div v-if="emailsList">
+        Liste d'emails: {{ emailsList }}
+    </div>
+    <div style="display: none;">
+        <br /><br />
         <h3 class="text-center mb-3">Rédiger une newsletter:</h3>
         <text-editor @toggleShowHTML="toggleShowHTML" />
     </div>
-    <p class="text-center">
+    <p class="text-center" style="display: none;">
         <b-button variant="success" size="sm" @click="sendNewsletter">Envoyer la newsletter</b-button>
     </p>
     <!-- <p>
@@ -97,11 +97,11 @@ export default {
                     label: 'E-mail',
                     sortable: true
                 },
-                {
-                    key: 'is_active',
-                    label: 'Est actif?',
-                    sortable: true
-                },
+                // {
+                //     key: 'is_active',
+                //     label: 'Est actif?',
+                //     sortable: true
+                // },
                 {
                     key: 'emails_sent',
                     label: "Nb. d'envois",
@@ -119,7 +119,8 @@ export default {
                 },
             ],
             selected: [],
-            showHTML: false
+            showHTML: false,
+            emailsList: ''
         }
     },
     computed: {
@@ -138,6 +139,7 @@ export default {
                 email
             }))
         },
+        
     },
     methods: {
         onRowSelected(items) {
@@ -152,6 +154,9 @@ export default {
         toggleShowHTML(value) {
             console.log('toggleShowHTML: ', value)
             this.showHTML = value
+        },
+        generateEmailsList () {
+            this.emailsList = this.newsletters.map(subscriber => subscriber.email)
         },
         async sendNewsletter() {
             try {

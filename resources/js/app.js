@@ -5,6 +5,7 @@ import i18n from '~/plugins/i18n'
 import App from '~/components/App'
 // import SvgVue from 'svg-vue'
 import VueGtag from "vue-gtag"
+import VueApexCharts from 'vue-apexcharts'
 
 import '~/plugins'
 import '~/components'
@@ -44,10 +45,13 @@ Vue.config.productionTip = false
 // );
 
 // import vuetify from './plugins/vuetify'
+Vue.use(VueApexCharts)
+Vue.component('apexchart', VueApexCharts)
 
 Vue.use(VueGtag, {
 	// config: { id: "G-HT8VEMTP0Z" } // Vivre La Chaux-de-Fonds
-	config: { id: "UA-71694605-10" }// Vivre La Chaux-de-Fonds 2
+	config: { id: "UA-71694605-11" }// Vivre La Chaux-de-Fonds 2
+	// config: { id: "UA-71694605-9" } // KB-Avocats
 });
 
 

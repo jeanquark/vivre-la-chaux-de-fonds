@@ -59,6 +59,9 @@ Route::get('/sections/slug/{slugId}', 'SectionsController@getSectionBySlug');
 Route::get('/sections/page/{pageId}', 'SectionsController@getSectionsByPageId');
 
 Route::get('/newsletters', 'NewslettersController@getNewsletters');
+Route::post('/newsletters/emails', 'NewslettersController@getNewsletterByEmail');
+Route::delete('/newsletters/emails/{encodedEmail}', 'NewslettersController@deleteNewsletterByEmail');
+
 
 Route::post('/send-contact-form', 'ContactMessageController@send');
 Route::post('/send-newsletter-form', 'NewslettersController@addSubscriptionToNewsletter');

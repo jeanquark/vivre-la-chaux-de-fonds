@@ -22,6 +22,21 @@ class NewslettersController extends Controller
         // $this->middleware('guest');
     }
 
+    public function getNewsletterByEmail(Request $request)
+    {
+        $email = $request->newsletterEmail;
+
+        $newsletter = Newsletter::where('email', '=', 'john.doe@example.com')->first();
+
+
+        // return response()->json($newsletter, 200);
+        return response()->json([
+            'success' => true,
+            'email' => $email,
+            'newsletter' => $newsletter
+        ], 200);
+    }
+
     public function getNewsletters()
     {
         $newsletters = Newsletter::all();
@@ -116,9 +131,25 @@ class NewslettersController extends Controller
 
         $newsletter->delete();
 
+        // return response()->json($newsletter, 200);
         return response()->json([
             'success' => true,
             'newsletter' => $newsletter
         ], 204);
+    }
+
+    protected function deleteNewsletterByEmail(Request $request, $encodedEmail)
+    {
+        $email = base64_decode($encodedEmail);
+
+        $newsletter = Newsletter::where('email', '=', $email)->first();
+
+        $newsletter->delete();
+
+        return response()->json([
+            'success' => true,
+            'email' => $email,
+            'newsletter' => $newsletter
+        ], 200);
     }
 }

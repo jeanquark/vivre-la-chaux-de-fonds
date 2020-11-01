@@ -4,28 +4,28 @@ import { objectToFormData } from 'object-to-formdata'
 
 // state
 export const state = {
+    newsletter: {},
     newsletters: {}
 }
 
 // getters
 export const getters = {
+    newsletter: state => state.newsletter,
     newsletters: state => state.newsletters
 }
 
 // mutations
 export const mutations = {
+    SET_NEWSLETTER(state, payload) {
+        console.log('SET_NEWSLETTER mutation', payload)
+        state.newsletter = payload
+    },
     SET_NEWSLETTERS(state, payload) {
         console.log('SET_NEWSLETTERS mutation', payload)
         payload.forEach(newsletter => {
             state.newsletters = Object.assign({}, state.newsletters, {
                 [newsletter.id]: newsletter
             })
-        })
-    },
-    SET_NEWSLETTER(state, payload) {
-        console.log('SET_NEWSLETTER mutation', payload)
-        state.newsletters = Object.assign({}, state.newsletters, {
-            [payload.id]: payload
         })
     },
     UPDATE_NEWSLETTER(state, payload) {
@@ -67,11 +67,11 @@ export const actions = {
             throw error
         }
     },
-    async fetchNewsletterBySlug({ commit }, payload) {
+    async fetchNewsletterByEmail({ commit }, payload) {
         try {
-            console.log('fetchNewsletterBySlug action: ', payload)
-            const { newsletterSlug } = payload
-            const { data } = await axios.get(`/api/newsletters/slug/${newsletterSlug}`)
+            console.log('fetchNewsletterByEmail action: ', payload)
+            const { newsletterEmail } = payload
+            const { data } = await axios.post(`/api/newsletters/emails`, { newsletterEmail })
             console.log('data: ', data)
             commit('SET_NEWSLETTER', data.newsletter)
         } catch (error) {
@@ -123,7 +123,7 @@ export const actions = {
             throw error
         }
     },
-    async deleteSubscription({ commit, dispatch }, payload) {
+    async deleteSubscription({ commit }, payload) {
         try {
             const { newsletterId } = payload
             console.log('newsletterId: ', newsletterId)
@@ -134,5 +134,15 @@ export const actions = {
             console.log('error from vuex: ', error)
             throw error
         }
-    }
+    },
+    async deleteSubscriptionByEmail({ commit }, payload) {
+        try {
+            const { newsletterEncodedEmail } = payload
+            console.log('newsletterEncodedEmail: ', newsletterEncodedEmail)
+            const { data } = await axios.delete(`/api/newsletters/emails/${newsletterEncodedEmail}`)
+        } catch (error) {
+            console.log('error from vuex: ', error)
+            throw error
+        }
+    },
 }

@@ -9,9 +9,11 @@ class GoogleAnalyticsController extends Controller
     {
         $analytics = $this->initializeAnalytics();
         $response = $this->getReport($analytics);
-        // $this->printResults($response);
+        // $results = $this->printResults($response);
         // return response()->json($analytics, 200);
+        // return response()->json($response->reports[0]['data'], 200);
         return response()->json($response, 200);
+        // return response()->json($results, 200);
 
     }
 
@@ -38,31 +40,92 @@ class GoogleAnalyticsController extends Controller
 
         // Replace with your view ID, for example XXXX.
         // $VIEW_ID = "2130670580"; // Vivre La Chaux-de-Fonds
-        $VIEW_ID = "231939111"; // Vivre La Chaux-de-Fonds 2
+        // $VIEW_ID = "231939111"; // Vivre La Chaux-de-Fonds 2
+        $VIEW_ID = "199421687"; // KB-Avocats
 
         // Create the DateRange object.
-        $dateRange = new \Google_Service_AnalyticsReporting_DateRange();
-        $dateRange->setStartDate("7daysAgo");
-        $dateRange->setEndDate("today");
+        $dateRange1 = new \Google_Service_AnalyticsReporting_DateRange();
+        $dateRange1->setStartDate("9DaysAgo");
+        $dateRange1->setEndDate("today");
+
+        $dateRange2 = new \Google_Service_AnalyticsReporting_DateRange();
+        $dateRange2->setStartDate("19DaysAgo");
+        $dateRange2->setEndDate("10DaysAgo");
+
+        $dateRange3 = new \Google_Service_AnalyticsReporting_DateRange();
+        $dateRange3->setStartDate("30DaysAgo");
+        $dateRange3->setEndDate("today");
 
         // Create the Metrics object.
-        $sessions = new \Google_Service_AnalyticsReporting_Metric();
-        $sessions->setExpression("ga:sessions");
-        $sessions->setAlias("sessions");
+        $metric1 = new \Google_Service_AnalyticsReporting_Metric();
+        // $sessions->setExpression("ga:sessions");
+        $metric1->setExpression("ga:sessions");
+        $metric1->setAlias("sessions");
+        // $sessions->setExpression("ga:pageviews");
+        // $sessions->setAlias("sessions");
+        // $sessions->setAlias("sessions,country");
+
+        $metric2 = new \Google_Service_AnalyticsReporting_Metric();
+        $metric2->setExpression("ga:pageviews");
+        $metric2->setAlias("pageviews");
+
+        $metric3 = new \Google_Service_AnalyticsReporting_Metric();
+        $metric3->setExpression("ga:newUsers");
+        $metric3->setAlias("newUsers");
+
+        $metric4 = new \Google_Service_AnalyticsReporting_Metric();
+        $metric4->setExpression("ga:bounceRate");
+        $metric4->setAlias("bounceRate");
+
+        // $country = new \Google_Service_AnalyticsReporting_Dimension();
+        // $country->setName("ga:country");
+
+        $city = new \Google_Service_AnalyticsReporting_Dimension();
+        $city->setName("ga:city");
+
+        $date = new \Google_Service_AnalyticsReporting_Dimension();
+        $date->setName("ga:date");
+
+        // $ordering = new Google_Service_AnalyticsReporting_OrderBy();
+        // // $ordering->setOrderType("HISTOGRAM_BUCKET");
+        // $ordering->setFieldName("ga:date");
 
         // Create the ReportRequest object.
-        $request = new \Google_Service_AnalyticsReporting_ReportRequest();
-        $request->setViewId($VIEW_ID);
-        $request->setDateRanges($dateRange);
-        $request->setMetrics(array($sessions));
+        $request1 = new \Google_Service_AnalyticsReporting_ReportRequest();
+        $request1->setViewId($VIEW_ID);
+        $request1->setMetrics(array($metric1, $metric2, $metric3, $metric4));
+        $request1->setDateRanges(array($dateRange1, $dateRange2));
+        $request1->setDimensions(array($date));
+        $request1->setIncludeEmptyRows(true);
 
-        $body = new \Google_Service_AnalyticsReporting_GetReportsRequest();
-        $body->setReportRequests(array($request));
-        return $analytics->reports->batchGet($body);
+        $ordering = new \Google_Service_AnalyticsReporting_OrderBy();
+        $ordering->setFieldName("ga:sessions");
+        $ordering->setOrderType("VALUE");
+        $ordering->setSortOrder("DESCENDING");
+
+        $request2 = new \Google_Service_AnalyticsReporting_ReportRequest();
+        $request2->setViewId($VIEW_ID);
+        $request2->setDateRanges($dateRange3);
+        $request2->setDimensions(array($city));
+        $request2->setMetrics(array($metric1));
+        $request2->setOrderBys($ordering);
+        $request2->setPageSize(10);
+        $request2->setIncludeEmptyRows(true);
+        
+
+        $body1 = new \Google_Service_AnalyticsReporting_GetReportsRequest();
+        $body1->setReportRequests(array($request1));
+
+        $body2 = new \Google_Service_AnalyticsReporting_GetReportsRequest();
+        $body2->setReportRequests(array($request2));
+
+        // return $analytics->reports->batchGet($body);
+        return array($analytics->reports->batchGet($body1), $analytics->reports->batchGet($body2));
     }
 
     public function printResults($reports)
     {
+        $abc;
         for ($reportIndex = 0; $reportIndex < count($reports); $reportIndex++) {
             $report = $reports[$reportIndex];
             $header = $report->getColumnHeader();
@@ -76,6 +139,7 @@ class GoogleAnalyticsController extends Controller
                 $metrics = $row->getMetrics();
                 for ($i = 0; $i < count($dimensionHeaders) && $i < count($dimensions); $i++) {
                     print($dimensionHeaders[$i] . ": " . $dimensions[$i] . "\n");
+                    // $abc($dimensionHeaders[$i] . ": " . $dimensions[$i] . "\n")
                 }
 
                 for ($j = 0; $j < count($metrics); $j++) {
