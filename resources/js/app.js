@@ -4,8 +4,9 @@ import router from '~/router'
 import i18n from '~/plugins/i18n'
 import App from '~/components/App'
 // import SvgVue from 'svg-vue'
-import VueGtag from "vue-gtag"
 import VueApexCharts from 'vue-apexcharts'
+// import VueGtag from "vue-gtag"
+import VueAnalytics from 'vue-analytics'
 
 import '~/plugins'
 import '~/components'
@@ -48,21 +49,24 @@ Vue.config.productionTip = false
 Vue.use(VueApexCharts)
 Vue.component('apexchart', VueApexCharts)
 
-Vue.use(VueGtag, {
-	// config: { id: "G-HT8VEMTP0Z" } // Vivre La Chaux-de-Fonds
-	// config: { id: "UA-71694605-11" }// Vivre La Chaux-de-Fonds 2
-	// config: { id: "UA-71694605-9" } // KB-Avocats
-	config: { id: "G-T7SKJ2NL74" }// Vivre La Chaux-de-Fonds 3
-});
+// Vue.use(VueGtag, {
+// 	// config: { id: "G-HT8VEMTP0Z" } // Vivre La Chaux-de-Fonds
+// 	// config: { id: "UA-71694605-11" } // Vivre La Chaux-de-Fonds 2
+// 	// config: { id: "UA-71694605-9" } // KB-Avocats
+// 	config: { id: "G-T7SKJ2NL74" } // Vivre La Chaux-de-Fonds 3
+// });
 
+Vue.use(VueAnalytics, {
+    id: 'UA-71694605-11' // Vivre La Chaux-de-Fonds 2
+})
 
 /* eslint-disable no-new */
 new Vue({
-	// SvgVue,
-	i18n,
-	store,
-	router,
-	// vuetify,
-	...App
+    // SvgVue,
+    i18n,
+    store,
+    router,
+    // vuetify,
+    ...App
 })
 // Vue.use(SvgVue)
