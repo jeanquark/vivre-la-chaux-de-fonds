@@ -50,10 +50,9 @@ Vue.use(VueApexCharts)
 Vue.component('apexchart', VueApexCharts)
 
 Vue.use(VueGtag, {
-	// config: { id: "G-HT8VEMTP0Z" } // Vivre La Chaux-de-Fonds
 	// config: { id: "UA-71694605-11" } // Vivre La Chaux-de-Fonds 2
-	config: { id: "UA-71694605-9" } // KB-Avocats
-	// config: { id: "G-T7SKJ2NL74" } // Vivre La Chaux-de-Fonds 3
+	// config: { id: "UA-71694605-9" } // KB-Avocats
+	config: { id: "G-T7SKJ2NL74" } // Vivre La Chaux-de-Fonds 3
 });
 
 // Vue.use(VueAnalytics, {
