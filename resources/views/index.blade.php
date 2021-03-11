@@ -17,9 +17,6 @@ $config = [
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
 
-    <!-- Prevent Google indexing -->
-    <meta name="robots" content="noindex">
-
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 	
   	<link rel="stylesheet" href="{{ mix('dist/css/app.css') }}">
