@@ -65,7 +65,7 @@ class ActivitiesController extends Controller
 
     public function getActivityBySlug(Request $request, $slug)
     {
-        $activity = Activity::where('slug', '=', $slug)->with('sponsors')->first();
+        $activity = Activity::where('slug', '=', $slug)->with('sponsors')->firstOrFail();
 
         // Retrieve all images related to a specific activity
         $activity['images'] = Storage::disk('images')->files('activities/' . $activity->slug);

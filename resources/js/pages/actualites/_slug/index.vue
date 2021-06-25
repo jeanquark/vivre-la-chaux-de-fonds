@@ -7,7 +7,7 @@
                 <div class="text-center mb-3">
                     <router-link to="/actualites">&larr; Retour vers les manifestations</router-link>
                 </div>
-                <b-card :img-src="`/images/${activity.image}`" :img-alt="`${activity.name}`" img-top tag="article" class="mb-2" :class="[activity.link ? 'link' : ''] " style="border: none;" @click="goToExternalLink(activity.link)">
+                <b-card :img-src="`/images/${activity.image}`" :img-alt="`${activity.name}`" img-top tag="article" class="mb-2" :class="[activity.link ? 'link' : ''] " style="border: none;">
                     <b-card-text class="">
                         <h5 class="text-center">{{ activity.name }}</h5>
                         <h6 class="text-center" v-if="activity.link"><a :href="activity.link" target="_blank">Plus d'informations &rarr;</a></h6>
@@ -18,6 +18,13 @@
                                 <router-link :to="`/images/${imagePath}`" target="_blank">
                                     <b-img thumbnail fluid :src="`/images/${imagePath}`" alt="Image 1"></b-img>
                                 </router-link>
+                            </b-col>
+                        </b-row>
+                        <b-row class="mt-4">
+                            <b-col cols="12" sm="4" md="3" v-for="sponsor in activity.sponsors" :key="sponsor.id">
+                                <a :href="sponsor.link" target="_blank">
+                                    <b-img :src="`/images/${sponsor.image}`" fluid :alt="sponsor.name"></b-img>
+                                </a>
                             </b-col>
                         </b-row>
                     </b-card-text>
@@ -54,7 +61,6 @@ export default {
     methods: {
         goToExternalLink(link) {
             if (link) {
-
                 window.open(link, '_blank')
             }
         }
@@ -65,6 +71,6 @@ export default {
 
 <style scoped>
     .link {
-        cursor: pointer;
+        /* cursor: pointer; */
     }
 </style>
