@@ -20,7 +20,7 @@
                                 </router-link>
                             </b-col>
                         </b-row>
-                        <b-row class="mt-4">
+                        <b-row align-v="center" class="mt-4">
                             <b-col cols="12" sm="4" md="3" v-for="sponsor in activity.sponsors" :key="sponsor.id">
                                 <a :href="sponsor.link" target="_blank">
                                     <b-img :src="`/images/${sponsor.image}`" fluid :alt="sponsor.name"></b-img>
