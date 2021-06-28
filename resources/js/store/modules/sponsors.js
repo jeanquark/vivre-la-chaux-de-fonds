@@ -44,7 +44,6 @@ export const mutations = {
 
 // actions
 export const actions = {
-    // async fetchSponsors({ commit }) {
     async fetchSponsors({ commit }, payload) {
         try {
             console.log('fetchSponsors: ', payload)
@@ -113,7 +112,7 @@ export const actions = {
     },
     async updateSponsor({ commit, dispatch }, form) {
         try {
-            console.log('updateSponsor form: ', form)
+            console.log('[VUEX sponsors] @updateSponsor form: ', form)
             const { data } = await form.submit('post', `/api/sponsors/${form.id}`, {
                 transformRequest: [
                     function(data, headers) {

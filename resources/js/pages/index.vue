@@ -35,9 +35,9 @@
                     </b-card-text>
                 </b-card>
             </b-col>
-            <b-col cols="12" md="6" lg="8" xl="9" class="p-5" style="" v-for="activity in currentActivities" :key="activity.id">
+            <b-col cols="12" md="6" lg="8" xl="9" class="p-5" style="">
                 <b-row class="justify-content-center">
-                    <b-col cols="12" md="6" lg="4">
+                    <b-col cols="12" md="6" lg="4" v-for="activity in currentActivities" :key="activity.id">
                         <b-card :img-src="`/images/${activity.image}`" :img-alt="`${activity.name}`" img-top style="border: none; ">
                             <b-card-text class="text-center">
                                 <h5 class="my-2">{{ activity.name }}</h5>

@@ -152,15 +152,15 @@ class SponsorsController extends Controller
 
         $sponsor = Sponsor::find($id);
 
-        $start_date = null;
-        if ($request->start_date) {
-            $start_date = date_create_from_format('Y-m-d', $request->start_date);
-        }
+        // $start_date = null;
+        // if ($request->start_date) {
+        //     $start_date = date_create_from_format('Y-m-d', $request->start_date);
+        // }
 
-        $end_date = null;
-        if ($request->end_date) {
-            $end_date = date_create_from_format('Y-m-d', $request->end_date);
-        }
+        // $end_date = null;
+        // if ($request->end_date) {
+        //     $end_date = date_create_from_format('Y-m-d', $request->end_date);
+        // }
 
         // Upload new image if present
         if (File::exists($request->new_image)) {
@@ -184,8 +184,8 @@ class SponsorsController extends Controller
                 'contribution' => $request->contribution,
                 'link' => $request->link,
                 'image' => $request->image,
-                'start_date' => $start_date,
-                'end_date' => $end_date,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
                 'is_active' => (int) $request->is_active,
                 'updated_at' => \Carbon\Carbon::now(),
             ]
