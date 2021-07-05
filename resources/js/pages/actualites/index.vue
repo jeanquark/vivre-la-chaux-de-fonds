@@ -11,6 +11,9 @@
             </b-col>
             <b-col cols="9">
                 <b-row no-gutters class="justify-content-center">
+                    <!-- activities: {{ activities }}<br /> -->
+                    <!-- pastActivities: {{ pastActivities }} -->
+                    <!-- futureActivities: {{ futureActivities }} -->
                     <b-col cols="12" md="6" class="my-3 px-5" v-for="activity in futureActivities" :key="activity.id">
                         <b-card :img-src="`/images/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" style="" @click="goToInternalLink(activity.slug)">
                             <b-card-text class="text-center">
@@ -23,27 +26,34 @@
                         </b-card>
                     </b-col>
                 </b-row>
-                
             </b-col>
         </b-row>
         <b-row no-gutters class="my-4 justify-content-center">
-                    <b-col cols="12" class="text-center">
-                        <h3 class="title">Historique</h3>
-                    </b-col>
-                </b-row>
-                <b-row no-gutters>
-                    <b-col cols="12" sm="6" md="4" lg="3" class="my-3 px-5" v-for="activity in pastActivities" :key="activity.id">
-                        <b-card :img-src="`/images/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" :class="[Math.random() < .5 ? 'primary-color' : 'secondary-color']" @click="goToInternalLink(activity.slug)">
-                            <b-card-text class="text-center">
-                                <h5 class="my-2">{{ activity.name }}</h5>
-                                <p>
-                                    {{ activity.start_date | moment('Do MMMM YYYY') }}
-                                    <span v-if="activity.end_date && activity.end_date !== activity.start_date"> - <br />{{ activity.end_date | moment('Do MMMM YYYY') }}</span>
-                                </p>
-                            </b-card-text>
-                        </b-card>
-                    </b-col>
-                </b-row>
+            <b-col cols="12" class="text-center">
+                <h3 class="title">Historique</h3>
+            </b-col>
+        </b-row>
+        <b-row no-gutters>
+            <b-col cols="12" sm="6" md="4" lg="3" class="my-3 px-5" v-for="activity in pastActivities" :key="activity.id">
+                <b-card
+                    :img-src="`/images/${activity.image}`"
+                    img-alt="Image"
+                    img-top
+                    tag="article"
+                    class="mb-2"
+                    :class="[Math.random() < 0.5 ? 'primary-color' : 'secondary-color']"
+                    @click="goToInternalLink(activity.slug)"
+                >
+                    <b-card-text class="text-center">
+                        <h5 class="my-2">{{ activity.name }}</h5>
+                        <p>
+                            {{ activity.start_date | moment('Do MMMM YYYY') }}
+                            <span v-if="activity.end_date && activity.end_date !== activity.start_date"> - <br />{{ activity.end_date | moment('Do MMMM YYYY') }}</span>
+                        </p>
+                    </b-card-text>
+                </b-card>
+            </b-col>
+        </b-row>
     </b-container>
 </template>
 
@@ -61,7 +71,7 @@ export default {
     },
     data() {
         return {
-            today: moment().format('YYYY-MM-DD HH:mm:ss')
+            today: moment().format('YYYY-MM-DD HH:mm:ss'),
         }
     },
     computed: {
@@ -69,22 +79,21 @@ export default {
             return this.$store.getters['activities/activities']
         },
         futureActivities() {
-            return Object.values(this.activities).filter(activity => activity.start_date >= this.today)
+            return Object.values(this.activities).filter((activity) => activity.start_date >= this.today)
         },
         pastActivities() {
-            return Object.values(this.activities).filter(activity => activity.end_date < this.today)
+            return Object.values(this.activities).filter(activity => activity.end_date < this.today).sort((a, b) => moment(b.start_date) - moment(a.start_date))
         },
         publishedActivities() {
-            return Object.values(this.activities).filter(activity => activity.is_published === 1)
+            return Object.values(this.activities).filter((activity) => activity.is_published === 1)
         },
         sponsors() {
             return this.$store.getters['sponsors/sponsors']
-        }
+        },
     },
     methods: {
         onMouseover() {
             console.log('onMouseover: ', Math.random())
-
         },
         goToInternalLink(link) {
             this.$router.push(`/actualites/${link}`)
@@ -93,8 +102,8 @@ export default {
             if (link) {
                 window.open(link, '_blank')
             }
-        }
-    }
+        },
+    },
 }
 </script>
 
