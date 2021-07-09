@@ -283,7 +283,7 @@ export default {
                 console.log('form.images: ', this.form.images)
                 // console.log('form.images[0]: ', this.form.images[0])
                 // console.log('...form.images: ', ...this.form.images)
-                const abc = []
+                // const abc = []
 
                 // for (let i = 0; i < this.form.images[0].length; i++) {
                 //     console.log('i: ', i)

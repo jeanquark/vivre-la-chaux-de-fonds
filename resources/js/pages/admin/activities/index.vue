@@ -100,12 +100,12 @@ export default {
     methods: {
         async deleteActivity(activityId) {
             try {
-                const value = await this.$bvModal.msgBoxConfirm(`Etes-vous sûr de vouloir supprimer l'activité ${activityId}?`, {
+                const confirm = await this.$bvModal.msgBoxConfirm(`Etes-vous sûr de vouloir supprimer l'activité ${activityId}?`, {
                     okTitle: 'Oui',
                     cancelTitle: 'Annuler'
                 })
-                console.log('value: ', value)
-                if (value) {
+                console.log('confirm: ', confirm)
+                if (confirm) {
                     await this.$store.dispatch('activities/deleteActivity', { activityId })
                     this.$noty.success('Activité supprimée avec succès!')
                 }

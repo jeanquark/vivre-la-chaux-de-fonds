@@ -37,7 +37,7 @@ export const mutations = {
     },
     DELETE_ACTIVITY(state, payload) {
         console.log('DELETE_ACTIVITY mutation: ', payload)
-        const { activityId } = parseInt(payload)
+        const { activityId } = payload
         console.log('activityId: ', activityId)
         Vue.delete(state.activities, activityId)
     }

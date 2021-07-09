@@ -10,7 +10,7 @@
         <h2 class="text-center" v-if="sponsor">Editer sponsor <span class="primary-color">{{ sponsor.name }}</span></h2>
 
         <!-- sponsor: {{ sponsor }}<br /><br /> -->
-        <b-row class="justify-content-center" v-if="sponsor">
+        <b-row class="justify-content-center">
             <b-col cols="12" md="8" lg="6">
                 <b-form @submit.prevent="updateSponsor">
                     <b-row align-v="center" class="justify-content-start my-3 px-3">
@@ -78,10 +78,10 @@
                                 accept="image/jpeg, image/png"
                                 placeholder="Choisir une nouvelle image..."
                                 drop-placeholder="Placez votre image ici..."
-                                :class="{ 'is-invalid': form.errors.has('image_new') }"
+                                :class="{ 'is-invalid': form.errors.has('new_image') }"
                                 @change="selectFile"
                             ></b-form-file>
-                            <has-error :form="form" field="image_new" />
+                            <has-error :form="form" field="new_image" />
                         </b-col>
 
                         <b-col cols="12" class="my-2">
@@ -201,6 +201,7 @@ export default {
             } catch (error) {
                 this.$store.commit('loading/SET_LOADING', false)
                 console.log('error: ', error)
+                console.log('error.response: ', error.response)
                 this.$noty.error("Une erreur est survenue et le sponsor n'a pas pu être mise à jour.")
             }
         }

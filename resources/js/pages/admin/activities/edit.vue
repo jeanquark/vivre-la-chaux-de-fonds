@@ -85,14 +85,14 @@
                                 En page d'accueil?
                             </b-form-checkbox>
                         </b-col>
+                    <!-- </b-row>
 
-                        <b-col cols="6" class="my-2" v-if="form.image">
+                    <b-row align-v="center" class="justify-content-start"> -->
+                        <b-col cols="12" class="my-2" v-if="form.image">
                             <p class="text-center">Image actuelle:</p>
                             <b-img center :src="`/images/${form.image}`" width="200" class=""></b-img>
                         </b-col>
-                        <b-col cols="6" class="my-2" v-if="form.image">
-                            <!-- <p class="text-center">Nouvelle image:</p>
-                            <b-img center :src="`/images/${form.image}`" width="200" class=""></b-img> -->
+                        <b-col cols="12" class="my-2" v-if="form.image">
                             <div id="preview" style="text-align: center; margin-bottom: 20px;" v-if="form.new_image">
                                 <p>Nouvelle image:</p>
                                 <img v-if="imagePreview" :src="imagePreview" style="width: 150px;" />
@@ -103,11 +103,11 @@
                                 accept="image/jpeg, image/png"
                                 placeholder="Choisir une nouvelle image..."
                                 drop-placeholder="Placez votre image ici..."
+                                :class="{ 'is-invalid': form.errors.has('new_image') }"
                                 @change="selectFile"
-                                :class="{ 'is-invalid': form.errors.has('image_new') }"
                             ></b-form-file>
                             <!-- <div class="mt-3">Selected file: {{ form.file ? form.file.name : '' }}</div> -->
-                            <has-error :form="form" field="image_new" />
+                            <has-error :form="form" field="new_image" />
                         </b-col>
 
                         <b-col cols="12" class="my-2">
@@ -162,13 +162,15 @@
                             ></b-form-file>
                         </b-col>
 
+                        form.images: {{ form.images }}<br />
+                        imagePreviewArray: {{ imagePreviewArray }}
                         <b-col cols="12" sm="4" class="my-2" v-for="(image, index) in form.images" :key="index">
                             <b-card title="" :img-src="imagePreviewArray[index]" img-alt="Image" img-top tag="article" style="" class="mb-2">
-                                <b-card-text class="text-center">
+                                <!-- <b-card-text class="text-center">
                                     {{ image }}
-                                </b-card-text>
+                                </b-card-text> -->
                                 <div class="text-center">
-                                    <b-button small variant="danger" @click="removeImage(image)">Remove</b-button>
+                                    <b-button size="sm" variant="danger" @click="removeImage(image, index)">Remove</b-button>
                                 </div>
                             </b-card>
                         </b-col>
@@ -259,7 +261,6 @@ export default {
         loading() {
             return this.$store.getters['loading/loading']
         },
-
         activities() {
             return this.$store.getters['activities/activities']
         },
@@ -296,20 +297,23 @@ export default {
                 }
             }
         },
-        removeImage(selectedImageName) {
-            console.log('removeImage: ', selectedImageName)
-            this.form.images = this.form.images.filter(image => image.name !== selectedImageName)
+        removeImage(selectedImageName, index) {
+            try {
+                console.log('removeImage selectedImageName: ', selectedImageName)
+                console.log('removeImage index: ', index)
+                console.log('form.images: ', this.form.images)
+                // this.form.images = this.form.images.filter(image => image.name !== selectedImageName)
+                this.form.images.splice(index, 1)
+            } catch (error) {
+                console.log('error: ', error)
+            }
         },
         async updateActivity() {
             try {
                 console.log('updateActivity form: ', this.form)
                 console.log('form.images: ', this.form.images)
-                // return
                 this.$store.commit('loading/SET_LOADING', true)
                 this.form['sponsors'] = this.activitySponsors.map(sponsor => parseInt(sponsor.id))
-                // return
-                // const { data } = await axios.post('/api/users', this.form)
-                // console.log('data: ', data)
                 await this.$store.dispatch('activities/updateActivity', this.form)
                 this.$store.commit('loading/SET_LOADING', false)
                 this.$noty.success('Activité mise à jour avec succès!')
@@ -317,6 +321,7 @@ export default {
             } catch (error) {
                 this.$store.commit('loading/SET_LOADING', false)
                 console.log('error: ', error)
+                console.log('error.response: ', error.response)
                 this.$noty.error("Une erreur est survenue et l'activité n'a pas pu être mise à jour.")
             }
         }

@@ -82,17 +82,8 @@ class ActivitiesController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|unique:activities',
             'link' => ['nullable', 'url'],
-            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300'],
         ]);
-
-        // if (File::exists($request->images)) {
-
-        // }
-
-        // return response()->json([
-        //     'success' => true,
-        //     'request->images' => $request->images
-        // ], 201);
 
         $activity = new Activity;
 
@@ -139,9 +130,7 @@ class ActivitiesController extends Controller
         return response()->json([
             'success' => true,
             'newActivity' => $newActivity,
-            // 'request' => $request,
             'request->image' => $request->image,
-            // 'request->sponsors' => $request->sponsors
             'request->images' => $request->images,
         ], 201);
     }
@@ -150,7 +139,7 @@ class ActivitiesController extends Controller
     {
         $validatedData = $request->validate([
             'name' => ['required', Rule::unique('activities')->ignore($id)],
-            'new_image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
+            'new_image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300'],
             'link' => ['nullable', 'url'],
         ]);
 

@@ -101,7 +101,7 @@ class SponsorsController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|unique:sponsors',
-            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300'],
             'link' => ['nullable', 'url']
         ]);
 
@@ -146,7 +146,7 @@ class SponsorsController extends Controller
     {
         $validatedData = $request->validate([
             'name' => ['required', Rule::unique('sponsors')->ignore($id)],
-            'new_image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300,min_height=200'],
+            'new_image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'dimensions:min_width=300'],
             'link' => ['nullable', 'url']
         ]);
 
