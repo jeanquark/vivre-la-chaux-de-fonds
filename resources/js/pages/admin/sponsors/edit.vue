@@ -74,14 +74,16 @@
                         </b-col>
 
                         <b-col cols="12" class="my-2">
-                            <b-form-file
-                                accept="image/jpeg, image/png"
-                                placeholder="Choisir une nouvelle image..."
-                                drop-placeholder="Placez votre image ici..."
-                                :class="{ 'is-invalid': form.errors.has('new_image') }"
-                                @change="selectFile"
-                            ></b-form-file>
-                            <has-error :form="form" field="new_image" />
+                            <b-form-group label="Nouvelle image (jpeg ou png, min 300px de largeur)">
+                                <b-form-file
+                                    accept="image/jpeg, image/png"
+                                    placeholder="Choisir une nouvelle image..."
+                                    drop-placeholder="Placez votre image ici..."
+                                    :class="{ 'is-invalid': form.errors.has('new_image') }"
+                                    @change="selectFile"
+                                ></b-form-file>
+                                <has-error :form="form" field="new_image" />
+                            </b-form-group>
                         </b-col>
 
                         <b-col cols="12" class="my-2">

@@ -23,6 +23,8 @@ class CreateSponsorsTable extends Migration
             $table->datetime('end_date')->nullable();
             $table->string('link')->nullable();
             $table->boolean('is_active')->default(0);
+            $table->boolean('is_partner')->default(0);
+            $table->boolean('is_supporter')->default(0);
             $table->timestamps();
         });
     }

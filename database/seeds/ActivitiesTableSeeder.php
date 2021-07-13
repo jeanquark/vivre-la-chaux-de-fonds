@@ -332,6 +332,8 @@ class ActivitiesTableSeeder extends Seeder
                 'contribution' => 0,
                 'link' => 'https://www.lasemeuse.ch/',
                 // 'end_date'      => '',
+                'is_partner' => true,
+                'is_supporter' => false,
                 'is_active' => true,
             ],
             [
@@ -341,6 +343,9 @@ class ActivitiesTableSeeder extends Seeder
                 'contribution' => 0,
                 'link' => 'https://www.axa.ch/fr/particuliers.html',
                 // 'end_date'      => '',
+                
+                'is_partner' => true,
+                'is_supporter' => false,
                 'is_active' => true,
             ],
             [
@@ -350,6 +355,9 @@ class ActivitiesTableSeeder extends Seeder
                 'contribution' => 0,
                 'link' => 'https://www.loro.ch/fr',
                 // 'end_date'      => '',
+                
+                'is_partner' => true,
+                'is_supporter' => false,
                 'is_active' => true,
             ],
             [
@@ -359,6 +367,9 @@ class ActivitiesTableSeeder extends Seeder
                 'contribution' => 0,
                 'link' => 'http://www.proietti.ch',
                 // 'end_date'      => '',
+                
+                'is_partner' => true,
+                'is_supporter' => false,
                 'is_active' => true,
             ],
             [
@@ -368,6 +379,9 @@ class ActivitiesTableSeeder extends Seeder
                 'contribution' => 0,
                 'link' => 'https://www.rtn.ch',
                 // 'end_date'      => '',
+                
+                'is_partner' => true,
+                'is_supporter' => false,
                 'is_active' => true,
             ],
             [
@@ -377,6 +391,9 @@ class ActivitiesTableSeeder extends Seeder
                 'contribution' => 0,
                 'link' => null,
                 // 'end_date'      => '',
+                
+                'is_partner' => true,
+                'is_supporter' => false,
                 'is_active' => true,
             ],
             [
@@ -386,6 +403,9 @@ class ActivitiesTableSeeder extends Seeder
                 'contribution' => 0,
                 'link' => 'https://www.rjb.ch',
                 // 'end_date'      => '',
+                
+                'is_partner' => true,
+                'is_supporter' => false,
                 'is_active' => true,
             ],
             [
@@ -395,6 +415,9 @@ class ActivitiesTableSeeder extends Seeder
                 'contribution' => 0,
                 'link' => 'http://www.nsa-securite.ch/',
                 // 'end_date'      => '',
+                
+                'is_partner' => true,
+                'is_supporter' => false,
                 'is_active' => true,
             ],
             [
@@ -404,6 +427,9 @@ class ActivitiesTableSeeder extends Seeder
                 'contribution' => 0,
                 'link' => 'https://www.rfj.ch/',
                 // 'end_date'      => '',
+                
+                'is_partner' => true,
+                'is_supporter' => false,
                 'is_active' => true,
             ],
             [
@@ -413,6 +439,9 @@ class ActivitiesTableSeeder extends Seeder
                 'contribution' => 0,
                 'link' => null,
                 // 'end_date'      => '',
+                
+                'is_partner' => true,
+                'is_supporter' => false,
                 'is_active' => true,
             ],
             [
@@ -422,6 +451,9 @@ class ActivitiesTableSeeder extends Seeder
                 'contribution' => 0,
                 'link' => 'http://viteos.ch',
                 // 'end_date'      => '',
+                
+                'is_partner' => true,
+                'is_supporter' => false,
                 'is_active' => true,
             ],
         ];

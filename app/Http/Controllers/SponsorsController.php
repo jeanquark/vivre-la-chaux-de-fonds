@@ -27,12 +27,21 @@ class SponsorsController extends Controller
     // public function getSponsors(Request $request, $params)
     {
         $is_active = (int)filter_var($request->query('is_active'), FILTER_VALIDATE_BOOLEAN);
+        $is_partner = (int)filter_var($request->query('is_partner'), FILTER_VALIDATE_BOOLEAN);
+        $is_supporter = (int)filter_var($request->query('is_supporter'), FILTER_VALIDATE_BOOLEAN);
         $slug = $request->query('slug');
         $id = $request->query('id');
+        // dd($is_partner);
 
         $sponsors = Sponsor::with('activities')
             ->when($is_active, function ($query) use ($is_active) {
                 return $query->where('is_active', '=', $is_active);
+            })
+            ->when($is_partner, function ($query) use ($is_partner) {
+                return $query->where('is_partner', '=', $is_partner);
+            })
+            ->when($is_supporter, function ($query) use ($is_supporter) {
+                return $query->where('is_supporter', '=', $is_supporter);
             })
             ->when($slug, function ($query) use ($slug) {
                 return $query->where('slug', '=', $slug);
@@ -54,10 +63,11 @@ class SponsorsController extends Controller
             // 'query' => $query,
             // 'queries' => $queries,
             'is_active' => $is_active,
+            'is_partner' => $is_partner,
+            'is_supporter' => $is_supporter,
             'slug' => $slug,
             'id' => $id,
             'sponsors' => $sponsors
-            // 'abc' => $abc
         ], 200);
 
         

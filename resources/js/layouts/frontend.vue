@@ -118,9 +118,9 @@ export default {
     components: { Slide },
     async created() {
         console.log('Using frontend layout!')
-        if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {
-            await this.$store.dispatch('sponsors/fetchSponsors')
-        }
+        // if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {
+        //     await this.$store.dispatch('sponsors/fetchSponsors')
+        // }
     },
     mounted() {},
     data() {

@@ -46,7 +46,7 @@ export const mutations = {
 export const actions = {
     async fetchSponsors({ commit }, payload) {
         try {
-            console.log('fetchSponsors: ', payload)
+            console.log('[VUEX] fetchSponsors: ', payload)
             let queryString = ''
             if (payload) {
                 queryString = Object.keys(payload).map(key => key + '=' + payload[key]).join('&');

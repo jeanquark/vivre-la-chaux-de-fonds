@@ -19,6 +19,12 @@
                     <template v-slot:cell(is_active)="row">
                         {{ row.item.is_active ? 'Oui' : 'Non' }}
                     </template>
+                    <template v-slot:cell(is_partner)="row">
+                        {{ row.item.is_partner ? 'Oui' : 'Non' }}
+                    </template>
+                    <template v-slot:cell(is_supporter)="row">
+                        {{ row.item.is_supporter ? 'Oui' : 'Non' }}
+                    </template>
                     <template v-slot:cell(activities)="row">
                         <div v-for="activity in row.item.activities" :key="activity.id" class="p-1">
                             <img :src="`/images/${activity.image}`" width="100" />
@@ -58,7 +64,9 @@ export default {
                 { key: 'image', label: 'Image', sortable: false },
                 { key: 'contribution', label: 'Contribution', sortable: true },
                 { key: 'end_date', label: 'Date de fin', sortable: true },
-                { key: 'is_active', label: 'actif?', sortable: true },
+                { key: 'is_active', label: 'Actif?', sortable: true },
+                { key: 'is_partner', label: 'Partenaire?', sortable: true },
+                { key: 'is_supporter', label: 'Support seulement?', sortable: true },
                 { key: 'activities', label: 'Activités', sortable: false },
                 { key: 'created_at', label: 'Date de création', sortable: true },
                 { key: 'updated_at', label: 'Dernière modification', sortable: true }

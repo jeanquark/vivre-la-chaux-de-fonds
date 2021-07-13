@@ -19,9 +19,21 @@
                             </b-form-group>
                         </b-col>
                         <b-col cols="12">
-                            <b-form-group label="Contribution (en francs):" label-for="contribution" :description="`${(parseFloat(form.contribution)).toFixed(2)} CHF`">
+                            <b-form-group label="Contribution (en francs):" label-for="contribution" :description="`${parseFloat(form.contribution).toFixed(2)} CHF`">
                                 <b-form-input type="number" id="contribution" placeholder="" :class="{ 'is-invalid': form.errors.has('contribution') }" v-model="form.contribution"></b-form-input>
                                 <has-error :form="form" field="contribution" />
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" class="my-2">
+                            <b-form-group label="Un sponsor partenaire apparaît globalement sur le site.">
+                                <b-form-checkbox id="partner" name="partner" :value="1" :unchecked-value="0" v-model="form.is_partner"> Sponsor partenaire </b-form-checkbox>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" class="my-2">
+                            <b-form-group label="Un sponsor soutient affiche 'Avec le soutient de...' Texte uniquement, pas d'image.">
+                                <b-form-checkbox id="supporter" name="supporter" :value="1" :unchecked-value="0" v-model="form.is_supporter">Sponsor soutient</b-form-checkbox>
                             </b-form-group>
                         </b-col>
 
@@ -53,8 +65,8 @@
                             </b-form-group>
                         </b-col>
 
-                        <b-col cols="12" class="my-2">
-                            <b-form-group label="Image:">
+                        <b-col cols="12" class="my-2" v-if="!form.is_supporter">
+                            <b-form-group label="Image (jpeg ou png, min 300px de largeur):">
                                 <b-form-file
                                     accept="image/jpeg, image/png"
                                     placeholder="Choisir une nouvelle image..."
@@ -89,9 +101,9 @@
                         </b-col>
 
                         <b-col cols="12" class="my-2">
-                            <b-form-checkbox id="is_active" name="is_active" :value="1" :unchecked-value="0" v-model="form.is_active">
-                                Actif?
-                            </b-form-checkbox>
+                            <b-form-group label="Le sponsor doit-il s'afficher en ligne? (Un sponsor inactif n'apparaît pas).">
+                                <b-form-checkbox id="is_active" name="is_active" :value="1" :unchecked-value="0" v-model="form.is_active"> Actif? </b-form-checkbox>
+                            </b-form-group>
                         </b-col>
                     </b-row>
                     <b-row class="justify-content-center my-2">
@@ -103,7 +115,7 @@
                         </b-button>
                     </b-row>
                     <b-row class="justify-content-center">
-                            <b-alert variant="danger" dismissible :show="form.errors.any()">Erreur lors de l'envoi.  Veuillez vérifier les champs.</b-alert>
+                        <b-alert variant="danger" dismissible :show="form.errors.any()">Erreur lors de l'envoi. Veuillez vérifier les champs.</b-alert>
                     </b-row>
                 </b-form>
             </b-col>
@@ -125,7 +137,7 @@ export default {
     layout: 'backend',
     components: {
         VueCtkDateTimePicker,
-        Multiselect
+        Multiselect,
     },
     async created() {
         if (Object.keys(this.$store.getters['activities/activities']).length < 2) {
@@ -142,15 +154,17 @@ export default {
             form: new Form({
                 name: '',
                 contribution: 0,
+                type: '',
                 start_date: '',
                 end_date: '',
                 link: '',
                 image: null,
                 is_active: false,
-                activities: []
+                is_partner: false,
+                is_supporter: false,
+                activities: [],
             }),
-            // image: {},
-            sponsorActivities: []
+            sponsorActivities: [],
         }
     },
     computed: {
@@ -162,9 +176,9 @@ export default {
         },
         activitiesArray() {
             var arr = []
-            Object.keys(this.activities).forEach(key => arr.push(this.activities[key]))
+            Object.keys(this.activities).forEach((key) => arr.push(this.activities[key]))
             return arr
-        }
+        },
     },
     methods: {
         // uploadImage(event) {
@@ -180,9 +194,9 @@ export default {
         async createSponsor() {
             try {
                 console.log('this.form: ', this.form)
-                // return
+                return
                 this.$store.commit('loading/SET_LOADING', true)
-                this.form['activities'] = this.sponsorActivities.map(activity => parseInt(activity.id))
+                this.form['activities'] = this.sponsorActivities.map((activity) => parseInt(activity.id))
                 // const { data } = await axios.post('/api/users', this.form)
                 // console.log('data: ', data)
                 await this.$store.dispatch('sponsors/createSponsor', this.form)
@@ -194,7 +208,7 @@ export default {
                 console.log('error: ', error)
                 this.$noty.error("Une erreur est survenue et le sponsor n'a pas pu être créer.")
             }
-        }
+        },
         // async createSponsor2() {
         //     try {
         //         let formData = new FormData()
@@ -240,7 +254,7 @@ export default {
         //         this.$noty.error("Une erreur est survenue et le sponsor n'a pas pu être créé.")
         //     }
         // }
-    }
+    },
 }
 </script>
 
