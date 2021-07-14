@@ -162,8 +162,8 @@
                             ></b-form-file>
                         </b-col>
 
-                        form.images: {{ form.images }}<br />
-                        imagePreviewArray: {{ imagePreviewArray }}
+                        <!-- form.images: {{ form.images }}<br /> -->
+                        <!-- imagePreviewArray: {{ imagePreviewArray }} -->
                         <b-col cols="12" sm="4" class="my-2" v-for="(image, index) in form.images" :key="index">
                             <b-card title="" :img-src="imagePreviewArray[index]" img-alt="Image" img-top tag="article" style="" class="mb-2">
                                 <!-- <b-card-text class="text-center">
