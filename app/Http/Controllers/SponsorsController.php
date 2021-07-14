@@ -69,22 +69,6 @@ class SponsorsController extends Controller
             'id' => $id,
             'sponsors' => $sponsors
         ], 200);
-
-        
-        
-        // if ($params) {
-            //     $array = explode("=", $params);
-            //     $key = $array[0];
-            //     $value = $array[1];
-            //     $sponsors = Sponsor::where($key, '=', $value)->with('activities')->get();
-            // } else {
-                //     $sponsors = Sponsor::with('activities')->get();
-                // }
-                
-        // $sponsors = Sponsor::with('activities')->get();
-
-        // return response()->json($sponsors, 200);
-
     }
 
     public function getSponsorById(Request $request, $id)
@@ -121,6 +105,8 @@ class SponsorsController extends Controller
         $sponsor->slug = str_slug($request->name);
         $sponsor->contribution = $request->contribution;
         $sponsor->link = $request->link;
+        $sponsor->is_partner = (int) $request->is_partner;
+        $sponsor->is_supporter = (int) $request->is_supporter;
         $sponsor->is_active = (int) $request->is_active;
 
         if ($request->start_date) {
@@ -196,6 +182,8 @@ class SponsorsController extends Controller
                 'image' => $request->image,
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
+                'is_partner' => $request->is_partner,
+                'is_supporter' => $request->is_supporter,
                 'is_active' => (int) $request->is_active,
                 'updated_at' => \Carbon\Carbon::now(),
             ]

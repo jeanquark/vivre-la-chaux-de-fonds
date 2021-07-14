@@ -76,13 +76,13 @@ export default {
             sortBy: 'id',
             sortDesc: true,
             fields: [
-                { key: 'id', label: 'ID', sortable: true },
-                { key: 'name', label: 'Nom', sortable: true },
-                { key: 'image', label: 'Image', sortable: true },
-                { key: 'is_published', label: 'Publié?', sortable: true },
-                { key: 'is_on_frontpage', label: "En page d'accueil?", sortable: true },
-                { key: 'updated_at', label: 'Dernière modification', sortable: true },
-                { key: 'actions', sortable: false }
+                { key: 'id', label: 'ID', sortable: true, thClass: 'align-middle' },
+                { key: 'name', label: 'Nom', sortable: true, thClass: 'align-middle' },
+                { key: 'image', label: 'Image', sortable: true, thClass: 'align-middle' },
+                { key: 'is_published', label: 'Publié?', sortable: true, thClass: 'align-middle' },
+                { key: 'is_on_frontpage', label: "En page d'accueil?", sortable: true, thClass: 'align-middle' },
+                { key: 'updated_at', label: 'Dernière modification', sortable: true, thClass: 'align-middle' },
+                { key: 'actions', sortable: false, thClass: 'align-middle' }
             ]
         }
     },

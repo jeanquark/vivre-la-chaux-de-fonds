@@ -7,6 +7,14 @@
                 </b-card>
                 <b-card class="card mb-3" v-if="authUser">
                     <b-card-text>
+                        <div style="border: 1px solid orange;">
+                            <a href="http://localhost:8000/documents/Dossiers%20de%20presse/2015%20-%20Bilan%20Saint-Nicolas.pdf" type="application/pdf" title="Dossiers de presse/2015 - Bilan Saint-Nicolas" target="_blank" style="">2015 - Bilan Saint-Nicolas</a>
+                            <br /><br />
+                            <a href="http://localhost:8000/documents/Dossiers%20de%20presse/2015%20-%20abc.pdf" target="_blank" style="">abc</a>
+                            <br /><br />
+                            <a href="/documents/Dossiers%20de%20presse/2015%20-%20Bilan%20Saint-Nicolas.pdf" type="application/pdf" title="Dossiers de presse/2015 - Bilan Saint-Nicolas" target="_blank" style="">2015 - Bilan Saint-Nicolas</a>
+                            <br /><br />
+                        </div>
                         <b-form @submit.prevent="joinNewsletter">
                             <b-form-group id="email" description="Nous ne partagerons pas votre adresse avec quiconque et ne vous enverront des messages qu'en lien avec nos activités futures.">
                                 <label for="email">N'oubliez pas de <b>rejoindre notre newsletter</b> pour être mis au courant de nos prochaines activités:</label>

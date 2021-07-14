@@ -27,6 +27,18 @@
                             </b-form-group>
                         </b-col>
 
+                        <b-col cols="12" class="my-2">
+                            <b-form-group label="Un sponsor partenaire apparaît globalement sur le site.">
+                                <b-form-checkbox id="is_partner" name="is_partner" :value="1" :unchecked-value="0" v-model="form.is_partner"> Sponsor partenaire </b-form-checkbox>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" class="my-2">
+                            <b-form-group label="Un sponsor soutient affiche 'Avec le soutient de...' Texte uniquement, pas d'image.">
+                                <b-form-checkbox id="is_supporter" name="is_supporter" :value="1" :unchecked-value="0" v-model="form.is_supporter">Sponsor soutient</b-form-checkbox>
+                            </b-form-group>
+                        </b-col>
+
                         <b-col cols="12" md="6">
                             <b-form-group label="Date de début:" label-for="startDate">
                                 <VueCtkDateTimePicker
@@ -162,6 +174,8 @@ export default {
                 link: '',
                 image: null,
                 new_image: null,
+                is_partner: false,
+                is_supporter: false,
                 is_active: false,
                 activities: []
             }),
