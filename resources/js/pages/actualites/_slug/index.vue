@@ -33,7 +33,7 @@
                             <b-col cols="12" sm="4" md="3" class="my-3" v-for="sponsor in sponsorNotPartners" :key="sponsor.id">
                                 <div v-if="sponsor.is_supporter">
                                     <i
-                                        >Avec le soutient de <b>{{ sponsor.name }}</b></i
+                                        >Avec le soutien de <b>{{ sponsor.name }}</b></i
                                     >
                                 </div>
                                 <div v-else>
