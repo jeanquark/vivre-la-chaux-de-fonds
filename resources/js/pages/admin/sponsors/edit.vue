@@ -34,7 +34,7 @@
                         </b-col>
 
                         <b-col cols="12" class="my-2">
-                            <b-form-group label="Un sponsor soutient affiche 'Avec le soutient de...' Texte uniquement, pas d'image.">
+                            <b-form-group label="Un sponsor soutient affiche 'Avec le soutient de...' dans la page de la manifestation. Texte uniquement, pas d'image.">
                                 <b-form-checkbox id="is_supporter" name="is_supporter" :value="1" :unchecked-value="0" v-model="form.is_supporter">Sponsor soutient</b-form-checkbox>
                             </b-form-group>
                         </b-col>
