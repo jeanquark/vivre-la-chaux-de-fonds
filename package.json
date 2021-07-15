@@ -38,6 +38,7 @@
         "svg.js": "^2.7.1",
         "vform": "^1.0.0",
         "vue": "^2.6.10",
+        "vue-analytics": "^5.22.1",
         "vue-apexcharts": "^1.6.0",
         "vue-burger-menu": "^2.0.3",
         "vue-ctk-date-time-picker": "^2.4.0",
