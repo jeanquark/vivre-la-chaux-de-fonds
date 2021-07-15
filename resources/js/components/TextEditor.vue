@@ -46,8 +46,9 @@
             <font-awesome-icon size="1x" icon="file-pdf" class="" />
         </b-button>
 
-        <b-button variant="dark" v-b-tooltip.hover title="Voir code" class="mx-.5" @click="toggleShowHTML">
-            <font-awesome-icon size="1x" icon="code" />
+        <b-button variant="dark" v-b-tooltip.hover title="Afficher le code/afficher le rendu" class="mx-.5" @click="toggleShowHTML">
+            <font-awesome-icon size="1x" :icon="['fa', 'eye']" v-if="showHTML" />
+            <font-awesome-icon size="1x" icon="code" v-else />
         </b-button>
 
         <b-row no-gutters class="justify-content-center my-2" v-if="selectedImageNode">
@@ -83,20 +84,12 @@ export default {
     },
     props: ['formContent'],
     created() {
-        // this.content = this.formContent
-
     },
     mounted() {
-        // this.content = '<img src="/images/favicon.png" style="margin-right: 20px;" /> Lien sur cette page.'
-        // if (this.formContent !== '') {
-
         this.content = this.formContent
-        // }
     },
     data() {
         return {
-            // content: '<img src="/images/favicon.png" style="margin-right: 20px;" /> Lien sur cette page.',
-            // content: this.formContent,
             content: '',
             showHTML: false,
             checked: false,

@@ -5,7 +5,7 @@
                 <b-card class="card mb-3" v-for="section in page.sections" :key="section.id">
                     <b-card-text v-html="section.content"> </b-card-text>
                 </b-card>
-                <b-card class="card mb-3" v-if="authUser">
+                <b-card class="card mb-3" v-if="authUser" style="display: none;">
                     <b-card-text>
                         <b-form @submit.prevent="joinNewsletter">
                             <b-form-group id="email" description="Nous ne partagerons pas votre adresse avec quiconque et ne vous enverront des messages qu'en lien avec nos activités futures.">

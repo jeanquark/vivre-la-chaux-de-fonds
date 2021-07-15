@@ -194,11 +194,9 @@ export default {
         async createSponsor() {
             try {
                 console.log('this.form: ', this.form)
-                return
+                // return
                 this.$store.commit('loading/SET_LOADING', true)
                 this.form['activities'] = this.sponsorActivities.map((activity) => parseInt(activity.id))
-                // const { data } = await axios.post('/api/users', this.form)
-                // console.log('data: ', data)
                 await this.$store.dispatch('sponsors/createSponsor', this.form)
                 this.$store.commit('loading/SET_LOADING', false)
                 this.$noty.success('Sponsor créé avec succès!')
@@ -209,51 +207,6 @@ export default {
                 this.$noty.error("Une erreur est survenue et le sponsor n'a pas pu être créer.")
             }
         },
-        // async createSponsor2() {
-        //     try {
-        //         let formData = new FormData()
-        //         formData.append('image', this.image)
-        //         formData.append('form', JSON.stringify(this.form))
-        //         // console.log('formData: ', formData)
-
-        //         await this.$store.dispatch('sponsors/createSponsor', { formData })
-        //         this.$noty.success('Sponsor créé avec succès!')
-        //         this.$router.push('/admin/sponsors')
-        //     } catch (error) {
-        //         console.log('error: ', error)
-        //         this.$noty.error("Une erreur est survenue et le sponsor n'a pas pu être créé.")
-        //     }
-        // },
-        // async createSponsor3() {
-        //     try {
-        //         await this.$store.dispatch('sponsors/createSponsor', { sponsor: this.form, image })
-        //         this.$noty.success('Sponsor créé avec succès!')
-        //         this.$router.push('/admin/sponsors')
-        //     } catch (error) {
-        //         console.log('error: ', error)
-        //         this.$noty.error("Une erreur est survenue et le sponsor n'a pas pu être créé.")
-        //     }
-        // },
-        // async createSponsor4() {
-        //     try {
-        //         const config = {
-        //             headers: { 'content-type': 'multipart/form-data' }
-        //         }
-
-        //         let formData = new FormData()
-        //         formData.append('image', this.image)
-        //         formData.append('form', JSON.stringify(this.form))
-        //         console.log('formData: ', formData)
-
-        //         const { data } = await axios.post('/api/sponsors', formData, config)
-        //         console.log('data: ', data)
-        //         this.$noty.success('Sponsor créé avec succès!')
-        //         this.$router.push('/admin/sponsors')
-        //     } catch (error) {
-        //         console.log('error: ', error)
-        //         this.$noty.error("Une erreur est survenue et le sponsor n'a pas pu être créé.")
-        //     }
-        // }
     },
 }
 </script>
