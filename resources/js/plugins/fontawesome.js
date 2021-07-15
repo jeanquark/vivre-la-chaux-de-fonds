@@ -9,11 +9,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
-  faGithub
+  faGithub, faChrome
 } from '@fortawesome/free-brands-svg-icons'
 
 library.add(
-  faUser, faLock, faSignOutAlt, faCog, faGithub, faUsers, faCalendarDay, faBriefcase, faUserSecret, faArrowsAltH, faEye, faEdit, faTrash, faHome, faTachometerAlt, faChevronDown, faDollarSign, faFileAlt, faFilePdf, faImage, faBold, faItalic, faUnderline, faAlignLeft, faAlignCenter, faAlignRight, faCode, faFolder, faListUl, faListOl, faLink, faCut, faCopy, faLockOpen, faAngleDown, faColumns, faFile, faEnvelope
+  faUser, faLock, faSignOutAlt, faCog, faGithub, faChrome, faUsers, faCalendarDay, faBriefcase, faUserSecret, faArrowsAltH, faEye, faEdit, faTrash, faHome, faTachometerAlt, faChevronDown, faDollarSign, faFileAlt, faFilePdf, faImage, faBold, faItalic, faUnderline, faAlignLeft, faAlignCenter, faAlignRight, faCode, faFolder, faListUl, faListOl, faLink, faCut, faCopy, faLockOpen, faAngleDown, faColumns, faFile, faEnvelope
 )
 
 // Vue.component('fa', FontAwesomeIcon)

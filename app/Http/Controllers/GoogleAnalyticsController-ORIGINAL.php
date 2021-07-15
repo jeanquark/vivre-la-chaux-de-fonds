@@ -1,35 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-use Spatie\Analytics\Period;
-use Spatie\Analytics\Analytics;
-use Spatie\Analytics\AnalyticsFacade;
 
 class GoogleAnalyticsController extends Controller
 {
     // https://developers.google.com/analytics/devguides/config/mgmt/v3/quickstart/service-php
     public function getData()
     {
-        $analyticsData = AnalyticsFacade::fetchVisitorsAndPageViews(Period::days(7));
-        $allViews = AnalyticsFacade::fetchMostVisitedPages(Period::days(7));
-        $totalViews = AnalyticsFacade::performQuery(
-            Period::years(1),
-            'ga:sessions',
-            [
-                'metrics' => 'ga:sessions, ga:pageviews',
-                'dimensions' => 'ga:yearMonth'
-            ]
-        );
-        
-        return array($analyticsData, $allViews, $totalViews);
-
-        // $analytics = $this->initializeAnalytics();
-        // $response = $this->getReport($analytics);
+        $analytics = $this->initializeAnalytics();
+        $response = $this->getReport($analytics);
         // $results = $this->printResults($response);
         // return response()->json($analytics, 200);
         // return response()->json($response->reports[0]['data'], 200);
-        // return response()->json($response, 200);
+        return response()->json($response, 200);
         // return response()->json($results, 200);
+
     }
 
     public function initializeAnalytics()
