@@ -137,7 +137,7 @@ export default {
 
 <style>
 body {
-    background: url('/images/svg/la_chaux_de_fonds_without_background_without_trees_with_transparency_80%.svg') no-repeat;
+    background: url('/images/svg/la_chaux_de_fonds_without_background_without_trees_with_transparency_80percent.svg') no-repeat;
     background-size: cover;
     min-height: 100vh;
     position: relative;
@@ -146,7 +146,7 @@ body {
 }
 @media only screen and (min-width: 992px) {
     body {
-        background: url('/images/svg/la_chaux_de_fonds_without_background_without_trees_with_transparency_80%.svg') no-repeat;
+        background: url('/images/svg/la_chaux_de_fonds_without_background_without_trees_with_transparency_80percent.svg') no-repeat;
         background-size: cover;
         min-height: 100vh;
         position: relative;
