@@ -67,7 +67,7 @@ export default [
 
     { path: '/admin', component: page('admin/index.vue'), children: [
 
-        { path: 'dashboard', name: '', component: page('admin/dashboard.vue') },
+        { path: 'dashboard', name: 'dashboard', component: page('admin/dashboard.vue') },
 
         { path: 'users', name: '', component: page('admin/users/index.vue') },
         { path: 'users/create', name: '', component: page('admin/users/create.vue') },

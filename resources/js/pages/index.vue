@@ -21,7 +21,7 @@
         </b-row>
         <b-row class="justify-content-start">
             <b-col cols="12" md="12" lg="4" xl="4">
-                <b-card class="card mb-3" style="display: none;">
+                <b-card class="card mb-3" style="" v-if="authUser">
                     <b-card-text>
                         <b-form @submit.prevent="joinNewsletter">
                             <b-form-group id="email" description="Nous ne partagerons pas votre adresse avec quiconque et ne vous enverront des messages qu'en lien avec nos activités futures.">

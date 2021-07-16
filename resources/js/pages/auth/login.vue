@@ -9,7 +9,7 @@
                         </b-card-title>
                         <b-card-text>
                             <b-form @submit.prevent="login">
-                                <!-- Email -->
+                                <!-- authUser: {{ authUser }} -->
                                 <b-row>
                                     <b-col cols="12" md="4" class="text-right col-form-label">
                                         <label>E-mail</label>
@@ -20,7 +20,6 @@
                                     </b-col>
                                 </b-row>
 
-                                <!-- Password -->
                                 <b-row>
                                     <b-col cols="12" md="4" class="text-right col-form-label">
                                         <label>Mot de passe</label>
@@ -43,9 +42,6 @@
                                         <router-link :to="{ name: 'password.request' }" class="m-2">
                                             Mot de passe oublié?
                                         </router-link>
-                                        <!-- <router-link :to="{ name: 'register' }" class="m-2">
-                                            S'enregistrer &rarr;
-                                        </router-link> -->
                                     </b-col>
                                 </b-row>
                             </b-form>
@@ -79,6 +75,9 @@ export default {
     computed: {
         loading() {
             return this.$store.getters['loading/loading']
+        },
+        authUser () {
+            return this.$store.getters['auth/user']
         }
     },
     methods: {
@@ -99,10 +98,16 @@ export default {
                 await this.$store.dispatch('auth/fetchUser')
 
                 // Redirect home.
-                // this.$router.push({ name: 'accueil' })
                 this.$store.commit('loading/SET_LOADING', false)
-                this.$router.push(this.$route.query.redirect || { name: 'index' })
+
+                // console.log('authUser: ', this.authUser)
+                if (this.authUser.roles.includes('admin')) {
+                    this.$router.push(this.$route.query.redirect || { name: 'dashboard' })
+                } else {
+                    this.$router.push(this.$route.query.redirect || { name: 'index' })
+                }
             } catch (error) {
+                console.log('error: ', error)
                 this.$store.commit('loading/SET_LOADING', false)
                 this.$noty.error('Une erreur est survenue lors de la tentative de login.')
             }
