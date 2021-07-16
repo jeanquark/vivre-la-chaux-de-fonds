@@ -52,7 +52,6 @@ class NewslettersController extends Controller
 
         // 1) Add new subscription to database
         $newSubscription = new Newsletter;
-
         $newSubscription->email = $request->email;
 
         $newSubscription->save();

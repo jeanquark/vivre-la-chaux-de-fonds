@@ -69,11 +69,11 @@ export default {
     data() {
         return {
             form: new Form({
-                firstname: 'John',
-                lastname: 'Doe',
-                email: 'john.doe@example.com',
-                password: 'secret',
-                password_confirmation: 'secret'
+                firstname: '',
+                lastname: '',
+                email: '',
+                password: '',
+                password_confirmation: ''
             })
         }
     },

@@ -17,7 +17,7 @@
 
 	<p>Vous pourrez vous désinscrire à tout moment en cliquant sur le lien affiché en bas de chaque e-mail reçu.</p>
 	<p>Avec nos meilleures salutations,<br />
-		Le comité de l'association <b>{{ config('app.name') }}</b></p>
+		Le comité de l'association <i>{{ config('app.name') }}</i></p>
 
 </body>
 

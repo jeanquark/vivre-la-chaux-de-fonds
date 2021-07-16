@@ -31,7 +31,7 @@ class SubscriptionToNewsletterConfirmation extends Mailable
      */
     public function build()
     {
-        $from = 'contact@vlcf.ch';
+        $from = 'info@vlcf.ch';
         $subject = "vlcf.ch - Inscription à la newsletter";
 
         return $this->from($from)->subject($subject)->view('emails.subscription_to_newsletter_confirmation');

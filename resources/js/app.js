@@ -50,10 +50,10 @@ Vue.use(VueApexCharts)
 Vue.component('apexchart', VueApexCharts)
 
 // Vue.use(VueGtag, {
-// 	config: { id: "G-T7SKJ2NL74" } // Vivre La Chaux-de-Fonds
+// 	config: { id: "G-T7SKJ2NL74" } // Google Analytics Application name: Vivre La Chaux-de-Fonds (GA4)
 // });
 Vue.use(VueAnalytics, {
-    id: 'UA-71694605-14', // Vivre La Chaux-de-Fonds 3
+    id: 'UA-71694605-14', // Google Analytics Application name: Vivre La Chaux-de-Fonds
     router
 })
 
