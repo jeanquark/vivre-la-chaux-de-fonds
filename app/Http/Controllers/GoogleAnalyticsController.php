@@ -10,18 +10,57 @@ class GoogleAnalyticsController extends Controller
     // https://developers.google.com/analytics/devguides/config/mgmt/v3/quickstart/service-php
     public function getData()
     {
-        $analyticsData = AnalyticsFacade::fetchVisitorsAndPageViews(Period::days(7));
-        $allViews = AnalyticsFacade::fetchMostVisitedPages(Period::days(7));
-        $totalViews = AnalyticsFacade::performQuery(
+        // $abc = 'abc';
+        // return array($abc);
+
+        // $analyticsData = AnalyticsFacade::fetchVisitorsAndPageViews(Period::days(7));
+        // $allViews = AnalyticsFacade::fetchMostVisitedPages(Period::days(7));
+        // $totalViews = AnalyticsFacade::performQuery(
+        //     Period::years(1),
+        //     'ga:sessions',
+        //     [
+        //         'metrics' => 'ga:sessions, ga:pageviews',
+        //         'dimensions' => 'ga:yearMonth'
+        //     ]
+        // );
+     
+        // return array($analyticsData, $allViews, $totalViews);
+
+        $lastWeek = AnalyticsFacade::performQuery(
+            Period::days(7),
+            'ga:sessions',
+            [
+                'metrics' => 'ga:sessions, ga:pageViews, ga:sessionDuration',
+                'dimensions' => 'ga:date'
+            ]
+        );
+        $lastMonth = AnalyticsFacade::performQuery(
+            Period::months(1),
+            'ga:sessions',
+            [
+                'metrics' => 'ga:sessions, ga:pageViews',
+                'dimensions' => 'ga:yearWeek'
+            ]
+        );
+        $lastYear = AnalyticsFacade::performQuery(
             Period::years(1),
             'ga:sessions',
             [
-                'metrics' => 'ga:sessions, ga:pageviews',
+                'metrics' => 'ga:sessions, ga:pageViews',
                 'dimensions' => 'ga:yearMonth'
             ]
         );
-        
-        return array($analyticsData, $allViews, $totalViews);
+
+        $country = AnalyticsFacade::performQuery(
+            Period::months(6),
+            'ga:sessions',
+            [
+                'metrics' => 'ga:sessions, ga:pageViews',
+                'dimensions' => 'ga:country',
+                'sort' => '-ga:sessions'
+            ]
+        );
+        return array($lastWeek, $lastMonth, $lastYear, $country);
 
         // $analytics = $this->initializeAnalytics();
         // $response = $this->getReport($analytics);
