@@ -27,19 +27,19 @@ class GoogleAnalyticsController extends Controller
         // return array($analyticsData, $allViews, $totalViews);
 
         $lastWeek = AnalyticsFacade::performQuery(
-            Period::days(7),
+            Period::days(6),
             'ga:sessions',
             [
-                'metrics' => 'ga:sessions, ga:pageViews, ga:sessionDuration',
+                'metrics' => 'ga:sessions, ga:pageViews, ga:newUsers',
                 'dimensions' => 'ga:date'
             ]
         );
-        $lastMonth = AnalyticsFacade::performQuery(
-            Period::months(1),
+        $bounceRate = AnalyticsFacade::performQuery(
+            Period::days(10),
             'ga:sessions',
             [
-                'metrics' => 'ga:sessions, ga:pageViews',
-                'dimensions' => 'ga:yearWeek'
+                'metrics' => 'ga:bounceRate',
+                'dimensions' => 'ga:date'
             ]
         );
         $lastYear = AnalyticsFacade::performQuery(
@@ -52,15 +52,25 @@ class GoogleAnalyticsController extends Controller
         );
 
         $country = AnalyticsFacade::performQuery(
-            Period::months(6),
+            Period::months(1),
             'ga:sessions',
             [
-                'metrics' => 'ga:sessions, ga:pageViews',
+                'metrics' => 'ga:sessions',
                 'dimensions' => 'ga:country',
                 'sort' => '-ga:sessions'
             ]
         );
-        return array($lastWeek, $lastMonth, $lastYear, $country);
+
+        $deviceCategory = AnalyticsFacade::performQuery(
+            Period::years(1),
+            'ga:sessions',
+            [
+                'metrics' => 'ga:sessions',
+                'dimensions' => 'ga:deviceCategory',
+            ]
+        );
+
+        return array($lastWeek, $bounceRate, $country, $deviceCategory);
 
         // $analytics = $this->initializeAnalytics();
         // $response = $this->getReport($analytics);
