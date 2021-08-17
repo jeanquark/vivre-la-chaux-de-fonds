@@ -60,7 +60,7 @@
                                     format="YYYY-MM-DD HH:mm:ss"
                                     formatted="YYYY-MM-DD HH:mm:ss"
                                     button-now-translation="Aujourd'hui"
-                                    only-date
+                                    :only-date="false"
                                     id="endDate"
                                     v-model="form.end_date"
                                 />

@@ -1,7 +1,7 @@
 <template>
     <b-container>
         <h2 class="text-center">Tableau de bord VLCF</h2>
-        <p>Dernier deploiement: 28 Juillet 2021.</p>
+        <p>Dernier deploiement: 17 Août 2021.</p>
         <br />
         <div style="display: none">
             <h4 class="text-center">Statistiques de fréquentation du site:</h4>
