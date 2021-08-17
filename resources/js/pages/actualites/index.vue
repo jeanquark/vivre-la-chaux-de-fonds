@@ -18,10 +18,10 @@
                     <b-col cols="12" sm="6" md="4" class="my-3 px-5" v-for="activity in futureActivities" :key="activity.id">
                         <b-card :img-src="`/images/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" style="" @click="goToInternalLink(activity.slug)">
                             <b-card-text class="text-center">
-                                <h5 class="my-2 abc" style="">{{ activity.name }}</h5>
+                                <h5 class="my-2" style="">{{ activity.name }}</h5>
                                 <p>
-                                    {{ activity.start_date | moment('Do MMMM YYYY') }}
-                                    <span v-if="activity.end_date && activity.end_date !== activity.start_date"> - <br />{{ activity.end_date | moment('Do MMMM YYYY') }}</span>
+                                    {{ activity.start_date | moment('Do MMMM YYYY') }}<br />
+                                    <span v-if="activity.end_date && formatDate(activity.start_date) !== formatDate(activity.end_date)"> - {{ activity.end_date | moment('Do MMMM YYYY') }}</span>
                                 </p>
                             </b-card-text>
                         </b-card>
@@ -48,8 +48,8 @@
                     <b-card-text class="text-center">
                         <h5 class="my-2">{{ activity.name }}</h5>
                         <p>
-                            {{ activity.start_date | moment('Do MMMM YYYY') }}
-                            <span v-if="activity.end_date && activity.end_date !== activity.start_date"> - <br />{{ activity.end_date | moment('Do MMMM YYYY') }}</span>
+                            {{ activity.start_date | moment('Do MMMM YYYY') }}<br />
+                                    <span v-if="activity.end_date && formatDate(activity.start_date) !== formatDate(activity.end_date)"> - {{ activity.end_date | moment('Do MMMM YYYY') }}</span>
                         </p>
                     </b-card-text>
                 </b-card>
@@ -98,6 +98,9 @@ export default {
         },
     },
     methods: {
+        formatDate (date) {
+            return moment(date).format('DD-MM-YYYY')
+        },
         onMouseover() {
             console.log('onMouseover: ', Math.random())
         },
