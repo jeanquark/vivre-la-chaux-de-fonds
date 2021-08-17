@@ -13,8 +13,8 @@
                 <b-row no-gutters class="justify-content-center">
                     <!-- activities: {{ activities }}<br /> -->
                     <!-- pastActivities: {{ pastActivities }} -->
-                    today: {{ today }}<br /><br />
-                    futureActivities: {{ futureActivities }}
+                    <!-- today: {{ today }}<br /><br /> -->
+                    <!-- futureActivities: {{ futureActivities }} -->
                     <b-col cols="12" sm="6" md="4" class="my-3 px-5" v-for="activity in futureActivities" :key="activity.id">
                         <b-card :img-src="`/images/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" style="" @click="goToInternalLink(activity.slug)">
                             <b-card-text class="text-center">
