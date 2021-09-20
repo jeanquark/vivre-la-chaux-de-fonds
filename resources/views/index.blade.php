@@ -15,7 +15,7 @@ $config = [
   	<title>{{ config('app.name') }}</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('images/favicon.jpg') }}" type="image/x-icon">
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 	
