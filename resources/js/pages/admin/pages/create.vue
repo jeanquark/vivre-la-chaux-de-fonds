@@ -55,6 +55,7 @@ import Form from 'vform'
 // Multiselect
 import Multiselect from 'vue-multiselect'
 
+// Text editor
 import TextEditor from '~/components/TextEditor'
 
 export default {

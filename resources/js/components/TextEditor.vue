@@ -269,7 +269,7 @@ export default {
 
 #textBox {
     width: 100%;
-    height: 350px;
+    height: 300px;
     border: 6px double $secondary;
     padding: 12px;
     overflow: scroll;

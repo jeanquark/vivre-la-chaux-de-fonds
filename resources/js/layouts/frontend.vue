@@ -5,7 +5,6 @@
         <b-row no-gutters align-h="center" align-v="center" class="mb-4" style="">
             <b-col cols="2" style="border: 0px solid red;">
                 <router-link to="/">
-                    <!-- <img src="/images/logo.png" width="100%" class="p-2" style="border: 0px solid green;" /> -->
                     <img src="/images/logo.svg" width="100%" class="p-2" style="border: 0px solid green;" />
                 </router-link>
                 <div class="d-md-none" style="text-align: center;">

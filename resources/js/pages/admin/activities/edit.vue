@@ -17,6 +17,7 @@
             <!-- form.sponsors: {{ form.sponsors }}<br /><br /> -->
             <!-- activity.images: {{ activity.images }}<br /><br /> -->
             <!-- form.images: {{ form.images }}<br /><br /> -->
+            <!-- form.content: {{ form.content }}<br /><br /> -->
         </p>
 
         <b-row class="justify-content-center">
@@ -35,10 +36,15 @@
                                 <has-error :form="form" field="subtitle" />
                             </b-form-group>
                         </b-col>
-                        <b-col cols="12">
+                        <!-- <b-col cols="12">
                             <b-form-group label="Contenu:" label-for="content">
                                 <b-form-textarea id="content" placeholder="" rows="3" max-rows="6" :class="{ 'is-invalid': form.errors.has('content') }" v-model="form.content"></b-form-textarea>
                                 <has-error :form="form" field="content" />
+                            </b-form-group>
+                        </b-col> -->
+                        <b-col cols="12" v-if="form && form.content">
+                            <b-form-group label="Contenu:" label-for="content">
+                                <text-editor @toggleShowHTML="toggleShowHTML" :formContent="form.content" />
                             </b-form-group>
                         </b-col>
                         <b-col cols="12" md="6">
@@ -75,27 +81,21 @@
                         </b-col>
 
                         <b-col cols="12" class="my-2">
-                            <b-form-checkbox id="is_published" name="is_published" value="1" unchecked-value="0" v-model="form.is_published">
-                                Publié?
-                            </b-form-checkbox>
+                            <b-form-checkbox id="is_published" name="is_published" value="1" unchecked-value="0" v-model="form.is_published"> Publié? </b-form-checkbox>
                         </b-col>
 
                         <b-col cols="12" class="my-2">
-                            <b-form-checkbox id="is_on_frontpage" name="is_on_frontpage" value="1" unchecked-value="0" v-model="form.is_on_frontpage">
-                                En page d'accueil?
-                            </b-form-checkbox>
+                            <b-form-checkbox id="is_on_frontpage" name="is_on_frontpage" value="1" unchecked-value="0" v-model="form.is_on_frontpage"> En page d'accueil? </b-form-checkbox>
                         </b-col>
-                    <!-- </b-row>
 
-                    <b-row align-v="center" class="justify-content-start"> -->
                         <b-col cols="12" class="my-2" v-if="form.image">
                             <p class="text-center">Image actuelle:</p>
                             <b-img center :src="`/images/${form.image}`" width="200" class=""></b-img>
                         </b-col>
                         <b-col cols="12" class="my-2" v-if="form.image">
-                            <div id="preview" style="text-align: center; margin-bottom: 20px;" v-if="form.new_image">
+                            <div id="preview" style="text-align: center; margin-bottom: 20px" v-if="form.new_image">
                                 <p>Nouvelle image:</p>
-                                <img v-if="imagePreview" :src="imagePreview" style="width: 150px;" />
+                                <img v-if="imagePreview" :src="imagePreview" style="width: 150px" />
                             </div>
                         </b-col>
                         <b-col cols="12" class="my-2">
@@ -125,27 +125,6 @@
                             </b-form-group>
                         </b-col>
                     </b-row>
-
-                    <!-- <b-row class="justify-content-start my-2 px-3">
-                        <b-col cols="12">
-                            <h4 class="text-center">Gallerie d'images</h4>
-                        </b-col>
-                        <b-col cols="12" sm="3" v-for="(image, index) in activity.images" :key="index">
-                            <b-card
-                                title=""
-                                :img-src="`/images/${image}`"
-                                img-alt="Image"
-                                img-top
-                                tag="article"
-                                style=""
-                                class="mb-2"
-                            >
-                                <div class="text-center">
-                                    <b-button small variant="danger" @click="removeImage(image)">Remove</b-button>
-                                </div>
-                            </b-card>
-                        </b-col>
-                    </b-row> -->
 
                     <b-row class="justify-content-start my-3 px-3">
                         <b-col cols="12" class="my-2">
@@ -202,11 +181,15 @@ import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css'
 // Multiselect
 import Multiselect from 'vue-multiselect'
 
+// Text editor
+import TextEditor from '../../../components/TextEditor'
+
 export default {
     layout: 'backend',
     components: {
         VueCtkDateTimePicker,
-        Multiselect
+        Multiselect,
+        TextEditor,
     },
     async created() {},
     async mounted() {
@@ -250,11 +233,12 @@ export default {
                 is_published: false,
                 is_on_frontpage: false,
                 sponsors: [],
-                images: []
+                images: [],
             }),
             activitySponsors: [],
             imagePreview: null,
-            imagePreviewArray: []
+            imagePreviewArray: [],
+            showHTML: false,
         }
     },
     computed: {
@@ -272,11 +256,15 @@ export default {
         },
         sponsorsArray() {
             var arr = []
-            Object.keys(this.sponsors).forEach(key => arr.push(this.sponsors[key]))
+            Object.keys(this.sponsors).forEach((key) => arr.push(this.sponsors[key]))
             return arr
-        }
+        },
     },
     methods: {
+        toggleShowHTML(value) {
+            console.log('toggleShowHTML: ', value)
+            this.showHTML = value
+        },
         selectFile(e) {
             this.form.new_image = e.target.files[0]
             this.imagePreview = URL.createObjectURL(e.target.files[0])
@@ -313,7 +301,17 @@ export default {
                 console.log('updateActivity form: ', this.form)
                 console.log('form.images: ', this.form.images)
                 this.$store.commit('loading/SET_LOADING', true)
-                this.form['sponsors'] = this.activitySponsors.map(sponsor => parseInt(sponsor.id))
+
+                let content
+                if (!this.showHTML) {
+                    content = document.getElementById('textBox').innerHTML
+                } else {
+                    content = document.getElementById('textBox').innerText
+                }
+                // console.log('content: ', content)
+                this.form['content'] = content
+
+                this.form['sponsors'] = this.activitySponsors.map((sponsor) => parseInt(sponsor.id))
                 await this.$store.dispatch('activities/updateActivity', this.form)
                 this.$store.commit('loading/SET_LOADING', false)
                 this.$noty.success('Activité mise à jour avec succès!')
@@ -324,8 +322,8 @@ export default {
                 console.log('error.response: ', error.response)
                 this.$noty.error("Une erreur est survenue et l'activité n'a pas pu être mise à jour.")
             }
-        }
-    }
+        },
+    },
 }
 </script>
 

@@ -14,7 +14,7 @@
         <!-- form.sponsors: {{ form.sponsors }}<br /><br /> -->
 
         <b-row class="justify-content-center">
-            <b-col cols="12" md="8" lg="6">
+            <b-col cols="12" md="8">
                 <b-form @submit.prevent="createActivity">
                     <b-row align-v="center" class="justify-content-start my-3 px-3">
                         <b-col cols="12">
@@ -31,8 +31,9 @@
                         </b-col>
                         <b-col cols="12">
                             <b-form-group label="Contenu:" label-for="content">
-                                <b-form-textarea id="content" rows="3" max-rows="6" :class="{ 'is-invalid': form.errors.has('content') }" v-model="form.content"></b-form-textarea>
-                                <has-error :form="form" field="content" />
+                                <!-- <b-form-textarea id="content" rows="3" max-rows="6" :class="{ 'is-invalid': form.errors.has('content') }" v-model="form.content"></b-form-textarea> -->
+                                <!-- <has-error :form="form" field="content" /> -->
+                                <text-editor @toggleShowHTML="toggleShowHTML" :formContent="form.content" />
                             </b-form-group>
                         </b-col>
                         <b-col cols="12" md="6">
@@ -119,10 +120,6 @@
                                 @change="selectFiles"
                             ></b-form-file>
 
-                            <!-- <div id="preview">
-                                <img v-if="url" :src="url" width="100" />
-                            </div> -->
-
                             <b-row>
                                 <b-col cols="12" sm="4" v-for="(image, index) in form.images" :key="index">
                                     <b-card
@@ -173,6 +170,9 @@ import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css'
 // Multiselect
 import Multiselect from 'vue-multiselect'
 
+// Text editor
+import TextEditor from '../../../components/TextEditor'
+
 // Multiple image upload
 // import VueUploadMultipleImage from 'vue-upload-multiple-image'
 
@@ -182,6 +182,7 @@ export default {
         VueCtkDateTimePicker,
         Multiselect,
         // VueUploadMultipleImage
+        TextEditor
     },
     async created() {
         if (Object.keys(this.$store.getters['sponsors/sponsors']).length < 2) {
@@ -208,6 +209,7 @@ export default {
             activitySponsors: [],
             imagePreview: null,
             imagePreviewArray: [],
+            showHTML: false,
             // images: [],
             // url2: []
             // formNewImage: new Form({
@@ -230,6 +232,10 @@ export default {
         }
     },
     methods: {
+        toggleShowHTML(value) {
+            console.log('toggleShowHTML: ', value)
+            this.showHTML = value
+        },
         selectFile(e) {
             this.form.image = e.target.files[0]
             this.imagePreview = URL.createObjectURL(e.target.files[0])
@@ -278,37 +284,21 @@ export default {
         async createActivity() {
             try {
                 console.log('form: ', this.form)
-                // this.form.images = this.form.images.map(image => image.path)
-                // console.log('form.images: ', this.form.images)
                 console.log('form.images: ', this.form.images)
-                // console.log('form.images[0]: ', this.form.images[0])
-                // console.log('...form.images: ', ...this.form.images)
-                // const abc = []
-
-                // for (let i = 0; i < this.form.images[0].length; i++) {
-                //     console.log('i: ', i)
-                // }
-                // return
-
                 this.$store.commit('loading/SET_LOADING', true)
+
+                let content
+                if (!this.showHTML) {
+                    content = document.getElementById('textBox').innerHTML
+                } else {
+                    content = document.getElementById('textBox').innerText
+                }
+                // console.log('content: ', content)
+                this.form['content'] = content
+
                 this.form['sponsors'] = this.activitySponsors.map(sponsor => parseInt(sponsor.id))
                 await this.$store.dispatch('activities/createActivity', this.form)
 
-                // let formData = new FormData()
-                // for( var i = 0; i < this.images.length; i++ ){
-                //     let file = this.images[i];
-
-                //     formData.append('files[' + i + ']', file);
-                // }
-                // console.log('formData: ', formData)
-                // // return
-
-                // const abc = await axios.post('/api/images', formData, {
-                //     headers: {
-                //         'Content-Type': 'multipart/form-data'
-                //     }
-                // })
-                // console.log('abc: ', abc)
                 this.$store.commit('loading/SET_LOADING', false)
                 this.$noty.success('Nouvelle activité créée avec succès!')
                 this.$router.push('/admin/activities')
