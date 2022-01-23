@@ -5,7 +5,7 @@
                 <b-card>
                     <b-card-body>
                         <b-card-title class="text-center mb-4">
-                            Définir nouveau mot de passe
+                            Définir un nouveau mot de passe
                         </b-card-title>
                         <b-card-text>
                             <b-form @submit.prevent="resetPassword">

@@ -16,7 +16,7 @@ To install node packages:
 npm install
 ```
 
-To launch development server
+To launch development server:
 ```bash
 php artisan serve
 ```
