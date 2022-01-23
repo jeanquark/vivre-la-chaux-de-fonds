@@ -81,10 +81,4 @@
 	.extended {
 		margin-left: 350px;
 	}
-	/*>>>.v-sidebar-menu .vsm--link_level-1 .vsm--icon {
-		height: 16px;
-		margin-top: 6px;
-	}*/
-
-
 </style>

@@ -20,6 +20,8 @@ class ResetPassword extends Notification
             // ->action('Reset Password', url(config('app.url').'/password/reset/'.$this->token).'?email='.urlencode($notifiable->email))
             // ->line('If you did not request a password reset, no further action is required.');
             // ->greeting('Bonjour,')
+            // ->subject(trans('email.subject'))
+            ->from('info@vlcf.ch')
             ->line(trans('email.intro'))
             ->action(trans('email.button'), url(config('app.url').'/password/reset/'.$this->token).'?email='.urlencode($notifiable->email))
             ->line(trans('email.outro'));

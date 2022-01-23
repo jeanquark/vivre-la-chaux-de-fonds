@@ -16,6 +16,11 @@ To install node packages:
 npm install
 ```
 
+To launch development server
+```bash
+php artisan serve
+```
+
 To launch dev environment with Laravel Valet:
 ```bash
 npm run watch #or for hot reload:

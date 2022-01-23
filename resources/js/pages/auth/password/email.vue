@@ -1,19 +1,20 @@
 <template>
     <b-container>
         <b-row class="justify-content-center fadeInDown">
-            <b-col cols="8">
+            <b-col cols="12" md="8">
                 <b-card>
                     <b-card-body>
                         <b-card-title class="text-center mb-4">
                             {{ $t('reset_password') }}
                         </b-card-title>
                         <b-card-text>
-                            <b-form @submit.prevent="send">
-                                <b-row>
+                            <b-form @submit.prevent="sendEmail">
+                                <b-row no-gutters>
                                     <alert-success :form="form" :message="status" />
-
+                                </b-row>
+                                <b-row>
                                     <!-- Email -->
-                                    <b-col cols="12" md="6" class="text-right col-form-label">
+                                    <b-col cols="12" md="4" class="text-right col-form-label">
                                         <label>E-mail</label>
                                     </b-col>
                                     <b-col cols="12" md="6">
@@ -59,24 +60,31 @@ export default {
         })
     }),
     computed: {
-        loading () {
+        loading() {
             return this.$store.getters['loading/loading']
         }
     },
     methods: {
-        async send() {
-            const { data } = await this.form.post('/api/password/email')
+        async sendEmail() {
+            try {
+                this.$store.commit('loading/SET_LOADING', true)
+                const { data } = await this.form.post('/api/password/email')
 
-            this.status = data.status
+                this.status = data.status
 
-            this.form.reset()
+                this.form.reset()
+                this.$store.commit('loading/SET_LOADING', false)
+            } catch (error) {
+                console.log('error: ', error)
+                this.$store.commit('loading/SET_LOADING', false)
+            }
         }
     }
 }
 </script>
 
 <style scoped>
-    /* ANIMATIONS */
+/* ANIMATIONS */
 .fadeInDown {
     -webkit-animation-name: fadeInDown;
     animation-name: fadeInDown;
