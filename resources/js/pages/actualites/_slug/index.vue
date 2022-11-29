@@ -9,7 +9,7 @@
                 <div class="text-center mb-3">
                     <router-link to="/actualites">&larr; Retour vers les manifestations</router-link>
                 </div>
-                <b-card :img-src="`/images/${activity.image}`" :img-alt="`${activity.name}`" img-top tag="article" class="mb-2" :class="[activity.link ? 'link' : '']" style="border: none">
+                <b-card :img-src="`${activity.image}` ? `/images/${activity.image}` : `/images/blank.jpg`" :img-alt="`${activity.name}`" img-top tag="article" class="mb-2" :class="[activity.link ? 'link' : '']" style="border: none">
                     <b-card-text class="">
                         <h5 class="text-center">{{ activity.name }}</h5>
                         <h6 class="text-center" v-if="activity.link"><a :href="activity.link" target="_blank">Plus d'informations &rarr;</a></h6>

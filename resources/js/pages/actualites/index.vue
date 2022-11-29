@@ -4,6 +4,7 @@
         <b-row class="justify-content-center mt-5">
             <b-col cols="3">
                 <b-carousel :indicators="false" :interval="2000" fade id="carousel-fade" style="text-shadow: 0px 0px 2px #000">
+                    
                     <b-carousel-slide v-for="sponsor in sponsors" :key="sponsor.id">
                         <img slot="img" width="100%" :src="`/images/${sponsor.image}`" :class="[sponsor.link ? 'link' : '']" @click="goToExternalLink(sponsor.link)" />
                     </b-carousel-slide>
@@ -16,7 +17,7 @@
                     <!-- today: {{ today }}<br /><br /> -->
                     <!-- futureActivities: {{ futureActivities }} -->
                     <b-col cols="12" sm="6" md="4" class="my-3 px-5" v-for="activity in futureActivities" :key="activity.id">
-                        <b-card :img-src="`/images/${activity.image}`" img-alt="Image" img-top tag="article" class="mb-2" style="" @click="goToInternalLink(activity.slug)">
+                        <b-card :img-src="`${activity.image}` ? `/images/${activity.image}` : `/images/blank.jpg`" img-alt="Image" img-top tag="article" class="mb-2" style="" @click="goToInternalLink(activity.slug)">
                             <b-card-text class="text-center">
                                 <h5 class="my-2" style="">{{ activity.name }}</h5>
                                 <p>
@@ -37,7 +38,7 @@
         <b-row no-gutters>
             <b-col cols="12" sm="6" md="4" lg="3" class="my-3 px-5" v-for="activity in pastActivities" :key="activity.id">
                 <b-card
-                    :img-src="`/images/${activity.image}`"
+                    :img-src="`${activity.image}` ? `/images/${activity.image}` : `/images/blank.jpg`"
                     img-alt="Image"
                     img-top
                     tag="article"
