@@ -5,7 +5,7 @@
 
         <b-row align-v="start" class="justify-content-center">
             <b-col cols="12" md="6">
-                Last upload: Tuesday 23:06
+                Last upload: Tuesday 23:28
             </b-col>
             
         </b-row>

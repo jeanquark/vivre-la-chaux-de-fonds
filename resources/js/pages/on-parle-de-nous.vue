@@ -9,7 +9,7 @@
                 </b-carousel> -->
                 <b-carousel :indicators="false" :interval="2000" fade id="carousel-fade" style="text-shadow: 0px 0px 2px #000">
                     <b-carousel-slide v-for="sponsor in sponsors" :key="sponsor.id">
-                        <img slot="img" width="100%" :src="`/images/${sponsor.image}`" :class="[sponsor.link ? 'link' : '']"  @click="goToExternalLink(sponsor.link)" />
+                        <img slot="img" width="100%" :src="sponsor.image ? `/images/${sponsor.image}` : '/images/blank.jpg'" :class="[sponsor.link ? 'link' : '']"  @click="goToExternalLink(sponsor.link)" />
                     </b-carousel-slide>
                 </b-carousel>
             </b-col>

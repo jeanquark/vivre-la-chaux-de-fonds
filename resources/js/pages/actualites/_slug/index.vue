@@ -9,7 +9,7 @@
                 <div class="text-center mb-3">
                     <router-link to="/actualites">&larr; Retour vers les manifestations</router-link>
                 </div>
-                <b-card :img-src="`${activity.image}` ? `/images/${activity.image}` : `/images/blank.jpg`" :img-alt="`${activity.name}`" img-top tag="article" class="mb-2" :class="[activity.link ? 'link' : '']" style="border: none">
+                <b-card :img-src="activity.image ? `/images/${activity.image}` : `/images/blank.jpg`" :img-alt="`${activity.name}`" img-top tag="article" class="mb-2" :class="[activity.link ? 'link' : '']" style="border: none">
                     <b-card-text class="">
                         <h5 class="text-center">{{ activity.name }}</h5>
                         <h6 class="text-center" v-if="activity.link"><a :href="activity.link" target="_blank">Plus d'informations &rarr;</a></h6>
@@ -26,7 +26,7 @@
                             <b-col cols="12" sm="4" md="3" class="my-3" v-for="sponsor in sponsorPartners" :key="sponsor.id">
                                 <div>
                                     <a :href="sponsor.link" target="_blank">
-                                        <b-img :src="`/images/${sponsor.image}`" fluid :alt="sponsor.name"></b-img>
+                                        <b-img :src="sponsor.image ? `/images/${sponsor.image}` : '/images/blank.jpg'" fluid :alt="sponsor.name"></b-img>
                                     </a>
                                 </div>
                             </b-col>
@@ -38,7 +38,7 @@
                                 </div>
                                 <div v-else>
                                     <a :href="sponsor.link" target="_blank">
-                                        <b-img :src="`/images/${sponsor.image}`" fluid :alt="sponsor.name"></b-img>
+                                        <b-img :src="sponsor.image ? `/images/${sponsor.image}` : '/images/blank.jpg'" fluid :alt="sponsor.name"></b-img>
                                     </a>
                                 </div>
                             </b-col>
