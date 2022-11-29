@@ -32,7 +32,7 @@
         </b-row>
         <b-row no-gutters class="my-4 justify-content-center">
             <b-col cols="12" class="text-center">
-                <h3 class="title">Historique</h3>
+                <h3 class="title">Historique</h3><small>a</small>
             </b-col>
         </b-row>
         <b-row no-gutters>
