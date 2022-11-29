@@ -44,6 +44,8 @@ export default [
     { path: '/partenariat', name: 'partenariat', component: page('partenariat.vue') },
 
     { path: '/newsletter/desinscription/:email_encoded', name: 'newsletter-desinscription', component: page('newsletter/desinscription/_email_encoded/index') },
+
+    { path: '/test', name: 'test', component: page('test.vue') },
     
     // { path: '/admin', name: 'admin', component: page('admin/index.vue') },
 

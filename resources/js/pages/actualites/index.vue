@@ -17,7 +17,7 @@
                     <!-- today: {{ today }}<br /><br /> -->
                     <!-- futureActivities: {{ futureActivities }} -->
                     <b-col cols="12" sm="6" md="4" class="my-3 px-5" v-for="activity in futureActivities" :key="activity.id">
-                        <b-card :img-src="`${activity.image}` ? `/images/${activity.image}` : `/images/blank.jpg`" img-alt="Image" img-top tag="article" class="mb-2" style="" @click="goToInternalLink(activity.slug)">
+                        <b-card :img-src="activity.image ? `/images/${activity.image}` : `/images/blank.jpg`" img-alt="Image" img-top tag="article" class="mb-2" style="" @click="goToInternalLink(activity.slug)">
                             <b-card-text class="text-center">
                                 <h5 class="my-2" style="">{{ activity.name }}</h5>
                                 <p>
@@ -32,13 +32,13 @@
         </b-row>
         <b-row no-gutters class="my-4 justify-content-center">
             <b-col cols="12" class="text-center">
-                <h3 class="title">Historique</h3><small>a</small>
+                <h3 class="title">Historique</h3>
             </b-col>
         </b-row>
         <b-row no-gutters>
             <b-col cols="12" sm="6" md="4" lg="3" class="my-3 px-5" v-for="activity in pastActivities" :key="activity.id">
                 <b-card
-                    :img-src="`${activity.image}` ? `/images/${activity.image}` : `/images/blank.jpg`"
+                    :img-src="activity.image ? `/images/${activity.image}` : `/images/blank.jpg`"
                     img-alt="Image"
                     img-top
                     tag="article"
