@@ -27,6 +27,7 @@ jobs:
         port: 22
         script: |
           cd web/vivre-la-chaux-de-fonds
+          ls
           php -r "file_exists('.env') || copy('.env.example', '.env');"
           php artisan key:generate
           composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
