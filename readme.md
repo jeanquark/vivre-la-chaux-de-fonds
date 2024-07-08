@@ -40,7 +40,7 @@ php artisan db:seed
 
 To open database, launch MySQL Workbench.
 
-To see the app, visit vivre-la-chaux-de-fonds.test in the browser
+To see the app, visit localhost:8000 in the browser
 
 
 ## Team
