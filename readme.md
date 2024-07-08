@@ -4,6 +4,11 @@
 
 ![homepage](public/images/homepage.jpg)
 
+## Environment
+
+PHP v7
+Node v16
+
 ## Content
 
 To install Laravel packages:

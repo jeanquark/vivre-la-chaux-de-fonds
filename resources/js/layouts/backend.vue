@@ -78,7 +78,6 @@ export default {
                         }
                     }
                 },
-
                 {
                     href: '/admin/activities',
                     title: 'Activités',
