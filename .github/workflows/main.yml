@@ -9,7 +9,7 @@ jobs:
       with:
         fetch-depth: 2
     - name: FTP-Deploy-Action
-      uses: SamKirkland/FTP-Deploy-Action@3.0.0
+      uses: SamKirkland/FTP-Deploy-Action@v3.1.2-patch
       with:
         ftp-server: ${{ secrets.FTP_HOST }}/web/vivre-la-chaux-de-fonds
         ftp-username: ${{ secrets.FTP_USERNAME }}
