@@ -15,6 +15,7 @@ jobs:
         ftp-username: ${{ secrets.FTP_USERNAME }}
         ftp-password: ${{ secrets.FTP_PASSWORD }}
   composer-install:
+    needs: deploy-file-updates
     name: Composer install
     runs-on: ubuntu-latest
     steps:
