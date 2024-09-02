@@ -100,6 +100,8 @@ export default {
                 this.$store.commit('loading/SET_LOADING', false)
             } catch (error) {
                 console.log('error: ', error)
+                // console.log('error.response: ', error.response)
+                // console.log('error.data: ', error.data)
                 this.$noty.error('Votre message n\'a pas été envoyé. Veuillez vérifier les champs.')
                 this.$store.commit('loading/SET_LOADING', false)
             }

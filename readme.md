@@ -42,6 +42,10 @@ To open database, launch MySQL Workbench.
 
 To see the app, visit localhost:8000 in the browser.
 
+## Deployment
+
+Compilation process for production is accomplished after commit (see <code>package.json</code> file).
+
 
 ## Team
 - Jean-Marc (développeur web)

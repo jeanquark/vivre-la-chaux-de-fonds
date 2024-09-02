@@ -32,7 +32,8 @@ class ContactForm extends Mailable
      */
     public function build()
     {
-        $from = 'contact@vlcf.ch';
+        // $from = 'postmaster@vlcf.ch';
+        $from = env('MAIL_FROM_ADDRESS');
         $subject = "vlcf.ch - Formulaire de contact";
 
         return $this->from($from)->subject($subject)->view('emails.contact');

@@ -106,7 +106,7 @@
 
         <footer>
             <!-- <h5 class="text-center my-0 py-2">vlcf.ch &copy;{{ new Date().getFullYear() }} </h5> -->
-            <b-row no-gutters align-h="center" align-v="center" class=""><h5 class="text-center my-0 py-2">vlcf.ch &copy;{{ new Date().getFullYear() }} </h5><small class="mx-2">v.1.0</small></b-row>
+            <b-row no-gutters align-h="center" align-v="center" class=""><h5 class="text-center my-0 py-2">vlcf.ch &copy;{{ new Date().getFullYear() }} </h5><small class="mx-2">v.2.0</small></b-row>
         </footer>
     </div>
     <!-- </b-container> -->

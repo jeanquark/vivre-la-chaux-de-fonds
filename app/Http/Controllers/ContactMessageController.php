@@ -45,10 +45,11 @@ class ContactMessageController extends Controller
         
         // 2) Send message as email
         Mail::to($senderAddress)->send(new ContactForm($contactMessage));
-        Mail::to($contactMessage->email)->send(new ContactFormSentConfirmation($contactMessage));
+        // Mail::to($contactMessage->email)->send(new ContactFormSentConfirmation($contactMessage));
 
         return response()->json([
-            'success' => true
+            'success' => true,
+            '$senderAddress' => $senderAddress
         ], 200);
     }
 }
